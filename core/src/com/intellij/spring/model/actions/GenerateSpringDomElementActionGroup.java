@@ -1,7 +1,7 @@
 package com.intellij.spring.model.actions;
 
+import com.intellij.openapi.actionSystem.AnSeparator;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
-import com.intellij.openapi.actionSystem.Separator;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
 import com.intellij.spring.model.actions.generate.SpringBeanGenerateProvider;
@@ -21,7 +21,7 @@ public class GenerateSpringDomElementActionGroup extends DefaultActionGroup {
     //add(new GenerateSpringDomElementAction(new SpringAliasGenerateProvider(), SpringIcons.SPRING_ALIAS_ICON ));
     //add(new GenerateSpringDomElementAction(new SpringImportGenerateProvider(), SpringIcons.CONFIG_FILE));
 
-    add(Separator.getInstance());
+    add(AnSeparator.getInstance());
 
     add(new GenerateSpringBeanBodyAction(new SpringPropertiesGenerateProvider()));
     add(new GenerateSpringBeanBodyAction(new SpringSetterDependenciesGenerateProvider(), SpringIcons.SPRING_BEAN_ICON));
