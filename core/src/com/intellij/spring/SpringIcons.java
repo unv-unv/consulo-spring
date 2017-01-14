@@ -10,7 +10,7 @@ import javax.swing.*;
 public interface SpringIcons {
   Icon SPRING_ICON = consulo.spring.SpringIcons.Spring;
   
-  Icon SPRING_BEAN_ICON = consulo.spring.SpringIcons.BeanAlias;
+  Icon SPRING_BEAN_ICON = consulo.spring.SpringIcons.SpringBean;
   Icon SPRING_JAVA_BEAN_ICON = consulo.spring.SpringIcons.SpringJavaBean;
   Icon SPRING_ALIAS_ICON = consulo.spring.SpringIcons.Spring;
   Icon SPRING_BEANS_ICON = consulo.spring.SpringIcons.Beans;
