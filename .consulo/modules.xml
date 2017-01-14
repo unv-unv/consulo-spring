@@ -25,6 +25,7 @@
           <orderEntry type="library" name="consulo-plugin: consulo.java" level="project" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.properties" level="project" />
+          <orderEntry type="module" module-name="aop-common" />
         </module-layer>
       </module>
       <module name="aop-common" dirurl="file://$PROJECT_DIR$/aop-common" current-layer="Default">
