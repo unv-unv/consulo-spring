@@ -4,9 +4,7 @@
     <modules>
       <module name="consulo-spring" dirurl="file://$PROJECT_DIR$" current-layer="Default">
         <module-layer name="Default">
-          <content url="file://$MODULE_DIR$">
-            <content-folder type="EXCLUDED" url="file://$MODULE_DIR$/.consulo" />
-          </content>
+          <content url="file://$MODULE_DIR$" />
           <orderEntry type="sourceFolder" />
         </module-layer>
       </module>
@@ -41,7 +39,6 @@
           <orderEntry type="sourceFolder" />
           <orderEntry type="library" name="consulo-plugin: consulo.java" level="project" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
-          <orderEntry type="module" module-name="_consulo-java-jam-api" exported="" />
           <orderEntry type="module" module-name="_consulo-java-ex" />
         </module-layer>
       </module>
@@ -72,6 +69,7 @@
           <orderEntry type="sourceFolder" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.xml" level="project" />
           <orderEntry type="library" name="consulo-plugin: consulo.java" level="project" />
+          <orderEntry type="module" module-name="_consulo-java-jam-api" exported="" />
         </module-layer>
       </module>
     </modules>

@@ -8,5 +8,7 @@
   <extensions defaultExtensionNs="com.intellij">
     <applicationService serviceInterface="com.intellij.jam.JamClassGenerator" serviceImplementation="consulo.java.jam.JamClassGeneratorImpl"/>
     <projectService serviceInterface="com.intellij.jam.JamService" serviceImplementation="com.intellij.jam.JamService" />
+
+    <psi.referenceContributor language="JAVA" implementation="com.intellij.jam.JamReferenceContributor" />
   </extensions>
 </idea-plugin>
