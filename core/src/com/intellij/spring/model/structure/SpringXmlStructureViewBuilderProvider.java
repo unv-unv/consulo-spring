@@ -6,6 +6,7 @@ import com.intellij.ide.structureView.StructureViewModel;
 import com.intellij.ide.structureView.TreeBasedStructureViewBuilder;
 import com.intellij.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import com.intellij.ide.util.treeView.smartTree.Sorter;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlFile;
@@ -38,8 +39,15 @@ public class SpringXmlStructureViewBuilderProvider implements XmlStructureViewBu
           }
 
           @NotNull
+          @Override
+          public StructureViewModel createStructureViewModel(@Nullable Editor editor) {
+            throw new UnsupportedOperationException();
+          }
+
+          @NotNull
           public StructureView createStructureView(final FileEditor fileEditor, final Project project) {
             return new SpringStructureViewComponent(fileEditor, createStructureViewModel(), project);
+
           }
         };
       }

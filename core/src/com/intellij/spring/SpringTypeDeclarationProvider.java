@@ -6,6 +6,7 @@ package com.intellij.spring;
 
 import com.intellij.codeInsight.navigation.actions.TypeDeclarationProvider;
 import com.intellij.jam.JamService;
+import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
@@ -18,13 +19,14 @@ import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.custom.CustomBeanFakePsiElement;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * @author peter
  */
-public class SpringTypeDeclarationProvider implements TypeDeclarationProvider{
-  public PsiElement[] getSymbolTypeDeclarations(final PsiElement symbol) {
+public class SpringTypeDeclarationProvider extends TypeDeclarationProvider{
+  public PsiElement[] getSymbolTypeDeclarations(@NotNull PsiElement symbol, @Nullable Editor editor, int offset) {
     if (symbol instanceof CustomBeanFakePsiElement) {
       return getBeanTypeDeclaration(((CustomBeanFakePsiElement)symbol).getBean());
     }

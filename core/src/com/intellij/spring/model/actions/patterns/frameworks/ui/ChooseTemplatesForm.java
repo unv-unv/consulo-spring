@@ -1,6 +1,5 @@
 package com.intellij.spring.model.actions.patterns.frameworks.ui;
 
-import com.intellij.facet.ui.FacetEditorsFactory;
 import com.intellij.facet.ui.libraries.LibrariesValidationComponent;
 import com.intellij.ide.BrowserUtil;
 import com.intellij.openapi.Disposable;
@@ -66,9 +65,7 @@ public class ChooseTemplatesForm implements Disposable {
 
       myTableViewPanel.add(comboPanelWrapper);
 
-      final FacetEditorsFactory facetEditorsFactory = FacetEditorsFactory.getInstance();
-      myLibrariesValidationComponent =
-        facetEditorsFactory.createLibrariesValidationComponent(myLibInfo.getLibs(), myLibInfo.getModule(), myLibInfo.getName());
+      myLibrariesValidationComponent = null; //facetEditorsFactory.createLibrariesValidationComponent(myLibInfo.getLibs(), myLibInfo.getModule(), myLibInfo.getName());
       myLibsPanel.add(myLibrariesValidationComponent.getComponent(), BorderLayout.CENTER);
       myLibrariesValidationComponent.addValidityListener(new LibrariesValidationComponent.ValidityListener() {
         public void valididyChanged(final boolean isValid) {

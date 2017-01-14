@@ -8,7 +8,7 @@ import com.intellij.aop.AopPointcut;
 import com.intellij.aop.psi.PointcutContext;
 import com.intellij.aop.psi.PointcutMatchDegree;
 import com.intellij.aop.psi.PsiPointcutExpression;
-import com.intellij.javaee.model.xml.impl.BaseImpl;
+import com.intellij.jam.model.common.BaseImpl;
 import com.intellij.psi.PsiMethod;
 import com.intellij.spring.aop.SpringAdvisedElementsSearcher;
 import com.intellij.spring.model.SpringUtils;

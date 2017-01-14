@@ -5,8 +5,8 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.XmlElementFactory;
-import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.constants.SpringConstants;
@@ -14,7 +14,7 @@ import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.spring.model.xml.beans.SpringProperty;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomUtil;
-import com.intellij.xml.XmlExtension;
+import com.intellij.xml.XmlNamespaceHelper;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +49,7 @@ public class UsePNamespaceIntention implements IntentionAction {
       final SpringProperty property = DomUtil.getContextElement(editor, SpringProperty.class);
       assert property != null;
       if (property.getXmlTag().getNamespaceByPrefix("p").equals(XmlUtil.EMPTY_URI)) {
-        XmlExtension.getExtension((XmlFile)file).insertNamespaceDeclaration((XmlFile)file, editor,
+        XmlNamespaceHelper.getHelper((XmlFile)file).insertNamespaceDeclaration((XmlFile)file, editor,
                                                                             Collections.<String>singleton(SpringConstants.P_NAMESPACE), "p", null);  
       }
       final SpringBean bean = (SpringBean)property.getParent();

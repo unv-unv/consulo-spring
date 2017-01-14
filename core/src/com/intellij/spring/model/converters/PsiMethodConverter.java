@@ -17,6 +17,7 @@ import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.CustomReferenceConverter;
 import com.intellij.util.xml.GenericDomValue;
+import consulo.ide.IconDescriptorUpdaters;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -105,7 +106,7 @@ public abstract class PsiMethodConverter extends Converter<PsiMethod> implements
 
         final PsiType returnType = method.getReturnType();
         final Object value = LookupValueFactory.createLookupValueWithHintAndTail(method.getName(),
-                                     method.getIcon(0),
+                                     IconDescriptorUpdaters.getIcon(method, 0),
                                      returnType == null ? null : returnType.getPresentableText(),
                                      tail);
         result.add(value);

@@ -4,8 +4,6 @@
 
 package com.intellij.spring.facet;
 
-import com.intellij.facet.ui.FacetEditorContext;
-import com.intellij.facet.ui.FacetEditorTab;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
@@ -22,6 +20,7 @@ import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.treeStructure.*;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,7 +38,7 @@ import java.util.Set;
 /**
  * @author Dmitry Avdeev
  */
-public class SpringConfigurationTab extends FacetEditorTab {
+public class SpringConfigurationTab  {
   
   private JPanel myMainPanel;
   private SimpleTree myTree;
@@ -48,8 +47,7 @@ public class SpringConfigurationTab extends FacetEditorTab {
   private JButton myRemoveButton;
   private JButton myEditButton;
 
-  private final SpringFacetConfiguration myConfiguration;
-  private final FacetEditorContext myContext;
+  private final SpringModuleExtension myModuleExtension;
   private final Set<SpringFileSet> myBuffer = new HashSet<SpringFileSet>();
   private final SimpleTreeBuilder myBuilder;
   private final SpringConfigsSearcher mySearcher;
@@ -73,11 +71,10 @@ public class SpringConfigurationTab extends FacetEditorTab {
 
   };
 
-  public SpringConfigurationTab(final SpringFacetConfiguration configuration, FacetEditorContext context) {
+  public SpringConfigurationTab(final SpringModuleExtension configuration) {
 
-    myConfiguration = configuration;
-    myContext = context;
-    mySearcher = new SpringConfigsSearcher(context);
+    myModuleExtension = configuration;
+    mySearcher = new SpringConfigsSearcher(configuration.getModule());
 
     final SimpleTreeStructure structure = new SimpleTreeStructure() {
       public Object getRootElement() {
@@ -100,13 +97,13 @@ public class SpringConfigurationTab extends FacetEditorTab {
       public void actionPerformed(ActionEvent e) {
         final SpringFileSet fileSet = new SpringFileSet(SpringFileSet.getUniqueId(myBuffer),
                                                         SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), myBuffer),
-                                                        myConfiguration) {
+            myModuleExtension) {
           public boolean isNew() {
             return true;
           }
         };
 
-        final FileSetEditor editor = new FileSetEditor(myMainPanel, fileSet, myBuffer, mySearcher, myContext.getProject());
+        final FileSetEditor editor = new FileSetEditor(myMainPanel, fileSet, myBuffer, mySearcher, myModuleExtension.getProject());
         editor.show();
         if (editor.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
           SpringFileSet editedFileSet = editor.getEditedFileSet();
@@ -130,7 +127,7 @@ public class SpringConfigurationTab extends FacetEditorTab {
       public void actionPerformed(final ActionEvent e) {
         final SpringFileSet fileSet = getCurrentFileSet();
         if (fileSet != null) {
-          final FileSetEditor editor = new FileSetEditor(myMainPanel, fileSet, myBuffer, mySearcher, myContext.getProject());
+          final FileSetEditor editor = new FileSetEditor(myMainPanel, fileSet, myBuffer, mySearcher, myModuleExtension.getProject());
           editor.show();
           if (editor.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
             myModified = true;
@@ -224,20 +221,19 @@ public class SpringConfigurationTab extends FacetEditorTab {
   }
 
   public void apply() throws ConfigurationException {
-    final Set<SpringFileSet> fileSets = myConfiguration.getFileSets();
+    final Set<SpringFileSet> fileSets = myModuleExtension.getFileSets();
     fileSets.clear();
     for (SpringFileSet fileSet : myBuffer) {
       if (!fileSet.isAutodetected() || fileSet.isRemoved()) {
         fileSets.add(fileSet);
       }
     }
-    myConfiguration.setModified();
   }
 
   public void reset() {
     myBuffer.clear();
-    final Module module = myContext.getModule();
-    final SpringFacet springFacet = (SpringFacet)myContext.getFacet();
+    final Module module = myModuleExtension.getModule();
+    final SpringModuleExtension springFacet = (SpringModuleExtension)myModuleExtension;
     final Set<SpringFileSet> sets = SpringManager.getInstance(module.getProject()).getAllSets(springFacet);
     for (SpringFileSet fileSet : sets) {
       myBuffer.add(new SpringFileSet(fileSet));
@@ -274,20 +270,20 @@ public class SpringConfigurationTab extends FacetEditorTab {
 
       final String name = mySet.getName();
       setPlainText(mySet.isAutodetected() ? name + " " + SpringBundle.message("config.fileset.autodetected") : name);
-      setIcons(fileSet.getIcon(), fileSet.getIcon());
+      setIcon(fileSet.getIcon());
     }
 
     public SimpleNode[] getChildren() {
       final ArrayList<SimpleNode> nodes = new ArrayList<SimpleNode>();
       deps: for (String dep: mySet.getDependencies()) {
-        final Module module = myContext.getModule();
+        final Module module = myModuleExtension.getModule();
         for (SpringFileSet fileSet : myBuffer) {
           if (fileSet.getId().equals(dep)) {
             nodes.add(new DependencyNode(fileSet, this));
             continue deps;
           }
         }
-        final SpringFacet springFacet = SpringFacet.getInstance(module);
+        final SpringModuleExtension springFacet = SpringModuleExtension.getInstance(module);
         assert springFacet != null;
         final List<SpringFileSet> models = SpringManager.getInstance(module.getProject()).getProvidedModels(springFacet);
         for (SpringFileSet fileSet : models) {
@@ -319,7 +315,7 @@ public class SpringConfigurationTab extends FacetEditorTab {
       super(parent);
       myFileSet = fileSet;
       setPlainText(fileSet.getName());
-      setIcons(SpringIcons.DEPENDENCY, SpringIcons.DEPENDENCY);
+      setIcon(SpringIcons.DEPENDENCY);
     }
 
     public SimpleNode[] getChildren() {
@@ -333,13 +329,13 @@ public class SpringConfigurationTab extends FacetEditorTab {
     ConfigFileNode(VirtualFilePointer name, SimpleNode parent) {
       super(parent);
       myFilePointer = name;
-      setIcons(SpringIcons.CONFIG_FILE, SpringIcons.CONFIG_FILE);
+      setIcon(SpringIcons.CONFIG_FILE);
     }
 
     protected void doUpdate() {
       final VirtualFile file = myFilePointer.getFile();
       if (file != null) {
-        final Project project = myContext.getProject();
+        final Project project = myModuleExtension.getProject();
         final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
         if (!(psiFile instanceof XmlFile) || !SpringManager.getInstance(project).isSpringBeans((XmlFile)psiFile)) {
           renderFile(SimpleTextAttributes.ERROR_ATTRIBUTES,

@@ -1,5 +1,6 @@
 package com.intellij.spring.model.structure;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
@@ -8,10 +9,9 @@ import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.beanProperties.BeanProperty;
 import com.intellij.spring.SpringIcons;
 import com.intellij.spring.model.xml.beans.ConstructorArg;
+import com.intellij.spring.model.xml.beans.SpringBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringProperty;
 import com.intellij.spring.model.xml.beans.SpringValueHolderDefinition;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.Icons;
 import com.intellij.util.xml.DomElementNavigationProvider;
 import com.intellij.util.xml.DomElementsNavigationManager;
 import com.intellij.util.xml.GenericDomValue;
@@ -78,7 +78,7 @@ public class SpringInjectionTreeElement implements StructureViewTreeElement, Ite
   }
 
   public Icon getIcon(boolean open) {
-    return isConstructorArg() ? Icons.METHOD_ICON : SpringIcons.SPRING_BEAN_PROPERTY_ICON;
+    return isConstructorArg() ? AllIcons.Nodes.Method : SpringIcons.SPRING_BEAN_PROPERTY_ICON;
   }
 
   public TextAttributesKey getTextAttributesKey() {

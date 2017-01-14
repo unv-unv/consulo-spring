@@ -3,17 +3,18 @@ package com.intellij.spring.model.jam;
 import com.intellij.jam.JamElement;
 import com.intellij.jam.JamStringAttributeElement;
 import com.intellij.jam.annotations.JamPsiConnector;
-import com.intellij.javaee.model.common.CommonModelElement;
-import com.intellij.psi.*;
+import com.intellij.jam.model.common.CommonModelElement;
+import com.intellij.openapi.util.text.StringUtil;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiMember;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.util.ArrayUtil;
-import com.intellij.openapi.util.text.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class JamPsiMemberSpringBean<T extends PsiMember> extends CommonModelElement.PsiBase
   implements JamElement, CommonSpringBean {

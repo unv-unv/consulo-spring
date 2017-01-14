@@ -16,7 +16,7 @@
 
 package com.intellij.spring.metadata;
 
-import com.intellij.javaee.model.common.JamSupportMetaData;
+import com.intellij.jam.model.common.JamSupportMetaData;
 import com.intellij.javaee.util.AnnotationTextUtil;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;

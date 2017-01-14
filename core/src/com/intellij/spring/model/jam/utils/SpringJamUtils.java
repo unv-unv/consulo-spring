@@ -4,16 +4,16 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiJavaPackage;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiPackage;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.jam.SpringJamModel;
+import com.intellij.spring.model.jam.javaConfig.JavaConfigConfiguration;
 import com.intellij.spring.model.jam.javaConfig.SpringJavaConfiguration;
 import com.intellij.spring.model.jam.javaConfig.SpringJavaExternalBean;
-import com.intellij.spring.model.jam.javaConfig.JavaConfigConfiguration;
 import com.intellij.spring.model.jam.stereotype.SpringStereotypeElement;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
@@ -36,7 +36,7 @@ public class SpringJamUtils {
     if (module != null) {
       List<ComponentScan> scanBeans = getComponentScans(domModel.getAllDomBeans());
       if (scanBeans.size() > 0) {
-        List<PsiPackage> psiPackages = getScannedPackages(scanBeans);
+        List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
         if (psiPackages.isEmpty()) {
           return Collections.emptyList();
         }
@@ -57,7 +57,7 @@ public class SpringJamUtils {
     if (module != null) {
       List<ComponentScan> scanBeans = getComponentScans(domModel.getAllDomBeans());
       if (scanBeans.size() > 0) {
-        List<PsiPackage> psiPackages = getScannedPackages(scanBeans);
+        List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
         if (psiPackages.isEmpty()) {
           return Collections.emptyList();
         }
@@ -84,7 +84,7 @@ public class SpringJamUtils {
   }
 
   private static List<SpringStereotypeElement> filterStereotypeComponents(final List<SpringStereotypeElement> components,
-                                                                final List<PsiPackage> psiPackages) {
+                                                                final List<PsiJavaPackage> psiPackages) {
     List<SpringStereotypeElement> filtered = new ArrayList<SpringStereotypeElement>();
     for (SpringStereotypeElement component : components) {
       final PsiClass psiClass = component.getBeanClass();
@@ -97,7 +97,7 @@ public class SpringJamUtils {
   }
 
   private static List<SpringJavaConfiguration> filterJavaConfigurations(final List<SpringJavaConfiguration> javaConfigurations,
-                                                                final List<PsiPackage> psiPackages) {
+                                                                final List<PsiJavaPackage> psiPackages) {
     List<SpringJavaConfiguration> filtered = new ArrayList<SpringJavaConfiguration>();
     for (SpringJavaConfiguration component : javaConfigurations) {
       final PsiClass psiClass = component.getPsiClass();
@@ -109,11 +109,11 @@ public class SpringJamUtils {
     return filtered;
   }
 
-  private static boolean isInPackage(List<PsiPackage> psiPackages, @Nullable PsiClass psiClass) {
+  private static boolean isInPackage(List<PsiJavaPackage> psiPackages, @Nullable PsiClass psiClass) {
     if (psiClass != null) {
       final String qualifiedName = psiClass.getQualifiedName();
       if (qualifiedName != null) {
-        for (PsiPackage psiPackage : psiPackages) {
+        for (PsiJavaPackage psiPackage : psiPackages) {
           if (StringUtil.startsWithConcatenationOf(qualifiedName, psiPackage.getQualifiedName(), ".")) {
             return true;
           }
@@ -131,8 +131,8 @@ public class SpringJamUtils {
     return elements;
   }
 
-  private static List<PsiPackage> getScannedPackages(final List<ComponentScan> scanBeans) {
-    final ArrayList<PsiPackage> list = new ArrayList<PsiPackage>(scanBeans.size());
+  private static List<PsiJavaPackage> getScannedPackages(final List<ComponentScan> scanBeans) {
+    final ArrayList<PsiJavaPackage> list = new ArrayList<PsiJavaPackage>(scanBeans.size());
     for (ComponentScan scanBean : scanBeans) {
       list.addAll(scanBean.getBasePackage().getValue());
     }

@@ -4,20 +4,15 @@
 
 package com.intellij.spring.model.converters;
 
-import com.intellij.codeInsight.TargetElementUtilBase;
-import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.DataConstants;
-import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.psi.*;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.model.xml.DomSpringBean;
-import com.intellij.spring.model.xml.CustomBeanWrapper;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.spring.model.xml.beans.TypeHolder;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-import com.intellij.util.xml.DomUtil;
+import consulo.codeInsight.TargetElementUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -75,14 +70,9 @@ public class SpringBeanUtil {
   }
 
   @Nullable
-  public static DomSpringBean getTargetSpringBean() {
-    return getTargetSpringBean(DataManager.getInstance().getDataContext());
-  }
-
-  public static DomSpringBean getTargetSpringBean(final DataContext dataContext) {
-    final Editor editor = (Editor)dataContext.getData(DataConstants.EDITOR);
+  public static DomSpringBean getTargetSpringBean(Editor editor) {
     if (editor != null) {
-      final PsiElement targetPsiElement = TargetElementUtilBase.findTargetElement(editor, TargetElementUtilBase.REFERENCED_ELEMENT_ACCEPTED);
+      final PsiElement targetPsiElement = TargetElementUtil.findTargetElement(editor, TargetElementUtil.getReferenceSearchFlags());
       if (targetPsiElement instanceof XmlTag) {
         final DomElement value = DomManager.getDomManager(targetPsiElement.getProject()).getDomElement((XmlTag)targetPsiElement);
         if (value instanceof DomSpringBean) {
@@ -90,9 +80,18 @@ public class SpringBeanUtil {
         }
       }
     }
-    final DomElement element = DomUtil.getContextElement(editor);
+    return null;
+  }
 
-    return element instanceof DomSpringBean && !(element instanceof CustomBeanWrapper) ? (DomSpringBean)element : null;
+  public static DomSpringBean getTargetSpringBean(final PsiElement element) {
+
+    if (element instanceof XmlTag) {
+      final DomElement value = DomManager.getDomManager(element.getProject()).getDomElement((XmlTag)element);
+      if (value instanceof DomSpringBean) {
+        return (DomSpringBean)value;
+      }
+    }
+    return null;
   }
 
 }

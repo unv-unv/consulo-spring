@@ -15,9 +15,9 @@ import com.intellij.openapi.components.*;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ModuleRootManager;
-import com.intellij.openapi.roots.OrderRootType;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.JDOMUtil;
 import com.intellij.openapi.util.Key;
@@ -35,6 +35,8 @@ import com.intellij.spring.schemas.SpringSchemaProvider;
 import com.intellij.util.*;
 import com.intellij.util.concurrency.Semaphore;
 import com.intellij.util.containers.ContainerUtil;
+import consulo.java.module.extension.JavaModuleExtension;
+import consulo.roots.ContentFolderScopes;
 import gnu.trove.THashMap;
 import gnu.trove.THashSet;
 import org.jdom.Document;
@@ -283,7 +285,7 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
         list.add(file);
       }
     });
-    for (VirtualFile file : ModuleRootManager.getInstance(module).getFiles(OrderRootType.SOURCES)) {
+    for (VirtualFile file : ModuleRootManager.getInstance(module).getContentFolderFiles(ContentFolderScopes.production())) {
       list.add(file);
     }
   }
@@ -297,7 +299,7 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
     }
 
     final JavaParameters javaParameters = new JavaParameters();
-    javaParameters.setJdk(ModuleRootManager.getInstance(module).getSdk());
+    javaParameters.setJdk(ModuleUtilCore.getSdk(module, JavaModuleExtension.class));
     javaParameters.setMainClass("com.intellij.spring.model.xml.custom.CustomBeanParser");
     if (isDebug()) {
       javaParameters.getVMParametersList().addParametersString("-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5239");

@@ -4,7 +4,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.vfs.JarFileSystem;
+import com.intellij.openapi.vfs.StandardFileSystems;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -25,13 +25,14 @@ import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
+import consulo.ide.IconDescriptorUpdaters;
+import consulo.vfs.util.ArchiveVfsUtil;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -75,14 +76,9 @@ public class ConfigFileChooser extends DialogWrapper {
               }
             }
             for (XmlFile file : files) {
-              try {
-                final VirtualFile vFile = file.getVirtualFile();
-                if (vFile != null && (vFile.getPath().indexOf(JarFileSystem.JAR_SEPARATOR) < 0 || JarFileSystem.getInstance().getJarFile(vFile) == null)) {
-                  nodes.add(new ConfigFileNode(file));
-                }
-              }
-              catch (IOException e) {
-                // just ignore it
+              final VirtualFile vFile = file.getVirtualFile();
+              if (vFile != null && (vFile.getPath().indexOf(StandardFileSystems.JAR_SEPARATOR) < 0 || ArchiveVfsUtil.getVirtualFileForArchive(vFile) == null)) {
+                nodes.add(new ConfigFileNode(file));
               }
             }
             return nodes.toArray(new SimpleNode[nodes.size()]);
@@ -171,7 +167,7 @@ public class ConfigFileChooser extends DialogWrapper {
 
     private ConfigFileNode(XmlFile file) {
       myFile = file;
-      setUniformIcon(file.getIcon(0));
+      setUniformIcon(IconDescriptorUpdaters.getIcon(file, 0));
       addColoredFragment(myFile.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
       final VirtualFile virtualFile = myFile.getVirtualFile();
       assert virtualFile != null;

@@ -197,7 +197,7 @@ public class FileSetEditor extends DialogWrapper {
   protected Action[] createLeftSideActions() {
     final AbstractAction locateAction = new AbstractAction(SpringBundle.message("config.locate.button")) {
       public void actionPerformed(final ActionEvent e) {
-        final VirtualFile[] files = FileChooser.chooseFiles(myMainPanel, new FileChooserDescriptor(true, false, true, false, true, true));
+        final VirtualFile[] files = FileChooser.chooseFiles(new FileChooserDescriptor(true, false, true, false, true, true), myMainPanel, null, null);
         if (files.length > 0) {
           for (VirtualFile file: files) {
             myFilesTree.addFile(file);

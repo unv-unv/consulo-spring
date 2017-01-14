@@ -1,9 +1,8 @@
 package com.intellij.spring.refactoring;
 
-import com.intellij.codeInsight.completion.simple.SimpleLookupItem;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupItem;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.template.*;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
@@ -123,11 +122,7 @@ public class SpringIntroduceBeanIntention implements IntentionAction {
       }
 
       public LookupElement[] calculateLookupItems(final ExpressionContext context) {
-        return ContainerUtil.map2Array(names, LookupItem.class, new Function<String, LookupItem>() {
-          public LookupItem fun(final String s) {
-            return new SimpleLookupItem<String>(s);
-          }
-        });
+        return ContainerUtil.map2Array(names, LookupElement.class, (Function<String, LookupElement>) LookupElementBuilder::create);
       }
     };
     template.addVariable("id", node, node, true);

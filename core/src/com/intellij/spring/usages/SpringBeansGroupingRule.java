@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.TypeSafeDataProvider;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vcs.FileStatus;
+import com.intellij.openapi.vcs.FileStatusManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlElement;
@@ -100,7 +101,7 @@ public class SpringBeansGroupingRule implements UsageGroupingRule {
     }
 
     public FileStatus getFileStatus() {
-      return isValid() ? DomUtil.getFile(getBean()).getFileStatus() : null;
+      return isValid() ? FileStatusManager.getInstance(myBean.getPsiManager().getProject()).getStatus(DomUtil.getFile(getBean()).getVirtualFile()): null;
     }
 
     public boolean isValid() {

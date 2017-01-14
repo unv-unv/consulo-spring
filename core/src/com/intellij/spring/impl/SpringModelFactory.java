@@ -4,27 +4,23 @@
 
 package com.intellij.spring.impl;
 
-import com.intellij.facet.FacetFinder;
-import com.intellij.facet.impl.FacetFinderImpl;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.beans.SpringImport;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.model.impl.DomModelFactory;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,6 +35,8 @@ public class SpringModelFactory extends DomModelFactory<Beans, SpringModel, PsiE
     super(Beans.class, project, "spring");
   }
 
+  /*
+  We don't need this because every change of file sets will change project root modificator - and drop cache
   @NotNull
   public Object[] computeDependencies(@Nullable SpringModel model, @Nullable Module module) {
     final ArrayList<Object> dependencies = new ArrayList<Object>(5);
@@ -50,17 +48,17 @@ public class SpringModelFactory extends DomModelFactory<Beans, SpringModel, PsiE
         dependencies.add(finder.getAllFacetsOfTypeModificationTracker(SpringFacet.FACET_TYPE_ID));
       }
       dependencies.add(ProjectRootManager.getInstance(project));
-      final SpringFacet facet = SpringFacet.getInstance(module);
+      final SpringModuleExtension facet = SpringModuleExtension.getInstance(module);
       if (facet != null){
         dependencies.add(facet.getConfiguration());
       }
     }
     return dependencies.toArray(new Object[dependencies.size()]);
-  }
+  }*/
 
   protected List<SpringModel> computeAllModels(@NotNull final Module module) {
 
-    final SpringFacet facet = SpringFacet.getInstance(module);
+    final SpringModuleExtension facet = SpringModuleExtension.getInstance(module);
     if (facet == null) {
       return Collections.emptyList();
     }

@@ -3,7 +3,7 @@
  */
 package com.intellij.spring;
 
-import com.intellij.javaee.model.xml.impl.RootBaseImpl;
+import com.intellij.jam.model.common.BaseRootImpl;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.constants.SpringConstants;
@@ -50,7 +50,7 @@ public class SpringDomFileDescription extends DomFileDescription<Beans> {
 
   protected void initializeFileDescription() {
 
-    registerImplementation(Beans.class, (Class)RootBaseImpl.class);
+    registerImplementation(Beans.class, (Class)BaseRootImpl.class);
     registerImplementation(SpringBean.class, SpringBeanImpl.class);
     registerImplementation(SpringProperty.class, SpringPropertyImpl.class);
     registerImplementation(ConstructorArg.class, ConstructorArgImpl.class);

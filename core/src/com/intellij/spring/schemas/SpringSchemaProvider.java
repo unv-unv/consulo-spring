@@ -27,6 +27,7 @@ import com.intellij.spring.constants.SpringConstants;
 import com.intellij.xml.DefaultXmlExtension;
 import com.intellij.xml.XmlSchemaProvider;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
+import consulo.psi.PsiPackage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -146,7 +147,7 @@ public class SpringSchemaProvider extends XmlSchemaProvider implements DumbAware
   @NotNull
   public static Map<String,VirtualFile> getSchemas(@NotNull final Module module) {
     final Project project = module.getProject();
-    final CachedValuesManager manager = PsiManager.getInstance(project).getCachedValuesManager();
+    final CachedValuesManager manager = CachedValuesManager.getManager(project);
     final Map<String,VirtualFile> bundle = manager.getCachedValue(module, SCHEMAS_BUNDLE_KEY, new CachedValueProvider<Map<String,VirtualFile>>() {
         public Result<Map<String,VirtualFile>> compute() {
           return computeSchemas(module);
@@ -162,7 +163,7 @@ public class SpringSchemaProvider extends XmlSchemaProvider implements DumbAware
 
   @NotNull
   private static CachedValueProvider.Result<Map<String,VirtualFile>> computeSchemas(@NotNull final Module module) {
-    final PsiPackage psiPackage =
+    final PsiJavaPackage psiPackage =
       JavaPsiFacade.getInstance(module.getProject()).findPackage("META-INF");
     if (psiPackage != null) {
       final PsiDirectory[] directories = psiPackage.getDirectories(GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module, false));

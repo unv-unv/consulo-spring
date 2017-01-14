@@ -5,18 +5,12 @@
 package com.intellij.spring;
 
 import com.intellij.aop.AopBundle;
-import static com.intellij.aop.psi.AopElementTypes.AOP_LEFT_PAR;
-import static com.intellij.aop.psi.AopElementTypes.AOP_RIGHT_PAR;
 import com.intellij.aop.psi.AopPointcutTypes;
-import static com.intellij.aop.psi.AopPrattParser.parsePatternPart;
 import com.intellij.aop.psi.PointcutDescriptor;
 import com.intellij.aop.psi.PsiBeanPointcutExpression;
 import com.intellij.aop.psi.PsiPointcutExpression;
-import com.intellij.codeInsight.template.impl.TemplateSettings;
 import com.intellij.codeInspection.InspectionToolProvider;
 import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.facet.FacetTypeRegistry;
-import com.intellij.javaee.ExternalResourceManagerEx;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.pratt.PrattBuilder;
 import com.intellij.openapi.Disposable;
@@ -25,47 +19,37 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.Disposer;
-import com.intellij.openapi.util.JDOMUtil;
-import com.intellij.patterns.DomPatterns;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
 import com.intellij.psi.filters.ElementFilter;
 import com.intellij.psi.impl.beanProperties.BeanProperty;
 import com.intellij.psi.meta.MetaDataRegistrar;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.refactoring.rename.RenameInputValidator;
-import com.intellij.refactoring.rename.RenameInputValidatorRegistry;
-import com.intellij.spring.constants.SpringConstants;
-import com.intellij.spring.facet.SpringFacetType;
 import com.intellij.spring.metadata.SpringBeanMetaData;
 import com.intellij.spring.metadata.SpringStereotypeQualifierMetaData;
 import com.intellij.spring.model.highlighting.*;
 import com.intellij.spring.model.highlighting.jam.SpringJavaConfigExternalBeansErrorInspection;
 import com.intellij.spring.model.highlighting.jam.SpringJavaConfigInconsistencyInspection;
-import com.intellij.spring.model.jam.qualifiers.SpringJamQualifier;
-import com.intellij.spring.model.jam.stereotype.SpringComponent;
-import com.intellij.spring.model.jam.stereotype.SpringController;
-import com.intellij.spring.model.jam.stereotype.SpringRepository;
-import com.intellij.spring.model.jam.stereotype.SpringService;
 import com.intellij.spring.model.jam.utils.JamAnnotationTypeUtil;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.CustomBeanWrapper;
 import com.intellij.spring.model.xml.DomSpringBean;
-import com.intellij.spring.model.xml.beans.*;
+import com.intellij.spring.model.xml.beans.SpringBean;
+import com.intellij.spring.model.xml.beans.SpringBeanPointer;
+import com.intellij.spring.model.xml.beans.SpringImport;
 import com.intellij.util.Function;
-import com.intellij.util.Icons;
 import com.intellij.util.NullableFunction;
-import com.intellij.util.ProcessingContext;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.ElementPresentationManager;
-import com.intellij.util.xml.TypeNameManager;
-import org.jdom.Document;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import static com.intellij.aop.psi.AopElementTypes.AOP_LEFT_PAR;
+import static com.intellij.aop.psi.AopElementTypes.AOP_RIGHT_PAR;
+import static com.intellij.aop.psi.AopPrattParser.parsePatternPart;
 
 public class SpringApplicationComponent implements ApplicationComponent, InspectionToolProvider, Disposable {
 
@@ -97,22 +81,11 @@ public class SpringApplicationComponent implements ApplicationComponent, Inspect
 
   public void initComponent() {
 
-    FacetTypeRegistry.getInstance().registerFacetType(SpringFacetType.INSTANCE);
-
     registerPresentations();
 
     registerLiveTemplates();
 
     registerMetaData();
-
-    ExternalResourceManagerEx.getInstanceEx().registerImplicitNamespace(SpringConstants.P_NAMESPACE, new PNamespaceDescriptor(), this);
-
-    RenameInputValidatorRegistry.getInstance()
-      .registerInputValidator(DomPatterns.domTargetElement(DomPatterns.domElement(SpringBean.class)), new RenameInputValidator() {
-        public boolean isInputValid(String newName, PsiElement element, ProcessingContext context) {
-          return true;
-        }
-      });
   }
 
   private static void registerMetaData() {
@@ -201,22 +174,6 @@ public class SpringApplicationComponent implements ApplicationComponent, Inspect
         return null;
       }
     });
-
-    TypeNameManager.registerTypeName(SpringProperty.class, SpringBundle.message("spring.property"));
-
-    ElementPresentationManager.registerIcons(Beans.class, SpringIcons.SPRING_BEANS_ICON);
-    ElementPresentationManager.registerIcons(SpringBean.class, SpringIcons.SPRING_BEAN_ICON);
-    ElementPresentationManager.registerIcons(PsiMethod.class, Icons.METHOD_ICON);
-    ElementPresentationManager.registerIcons(SpringBeanScope.class, SpringIcons.SPRING_BEAN_SCOPE_ICON);
-    ElementPresentationManager.registerIcons(SpringProperty.class, SpringIcons.SPRING_BEAN_PROPERTY_ICON);
-    ElementPresentationManager.registerIcons(BeanProperty.class, SpringIcons.SPRING_BEAN_PROPERTY_ICON);
-    ElementPresentationManager.registerIcons(SpringImport.class, SpringIcons.CONFIG_FILE);
-
-    TypeNameManager.registerTypeName(SpringJamQualifier.class, "@Qualifier");
-    TypeNameManager.registerTypeName(SpringService.class, "@Service");
-    TypeNameManager.registerTypeName(SpringRepository.class, "@Repository");
-    TypeNameManager.registerTypeName(SpringController.class, "@Controller");
-    TypeNameManager.registerTypeName(SpringComponent.class, "@Component");
   }
 
   public Class[] getInspectionClasses() {
@@ -237,7 +194,7 @@ public class SpringApplicationComponent implements ApplicationComponent, Inspect
   }
 
   private void registerLiveTemplates() {
-    final TemplateSettings settings = TemplateSettings.getInstance();
+    /*final TemplateSettings settings = TemplateSettings.getInstance();
     for (String templatesFile : LIVE_TEMPLATES_FILES) {
       try {
         final Document document = JDOMUtil.loadDocument(getClass().getResourceAsStream(LIVE_TEMPLATES_DIR + templatesFile));
@@ -246,7 +203,7 @@ public class SpringApplicationComponent implements ApplicationComponent, Inspect
       catch (Exception e) {
         LOG.error("Can't load " + templatesFile, e);
       }
-    }
+    } */
   }
 
 }

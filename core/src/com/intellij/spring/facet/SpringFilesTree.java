@@ -4,21 +4,23 @@
 
 package com.intellij.spring.facet;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.vfs.JarFileSystem;
+import com.intellij.openapi.vfs.StandardFileSystems;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.ui.*;
+import com.intellij.util.containers.Convertor;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.ui.tree.TreeUtil;
-import com.intellij.util.containers.Convertor;
-import com.intellij.peer.PeerFactory;
+import consulo.fileTypes.impl.VfsIconUtil;
+import consulo.ide.IconDescriptorUpdaters;
 
 import javax.swing.*;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.util.*;
 
@@ -44,40 +46,40 @@ public class SpringFilesTree extends CheckboxTreeBase {
         final Object object = ((CheckedTreeNode)value).getUserObject();
         if (object instanceof Module) {
           final Module module = (Module)object;
-          final Icon icon = module.getModuleType().getNodeIcon(expanded);
+          final Icon icon = AllIcons.Nodes.Module;
           renderer.setIcon(icon);
           final String moduleName = module.getName();
           renderer.append(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
         } else if (object instanceof PsiFile) {
           final PsiFile psiFile = (PsiFile)object;
-          final Icon icon = psiFile.getIcon(0);
+          final Icon icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
           renderer.setIcon(icon);
           final String fileName = psiFile.getName();
           renderer.append(fileName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
           final VirtualFile virtualFile = psiFile.getVirtualFile();
           if (virtualFile != null) {
             String path = virtualFile.getPath();
-            final int i = path.indexOf(JarFileSystem.JAR_SEPARATOR);
+            final int i = path.indexOf(StandardFileSystems.JAR_SEPARATOR);
             if (i >= 0) {
-              path = path.substring(i + JarFileSystem.JAR_SEPARATOR.length());  
+              path = path.substring(i + StandardFileSystems.JAR_SEPARATOR.length());
             }
             renderer.append(" (" + path + ")", SimpleTextAttributes.GRAYED_ATTRIBUTES);
           }
         } else if (object instanceof VirtualFile) {
           VirtualFile file = (VirtualFile)object;
-          renderer.setIcon(file.getIcon());
+          renderer.setIcon(VfsIconUtil.getIcon(file, 0, null));
           renderer.append(file.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
           String path = file.getPath();
-          final int i = path.indexOf(JarFileSystem.JAR_SEPARATOR);
+          final int i = path.indexOf(StandardFileSystems.JAR_SEPARATOR);
           if (i >= 0) {
-            path = path.substring(i + JarFileSystem.JAR_SEPARATOR.length());
+            path = path.substring(i + StandardFileSystems.JAR_SEPARATOR.length());
           }
           renderer.append(" (" + path + ")", SimpleTextAttributes.GRAYED_ATTRIBUTES);
         }
       }
     }, null);
 
-    PeerFactory.getInstance().getUIHelper().installTreeSpeedSearch(this, new Convertor<TreePath, String>() {
+    TreeUIHelper.getInstance().installTreeSpeedSearch(this, new Convertor<TreePath, String>() {
       public String convert(final TreePath treePath) {
         final Object object = ((CheckedTreeNode)treePath.getLastPathComponent()).getUserObject();
         if (object instanceof Module) {
@@ -90,7 +92,7 @@ public class SpringFilesTree extends CheckboxTreeBase {
           return "";
         }
       }
-    });
+    }, true);
   }
 
   public Set<PsiFile> buildModuleNodes(final MultiMap<Module,PsiFile> files,

@@ -1,7 +1,8 @@
 package com.intellij.spring.model.jam.qualifiers;
 
-import com.intellij.javaee.model.annotations.AnnotationModelUtil;
-import com.intellij.javaee.model.common.CommonModelElement;
+import com.intellij.jam.JamElement;
+import com.intellij.jam.model.common.CommonModelElement;
+import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -9,7 +10,6 @@ import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.QualifierAttribute;
 import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.util.xml.NameValue;
-import com.intellij.jam.JamElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,7 +37,7 @@ public class SpringJamQualifier extends CommonModelElement.PsiBase implements Ja
   @Nullable
   @NameValue
   public String getQualifiedName() {
-    return AnnotationModelUtil.getObjectValue(myAnno.findDeclaredAttributeValue(null), String.class)   ;
+    return JamCommonUtil.getObjectValue(myAnno.findDeclaredAttributeValue(null), String.class)   ;
   }
 
   @NotNull
@@ -75,7 +75,7 @@ public class SpringJamQualifier extends CommonModelElement.PsiBase implements Ja
         }
 
         public String getAttributeValue() {
-          return AnnotationModelUtil.getObjectValue(pair.getValue(), String.class);
+          return JamCommonUtil.getObjectValue(pair.getValue(), String.class);
         }
       });
     }

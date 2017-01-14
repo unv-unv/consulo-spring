@@ -20,8 +20,8 @@ public class SpringStructureViewModel extends XmlStructureViewTreeModel implemen
 
   public SpringStructureViewModel(@NotNull XmlFile xmlFile, final DomElementNavigationProvider navigationProvider, boolean showBeanStructure) {
 
-    super(xmlFile);
-    myRoot = new SpringModelTreeElement((XmlFile)getPsiFile(), navigationProvider, showBeanStructure);
+    super(xmlFile, null);
+    myRoot = new SpringModelTreeElement(getPsiFile(), navigationProvider, showBeanStructure);
   }
 
   @NotNull

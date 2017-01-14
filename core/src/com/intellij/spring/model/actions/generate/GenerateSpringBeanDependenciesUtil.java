@@ -24,7 +24,6 @@ import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.highlighting.SpringConstructorArgResolveUtil;
 import com.intellij.spring.model.xml.CommonSpringBean;
@@ -33,6 +32,7 @@ import com.intellij.spring.model.xml.beans.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -768,7 +768,7 @@ public class GenerateSpringBeanDependenciesUtil {
   }
 
   private static boolean isSpringModule(final Module module) {
-    return module != null && SpringFacet.getInstance(module) != null;
+    return module != null && SpringModuleExtension.getInstance(module) != null;
   }
 
   @Nullable

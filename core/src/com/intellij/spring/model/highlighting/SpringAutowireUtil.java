@@ -13,16 +13,16 @@ import com.intellij.psi.util.PropertyUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.constants.SpringAnnotationsConstants;
-import com.intellij.spring.model.jam.utils.JamAnnotationTypeUtil;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.jam.qualifiers.SpringJamQualifier;
+import com.intellij.spring.model.jam.utils.JamAnnotationTypeUtil;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.*;
 import com.intellij.util.containers.HashMap;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NonNls;
 
 import java.lang.annotation.ElementType;
 import java.util.*;

@@ -1,9 +1,7 @@
 package com.intellij.spring.facet;
 
-import com.intellij.facet.ui.FacetEditorContext;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -12,6 +10,7 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
+import consulo.vfs.util.ArchiveVfsUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -27,10 +26,6 @@ public class SpringConfigsSearcher {
   private final List<VirtualFile> myVirtualFiles = new ArrayList<VirtualFile>();
   private final @NotNull Module myModule;
 
-  public SpringConfigsSearcher(FacetEditorContext context) {
-    myModule = context.getModule();
-  }
-
   public SpringConfigsSearcher(@NotNull Module module) {
     myModule = module;
   }
@@ -43,7 +38,7 @@ public class SpringConfigsSearcher {
       .getFileElements(Beans.class, myModule.getProject(), GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule));
     for (DomFileElement<Beans> element : elements) {
       XmlFile file = element.getFile();
-      VirtualFile jar = JarFileSystem.getInstance().getVirtualFileForJar(file.getVirtualFile());
+      VirtualFile jar = ArchiveVfsUtil.getVirtualFileForJar(file.getVirtualFile());
       if (jar != null) {
         myJars.putValue(jar, file);
       } else {

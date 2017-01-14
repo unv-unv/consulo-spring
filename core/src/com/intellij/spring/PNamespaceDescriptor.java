@@ -3,24 +3,23 @@
  */
 package com.intellij.spring;
 
-import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.beanProperties.CreateBeanPropertyFix;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.meta.PsiPresentableMetaData;
 import com.intellij.psi.util.PropertyUtil;
-import com.intellij.psi.xml.*;
+import com.intellij.psi.xml.XmlDocument;
+import com.intellij.psi.xml.XmlElement;
+import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.constants.SpringConstants;
-import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.xml.beans.SpringBean;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
-import com.intellij.xml.XmlUndefinedElementFixProvider;
 import com.intellij.xml.impl.XmlAttributeDescriptorEx;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
 import org.jetbrains.annotations.NonNls;
@@ -35,7 +34,7 @@ import java.util.Map;
 /**
  * @author peter
  */
-public class PNamespaceDescriptor extends XmlNSDescriptorImpl implements XmlUndefinedElementFixProvider {
+public class PNamespaceDescriptor extends XmlNSDescriptorImpl {
 
   public XmlAttributeDescriptor getAttribute(final String localName, final String namespace, final XmlTag context) {
     // TODO: this is not efficient!
@@ -48,7 +47,7 @@ public class PNamespaceDescriptor extends XmlNSDescriptorImpl implements XmlUnde
   }
 
   @Nullable
-  private static PsiClass getClass(@NotNull final XmlTag tag) {
+  public static PsiClass getClass(@NotNull final XmlTag tag) {
     final DomElement element = DomManager.getDomManager(tag.getProject()).getDomElement(tag);
 
     if (element instanceof SpringBean) {
@@ -86,30 +85,6 @@ public class PNamespaceDescriptor extends XmlNSDescriptorImpl implements XmlUnde
     return getAttributeDescriptors(context);
   }
 
-  @NotNull
-  public IntentionAction[] createFixes(final @NotNull XmlElement element) {
-    if (element instanceof XmlAttribute) {
-      final PsiClass psiClass = getClass((XmlTag)element.getParent());
-      if (psiClass != null) {
-        PsiType type = null;
-        @NonNls final String localName = ((XmlAttribute)element).getLocalName();
-        final Project project = element.getProject();
-        if (localName.endsWith("-ref")) {
-          final SpringModel model = SpringManager.getInstance(project).getSpringModelByFile((XmlFile)element.getContainingFile());
-          final SpringBeanPointer pointer = SpringUtils.getBeanPointer(model, ((XmlAttribute)element).getDisplayValue());
-          if (pointer != null && pointer.getEffectiveBeanType().length > 0) {
-            type = JavaPsiFacade.getInstance(project).getElementFactory().createType(pointer.getEffectiveBeanType()[0]);
-          }
-        }
-        @NonNls String name = ((XmlAttribute)element).getLocalName();
-        if (name.endsWith("-ref")) {
-          name = name.substring(0, name.length() - "-ref".length());
-        }
-        return CreateBeanPropertyFix.createActions(name, psiClass, type, true);
-      }
-    }
-    return IntentionAction.EMPTY_ARRAY;
-  }
 
   private static class PAttributeDescriptor implements XmlAttributeDescriptorEx, PsiPresentableMetaData {
     private final String myPropertyName;

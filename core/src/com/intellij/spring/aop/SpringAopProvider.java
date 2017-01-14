@@ -13,25 +13,23 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.PsiModificationTracker;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.util.*;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.xml.aop.AopConfig;
 import com.intellij.spring.model.xml.aop.BasicAdvice;
 import com.intellij.spring.model.xml.aop.SpringAopAdvice;
 import com.intellij.spring.model.xml.beans.Beans;
+import com.intellij.util.Processor;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
+import consulo.spring.module.extension.SpringModuleExtension;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +49,7 @@ public class SpringAopProvider extends AopProvider {
     if (SpringManager.getInstance(module.getProject()) == null) return Collections.emptySet();
 
     if (module.getUserData(CACHED_SPRING_MODELS) == null) {
-      module.putUserData(CACHED_SPRING_MODELS, PsiManager.getInstance(module.getProject()).getCachedValuesManager().createCachedValue(new CachedValueProvider<Set<? extends AopAspect>>() {
+      module.putUserData(CACHED_SPRING_MODELS, CachedValuesManager.getManager(module.getProject()).createCachedValue(new CachedValueProvider<Set<? extends AopAspect>>() {
         public Result<Set<? extends AopAspect>> compute() {
           final THashSet<AopAspect> set = new THashSet<AopAspect>();
           for (final SpringModel model : SpringUtils.getNonEmptySpringModels(module)) {
@@ -88,7 +86,7 @@ public class SpringAopProvider extends AopProvider {
   public static AopAdvisedElementsSearcher getSearcher(final PsiClass aClass) {
     CachedValue<AopAdvisedElementsSearcher> value = aClass.getUserData(CACHED_SEARCHER);
     if (value == null) {
-      aClass.putUserData(CACHED_SEARCHER, value = aClass.getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<AopAdvisedElementsSearcher>() {
+      aClass.putUserData(CACHED_SEARCHER, value = CachedValuesManager.getManager(aClass.getProject()).createCachedValue(new CachedValueProvider<AopAdvisedElementsSearcher>() {
         public Result<AopAdvisedElementsSearcher> compute() {
           final Module module = ModuleUtil.findModuleForPsiElement(aClass);
           if (module == null || hasNoSpringFacetAtAll(module)) {
@@ -110,9 +108,9 @@ public class SpringAopProvider extends AopProvider {
   }
 
   private static boolean hasNoSpringFacetAtAll(final Module module) {
-    return ModuleUtil.visitMeAndDependentModules(module, new ModuleUtil.ModuleVisitor() {
-      public boolean visit(final Module module) {
-        return SpringFacet.getInstance(module) == null;
+    return ModuleUtil.visitMeAndDependentModules(module, new Processor<Module>() {
+      public boolean process(final Module module) {
+        return SpringModuleExtension.getInstance(module) == null;
       }
     });
   }

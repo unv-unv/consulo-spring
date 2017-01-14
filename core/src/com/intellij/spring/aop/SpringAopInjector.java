@@ -12,15 +12,11 @@ import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.TextRange;
-import static com.intellij.patterns.DomPatterns.*;
-import static com.intellij.patterns.StandardPatterns.*;
 import com.intellij.patterns.XmlAttributeValuePattern;
 import com.intellij.patterns.XmlPatterns;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.xml.XmlAttribute;
-import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.SpringUtils;
@@ -33,9 +29,11 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
+
+import static com.intellij.patterns.DomPatterns.*;
+import static com.intellij.patterns.StandardPatterns.*;
 
 /**
  * @author peter
@@ -76,7 +74,7 @@ public class SpringAopInjector implements MultiHostInjector {
     )
   );
 
-  public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull final PsiElement host) {
+  public void injectLanguages(@NotNull MultiHostRegistrar registrar, @NotNull final PsiElement host) {
     final ProcessingContext context = new ProcessingContext();
     if (SPRING_AOP_INJECTION_PATTERN.accepts(host, context)) {
       final SpringAdvisedElementsSearcher searcher = new SpringAdvisedElementsSearcher(host.getManager(), getBeansFromContext(host));
@@ -134,10 +132,4 @@ public class SpringAopInjector implements MultiHostInjector {
     }
     return Collections.emptyList();
   }
-
-  @NotNull
-  public List<? extends Class<? extends PsiElement>> elementsToInjectIn() {
-    return Arrays.asList(XmlAttributeValue.class, XmlAttribute.class);
-  }
-
 }

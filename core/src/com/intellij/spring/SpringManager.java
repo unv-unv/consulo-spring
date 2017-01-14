@@ -9,9 +9,9 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.facet.SpringFileSet;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.model.converters.CustomConverterRegistry;
 import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,16 +59,16 @@ public abstract class SpringManager {
    * @see SpringModelProvider
    */
   @NotNull
-  public abstract List<SpringFileSet> getProvidedModels(final @NotNull SpringFacet facet);
+  public abstract List<SpringFileSet> getProvidedModels(final @NotNull SpringModuleExtension facet);
 
   /**
    * Returns all configured and provided file sets.
    * @param facet
    * @return all working file sets for the module.
-   * @see #getProvidedModels(com.intellij.spring.facet.SpringFacet)
+   * @see #getProvidedModels(SpringModuleExtension)
    */
   @NotNull
-  public abstract Set<SpringFileSet> getAllSets(final @NotNull SpringFacet facet);
+  public abstract Set<SpringFileSet> getAllSets(final @NotNull SpringModuleExtension facet);
 
   public abstract GenericDomValueConvertersRegistry getValueProvidersRegistry();
 

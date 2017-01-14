@@ -132,7 +132,7 @@ public class InjectionValueStyleInspection extends SpringBeanInspectionBase {
 
     public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
       final XmlElement xmlElement = myValueHolder.getXmlElement();
-      if (xmlElement == null || !CodeInsightUtilBase.preparePsiElementForWrite(xmlElement)) {
+      if (xmlElement == null || !CodeInsightUtilBase.getInstance().preparePsiElementForWrite(xmlElement)) {
         return;
       }
       final GenericDomValue<?> valueElement = myValueHolder.getValueElement();
@@ -190,7 +190,7 @@ public class InjectionValueStyleInspection extends SpringBeanInspectionBase {
 
     public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
       final XmlElement element = myValueHolder.getXmlElement();
-      if (element == null || !CodeInsightUtilBase.preparePsiElementForWrite(element)) {
+      if (element == null || !CodeInsightUtilBase.getInstance().preparePsiElementForWrite(element)) {
         return;
       }
       final String val = myValueHolder.getRef().getBean().getStringValue();

@@ -5,9 +5,9 @@ import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.xml.DomSpringBean;
@@ -15,6 +15,7 @@ import com.intellij.spring.model.xml.beans.DomSpringBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.spring.model.xml.beans.SpringPropertyDefinition;
+import com.intellij.util.Processor;
 import com.intellij.util.containers.ConcurrentMultiMap;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomManager;
@@ -43,15 +44,15 @@ public class SpringJavaClassInfo {
     myPsiClass = psiClass;
     final Project project = psiClass.getProject();
 
-    myBeans = PsiManager.getInstance(project).getCachedValuesManager().createCachedValue(new CachedValueProvider<List<DomSpringBeanPointer>>() {
+    myBeans = CachedValuesManager.getManager(project).createCachedValue(new CachedValueProvider<List<DomSpringBeanPointer>>() {
       public Result<List<DomSpringBeanPointer>> compute() {
         final Module module = ModuleUtil.findModuleForPsiElement(myPsiClass);
         if (module == null) {
           return null;
         }
         final List<DomSpringBeanPointer> result = new ArrayList<DomSpringBeanPointer>();
-        ModuleUtil.visitMeAndDependentModules(module, new ModuleUtil.ModuleVisitor() {
-          public boolean visit(final Module module) {
+        ModuleUtil.visitMeAndDependentModules(module, new Processor<Module>() {
+          public boolean process(final Module module) {
             final SpringModel model = SpringManager.getInstance(project).getCombinedModel(module);
             if (model != null) {
               final List<SpringBaseBeanPointer> list = model.findBeansByEffectivePsiClassWithInheritance(myPsiClass);
@@ -69,7 +70,7 @@ public class SpringJavaClassInfo {
       }
     }, false);
 
-    myProperties = PsiManager.getInstance(project).getCachedValuesManager().createCachedValue(new CachedValueProvider<MultiMap<String, SpringPropertyDefinition>>() {
+    myProperties = CachedValuesManager.getManager(project).createCachedValue(new CachedValueProvider<MultiMap<String, SpringPropertyDefinition>>() {
       public Result<MultiMap<String, SpringPropertyDefinition>> compute() {
         final List<DomSpringBeanPointer> list = getMappedBeans();
         final MultiMap<String, SpringPropertyDefinition> map = new ConcurrentMultiMap<String, SpringPropertyDefinition>() ;

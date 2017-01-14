@@ -71,7 +71,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   private final List<String> myDependencies = new ArrayList<String>();
   private boolean myRemoved;
 
-  public SpringFileSet(@NonNls @NotNull String id, @NotNull String name, @NotNull final SpringFacetConfiguration parent) {
+  public SpringFileSet(@NonNls @NotNull String id, @NotNull String name, @NotNull final Disposable parent) {
     myId = id;
     myName = name;
     Disposer.register(parent, this);

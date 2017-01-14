@@ -22,14 +22,16 @@ import com.intellij.util.xml.impl.DomTemplateRunnerImpl;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 public abstract class MethodInvokingFactoryBean extends SpringBeanGenerateProvider {
   public MethodInvokingFactoryBean(String text) {
     super(text, null);
   }
 
-    protected void runTemplate(final Editor editor, final PsiFile file, final SpringBean springBean) {
-    super.runTemplate(editor, file, springBean);
+  @Override
+  protected void runTemplate(Editor editor, PsiFile file, SpringBean springBean, Map<String, String> predefinedVars) {
+    super.runTemplate(editor, file, springBean, predefinedVars);
     ((DomTemplateRunnerImpl)DomTemplateRunner.getInstance(file.getProject())).runTemplate(springBean,editor, getTemplate(springBean));
   }
 

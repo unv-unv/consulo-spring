@@ -85,7 +85,7 @@ public class SpringBeanInstantiationInspection extends SpringBeanInspectionBase 
     }
 
     public void applyFix(@NotNull final Project project, @NotNull final ProblemDescriptor descriptor) {
-      if (CodeInsightUtilBase.preparePsiElementForWrite(descriptor.getPsiElement())) {
+      if (CodeInsightUtilBase.getInstance().preparePsiElementForWrite(descriptor.getPsiElement())) {
         myElement.setValue(Boolean.TRUE);
       }
     }

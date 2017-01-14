@@ -12,8 +12,7 @@ package com.intellij.spring.model.converters;
 
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.MutableLookupElement;
-import com.intellij.codeInsight.lookup.LookupElementFactory;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.editor.Editor;
@@ -252,11 +251,11 @@ public class SpringBeanResolveConverter extends ResolvingConverter<SpringBeanPoi
     }
   }
 
-  public static MutableLookupElement<SpringBeanPointer> createCompletionVariant(SpringBeanPointer variant) {
+  public static LookupElementBuilder createCompletionVariant(SpringBeanPointer variant) {
     String name = variant.getName();
     PsiClass beanClass = variant.getBeanClass();
     if (name != null) {
-      MutableLookupElement<SpringBeanPointer> element = LookupElementFactory.getInstance().createLookupElement(variant, name);
+      LookupElementBuilder element = LookupElementBuilder.create(variant, name);
       element.setIcon(variant.getBeanIcon());
       if (beanClass != null) {
         element.setTypeText(beanClass.getName());

@@ -5,19 +5,19 @@ import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.jam.JamService;
-import com.intellij.javaee.util.JamCommonUtil;
+import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
+import com.intellij.semantic.SemKey;
 import com.intellij.spring.SpringBundle;
-import com.intellij.spring.facet.SpringFacet;
+import com.intellij.spring.model.jam.javaConfig.JavaConfigConfiguration;
 import com.intellij.spring.model.jam.javaConfig.JavaSpringConfiguration;
 import com.intellij.spring.model.jam.javaConfig.SpringJavaConfiguration;
-import com.intellij.spring.model.jam.javaConfig.JavaConfigConfiguration;
-import com.intellij.semantic.SemKey;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -39,9 +39,9 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
   public ProblemDescriptor[] checkFile(@NotNull PsiFile file, @NotNull InspectionManager manager, boolean isOnTheFly) {
     if (JamCommonUtil.isPlainJavaFile(file)) {
       final Module module = ModuleUtil.findModuleForPsiElement(file);
-      if (module != null && SpringFacet.getInstance(module) != null) {
+      if (module != null && SpringModuleExtension.getInstance(module) != null) {
 
-        final ProblemsHolder holder = new ProblemsHolder(manager, file);
+        final ProblemsHolder holder = new ProblemsHolder(manager, file, isOnTheFly);
 
         checkJavaFile((PsiJavaFile)file, holder, isOnTheFly, module);
 

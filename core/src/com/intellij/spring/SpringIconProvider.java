@@ -4,25 +4,22 @@
  */
 package com.intellij.spring;
 
-import com.intellij.ide.IconProvider;
-import com.intellij.openapi.project.DumbAware;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlFile;
+import consulo.annotations.RequiredReadAction;
+import consulo.ide.IconDescriptor;
+import consulo.ide.IconDescriptorUpdater;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
 
 /**
  * @author peter
  */
-public class SpringIconProvider extends IconProvider implements DumbAware {
-  @Nullable
-  public Icon getIcon(@NotNull final PsiElement element, final int flags) {
-    if (element instanceof XmlFile && SpringManager.getInstance(element.getProject()).isSpringBeans((XmlFile)element)) {
-      return SpringIcons.CONFIG_FILE;
+public class SpringIconProvider implements IconDescriptorUpdater {
+  @RequiredReadAction
+  @Override
+  public void updateIcon(@NotNull IconDescriptor iconDescriptor, @NotNull PsiElement element, int i) {
+    if (element instanceof XmlFile && SpringManager.getInstance(element.getProject()).isSpringBeans((XmlFile) element)) {
+      iconDescriptor.setMainIcon(SpringIcons.CONFIG_FILE);
     }
-    return null;
   }
-  
 }

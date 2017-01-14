@@ -16,6 +16,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.util.PatchedWeakReference;
+import com.intellij.util.xml.DomAnchor;
 import com.intellij.util.xml.impl.DomAnchorImpl;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,7 +26,7 @@ import java.lang.ref.WeakReference;
  * @author peter
  */
 public class DomSpringBeanPointer extends SpringBaseBeanPointer {
-  @NotNull private final DomAnchorImpl<DomSpringBean> myPointer;
+  @NotNull private final DomAnchor<DomSpringBean> myPointer;
   private final NotNullLazyValue<Boolean> myAbstract = new NotNullLazyValue<Boolean>() {
     @NotNull
     protected Boolean compute() {
@@ -54,7 +55,7 @@ public class DomSpringBeanPointer extends SpringBaseBeanPointer {
   private DomSpringBeanPointer(@NotNull final DomSpringBean springBean) {
     super(springBean.getBeanName());
     ProgressManager.getInstance().checkCanceled();
-    myCachedValue = new PatchedWeakReference<DomSpringBean>(springBean);
+    myCachedValue = new PatchedWeakReference<>(springBean);
     final XmlTag tag = springBean.getXmlTag();
     assert tag != null;
     myPointer = DomAnchorImpl.createAnchor(springBean);

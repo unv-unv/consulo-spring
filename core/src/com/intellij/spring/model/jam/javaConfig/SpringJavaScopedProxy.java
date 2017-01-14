@@ -1,6 +1,6 @@
 package com.intellij.spring.model.jam.javaConfig;
 
-import com.intellij.javaee.model.common.CommonModelElement;
+import com.intellij.jam.model.common.CommonModelElement;
 
 public interface SpringJavaScopedProxy extends CommonModelElement {
 }

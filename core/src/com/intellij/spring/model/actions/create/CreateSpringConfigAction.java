@@ -16,7 +16,6 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
-import com.intellij.spring.facet.SpringFrameworkSupportProvider;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,7 +46,7 @@ public class CreateSpringConfigAction extends CreateFileAction {
   @NotNull
   protected PsiElement[] create(final String newName, final PsiDirectory directory) throws Exception {
     final Module module = ModuleUtil.findModuleForPsiElement(directory);
-    final FileTemplate template = SpringFrameworkSupportProvider.chooseTemplate(module);
+    final FileTemplate template = null;///SpringFrameworkSupportProvider.chooseTemplate(module);
     @NonNls final String fileName = FileUtil.getExtension(newName).length() == 0 ? newName + ".xml" : newName;
     final PsiElement psiElement = FileTemplateUtil.createFromTemplate(template, fileName, null, directory);
     return new PsiElement[] {psiElement};

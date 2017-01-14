@@ -1,24 +1,20 @@
 package com.intellij.spring.model.highlighting;
 
-import com.intellij.ProjectTopics;
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer;
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.facet.FacetManager;
 import com.intellij.ide.DataManager;
 import com.intellij.lang.annotation.HighlightSeverity;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.roots.ProjectFileIndex;
-import com.intellij.openapi.roots.ex.ProjectRootManagerEx;
+import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupStep;
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep;
@@ -28,14 +24,14 @@ import com.intellij.psi.PsiFile;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.facet.FileSetEditor;
-import com.intellij.spring.facet.SpringFacet;
-import com.intellij.spring.facet.SpringFacetType;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.Processor;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -78,10 +74,10 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
         (!checkTestFiles && projectFileIndex.isInTestSourceContent(virtualFile))) {
       return;
     }
-    final Ref<SpringFacet> facetRef = new Ref<SpringFacet>();
-    final boolean notFound = ModuleUtil.visitMeAndDependentModules(module, new ModuleUtil.ModuleVisitor() {
-      public boolean visit(final Module module) {
-        final SpringFacet facet = SpringFacet.getInstance(module);
+    final Ref<SpringModuleExtension> facetRef = new Ref<SpringModuleExtension>();
+    final boolean notFound = ModuleUtil.visitMeAndDependentModules(module, new Processor<Module>() {
+      public boolean process(final Module module) {
+        final SpringModuleExtension facet = SpringModuleExtension.getInstance(module);
         if (facet != null) {
           facetRef.set(facet);
           final Set<SpringFileSet> sets = SpringManager.getInstance(module.getProject()).getAllSets(facet);
@@ -98,7 +94,7 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
     if (!notFound) {
       return;
     }
-    final SpringFacet springFacet = facetRef.get();
+    final SpringModuleExtension springFacet = facetRef.get();
     if (springFacet == null) {
       holder.createProblem(domFileElement, HighlightSeverity.WARNING,
                            SpringBundle.message("spring.facet.not.configured.for.module", module.getName()),
@@ -147,16 +143,16 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
 
     @Override
     protected void doFix(final Project project) {
-      final SpringFacet facet = SpringFacet.getInstance(myModule);
+      final SpringModuleExtension facet = SpringModuleExtension.getInstance(myModule);
       if (facet != null) {
-        final Set<SpringFileSet> sets = facet.getConfiguration().getFileSets();
+        final Set<SpringFileSet> sets = facet.getFileSets();
         if (sets.size() == 0) {
           addNewSet(facet, sets);
         }
         else {
           final ArrayList<SpringFileSet> list = new ArrayList<SpringFileSet>(sets);
           final SpringFileSet newSet = new SpringFileSet(SpringFileSet.getUniqueId(sets),
-                                                         SpringBundle.message("fileset.new"), facet.getConfiguration()) {
+                                                         SpringBundle.message("fileset.new"), facet) {
             public boolean isNew() {
               return true;
             }
@@ -172,12 +168,14 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
                 }
                 else {
                   selectedValue.addFile(myVirtualFile);
-                  ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                  //TODO [VISTALL]
+
+                  /*ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
                       ProjectRootManagerEx.getInstanceEx(project).beforeRootsChange(false);
                       ProjectRootManagerEx.getInstanceEx(project).rootsChanged(false);
                     }
-                  });
+                  }); */
                 }
                 return super.onChosen(selectedValue, finalChoice);
               }
@@ -233,11 +231,13 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
     }
 
     protected void doFix(final Project project) {
-      final SpringFacet facet = new WriteCommandAction<SpringFacet>(project, getName()) {
-        protected void run(final Result<SpringFacet> springFacetResult) throws Throwable {
-          final SpringFacet facet =
+      final SpringModuleExtension facet = new WriteCommandAction<SpringModuleExtension>(project, getName()) {
+        protected void run(final Result<SpringModuleExtension> springFacetResult) throws Throwable {
+          //TODO [VISTALL]
+
+          /*final SpringFacet facet =
             FacetManager.getInstance(myModule).addFacet(SpringFacetType.INSTANCE, SpringFacetType.INSTANCE.getPresentableName(), null);
-          springFacetResult.setResult(facet);
+          springFacetResult.setResult(facet);    */
 
         }
       }.execute().getResultObject();
@@ -250,11 +250,11 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
       addNewSet(facet, sets);
     }
 
-    protected void addNewSet(final SpringFacet facet, final Set<SpringFileSet> sets) {
+    protected void addNewSet(final SpringModuleExtension facet, final Set<SpringFileSet> sets) {
       final SpringFileSet set =
         new SpringFileSet(SpringFileSet.getUniqueId(sets),
                           SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets),
-                          facet.getConfiguration()) {
+                          facet) {
           public boolean isNew() {
             return true;
           }
@@ -262,13 +262,14 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
       editSet(facet, sets, set);
     }
 
-    protected void editSet(final SpringFacet facet, final Set<SpringFileSet> sets, final SpringFileSet set) {
+    protected void editSet(final SpringModuleExtension facet, final Set<SpringFileSet> sets, final SpringFileSet set) {
       set.addFile(myVirtualFile);
       final FileSetEditor editor = new FileSetEditor(myModule, set, sets);
       editor.show();
       if (editor.isOK()) {
-        facet.getConfiguration().getFileSets().add(editor.getEditedFileSet());
-        myModule.getProject().getMessageBus().syncPublisher(ProjectTopics.LOGICAL_ROOTS).logicalRootsChanged();
+        //TODO [VISTALL]
+        //facet.getConfiguration().getFileSets().add(editor.getEditedFileSet());
+        //myModule.getProject().getMessageBus().syncPublisher(ProjectTopics.LOGICAL_ROOTS).logicalRootsChanged();
       }
     }
   }

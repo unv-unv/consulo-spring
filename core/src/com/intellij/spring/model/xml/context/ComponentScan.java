@@ -3,7 +3,7 @@
 
 package com.intellij.spring.model.xml.context;
 
-import com.intellij.psi.PsiPackage;
+import com.intellij.psi.PsiJavaPackage;
 import com.intellij.spring.model.converters.PackageListConverter;
 import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.util.xml.Convert;
@@ -26,7 +26,7 @@ public interface ComponentScan extends DomSpringBean, SpringContextElement {
 	@NotNull
 	@Required
         @Convert(PackageListConverter.class)
-        GenericAttributeValue<Collection<PsiPackage>> getBasePackage();
+        GenericAttributeValue<Collection<PsiJavaPackage>> getBasePackage();
 
 
 	/**

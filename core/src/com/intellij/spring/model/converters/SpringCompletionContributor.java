@@ -17,9 +17,9 @@
 package com.intellij.spring.model.converters;
 
 import com.intellij.codeInsight.completion.*;
-import com.intellij.codeInsight.lookup.MutableLookupElement;
-import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.openapi.actionSystem.IdeActions;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.xml.XmlToken;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
@@ -51,7 +51,7 @@ public class SpringCompletionContributor extends CompletionContributor {
         Collection<SpringBeanPointer> variants =
           ((SpringBeanResolveConverter)reference.getConverter()).getSmartVariants(reference.getConvertContext());
         for (SpringBeanPointer variant : variants) {
-          MutableLookupElement<SpringBeanPointer> element = SpringBeanResolveConverter.createCompletionVariant(variant);
+          LookupElementBuilder element = SpringBeanResolveConverter.createCompletionVariant(variant);
           if (element != null) {
             result.addElement(element);
           }

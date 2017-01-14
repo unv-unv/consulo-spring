@@ -28,7 +28,7 @@ public class SpringFindUsagesHandlerFactory extends FindUsagesHandlerFactory {
 
     if (psiElement instanceof PsiMethod && SpringJamUtils.isExternalBean((PsiMethod)psiElement)) return true;
 
-    return SpringBeanUtil.getTargetSpringBean() != null;
+    return SpringBeanUtil.getTargetSpringBean(psiElement) != null;
   }
 
   public FindUsagesHandler createFindUsagesHandler(final PsiElement element, final boolean forHighlightUsages) {
@@ -39,7 +39,7 @@ public class SpringFindUsagesHandlerFactory extends FindUsagesHandlerFactory {
     if (element instanceof PsiMethod && SpringJamUtils.isExternalBean((PsiMethod)element)) {
       return new SpringJavaExternalBeanFindUsagesHandler((PsiMethod)element);
     }
-    final DomSpringBean bean = SpringBeanUtil.getTargetSpringBean();
+    final DomSpringBean bean = SpringBeanUtil.getTargetSpringBean(element);
     if (bean != null) {
       return new SpringJavaBeanReferencesFindUsagesHandler(bean);
     }

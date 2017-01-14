@@ -4,6 +4,7 @@
 
 package com.intellij.spring.model.values;
 
+import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.PsiType;
@@ -44,7 +45,7 @@ public class PropertyValueConverter extends WrappingConverter {
     XmlElement xmlElement = element.getXmlElement();
     if (xmlElement instanceof XmlAttribute) {
       PsiLanguageInjectionHost host = (PsiLanguageInjectionHost)((XmlAttribute)xmlElement).getValueElement();
-      if (host == null || host.getInjectedPsi() != null) {
+      if (host == null || InjectedLanguageManager.getInstance(xmlElement.getProject()).getInjectedPsiFiles(xmlElement) != null) {
         return Collections.emptyList();
       }
     }

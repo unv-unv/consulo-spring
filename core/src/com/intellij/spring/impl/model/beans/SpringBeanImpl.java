@@ -6,7 +6,6 @@ package com.intellij.spring.impl.model.beans;
 
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
@@ -20,16 +19,19 @@ import com.intellij.spring.model.highlighting.SpringConstructorArgResolveUtil;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.spring.model.xml.beans.*;
-import com.intellij.util.Function;
 import com.intellij.util.ArrayUtil;
-import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.util.Function;
 import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.GenericAttributeValue;
 import gnu.trove.THashSet;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NonNls;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -150,7 +152,7 @@ public abstract class SpringBeanImpl extends DomSpringBeanImpl implements Spring
   @NotNull
   public ResolvedConstructorArgs getResolvedConstructorArgs() {
     if (myResolvedConstructorArgs == null) {
-      final CachedValuesManager cachedValuesManager = PsiManager.getInstance(getManager().getProject()).getCachedValuesManager();
+      final CachedValuesManager cachedValuesManager = CachedValuesManager.getManager(getManager().getProject());
       myResolvedConstructorArgs = cachedValuesManager.createCachedValue(new CachedValueProvider<ResolvedConstructorArgsImpl>() {
         public Result<ResolvedConstructorArgsImpl> compute() {
           return Result.createSingleDependency(new ResolvedConstructorArgsImpl(SpringBeanImpl.this),

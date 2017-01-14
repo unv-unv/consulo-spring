@@ -27,6 +27,7 @@ import com.intellij.util.PairProcessor;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.text.StringTokenizer;
 import com.intellij.util.xml.*;
+import com.intellij.util.xml.impl.ConvertContextImpl;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -120,7 +121,7 @@ public class ResourceResolverUtils {
     return addResourceItems(result, references, filter);
   }
 
-  public static <V extends PsiFileSystemItem, T extends Collection<V>> T addResourceFilesFrom(final @NotNull PsiElement element, final @NotNull String s, final String delimiter,
+  public static <V, T extends Collection<V>> T addResourceFilesFrom(final @NotNull PsiElement element, final @NotNull String s, final String delimiter,
                                                   final T result, final Condition<PsiFileSystemItem> filter) {
     final ArrayList<PsiReference> references = new ArrayList<PsiReference>();
     final int startInElement = ElementManipulators.getOffsetInElement(element);
@@ -142,13 +143,13 @@ public class ResourceResolverUtils {
     final Converter converter = WrappingConverter.getDeepestConverter(element.getConverter(), element);
     if (converter instanceof CustomReferenceConverter) {
       final PsiReference[] references = ((CustomReferenceConverter)converter).createReferences(element, element.getXmlElement(),
-                                                                                               AbstractConvertContext.createConvertContext(element));
+                                                                                               new ConvertContextImpl(element));
       return addResourceItems(result, references, filter);
     }
     return result;
   }
 
-  private static <V extends PsiFileSystemItem, T extends Collection<V>> T addResourceItems(final T result, final PsiReference[] references, final Condition<PsiFileSystemItem> filter) {
+  private static <V, T extends Collection<V>> T addResourceItems(final T result, final PsiReference[] references, final Condition<PsiFileSystemItem> filter) {
     for (PsiReference reference : references) {
       if (reference instanceof PsiPolyVariantReference) {
         final ResolveResult[] resolveResults = ((PsiPolyVariantReference)reference).multiResolve(false);

@@ -11,6 +11,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.searches.AnnotatedMembersSearch;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
@@ -138,7 +139,7 @@ public class JamAnnotationTypeUtil {
 
     CachedValue<Collection<PsiClass>> cachedValue = module.getUserData(key);
     if (cachedValue == null) {
-      cachedValue = PsiManager.getInstance(module.getProject()).getCachedValuesManager()
+      cachedValue = CachedValuesManager.getManager(module.getProject())
         .createCachedValue(new CachedValueProvider<Collection<PsiClass>>() {
           public Result<Collection<PsiClass>> compute() {
             final Collection<PsiClass> classes = getAnnotationTypesWithChildren(annotationName, module);

@@ -4,7 +4,6 @@
 
 package com.intellij.spring.impl;
 
-import com.intellij.javaee.model.xml.impl.RootBaseImpl;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -14,7 +13,6 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.SpringModelProvider;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.converters.CustomConverterRegistry;
 import com.intellij.spring.model.values.converters.*;
@@ -22,6 +20,7 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,11 +67,11 @@ public class SpringManagerImpl extends SpringManager {
   @NotNull
   public List<SpringModel> getAllModels(@NotNull Module module) {
     final List<SpringModel> list = myModelFactory.getAllModels(module);
-    for (final SpringModel springModel : list) {
+    /*for (final SpringModel springModel : list) {
       for (final DomFileElement<Beans> element : springModel.getRoots()) {
         ((RootBaseImpl)element.getRootElement()).registerDomModule(module);
       }
-    }
+    }*/
     return list;
   }
 
@@ -111,7 +110,7 @@ public class SpringManagerImpl extends SpringManager {
 
 
   @NotNull
-  public List<SpringFileSet> getProvidedModels(@NotNull SpringFacet facet) {
+  public List<SpringFileSet> getProvidedModels(@NotNull SpringModuleExtension facet) {
     List<SpringFileSet> result = null;
 
     for (SpringModelProvider modelProvider : Extensions.getExtensions(SpringModelProvider.EP_NAME)) {
@@ -129,8 +128,8 @@ public class SpringManagerImpl extends SpringManager {
   }
 
   @NotNull
-  public Set<SpringFileSet> getAllSets(final @NotNull SpringFacet facet) {
-    final Set<SpringFileSet> fileSets = new HashSet<SpringFileSet>(facet.getConfiguration().getFileSets());
+  public Set<SpringFileSet> getAllSets(final @NotNull SpringModuleExtension facet) {
+    final Set<SpringFileSet> fileSets = new HashSet<SpringFileSet>(facet.getFileSets());
     final List<SpringFileSet> providedModels = getProvidedModels(facet);
     fileSets.addAll(providedModels);
     return fileSets;

@@ -69,7 +69,7 @@ public class MethodResolveProcessor implements PsiScopeProcessor, ElementClassHi
   public void handleEvent(Event event, Object associated) {
   }
 
-  public boolean shouldProcess(DeclaractionKind kind) {
-    return kind == DeclaractionKind.METHOD;
+  public boolean shouldProcess(ElementClassHint.DeclarationKind kind) {
+    return kind == ElementClassHint.DeclarationKind.METHOD;
   }
 }

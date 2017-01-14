@@ -1,13 +1,14 @@
 <idea-plugin>
     <name>Spring-AOP and AspectJ support</name>
     <id>com.intellij.aop</id>
-    <version>1.0</version>
+    <version>SNAPSHOT</version>
     <vendor>JetBrains</vendor>
     <resource-bundle>messages.AopBundle</resource-bundle>
     <description>Support for Spring AOP pointcut language</description>
     <category>Web/JavaEE Technologies</category>
 
     <depends>consulo.java</depends>
+    <depends>consulo.java.ex</depends>
     <depends>com.intellij.xml</depends>
 
     <extensionPoints>

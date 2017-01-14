@@ -4,6 +4,7 @@
 
 package com.intellij.spring.gutter;
 
+import com.intellij.codeInsight.navigation.DomNavigationGutterIconBuilder;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.ide.util.DefaultPsiElementCellRenderer;
 import com.intellij.ide.util.PsiElementListCellRenderer;
@@ -219,7 +220,7 @@ public class SpringClassAnnotator implements Annotator {
                                               final PsiMethod psiMethod) {
 
 
-    NavigationGutterIconBuilder.create(SpringIcons.SPRING_BEAN_PROPERTY_ICON, NavigationGutterIconBuilder.DEFAULT_DOM_CONVERTOR).
+    NavigationGutterIconBuilder.create(SpringIcons.SPRING_BEAN_PROPERTY_ICON, DomNavigationGutterIconBuilder.DEFAULT_DOM_CONVERTOR).
       setTargets(new NotNullLazyValue<Collection<? extends DomElement>>() {
         @NotNull
         protected Collection<? extends DomElement> compute() {

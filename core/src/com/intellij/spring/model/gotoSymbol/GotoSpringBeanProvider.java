@@ -6,10 +6,10 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.util.containers.HashSet;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;
+import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -60,7 +60,7 @@ public class GotoSpringBeanProvider extends GoToSymbolProvider {
   }
 
   protected boolean acceptModule(final Module module) {
-    return SpringFacet.getInstance(module) != null;
+    return SpringModuleExtension.getInstance(module) != null;
   }
 }
 

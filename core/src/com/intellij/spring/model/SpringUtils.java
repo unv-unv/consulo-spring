@@ -31,16 +31,12 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.codeStyle.SuggestedNameInfo;
 import com.intellij.psi.codeStyle.VariableKind;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.InheritanceUtil;
-import com.intellij.psi.util.PsiModificationTracker;
+import com.intellij.psi.util.*;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.constants.SpringConstants;
-import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.factories.SpringFactoryBeansManager;
 import com.intellij.spring.impl.SpringModelImpl;
 import com.intellij.spring.model.converters.SpringConverterUtil;
@@ -56,6 +52,7 @@ import com.intellij.util.SmartList;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.spring.module.extension.SpringModuleExtension;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -149,7 +146,7 @@ public class SpringUtils {
   public static List<SpringModel> getNonEmptySpringModels(@NotNull final Module module) {
     CachedValue<List<SpringModel>> value = module.getUserData(NON_EMPTY_SPRING_MODELS_CACHE);
     if (value == null) {
-      value = PsiManager.getInstance(module.getProject()).getCachedValuesManager().createCachedValue(new CachedValueProvider<List<SpringModel>>() {
+      value = CachedValuesManager.getManager(module.getProject()).createCachedValue(new CachedValueProvider<List<SpringModel>>() {
         public Result<List<SpringModel>> compute() {
           return Result.create(computeNonEmptyModels(module), PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
         }
@@ -167,10 +164,10 @@ public class SpringUtils {
     final Ref<Boolean> hasFacets = Ref.create(false);
 
     final List<SpringModel> result = new SmartList<SpringModel>();
-    ModuleUtil.visitMeAndDependentModules(module, new ModuleUtil.ModuleVisitor() {
-      public boolean visit(final Module module) {
+    ModuleUtil.visitMeAndDependentModules(module, new Processor<Module>() {
+      public boolean process(final Module module) {
         if (!hasFacets.get().booleanValue()) {
-          hasFacets.set(SpringFacet.getInstance(module) != null);
+          hasFacets.set(SpringModuleExtension.getInstance(module) != null);
         }
 
         final List<SpringModel> models = manager.getAllModels(module);
@@ -186,11 +183,11 @@ public class SpringUtils {
       List<DomFileElement<Beans>> models = new SmartList<DomFileElement<Beans>>();
       Set<XmlFile> modelFiles = new THashSet<XmlFile>();
       final GlobalSearchScope scope =
-        GlobalSearchScope.moduleWithDependentsScope(module).intersectWith(GlobalSearchScope.projectProductionScope(project));
+        GlobalSearchScope.moduleWithDependentsScope(module).intersectWith(GlobalSearchScope.projectScope(project));
       final Collection<VirtualFile> files = DomService.getInstance().getDomFileCandidates(Beans.class, project, scope);
       for (final VirtualFile virtualFile : files) {
         final Module mod = ModuleUtil.findModuleForFile(virtualFile, project);
-        if (mod == null || SpringFacet.getInstance(mod) == null) continue;
+        if (mod == null || SpringModuleExtension.getInstance(mod) == null) continue;
 
         final PsiFile file1 = PsiManager.getInstance(project).findFile(virtualFile);
         if (file1 instanceof XmlFile) {

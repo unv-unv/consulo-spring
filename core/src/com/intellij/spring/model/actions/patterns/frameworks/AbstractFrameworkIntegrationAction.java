@@ -3,7 +3,6 @@ package com.intellij.spring.model.actions.patterns.frameworks;
 import com.intellij.codeInsight.template.Template;
 import com.intellij.codeInsight.template.TemplateEditingAdapter;
 import com.intellij.codeInsight.template.TemplateManager;
-import com.intellij.facet.*;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -57,6 +56,8 @@ public abstract class AbstractFrameworkIntegrationAction extends FrameworkIntegr
     final String facetId = getFacetId();
     if (!StringUtil.isEmptyOrSpaces(facetId)) {
 
+      /*
+      TODO [VISTALL]
       final FacetManager facetManager = FacetManager.getInstance(module);
       final FacetType<?,?> type = FacetTypeRegistry.getInstance().findFacetType(facetId);
 
@@ -70,7 +71,7 @@ public abstract class AbstractFrameworkIntegrationAction extends FrameworkIntegr
           model.addFacet(facet);
           model.commit();
         }
-      }
+      } */
     }
   }
 

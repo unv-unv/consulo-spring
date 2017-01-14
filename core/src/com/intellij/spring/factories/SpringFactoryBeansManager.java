@@ -14,6 +14,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.spring.factories.resolvers.*;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.util.containers.HashMap;
@@ -21,8 +22,7 @@ import com.intellij.util.xmlb.XmlSerializer;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.objectweb.asm.*;
-import org.objectweb.asm.commons.EmptyVisitor;
+import org.jetbrains.org.objectweb.asm.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -163,7 +163,7 @@ public class SpringFactoryBeansManager implements ApplicationComponent {
   private static Set<String> guessObjectType(final PsiClass factoryClass) {
     CachedValue<Set<String>> cachedValue = factoryClass.getUserData(CACHED_OBJECT_TYPE);
     if (cachedValue == null) {
-      factoryClass.putUserData(CACHED_OBJECT_TYPE, cachedValue = factoryClass.getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<Set<String>>() {
+      factoryClass.putUserData(CACHED_OBJECT_TYPE, cachedValue = CachedValuesManager.getManager(factoryClass.getProject()).createCachedValue(new CachedValueProvider<Set<String>>() {
         public Result<Set<String>> compute() {
           return new Result<Set<String>>(doGuessObjectType(factoryClass), factoryClass);
         }
@@ -241,8 +241,12 @@ public class SpringFactoryBeansManager implements ApplicationComponent {
     mySpringFactories.remove(className);
   }
 
-  private static class FactoryBeanObjectTypeReader extends EmptyVisitor {
+  private static class FactoryBeanObjectTypeReader extends ClassVisitor {
     private String myResultQName;
+
+    public FactoryBeanObjectTypeReader() {
+      super(Opcodes.API_VERSION);
+    }
 
     public String getResultQName() {
       return myResultQName;
@@ -251,7 +255,7 @@ public class SpringFactoryBeansManager implements ApplicationComponent {
     public MethodVisitor visitMethod(final int access, @NonNls final String name, final String desc, final String signature,
                                      final String[] exceptions) {
       if ("getObjectType".equals(name) && (signature == null || signature.startsWith("()"))) {
-        return new EmptyVisitor(){
+        return new MethodVisitor(Opcodes.API_VERSION){
           private String qname;
           private int number = 0;
 

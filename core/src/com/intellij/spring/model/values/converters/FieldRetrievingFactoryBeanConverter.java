@@ -55,7 +55,7 @@ public class FieldRetrievingFactoryBeanConverter extends Converter<String> imple
 
     List<PsiReference> collectedReferences = new ArrayList<PsiReference>();
 
-    final JavaClassReferenceProvider provider = new JavaClassReferenceProvider(element.getProject());
+    final JavaClassReferenceProvider provider = new JavaClassReferenceProvider();
     provider.setSoft(mySoft);
     final PsiReference[] javaClassReferences = provider.getReferencesByElement(element);
 

@@ -1,5 +1,6 @@
 package com.intellij.spring.model.highlighting.jam;
 
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -31,7 +32,7 @@ public class SpringExternalBeanReferencesRenameHandler implements RenameHandler 
   }
 
   public boolean isRenaming(DataContext dataContext) {
-    final DomSpringBean springBean = SpringBeanUtil.getTargetSpringBean();
+    final DomSpringBean springBean = SpringBeanUtil.getTargetSpringBean(CommonDataKeys.EDITOR.getData(dataContext));
     if (springBean == null) return false;
 
     final List<SpringJavaExternalBean> list = SpringJamUtils.findExternalBeanReferences(springBean);
@@ -42,7 +43,7 @@ public class SpringExternalBeanReferencesRenameHandler implements RenameHandler 
 
 
   public void invoke(@NotNull Project project, Editor editor, PsiFile file, DataContext dataContext) {
-    final DomSpringBean springBean = SpringBeanUtil.getTargetSpringBean();
+    final DomSpringBean springBean = SpringBeanUtil.getTargetSpringBean(editor);
     if (springBean != null) {
       final ExternalBeanRenameDialog dialog = new ExternalBeanRenameDialog(springBean, editor);
       dialog.show();

@@ -58,7 +58,7 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool 
     if (SpringAutowireUtil.isAutowiredByAnnotation(psiMethod)) {
       SpringModel springModel = getModelForBean(psiMethod.getContainingClass());
       if (springModel != null) {
-        final ProblemsHolder holder = new ProblemsHolder(manager, psiMethod.getContainingFile());
+        final ProblemsHolder holder = new ProblemsHolder(manager, psiMethod.getContainingFile(), isOnTheFly);
         final boolean required = SpringAutowireUtil.isRequired(psiMethod);
         checkAutowiredMethod(psiMethod, holder, springModel, required);
         return holder.getResultsArray();
@@ -72,7 +72,7 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool 
     if (SpringAutowireUtil.isAutowiredByAnnotation(psiField)) {
       SpringModel springModel = getModelForBean(psiField.getContainingClass());
       if (springModel != null) {
-        final ProblemsHolder holder = new ProblemsHolder(manager, psiField.getContainingFile());
+        final ProblemsHolder holder = new ProblemsHolder(manager, psiField.getContainingFile(), isOnTheFly);
         final boolean required = SpringAutowireUtil.isRequired(psiField);
         checkAutowiredPsiMember(psiField, psiField.getType(), holder, springModel, required);
         return holder.getResultsArray();

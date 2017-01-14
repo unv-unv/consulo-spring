@@ -18,7 +18,7 @@ package com.intellij.spring.model.jam.javaConfig;
 
 import com.intellij.jam.reflect.JamChildrenQuery;
 import com.intellij.jam.reflect.JamClassMeta;
-import com.intellij.psi.PsiRef;
+import com.intellij.psi.PsiElementRef;
 import com.intellij.spring.constants.SpringAnnotationsConstants;
 
 import java.util.List;
@@ -42,10 +42,10 @@ public abstract class JavaConfigConfiguration extends SpringJavaConfiguration {
   }
 
   public List<? extends SpringJavaBean> getBeans() {
-    return BEANS_QUERY.findChildren(PsiRef.real(getPsiElement()));
+    return BEANS_QUERY.findChildren(PsiElementRef.real(getPsiElement()));
   }
 
   public List<? extends SpringJavaExternalBean> getExternalBeans() {
-    return EXTERNAL_BEANS_QUERY.findChildren(PsiRef.real(getPsiElement()));
+    return EXTERNAL_BEANS_QUERY.findChildren(PsiElementRef.real(getPsiElement()));
   }
 }

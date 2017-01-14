@@ -17,6 +17,7 @@ import com.intellij.spring.model.xml.beans.*;
 import com.intellij.usageView.UsageInfo;
 import com.intellij.util.Function;
 import com.intellij.util.IncorrectOperationException;
+import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.GenericAttributeValue;
@@ -27,7 +28,6 @@ import com.intellij.util.xml.reflect.DomGenericInfo;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -46,7 +46,7 @@ public class SpringInlineHandler implements InlineHandler {
     };
   }
 
-  public void removeDefinition(final PsiElement element) {
+  public void removeDefinition(final PsiElement element, Settings settings) {
     final DomElement domElement;
     if (element instanceof XmlTag) {
       domElement = DomManager.getDomManager(element.getProject()).getDomElement((XmlTag)element);
@@ -61,7 +61,7 @@ public class SpringInlineHandler implements InlineHandler {
       return null;
     }
     return new Inliner() {
-      public Map<PsiElement, String> getConflicts(final PsiReference reference, final PsiElement referenced) {
+      public MultiMap<PsiElement,String> getConflicts(final PsiReference reference, final PsiElement referenced) {
         return null;
       }
 

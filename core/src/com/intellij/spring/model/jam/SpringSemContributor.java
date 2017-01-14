@@ -6,9 +6,8 @@ import com.intellij.jam.reflect.JamMemberMeta;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.patterns.PsiClassPattern;
-import static com.intellij.patterns.PsiJavaPatterns.psiClass;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiRef;
+import com.intellij.psi.PsiElementRef;
 import com.intellij.semantic.SemContributor;
 import com.intellij.semantic.SemKey;
 import com.intellij.semantic.SemRegistrar;
@@ -21,6 +20,8 @@ import com.intellij.spring.model.jam.utils.JamAnnotationTypeUtil;
 import com.intellij.util.NullableFunction;
 
 import java.util.List;
+
+import static com.intellij.patterns.PsiJavaPatterns.psiClass;
 
 public class SpringSemContributor extends SemContributor {
   private static final SemKey<JamMemberMeta<PsiClass, CustomSpringComponent>> CUSTOM_COMPONENT_META_KEY = JamService.MEMBER_META_KEY.subKey("CustomSpringComponentMeta");
@@ -56,7 +57,7 @@ public class SpringSemContributor extends SemContributor {
     registrar.registerSemElementProvider(CUSTOM_COMPONENT_JAM_KEY, psiClassPattern, new NullableFunction<PsiClass, CustomSpringComponent>() {
       public CustomSpringComponent fun(PsiClass member) {
         final JamMemberMeta<PsiClass, CustomSpringComponent> memberMeta = mySemService.getSemElement(CUSTOM_COMPONENT_META_KEY, member);
-        return memberMeta != null ? memberMeta.createJamElement(PsiRef.real(member)) : null;
+        return memberMeta != null ? memberMeta.createJamElement(PsiElementRef.real(member)) : null;
       }
     });
   }
@@ -82,7 +83,7 @@ public class SpringSemContributor extends SemContributor {
   private static JamMemberMeta<PsiClass, CustomSpringComponent> createCustomSpringComponentJamMemberMeta(final String annotationFQN) {
     return new JamMemberMeta<PsiClass, CustomSpringComponent>(null, CustomSpringComponent.class, CUSTOM_COMPONENT_JAM_KEY) {
       @Override
-      public CustomSpringComponent createJamElement(PsiRef<PsiClass> psiMemberPsiRef) {
+      public CustomSpringComponent createJamElement(PsiElementRef<PsiClass> psiMemberPsiRef) {
         return new CustomSpringComponent(annotationFQN, psiMemberPsiRef.getPsiElement());
       }
     };

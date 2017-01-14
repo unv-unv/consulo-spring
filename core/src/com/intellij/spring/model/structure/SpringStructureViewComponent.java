@@ -2,8 +2,10 @@ package com.intellij.spring.model.structure;
 
 import com.intellij.ide.structureView.StructureViewModel;
 import com.intellij.ide.structureView.newStructureView.StructureViewComponent;
+import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.AsyncResult;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
@@ -11,17 +13,18 @@ import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-
-import javax.swing.tree.DefaultMutableTreeNode;
+import org.jetbrains.annotations.NotNull;
 
 public class SpringStructureViewComponent extends StructureViewComponent {
-  public SpringStructureViewComponent(FileEditor editor, StructureViewModel structureViewModel, Project project) {
-    super(editor, structureViewModel, project);
+
+  public SpringStructureViewComponent(FileEditor editor, @NotNull StructureViewModel structureViewModel, @NotNull Project project) {
+    super(editor, structureViewModel, project, true);
   }
 
-  public DefaultMutableTreeNode expandPathToElement(final Object element) {
+  @Override
+  public AsyncResult<AbstractTreeNode> expandPathToElement(Object element) {
     if (element instanceof XmlElement) {
-      final XmlElement xmlElement = (XmlElement)element;
+      final XmlElement xmlElement = (XmlElement) element;
       XmlTag tag = PsiTreeUtil.getParentOfType(xmlElement, XmlTag.class);
 
       while (tag != null) {

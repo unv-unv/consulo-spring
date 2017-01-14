@@ -4,7 +4,6 @@
 
 package com.intellij.spring.model.properties;
 
-import com.intellij.codeInsight.TargetElementUtilBase;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
@@ -24,6 +23,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericAttributeValue;
+import consulo.codeInsight.TargetElementUtil;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -50,7 +50,7 @@ public class SpringPropertiesUtil {
 
       if (property == null || isJavaBeanReference(file, editor, offset)) return null;
 
-      final PsiReference reference = TargetElementUtilBase.findReference(editor, offset);
+      final PsiReference reference = TargetElementUtil.findReference(editor, offset);
       if (reference != null) {
         final PsiElement psiElement = reference.resolve();
         if (psiElement instanceof PsiMethod) {

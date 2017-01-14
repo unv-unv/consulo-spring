@@ -1,6 +1,6 @@
 package com.intellij.spring.model.xml;
 
-import com.intellij.javaee.model.common.CommonModelElement;
+import com.intellij.jam.model.common.CommonModelElement;
 import com.intellij.psi.PsiClass;
 import com.intellij.util.xml.NameValue;
 import org.jetbrains.annotations.NotNull;

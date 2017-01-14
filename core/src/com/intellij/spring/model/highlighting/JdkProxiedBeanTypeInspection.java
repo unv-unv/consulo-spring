@@ -23,11 +23,11 @@ import com.intellij.aop.jam.AopLanguageInjector;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.javaee.util.JamCommonUtil;
+import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.progress.ProgressManager;
-import com.intellij.openapi.progress.impl.ProgressManagerImpl;
+import com.intellij.openapi.progress.util.AbstractProgressIndicatorBase;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
@@ -36,6 +36,7 @@ import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.aop.SpringAdvisedElementsSearcher;
@@ -63,9 +64,6 @@ import java.util.Set;
  * @author Dmitry Avdeev
  */
 public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
-
-  public static boolean TEST_ME = false;
-
   private static final Key<CachedValue<Set<PsiClass>>> REPLACE_CLASS = Key.create("ReplaceClassWithInterfaces");
 
   @Override
@@ -85,19 +83,16 @@ public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
     try {
       ProgressManager.getInstance().runProcess(new Runnable() {
         public void run() {
-          if (TEST_ME) {
-            ProgressManagerImpl.setNeedToCheckCancel(true);
-          }
           ProgressManager.getInstance().checkCanceled();
           interfaces.addAll(getInterfacesToReplaceClassWith(psiClass));
         }
-      }, new DelegatingProgressIndicatorEx() {
+      }, new AbstractProgressIndicatorBase() {
 
         long myCount;
         @Override
         public void checkCanceled() throws ProcessCanceledException {
 
-          if (!isCanceled() && (TEST_ME || (++myCount % 1000 == 0) && (System.currentTimeMillis() - startTime > 200))) {
+          if (!isCanceled() && ((++myCount % 1000 == 0) && (System.currentTimeMillis() - startTime > 200))) {
             throw new TimeoutException();
           }
           super.checkCanceled();
@@ -129,7 +124,7 @@ public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
   private static Set<PsiClass> getInterfacesToReplaceClassWith(final PsiClass psiClass) {
     CachedValue<Set<PsiClass>> classes = psiClass.getUserData(REPLACE_CLASS);
     if (classes == null) {
-      psiClass.putUserData(REPLACE_CLASS, classes = psiClass.getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<Set<PsiClass>>() {
+      psiClass.putUserData(REPLACE_CLASS, classes = CachedValuesManager.getManager(psiClass.getProject()).createCachedValue(new CachedValueProvider<Set<PsiClass>>() {
         public Result<Set<PsiClass>> compute() {
           ProgressManager.getInstance().checkCanceled();
           for (final AopProvider provider : AopLanguageInjector.getAopProviders(psiClass)) {

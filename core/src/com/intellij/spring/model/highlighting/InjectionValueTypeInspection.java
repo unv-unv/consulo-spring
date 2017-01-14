@@ -20,11 +20,11 @@ import com.intellij.spring.model.xml.CustomBean;
 import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.*;
 import com.intellij.util.Function;
-import com.intellij.util.xml.AbstractConvertContext;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
+import com.intellij.util.xml.impl.ConvertContextImpl;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -240,7 +240,7 @@ public class InjectionValueTypeInspection extends DomSpringBeanInspectionBase {
       Converter converter = genericDomValue.getConverter();
       if (converter instanceof SpringBeanResolveConverter) {
         List<PsiClassType> list =
-          ((SpringBeanResolveConverter)converter).getRequiredClasses(AbstractConvertContext.createConvertContext(genericDomValue));
+          ((SpringBeanResolveConverter)converter).getRequiredClasses(new ConvertContextImpl(genericDomValue));
         if (list != null && list.size() > 0) {
           boolean isAssignable = false;
           for (PsiClassType type : list) {

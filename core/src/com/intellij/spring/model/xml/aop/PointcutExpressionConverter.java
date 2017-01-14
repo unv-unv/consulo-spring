@@ -3,18 +3,18 @@
  */
 package com.intellij.spring.model.xml.aop;
 
-import com.intellij.aop.psi.PsiPointcutExpression;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.util.xml.Converter;
-import com.intellij.util.xml.ConvertContext;
-import com.intellij.util.xml.GenericAttributeValue;
-import com.intellij.psi.PsiLanguageInjectionHost;
+import com.intellij.aop.psi.PsiPointcutExpression;
+import com.intellij.lang.injection.InjectedLanguageManager;
+import com.intellij.openapi.util.Pair;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.Pair;
-import org.jetbrains.annotations.Nullable;
+import com.intellij.util.xml.ConvertContext;
+import com.intellij.util.xml.Converter;
+import com.intellij.util.xml.GenericAttributeValue;
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class PointcutExpressionConverter extends Converter<PsiPointcutExpression
     final XmlAttributeValue attributeValue = ((GenericAttributeValue)context.getInvocationElement()).getXmlAttributeValue();
     if (attributeValue == null) return null;
 
-    final List<Pair<PsiElement,TextRange>> list = ((PsiLanguageInjectionHost)attributeValue).getInjectedPsi();
+    final List<Pair<PsiElement,TextRange>> list = InjectedLanguageManager.getInstance(context.getProject()).getInjectedPsiFiles(attributeValue);
     if (list == null || list.isEmpty()) return null;
 
     return ((AopPointcutExpressionFile)list.get(0).first).getPointcutExpression();

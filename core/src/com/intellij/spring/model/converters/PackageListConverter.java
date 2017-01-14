@@ -1,7 +1,7 @@
 package com.intellij.spring.model.converters;
 
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiPackage;
+import com.intellij.psi.PsiJavaPackage;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.PackageReferenceSet;
 import com.intellij.psi.impl.source.resolve.reference.impl.providers.PsiPackageReference;
@@ -22,9 +22,9 @@ import java.util.regex.Pattern;
 /**
  * @author Dmitry Avdeev
  */
-public class PackageListConverter extends Converter<Collection<PsiPackage>> implements CustomReferenceConverter {
+public class PackageListConverter extends Converter<Collection<PsiJavaPackage>> implements CustomReferenceConverter {
 
-  public Collection<PsiPackage> fromString(@Nullable @NonNls final String s, final ConvertContext context) {
+  public Collection<PsiJavaPackage> fromString(@Nullable @NonNls final String s, final ConvertContext context) {
     if (s == null) {
       return Collections.emptyList();
     }
@@ -34,7 +34,7 @@ public class PackageListConverter extends Converter<Collection<PsiPackage>> impl
       return Collections.emptyList();
     }
     final PsiReference[] psiReferences = xmlAttributeValue.getReferences();
-    final Collection<PsiPackage> list = new HashSet<PsiPackage>();
+    final Collection<PsiJavaPackage> list = new HashSet<PsiJavaPackage>();
     for (PsiReference psiReference : psiReferences) {
       if (psiReference instanceof PsiPackageReference) {
         list.addAll(((PsiPackageReference)psiReference).getReferenceSet().resolvePackage());
@@ -43,7 +43,7 @@ public class PackageListConverter extends Converter<Collection<PsiPackage>> impl
     return list;
   }
 
-  public String toString(@Nullable final Collection<PsiPackage> psiPackages, final ConvertContext context) {
+  public String toString(@Nullable final Collection<PsiJavaPackage> psiPackages, final ConvertContext context) {
     return null;
   }
 
@@ -58,12 +58,12 @@ public class PackageListConverter extends Converter<Collection<PsiPackage>> impl
       protected void processToken(final int start, final int end, final boolean delimitersOnly) {
         final PackageReferenceSet referenceSet = new PackageReferenceSet(text.substring(start, end), element, 1 + start) {
           @Override
-          public Collection<PsiPackage> resolvePackageName(final PsiPackage context, final String packageName) {
+          public Collection<PsiJavaPackage> resolvePackageName(final PsiJavaPackage context, final String packageName) {
             if (packageName.contains("*")) {
               final Pattern pattern = PatternUtil.fromMask(packageName);
-              final PsiPackage[] psiPackages = context.getSubPackages();
-              final ArrayList<PsiPackage> packages = new ArrayList<PsiPackage>(psiPackages.length);
-              for (PsiPackage aPackage : psiPackages) {
+              final PsiJavaPackage[] psiPackages = context.getSubPackages();
+              final ArrayList<PsiJavaPackage> packages = new ArrayList<PsiJavaPackage>(psiPackages.length);
+              for (PsiJavaPackage aPackage : psiPackages) {
                 if (pattern.matcher(aPackage.getName()).matches()) {
                   packages.add(aPackage);
                 }

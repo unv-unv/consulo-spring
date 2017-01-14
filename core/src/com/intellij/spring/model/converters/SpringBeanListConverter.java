@@ -11,8 +11,7 @@
 package com.intellij.spring.model.converters;
 
 import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementFactory;
-import com.intellij.codeInsight.lookup.MutableLookupElement;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.LocalQuickFixProvider;
 import com.intellij.openapi.util.TextRange;
@@ -26,9 +25,9 @@ import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.Beans;
+import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.converters.DelimitedListConverter;
@@ -113,10 +112,10 @@ public class SpringBeanListConverter extends DelimitedListConverter<SpringBeanPo
     for (final SpringBeanPointer pointer : variants) {
       final String beanName = pointer.getName();
       if (beanName != null) {
-        final MutableLookupElement<SpringBeanPointer> element = LookupElementFactory.getInstance().createLookupElement(pointer, beanName).setIcon(pointer.getBeanIcon());
+        final LookupElementBuilder element = LookupElementBuilder.create(pointer, beanName).setIcon(pointer.getBeanIcon());
         final PsiClass psiClass = pointer.getBeanClass();
         if (psiClass != null) {
-          element.setTypeText(psiClass.getName());
+          element.withTypeText(psiClass.getName());
         }
         result.add(element);
       }

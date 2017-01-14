@@ -51,7 +51,7 @@ public class SpringAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
         for (final DomFileElement<Beans> root : model.getRoots()) {
           CachedValue<Boolean> value = root.getUserData(CGLIB_PROXYING);
           if (value == null) {
-            root.putUserData(CGLIB_PROXYING, value = getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<Boolean>() {
+            root.putUserData(CGLIB_PROXYING, value = CachedValuesManager.getManager(getManager().getProject()).createCachedValue(new CachedValueProvider<Boolean>() {
               public Result<Boolean> compute() {
                 return Result.create(isCglib(root), root);
               }
@@ -174,7 +174,7 @@ public class SpringAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
   private static boolean isAopClass(@NotNull final PsiClass psiClass) {
     CachedValue<Boolean> value = psiClass.getUserData(INHERITANCE_CACHE_KEY);
     if (value == null) {
-      value = psiClass.getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<Boolean>() {
+      value = CachedValuesManager.getManager(psiClass.getProject()).createCachedValue(new CachedValueProvider<Boolean>() {
         public Result<Boolean> compute() {
           final boolean result = !InheritanceUtil.processSupers(psiClass, true, new Processor<PsiClass>() {
             public boolean process(final PsiClass psiClass) {
