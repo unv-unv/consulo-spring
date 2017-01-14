@@ -36,7 +36,7 @@ public class JamClassGeneratorImpl extends JamClassGenerator {
           if(method.isAnnotationPresent(JamPsiConnector.class)) {
             return myPsiElementRef.getPsiElement();
           }
-          return null;
+          throw new UnsupportedOperationException(method.getName() + " is not supported in " + myClass.getName());
       }
     }
   }
