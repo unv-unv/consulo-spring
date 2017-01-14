@@ -8,11 +8,14 @@ import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.ide.DataManager;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.application.Result;
+import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootManager;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -31,7 +34,9 @@ import com.intellij.util.Processor;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.annotations.RequiredDispatchThread;
 import consulo.spring.module.extension.SpringModuleExtension;
+import consulo.spring.module.extension.SpringMutableModuleExtension;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -41,6 +46,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * @author Dmitry Avdeev
@@ -74,12 +80,12 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
         (!checkTestFiles && projectFileIndex.isInTestSourceContent(virtualFile))) {
       return;
     }
-    final Ref<SpringModuleExtension> facetRef = new Ref<SpringModuleExtension>();
+    final Ref<SpringModuleExtension> moduleExtensionRef = new Ref<SpringModuleExtension>();
     final boolean notFound = ModuleUtil.visitMeAndDependentModules(module, new Processor<Module>() {
       public boolean process(final Module module) {
         final SpringModuleExtension facet = SpringModuleExtension.getInstance(module);
         if (facet != null) {
-          facetRef.set(facet);
+          moduleExtensionRef.set(facet);
           final Set<SpringFileSet> sets = SpringManager.getInstance(module.getProject()).getAllSets(facet);
           for (SpringFileSet fileSet : sets) {
             if (fileSet.hasFile(virtualFile)) {
@@ -94,15 +100,16 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
     if (!notFound) {
       return;
     }
-    final SpringModuleExtension springFacet = facetRef.get();
-    if (springFacet == null) {
+    final SpringModuleExtension moduleExtension = moduleExtensionRef.get();
+    if (moduleExtension == null) {
       holder.createProblem(domFileElement, HighlightSeverity.WARNING,
-                           SpringBundle.message("spring.facet.not.configured.for.module", module.getName()),
-                           new AddFacetFix(module, domFileElement.getFile()));
-    } else {
+          SpringBundle.message("spring.facet.not.configured.for.module", module.getName()),
+          new AddFacetFix(module, domFileElement.getFile()));
+    }
+    else {
       holder.createProblem(domFileElement, HighlightSeverity.WARNING,
-                           SpringBundle.message("file.set.not.configured.for.file"),
-                           new ConfigureFileSetFix(springFacet.getModule(), domFileElement.getFile()));
+          SpringBundle.message("file.set.not.configured.for.file"),
+          new ConfigureFileSetFix(moduleExtension.getModule(), domFileElement.getFile()));
 
     }
   }
@@ -142,44 +149,42 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
     }
 
     @Override
+    @RequiredDispatchThread
     protected void doFix(final Project project) {
-      final SpringModuleExtension facet = SpringModuleExtension.getInstance(myModule);
-      if (facet != null) {
-        final Set<SpringFileSet> sets = facet.getFileSets();
+      final SpringModuleExtension extension = SpringModuleExtension.getInstance(myModule);
+      if (extension != null) {
+        final Set<SpringFileSet> sets = extension.getFileSets();
         if (sets.size() == 0) {
-          addNewSet(facet, sets);
+          addNewSet(extension, sets);
         }
         else {
           final ArrayList<SpringFileSet> list = new ArrayList<SpringFileSet>(sets);
           final SpringFileSet newSet = new SpringFileSet(SpringFileSet.getUniqueId(sets),
-                                                         SpringBundle.message("fileset.new"), facet) {
+              SpringBundle.message("fileset.new"), extension) {
             public boolean isNew() {
               return true;
             }
           };
           list.add(newSet);
           final BaseListPopupStep<SpringFileSet> step =
-            new BaseListPopupStep<SpringFileSet>(SpringBundle.message("choose.file.set"), list) {
-              public PopupStep onChosen(final SpringFileSet selectedValue, final boolean finalChoice) {
-                if (selectedValue == newSet) {
-                  final String name = SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets);
-                  newSet.setName(name);
-                  editSet(facet, sets, newSet);
-                }
-                else {
-                  selectedValue.addFile(myVirtualFile);
-                  //TODO [VISTALL]
+              new BaseListPopupStep<SpringFileSet>(SpringBundle.message("choose.file.set"), list) {
+                @RequiredDispatchThread
+                public PopupStep onChosen(final SpringFileSet selectedValue, final boolean finalChoice) {
+                  if (selectedValue == newSet) {
+                    final String name = SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets);
+                    newSet.setName(name);
 
-                  /*ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    public void run() {
-                      ProjectRootManagerEx.getInstanceEx(project).beforeRootsChange(false);
-                      ProjectRootManagerEx.getInstanceEx(project).rootsChanged(false);
-                    }
-                  }); */
+
+                    editSet(extension, sets, newSet);
+                  }
+                  else {
+                    modifyExtensionOnce(myModule, springMutableModuleExtension -> {
+                      selectedValue.addFile(myVirtualFile);
+                    });
+                  }
+                  return super.onChosen(selectedValue, finalChoice);
                 }
-                return super.onChosen(selectedValue, finalChoice);
-              }
-            };
+              };
           JBPopupFactory.getInstance().createListPopup(step).showInBestPositionFor(DataManager.getInstance().getDataContext());
         }
       }
@@ -252,25 +257,36 @@ public class SpringFacetInspection extends SpringBeanInspectionBase {
 
     protected void addNewSet(final SpringModuleExtension facet, final Set<SpringFileSet> sets) {
       final SpringFileSet set =
-        new SpringFileSet(SpringFileSet.getUniqueId(sets),
-                          SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets),
-                          facet) {
-          public boolean isNew() {
-            return true;
-          }
-        };
+          new SpringFileSet(SpringFileSet.getUniqueId(sets),
+              SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets),
+              facet) {
+            public boolean isNew() {
+              return true;
+            }
+          };
       editSet(facet, sets, set);
     }
 
-    protected void editSet(final SpringModuleExtension facet, final Set<SpringFileSet> sets, final SpringFileSet set) {
+    @RequiredDispatchThread
+    protected void editSet(final SpringModuleExtension extension, final Set<SpringFileSet> sets, final SpringFileSet set) {
       set.addFile(myVirtualFile);
       final FileSetEditor editor = new FileSetEditor(myModule, set, sets);
       editor.show();
       if (editor.isOK()) {
-        //TODO [VISTALL]
-        //facet.getConfiguration().getFileSets().add(editor.getEditedFileSet());
-        //myModule.getProject().getMessageBus().syncPublisher(ProjectTopics.LOGICAL_ROOTS).logicalRootsChanged();
+        modifyExtensionOnce(extension.getModule(), it -> it.getFileSets().add(editor.getEditedFileSet().cloneTo(it)));
       }
+    }
+
+    @RequiredDispatchThread
+    public static void modifyExtensionOnce(Module module, Consumer<SpringMutableModuleExtension> consumer) {
+      WriteAction.run(() -> {
+        ModifiableRootModel modifiableModel = ModuleRootManager.getInstance(module).getModifiableModel();
+        SpringMutableModuleExtension springExtension = modifiableModel.getExtensionWithoutCheck(SpringMutableModuleExtension.class);
+        assert springExtension != null;
+        springExtension.setEnabled(true);
+        consumer.accept(springExtension);
+        modifiableModel.commit();
+      });
     }
   }
 }

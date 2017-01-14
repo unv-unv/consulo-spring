@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author VISTALL
@@ -51,7 +52,7 @@ public class SpringModuleExtensionImpl extends ModuleExtensionImpl<SpringModuleE
   @Override
   public void commit(@NotNull SpringModuleExtension mutableModuleExtension) {
     super.commit(mutableModuleExtension);
-    myFileSets = new LinkedHashSet<>(mutableModuleExtension.getFileSets());
+    myFileSets = mutableModuleExtension.getFileSets().stream().map(it -> it.cloneTo(this)).collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   @RequiredReadAction

@@ -5,6 +5,8 @@ package com.intellij.spring;
 
 import com.intellij.jam.model.common.BaseRootImpl;
 import com.intellij.openapi.extensions.Extensions;
+import com.intellij.openapi.util.Iconable;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.constants.SpringConstants;
 import com.intellij.spring.impl.model.CustomBeanWrapperImpl;
@@ -33,7 +35,9 @@ import com.intellij.util.NotNullFunction;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileDescription;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +50,17 @@ public class SpringDomFileDescription extends DomFileDescription<Beans> {
 
   public SpringDomFileDescription() {
     super(Beans.class, "beans");
+  }
+
+  @Nullable
+  @Override
+  public Icon getFileIcon(@Iconable.IconFlags int flags) {
+    return SpringIcons.CONFIG_FILE;
+  }
+
+  @Override
+  public boolean isMyFile(@NotNull XmlFile file) {
+    return true;
   }
 
   protected void initializeFileDescription() {

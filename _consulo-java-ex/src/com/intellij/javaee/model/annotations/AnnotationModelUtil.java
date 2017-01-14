@@ -19,9 +19,9 @@ public class AnnotationModelUtil {
     private T myValue;
     private String myStringValue;
 
-    private AnnotationGenericValueImpl(T myValue, String myStringValue) {
-      this.myValue = myValue;
-      this.myStringValue = myStringValue;
+    private AnnotationGenericValueImpl(T value, String stringValue) {
+      this.myValue = value;
+      this.myStringValue = stringValue;
     }
 
     @Nullable
@@ -44,19 +44,20 @@ public class AnnotationModelUtil {
 
   @RequiredReadAction
   @SuppressWarnings("unchecked")
+  @NotNull
   public static <T> List<AnnotationGenericValue<T>> getEnumArrayValue(PsiAnnotation annotation, String name, Class<T> c) {
     List<AnnotationGenericValue<T>> values = new ArrayList<>();
 
     PsiAnnotationMemberValue attributeValue = annotation.findAttributeValue(name);
-    if(attributeValue instanceof PsiArrayInitializerMemberValue) {
+    if (attributeValue instanceof PsiArrayInitializerMemberValue) {
       PsiAnnotationMemberValue[] initializers = ((PsiArrayInitializerMemberValue) attributeValue).getInitializers();
       for (PsiAnnotationMemberValue initializer : initializers) {
-        if(initializer instanceof PsiReferenceExpression) {
+        if (initializer instanceof PsiReferenceExpression) {
           PsiElement resolve = ((PsiReferenceExpression) initializer).resolve();
-          if(resolve instanceof PsiEnumConstant) {
+          if (resolve instanceof PsiEnumConstant) {
             try {
               String constantName = ((PsiEnumConstant) resolve).getName();
-              if(constantName == null) {
+              if (constantName == null) {
                 continue;
               }
               Field declaredField = c.getDeclaredField(constantName);
@@ -76,7 +77,16 @@ public class AnnotationModelUtil {
     return values;
   }
 
-  public static AnnotationGenericValue<Boolean> getBooleanValue(PsiAnnotation annotation, String required, boolean defaultValue) {
-    throw new UnsupportedOperationException();
+  @NotNull
+  public static AnnotationGenericValue<Boolean> getBooleanValue(PsiAnnotation annotation, String name, boolean defaultValue) {
+    PsiAnnotationMemberValue attributeValue = annotation.findAttributeValue(name);
+    boolean value = defaultValue;
+    if (attributeValue instanceof PsiLiteral) {
+      Object literalValue = ((PsiLiteral) attributeValue).getValue();
+      if (literalValue instanceof Boolean) {
+        value = (Boolean) literalValue;
+      }
+    }
+    return new AnnotationGenericValueImpl<>(value, String.valueOf(value));
   }
 }

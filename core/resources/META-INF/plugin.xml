@@ -54,20 +54,11 @@
     <codeInsight.lineMarkerProvider language="XML" implementationClass="com.intellij.spring.aop.SpringAopAnnotator"/>
     <fileStructureGroupRuleProvider implementation="com.intellij.spring.usages.SpringBeanGroupRuleProvider"/>
 
-    <dom.fileDescription implementation="com.intellij.spring.SpringDomFileDescription"/>
-    <dom.extender domClass="com.intellij.spring.model.xml.beans.Beans" extenderClass="com.intellij.spring.SpringDefaultDomExtender$BeansExtender"/>
-    <dom.extender domClass="com.intellij.spring.model.xml.beans.ListOrSet" extenderClass="com.intellij.spring.SpringDefaultDomExtender$ListOrSetExtender"/>
-    <dom.extender domClass="com.intellij.spring.model.xml.SpringModelElement" extenderClass="com.intellij.spring.aop.SpringAopDomExtender"/>
-    <dom.extender domClass="com.intellij.spring.model.xml.beans.Beans" extenderClass="com.intellij.spring.aop.SpringTxDomExtender"/>
-    <dom.extender domClass="com.intellij.spring.model.xml.beans.SpringBean" extenderClass="com.intellij.spring.SpringPNamespaceDomExtender"/>
-    <dom.extender domClass="com.intellij.spring.model.xml.CustomBeanWrapper" extenderClass="com.intellij.spring.SpringToolDomExtender"/>
-
     <referencesSearch implementation="com.intellij.spring.aop.SpringAopParameterReferencesSearcher"/>
 
     <spring.effective.types.provider implementation="com.intellij.spring.model.SpringFactoryBeansEffectiveTypesProviders" id="factory" order="first"/>
     <spring.effective.types.provider implementation="com.intellij.spring.aop.SpringAopEffectiveTypesProvider"/>
 
-    <iconDescriptorUpdater implementation="com.intellij.spring.SpringIconProvider"/>
     <typeDeclarationProvider implementation="com.intellij.spring.SpringTypeDeclarationProvider"/>
 
     <renameInputValidator implementation="consulo.spring.SpringRenameInputValidator"/>
@@ -77,7 +68,6 @@
     <projectService serviceInterface="com.intellij.spring.model.actions.patterns.frameworks.util.StandardBeansDocLinksManager" serviceImplementation="com.intellij.spring.model.actions.patterns.frameworks.util.StandardBeansDocLinksManager"/>
     <projectService serviceInterface="com.intellij.spring.model.actions.patterns.frameworks.util.LibrariesConfigurationManager" serviceImplementation="com.intellij.spring.model.actions.patterns.frameworks.util.LibrariesConfigurationManager"/>
 
-    <xml.schemaProvider implementation="com.intellij.spring.schemas.SpringSchemaProvider"/>
     <psi.referenceContributor implementation="com.intellij.spring.references.SpringReferenceContributor"/>
     <refactoring.moveHandler implementation="com.intellij.spring.refactoring.SpringBeanMoveHandler"/>
     <refactoring.inlineHandler language="XML" implementationClass="com.intellij.spring.refactoring.SpringInlineHandler"/>
@@ -97,7 +87,6 @@
     <typeName className="com.intellij.spring.model.jam.stereotype.SpringController" name="@Controller"/>
     <typeName className="com.intellij.spring.model.jam.stereotype.SpringComponent" name="@Component"/>
     <typeName className="com.intellij.spring.model.xml.beans.SpringProperty" resourceBundle="messages.SpringBundle" resourceKey="spring.property"/>
-
 
     <typeIcon className="Beans.class" icon="/resources/icons/beans.png"/>
     <typeIcon className="SpringBean.class" icon="/resources/icons/springBean.png"/>
@@ -148,6 +137,16 @@
 
     <implicitNamespaceDescriptorProvider implementation="consulo.spring.SpringImplicitNamespaceDescriptorProvider"/>
     <undefinedElementFixProvider implementation="consulo.spring.PNamespaceUndefinedElementFixProvider"/>
+
+    <schemaProvider implementation="com.intellij.spring.schemas.SpringSchemaProvider"/>
+
+    <dom.fileDescription implementation="com.intellij.spring.SpringDomFileDescription"/>
+    <dom.extender domClass="com.intellij.spring.model.xml.beans.Beans" extenderClass="com.intellij.spring.SpringDefaultDomExtender$BeansExtender"/>
+    <dom.extender domClass="com.intellij.spring.model.xml.beans.ListOrSet" extenderClass="com.intellij.spring.SpringDefaultDomExtender$ListOrSetExtender"/>
+    <dom.extender domClass="com.intellij.spring.model.xml.SpringModelElement" extenderClass="com.intellij.spring.aop.SpringAopDomExtender"/>
+    <dom.extender domClass="com.intellij.spring.model.xml.beans.Beans" extenderClass="com.intellij.spring.aop.SpringTxDomExtender"/>
+    <dom.extender domClass="com.intellij.spring.model.xml.beans.SpringBean" extenderClass="com.intellij.spring.SpringPNamespaceDomExtender"/>
+    <dom.extender domClass="com.intellij.spring.model.xml.CustomBeanWrapper" extenderClass="com.intellij.spring.SpringToolDomExtender"/>
   </extensions>
 
   <application-components>
