@@ -1,7 +1,12 @@
 package consulo.spring.module.extension;
 
+import com.intellij.spring.facet.SpringConfigurationTab;
+import consulo.annotations.RequiredDispatchThread;
 import consulo.roots.ModuleRootLayer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 /**
  * @author VISTALL
@@ -12,6 +17,14 @@ public class SpringMutableModuleExtensionImpl extends SpringModuleExtensionImpl 
     super(id, moduleRootLayer);
   }
 
+  @RequiredDispatchThread
+  @Nullable
+  @Override
+  public JComponent createConfigurablePanel(@NotNull Runnable updateOnCheck) {
+    SpringConfigurationTab tab = new SpringConfigurationTab(this);
+    return tab.createComponent();
+  }
+
   @Override
   public void setEnabled(boolean b) {
     myIsEnabled = b;
@@ -19,6 +32,6 @@ public class SpringMutableModuleExtensionImpl extends SpringModuleExtensionImpl 
 
   @Override
   public boolean isModified(@NotNull SpringModuleExtension springModuleExtension) {
-    return myIsEnabled != springModuleExtension.isEnabled();
+    return myIsEnabled != springModuleExtension.isEnabled() || !myFileSets.equals(springModuleExtension.getFileSets());
   }
 }

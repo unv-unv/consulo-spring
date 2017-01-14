@@ -5,7 +5,6 @@
 package com.intellij.spring.facet;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
@@ -21,7 +20,6 @@ import com.intellij.spring.SpringManager;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.treeStructure.*;
 import consulo.spring.module.extension.SpringModuleExtension;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -38,8 +36,8 @@ import java.util.Set;
 /**
  * @author Dmitry Avdeev
  */
-public class SpringConfigurationTab  {
-  
+public class SpringConfigurationTab {
+
   private JPanel myMainPanel;
   private SimpleTree myTree;
 
@@ -51,12 +49,11 @@ public class SpringConfigurationTab  {
   private final Set<SpringFileSet> myBuffer = new HashSet<SpringFileSet>();
   private final SimpleTreeBuilder myBuilder;
   private final SpringConfigsSearcher mySearcher;
-  private boolean myModified;
 
   private final SimpleNode myRoot = new SimpleNode() {
     public SimpleNode[] getChildren() {
       List<SimpleNode> nodes = new ArrayList<SimpleNode>(myBuffer.size());
-      for (SpringFileSet entry: myBuffer) {
+      for (SpringFileSet entry : myBuffer) {
         if (!entry.isRemoved()) {
           final FileSetNode setNode = new FileSetNode(entry);
           nodes.add(setNode);
@@ -82,7 +79,7 @@ public class SpringConfigurationTab  {
       }
     };
     myTree.setRootVisible(false);
-    myBuilder = new SimpleTreeBuilder(myTree, (DefaultTreeModel)myTree.getModel(), structure, null);
+    myBuilder = new SimpleTreeBuilder(myTree, (DefaultTreeModel) myTree.getModel(), structure, null);
     myBuilder.initRoot();
 
     myTree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
@@ -96,7 +93,7 @@ public class SpringConfigurationTab  {
     myAddSetButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         final SpringFileSet fileSet = new SpringFileSet(SpringFileSet.getUniqueId(myBuffer),
-                                                        SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), myBuffer),
+            SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), myBuffer),
             myModuleExtension) {
           public boolean isNew() {
             return true;
@@ -107,13 +104,13 @@ public class SpringConfigurationTab  {
         editor.show();
         if (editor.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
           SpringFileSet editedFileSet = editor.getEditedFileSet();
-          Disposer.register(configuration, editedFileSet);          
+          Disposer.register(configuration, editedFileSet);
           myBuffer.add(editedFileSet);
-          myModified = true;
           myBuilder.updateFromRoot();
           selectFileSet(fileSet);
+          apply();
         }
-        myTree.requestFocus();        
+        myTree.requestFocus();
       }
     });
 
@@ -130,20 +127,22 @@ public class SpringConfigurationTab  {
           final FileSetEditor editor = new FileSetEditor(myMainPanel, fileSet, myBuffer, mySearcher, myModuleExtension.getProject());
           editor.show();
           if (editor.getExitCode() == DialogWrapper.OK_EXIT_CODE) {
-            myModified = true;
             myBuffer.remove(fileSet);
             final SpringFileSet edited = editor.getEditedFileSet();
-            Disposer.register(configuration, edited);          
+            Disposer.register(configuration, edited);
             myBuffer.add(edited);
             edited.setAutodetected(false);
             edited.setIcon(SpringIcons.FILESET);
             myBuilder.updateFromRoot();
             selectFileSet(edited);
+            apply();
           }
           myTree.requestFocus();
         }
       }
     });
+
+    reset();
   }
 
   private void remove() {
@@ -151,35 +150,38 @@ public class SpringConfigurationTab  {
     for (SimpleNode node : nodes) {
 
       if (node instanceof DependencyNode) {
-        final SpringFileSet fileSet = ((FileSetNode)node.getParent()).mySet;
-        fileSet.removeDependency(((DependencyNode)node).myFileSet.getId());
-      } else if (node instanceof FileSetNode) {
-        final SpringFileSet fileSet = ((FileSetNode)node).mySet;
+        final SpringFileSet fileSet = ((FileSetNode) node.getParent()).mySet;
+        fileSet.removeDependency(((DependencyNode) node).myFileSet.getId());
+      }
+      else if (node instanceof FileSetNode) {
+        final SpringFileSet fileSet = ((FileSetNode) node).mySet;
         final int result = Messages.showYesNoDialog(myMainPanel,
-                                                    SpringBundle.message("config.remove.button.message", fileSet.getName()),
-                                                    SpringBundle.message("config.remove.button.title"),
-                                                    Messages.getQuestionIcon());
+            SpringBundle.message("config.remove.button.message", fileSet.getName()),
+            SpringBundle.message("config.remove.button.title"),
+            Messages.getQuestionIcon());
         if (result == 0) {
           if (fileSet.isAutodetected()) {
             fileSet.setRemoved(true);
             myBuffer.add(fileSet);
-          } else {
+          }
+          else {
             myBuffer.remove(fileSet);
           }
           for (SpringFileSet set : myBuffer) {
             set.removeDependency(fileSet.getId());
           }
         }
-      } else if (node instanceof ConfigFileNode) {
-        final VirtualFilePointer filePointer = ((ConfigFileNode)node).myFilePointer;
-        final SpringFileSet fileSet = ((FileSetNode)node.getParent()).mySet;
+      }
+      else if (node instanceof ConfigFileNode) {
+        final VirtualFilePointer filePointer = ((ConfigFileNode) node).myFilePointer;
+        final SpringFileSet fileSet = ((FileSetNode) node.getParent()).mySet;
         fileSet.removeFile(filePointer);
       }
     }
 
-    myModified = true;
     myBuilder.updateFromRoot();
     myTree.requestFocus();
+    apply();
   }
 
   @Nullable
@@ -195,32 +197,25 @@ public class SpringConfigurationTab  {
       return null;
     }
     if (selectedNode instanceof FileSetNode) {
-      return (FileSetNode)selectedNode;
-    } else if (selectedNode.getParent() instanceof FileSetNode) {
-      return (FileSetNode)selectedNode.getParent();
-    } else {
+      return (FileSetNode) selectedNode;
+    }
+    else if (selectedNode.getParent() instanceof FileSetNode) {
+      return (FileSetNode) selectedNode.getParent();
+    }
+    else {
       final SimpleNode parent = selectedNode.getParent();
       if (parent != null && parent.getParent() instanceof FileSetNode) {
-        return (FileSetNode)selectedNode.getParent().getParent();
+        return (FileSetNode) selectedNode.getParent().getParent();
       }
     }
     return null;
-  }
-
-  @Nls
-  public String getDisplayName() {
-    return SpringBundle.message("config.display.name");
   }
 
   public JComponent createComponent() {
     return myMainPanel;
   }
 
-  public boolean isModified() {
-    return myModified;
-  }
-
-  public void apply() throws ConfigurationException {
+  public void apply() {
     final Set<SpringFileSet> fileSets = myModuleExtension.getFileSets();
     fileSets.clear();
     for (SpringFileSet fileSet : myBuffer) {
@@ -233,7 +228,7 @@ public class SpringConfigurationTab  {
   public void reset() {
     myBuffer.clear();
     final Module module = myModuleExtension.getModule();
-    final SpringModuleExtension springFacet = (SpringModuleExtension)myModuleExtension;
+    final SpringModuleExtension springFacet = myModuleExtension;
     final Set<SpringFileSet> sets = SpringManager.getInstance(module.getProject()).getAllSets(springFacet);
     for (SpringFileSet fileSet : sets) {
       myBuffer.add(new SpringFileSet(fileSet));
@@ -248,11 +243,11 @@ public class SpringConfigurationTab  {
     Disposer.dispose(myBuilder);
   }
 
-  private void selectFileSet(final SpringFileSet fileSet) {    
+  private void selectFileSet(final SpringFileSet fileSet) {
     myTree.select(myBuilder, new SimpleNodeVisitor() {
       public boolean accept(final SimpleNode simpleNode) {
         if (simpleNode instanceof FileSetNode) {
-          if (((FileSetNode)simpleNode).mySet.equals(fileSet)) {
+          if (((FileSetNode) simpleNode).mySet.equals(fileSet)) {
             return true;
           }
         }
@@ -275,7 +270,8 @@ public class SpringConfigurationTab  {
 
     public SimpleNode[] getChildren() {
       final ArrayList<SimpleNode> nodes = new ArrayList<SimpleNode>();
-      deps: for (String dep: mySet.getDependencies()) {
+      deps:
+      for (String dep : mySet.getDependencies()) {
         final Module module = myModuleExtension.getModule();
         for (SpringFileSet fileSet : myBuffer) {
           if (fileSet.getId().equals(dep)) {
@@ -293,7 +289,7 @@ public class SpringConfigurationTab  {
           }
         }
       }
-      for (VirtualFilePointer file: mySet.getFiles()) {
+      for (VirtualFilePointer file : mySet.getFiles()) {
         nodes.add(new ConfigFileNode(file, this));
       }
       return nodes.toArray(new SimpleNode[nodes.size()]);
@@ -304,7 +300,7 @@ public class SpringConfigurationTab  {
     }
 
     public Object[] getEqualityObjects() {
-      return new Object[] { mySet, mySet.getName(), mySet.getFiles(), mySet.getDependencies() };
+      return new Object[]{mySet, mySet.getName(), mySet.getFiles(), mySet.getDependencies()};
     }
   }
 
@@ -337,19 +333,20 @@ public class SpringConfigurationTab  {
       if (file != null) {
         final Project project = myModuleExtension.getProject();
         final PsiFile psiFile = PsiManager.getInstance(project).findFile(file);
-        if (!(psiFile instanceof XmlFile) || !SpringManager.getInstance(project).isSpringBeans((XmlFile)psiFile)) {
+        if (!(psiFile instanceof XmlFile) || !SpringManager.getInstance(project).isSpringBeans((XmlFile) psiFile)) {
           renderFile(SimpleTextAttributes.ERROR_ATTRIBUTES,
-                     SimpleTextAttributes.ERROR_ATTRIBUTES,
-                     SpringBundle.message("config.file.is.not.spring"));
+              SimpleTextAttributes.ERROR_ATTRIBUTES,
+              SpringBundle.message("config.file.is.not.spring"));
           return;
         }
         renderFile(SimpleTextAttributes.REGULAR_ATTRIBUTES,
-                   SimpleTextAttributes.GRAYED_ATTRIBUTES,
-                   null);
-      } else {
+            SimpleTextAttributes.GRAYED_ATTRIBUTES,
+            null);
+      }
+      else {
         renderFile(SimpleTextAttributes.ERROR_ATTRIBUTES,
-                   SimpleTextAttributes.ERROR_ATTRIBUTES,
-                   SpringBundle.message("config.file.not.found"));
+            SimpleTextAttributes.ERROR_ATTRIBUTES,
+            SpringBundle.message("config.file.not.found"));
       }
     }
 
