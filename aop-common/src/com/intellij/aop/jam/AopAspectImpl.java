@@ -44,11 +44,11 @@ public abstract class AopAspectImpl implements AopAspect, JamElement {
   public abstract PsiClass getPsiClass();
 
   public List<AopAdviceImpl> getAdvices() {
-    return ADVICE_QUERY.findChildren(PsiRef.real(getPsiClass()));
+    return ADVICE_QUERY.findChildren(PsiElementRef.real(getPsiClass()));
   }
 
   public List<AopIntroductionImpl> getIntroductions() {
-    return INTRODUCTIONS_QUERY.findChildren(PsiRef.real(getPsiClass()));
+    return INTRODUCTIONS_QUERY.findChildren(PsiElementRef.real(getPsiClass()));
   }
 
 }

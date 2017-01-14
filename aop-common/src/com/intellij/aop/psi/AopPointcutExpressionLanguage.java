@@ -5,10 +5,7 @@ package com.intellij.aop.psi;
 
 import com.intellij.lang.InjectableLanguage;
 import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
+import com.intellij.openapi.fileTypes.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -26,7 +23,7 @@ public class AopPointcutExpressionLanguage extends Language implements Injectabl
   }
 
   @Override
-  public FileType getAssociatedFileType() {
+  public LanguageFileType getAssociatedFileType() {
     return AopPointcutExpressionFileType.INSTANCE;
   }
 

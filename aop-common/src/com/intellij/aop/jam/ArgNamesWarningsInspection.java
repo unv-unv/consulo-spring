@@ -18,7 +18,6 @@ import com.intellij.psi.search.searches.ReferencesSearch;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.Processor;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.containers.CollectionFactory;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -60,7 +59,7 @@ public class ArgNamesWarningsInspection extends AbstractArgNamesInspection {
   private static boolean canInferParameters(final PsiParameter[] parameters, ArgNamesManipulator manipulator, PsiMethod method) {
     if (parameters.length == 0) return true;
 
-    Set<PsiParameter> set = CollectionFactory.newTroveSet(parameters);
+    Set<PsiParameter> set = ContainerUtil.newTroveSet(parameters);
     if (LocalAopModel.isJoinPointParamer(parameters[0])) {
       set.remove(parameters[0]);
       if (set.isEmpty()) return true;

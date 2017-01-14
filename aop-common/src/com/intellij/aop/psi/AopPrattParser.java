@@ -19,6 +19,8 @@ import static com.intellij.lang.pratt.PathPattern.path;
  * @author peter
  */
 public class AopPrattParser extends PrattParser {
+    public static final PrattRegistry ourPrattRegistry = new PrattRegistry();
+
     static final int LOGIC = 30;
     static final int POINTCUT = 40;
     static final int TYPE_PATTERN = 70;
@@ -30,19 +32,17 @@ public class AopPrattParser extends PrattParser {
     private static final ElementPattern<IElementType> ARRAYABLE = PsiJavaPatterns.or(REFERENCE_QUALIFIER, PsiJavaPatterns.elementType().oneOf(AOP_PRIMITIVE_TYPE_EXPRESSION));
     private static final ElementPattern<IElementType> ANY_TYPE_PATTERN = PsiJavaPatterns.or(ARRAYABLE, PsiJavaPatterns.elementType().oneOf(AOP_BINARY_EXPRESSION, AOP_NOT_EXPRESSION, AOP_PARENTHESIZED_EXPRESSION));
 
-    @Override
-    protected PrattRegistry getRegistry() {
-        PrattRegistry registry = new PrattRegistry();
+    static {
         AopPointcutTypes.getPointcutTokens(); //to initialize
 
-        registry.registerParser(AOP_IDENTIFIER, POINTCUT, path().up(), TokenParser.postfix(AOP_REFERENCE_EXPRESSION));
-        registry.registerParser(AOP_DOT, POINTCUT, path().left(AOP_REFERENCE_EXPRESSION).up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_IDENTIFIER, POINTCUT, path().up(), TokenParser.postfix(AOP_REFERENCE_EXPRESSION));
+        ourPrattRegistry.registerParser(AOP_DOT, POINTCUT, path().left(AOP_REFERENCE_EXPRESSION).up(), new ReducingParser() {
             public IElementType parseFurther(final PrattBuilder builder) {
                 builder.assertToken(AOP_IDENTIFIER, AopBundle.message("error.id.expected"));
                 return AOP_REFERENCE_EXPRESSION;
             }
         });
-        registry.registerParser(AOP_LEFT_PAR, POINTCUT, path().left(AOP_REFERENCE_EXPRESSION).up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_LEFT_PAR, POINTCUT, path().left(AOP_REFERENCE_EXPRESSION).up(), new ReducingParser() {
             public IElementType parseFurther(final PrattBuilder builder) {
                 final MutableMarker paramList = builder.mark();
                 if (!builder.isToken(AOP_RIGHT_PAR)) {
@@ -60,16 +60,16 @@ public class AopPrattParser extends PrattParser {
         });
 
         for (IElementType type : AOP_PRIMITIVE_TYPES.getTypes()) {
-            registry.registerParser(type, ATOM + 1, path().up(), TokenParser.postfix(AOP_PRIMITIVE_TYPE_EXPRESSION));
+            ourPrattRegistry.registerParser(type, ATOM + 1, path().up(), TokenParser.postfix(AOP_PRIMITIVE_TYPE_EXPRESSION));
         }
 
-        registry.registerParser(AOP_IDENTIFIER, ATOM + 1, path().up(), new TokenParser() {
+        ourPrattRegistry.registerParser(AOP_IDENTIFIER, ATOM + 1, path().up(), new TokenParser() {
             public final boolean parseToken(final PrattBuilder builder) {
                 builder.reduce(parsePatternPart(builder));
                 return true;
             }
         });
-        registry.registerParser(AOP_ASTERISK, ATOM + 1, path().up(), new TokenParser() {
+        ourPrattRegistry.registerParser(AOP_ASTERISK, ATOM + 1, path().up(), new TokenParser() {
             public final boolean parseToken(final PrattBuilder builder) {
                 builder.reduce(parsePatternPart(builder));
                 return true;
@@ -93,30 +93,30 @@ public class AopPrattParser extends PrattParser {
                 return true;
             }
         };
-        registry.registerParser(AOP_DOT, SIMPLE_TYPE + 1, path().left(REFERENCE_QUALIFIER).up(), pathSeparator);
-        registry.registerParser(AOP_DOT_DOT, SIMPLE_TYPE - 1, path().left(REFERENCE_QUALIFIER).up(), pathSeparator);
-        registry.registerParser(ANNO_WHITE_SPACE, Integer.MAX_VALUE, new TokenParser() {
+        ourPrattRegistry.registerParser(AOP_DOT, SIMPLE_TYPE + 1, path().left(REFERENCE_QUALIFIER).up(), pathSeparator);
+        ourPrattRegistry.registerParser(AOP_DOT_DOT, SIMPLE_TYPE - 1, path().left(REFERENCE_QUALIFIER).up(), pathSeparator);
+        ourPrattRegistry.registerParser(ANNO_WHITE_SPACE, Integer.MAX_VALUE, new TokenParser() {
             public boolean parseToken(final PrattBuilder builder) {
                 builder.advance();
                 return false;
             }
         });
 
-        registry.registerParser(AOP_OR, LOGIC + 1, path().left().up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_OR, LOGIC + 1, path().left().up(), new ReducingParser() {
             @Nullable
             public IElementType parseFurther(final PrattBuilder builder) {
                 parsePointcut(builder, builder.createChildBuilder(LOGIC + 1));
                 return AOP_POINTCUT_BINARY_EXPRESSION;
             }
         });
-        registry.registerParser(AOP_AND, LOGIC + 2, path().left().up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_AND, LOGIC + 2, path().left().up(), new ReducingParser() {
             @Nullable
             public IElementType parseFurther(final PrattBuilder builder) {
                 parsePointcut(builder, builder.createChildBuilder(LOGIC + 2));
                 return AOP_POINTCUT_BINARY_EXPRESSION;
             }
         });
-        registry.registerParser(AOP_NOT, LOGIC + 3, path().up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_NOT, LOGIC + 3, path().up(), new ReducingParser() {
             @Nullable
             public IElementType parseFurther(final PrattBuilder builder) {
                 parsePointcut(builder, builder.createChildBuilder(LOGIC + 2));
@@ -124,9 +124,9 @@ public class AopPrattParser extends PrattParser {
             }
         });
 
-        registry.registerParser(AOP_OR, TYPE_PATTERN + 1, path().left(ANY_TYPE_PATTERN).up(), TokenParser.infix(TYPE_PATTERN + 1, AOP_BINARY_EXPRESSION));
-        registry.registerParser(AOP_AND, TYPE_PATTERN + 2, path().left(ANY_TYPE_PATTERN).up(), TokenParser.infix(TYPE_PATTERN + 2, AOP_BINARY_EXPRESSION));
-        registry.registerParser(AOP_NOT, TYPE_PATTERN + 3, path().up(), new TokenParser() {
+        ourPrattRegistry.registerParser(AOP_OR, TYPE_PATTERN + 1, path().left(ANY_TYPE_PATTERN).up(), TokenParser.infix(TYPE_PATTERN + 1, AOP_BINARY_EXPRESSION));
+        ourPrattRegistry.registerParser(AOP_AND, TYPE_PATTERN + 2, path().left(ANY_TYPE_PATTERN).up(), TokenParser.infix(TYPE_PATTERN + 2, AOP_BINARY_EXPRESSION));
+        ourPrattRegistry.registerParser(AOP_NOT, TYPE_PATTERN + 3, path().up(), new TokenParser() {
             public boolean parseToken(final PrattBuilder builder) {
                 final MutableMarker annotatedType = builder.mark();
                 final MutableMarker not = builder.mark();
@@ -147,7 +147,7 @@ public class AopPrattParser extends PrattParser {
             }
         });
 
-        registry.registerParser(AOP_AT, TYPE_PATTERN + 5, path().up(), new TokenParser() {
+        ourPrattRegistry.registerParser(AOP_AT, TYPE_PATTERN + 5, path().up(), new TokenParser() {
             public boolean parseToken(final PrattBuilder builder) {
                 final MutableMarker annotatedType = builder.mark();
                 parseAnnotations(builder);
@@ -158,14 +158,14 @@ public class AopPrattParser extends PrattParser {
             }
         });
 
-        registry.registerParser(AOP_LEFT_PAR, POINTCUT + 1, path().up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_LEFT_PAR, POINTCUT + 1, path().up(), new ReducingParser() {
             public IElementType parseFurther(final PrattBuilder builder) {
                 parsePointcut(builder, builder.createChildBuilder(0));
                 builder.assertToken(AOP_RIGHT_PAR, AopBundle.message("error.0.expected", ")"));
                 return AOP_POINTCUT_PARENTHESIZED_EXPRESSION;
             }
         });
-        registry.registerParser(AOP_LEFT_PAR, ATOM + 1, path().up(), new ReducingParser() {
+        ourPrattRegistry.registerParser(AOP_LEFT_PAR, ATOM + 1, path().up(), new ReducingParser() {
             public IElementType parseFurther(final PrattBuilder builder) {
                 builder.parseChildren(TYPE_PATTERN, AopBundle.message("error.type.name.pattern.expected"));
                 builder.assertToken(AOP_RIGHT_PAR, AopBundle.message("error.0.expected", ")"));
@@ -173,7 +173,7 @@ public class AopPrattParser extends PrattParser {
             }
         });
 
-        registry.registerParser(AOP_LT, TYPE_PATTERN + 11, path().left(REFERENCE_QUALIFIER).up(), new TokenParser() {
+        ourPrattRegistry.registerParser(AOP_LT, TYPE_PATTERN + 11, path().left(REFERENCE_QUALIFIER).up(), new TokenParser() {
             public boolean parseToken(final PrattBuilder builder) {
                 final MutableMarker typeParamList = builder.mark();
                 builder.advance();
@@ -199,14 +199,18 @@ public class AopPrattParser extends PrattParser {
                 return true;
             }
         });
-        registry.registerParser(AOP_PLUS, TYPE_PATTERN + 10, path().left(REFERENCE_QUALIFIER).up(), TokenParser.postfix(AOP_SUBTYPE_EXPRESSION));
-        registry.registerParser(AOP_BRACES, TYPE_PATTERN + 9, path().left(ARRAYABLE).up(), TokenParser.postfix(AOP_ARRAY_EXPRESSION));
-        registry.registerParser(AOP_BRACES, TYPE_PATTERN + 9, path().left(ARRAYABLE).up(), TokenParser.postfix(AOP_ARRAY_EXPRESSION));
-        registry.registerParser(AOP_VARARGS, TYPE_PATTERN + 9, path().left(ARRAYABLE).up(), TokenParser.postfix(AOP_ARRAY_EXPRESSION));
-        return registry;
+        ourPrattRegistry.registerParser(AOP_PLUS, TYPE_PATTERN + 10, path().left(REFERENCE_QUALIFIER).up(), TokenParser.postfix(AOP_SUBTYPE_EXPRESSION));
+        ourPrattRegistry.registerParser(AOP_BRACES, TYPE_PATTERN + 9, path().left(ARRAYABLE).up(), TokenParser.postfix(AOP_ARRAY_EXPRESSION));
+        ourPrattRegistry.registerParser(AOP_BRACES, TYPE_PATTERN + 9, path().left(ARRAYABLE).up(), TokenParser.postfix(AOP_ARRAY_EXPRESSION));
+        ourPrattRegistry.registerParser(AOP_VARARGS, TYPE_PATTERN + 9, path().left(ARRAYABLE).up(), TokenParser.postfix(AOP_ARRAY_EXPRESSION));
     }
 
-    static boolean parseAnnotations(final PrattBuilder builder) {
+  @Override
+  protected PrattRegistry getRegistry() {
+    return ourPrattRegistry;
+  }
+
+  static boolean parseAnnotations(final PrattBuilder builder) {
         MutableMarker annoHolder = builder.mark();
         boolean first = true;
         while (true) {

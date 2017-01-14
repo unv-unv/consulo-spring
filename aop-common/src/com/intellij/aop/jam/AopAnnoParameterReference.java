@@ -6,7 +6,7 @@ package com.intellij.aop.jam;
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.javaee.model.annotations.AnnotationModelUtil;
+import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -35,7 +35,7 @@ public class AopAnnoParameterReference extends PsiReferenceBase<PsiAnnotationMem
 
   @NotNull
   public final String getCanonicalText() {
-    return StringUtil.notNullize(AnnotationModelUtil.getObjectValue(getElement(), String.class));
+    return StringUtil.notNullize(JamCommonUtil.getObjectValue(getElement(), String.class));
   }
 
   public String getUnresolvedMessagePattern() {

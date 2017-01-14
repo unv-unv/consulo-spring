@@ -10,6 +10,7 @@ import com.intellij.aop.psi.AopPointcutExpressionFile;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.codeInspection.XmlSuppressableInspectionTool;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
 import com.intellij.psi.xml.XmlAttributeValue;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +37,7 @@ public abstract class AbstractAopInspection extends XmlSuppressableInspectionToo
   }
 
   protected void checkElement(final PsiElement element, final ProblemsHolder holder) {
-    ((PsiLanguageInjectionHost)element).processInjectedPsi(new PsiLanguageInjectionHost.InjectedPsiVisitor() {
+    InjectedLanguageUtil.enumerate(element, new PsiLanguageInjectionHost.InjectedPsiVisitor() {
       public void visit(@NotNull PsiFile file, @NotNull List<PsiLanguageInjectionHost.Shred> places) {
         if (file instanceof AopPointcutExpressionFile && file.getContext() == element) {
           final AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile)file;

@@ -9,8 +9,8 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.Processor;
 import com.intellij.util.Function;
+import com.intellij.util.Processor;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.TestOnly;
 
@@ -36,8 +36,8 @@ public class AllAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
   }
 
   public boolean process(final Processor<PsiClass> processor) {
-    final PsiPackage psiPackage = JavaPsiFacade.getInstance(getManager().getProject()).findPackage("");
-    return psiPackage == null || processPackage(processor, psiPackage, new ArrayList<PsiPackage>());
+    final PsiJavaPackage psiPackage = JavaPsiFacade.getInstance(getManager().getProject()).findPackage("");
+    return psiPackage == null || processPackage(processor, psiPackage, new ArrayList<PsiJavaPackage>());
 
   }
 
@@ -46,10 +46,10 @@ public class AllAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
     return true;
   }
 
-  private boolean processPackage(final Processor<PsiClass> processor, final PsiPackage psiPackage, final List<PsiPackage> visited) {
+  private boolean processPackage(final Processor<PsiClass> processor, final PsiJavaPackage psiPackage, final List<PsiJavaPackage> visited) {
     if (visited.contains(psiPackage)) {
-      LOG.error("Circular package structure:\n" + StringUtil.join(visited, new Function<PsiPackage, String>() {
-        public String fun(final PsiPackage psiPackage) {
+      LOG.error("Circular package structure:\n" + StringUtil.join(visited, new Function<PsiJavaPackage, String>() {
+        public String fun(final PsiJavaPackage psiPackage) {
           return psiPackage.getQualifiedName() + " === " + StringUtil.join(psiPackage.getDirectories(), new Function<PsiDirectory, String>() {
             public String fun(final PsiDirectory psiDirectory) {
               return psiDirectory.getVirtualFile().getPath();
@@ -67,8 +67,8 @@ public class AllAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
     })) {
       return false;
     }
-    for (final PsiPackage aPackage : psiPackage.getSubPackages(myScope)) {
-      if (!processPackage(processor, aPackage, new ArrayList<PsiPackage>(visited))) return false;
+    for (final PsiJavaPackage aPackage : psiPackage.getSubPackages(myScope)) {
+      if (!processPackage(processor, aPackage, new ArrayList<PsiJavaPackage>(visited))) return false;
     }
     return true;
   }

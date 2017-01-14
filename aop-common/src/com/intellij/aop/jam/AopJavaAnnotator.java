@@ -11,17 +11,18 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProvider;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.ide.util.DefaultPsiElementCellRenderer;
-import com.intellij.javaee.util.JamCommonUtil;
+import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
+import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.NotNullLazyValue;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.psi.*;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
 import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.ui.LayeredIcon;
 import com.intellij.util.NotNullFunction;
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author peter
@@ -145,9 +147,9 @@ public class AopJavaAnnotator implements LineMarkerProvider {
     }
   }
 
-  public static NavigationGutterIconBuilder<AopIntroduction> addNavigationToBoundIntroductions(final List<AopIntroduction> boundIntros) {
-    return NavigationGutterIconBuilder.create(createToIcon(AopConstants.INTRODUCTION_ICON), AopIntroduction.class).
-      setTargets(boundIntros).
+  public static NavigationGutterIconBuilder<PsiElement> addNavigationToBoundIntroductions(final List<AopIntroduction> boundIntros) {
+    return NavigationGutterIconBuilder.create(createToIcon(AopConstants.INTRODUCTION_ICON)).
+      setTargets(boundIntros.stream().map(it -> it.getIdentifyingPsiElement()).collect(Collectors.toList())).
       setTooltipText(AopBundle.message("tooltip.text.navigate.to.introductions")).
       setPopupTitle(AopBundle.message("tooltip.text.navigate.to.introductions")).
       setAlignment(GutterIconRenderer.Alignment.LEFT);
@@ -222,7 +224,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
   public static List<AopIntroduction> getBoundIntroductions(final PsiClass psiClass) {
     CachedValue<List<AopIntroduction>> value = psiClass.getUserData(BOUND_INTROS_KEY);
     if (value == null) {
-      psiClass.putUserData(BOUND_INTROS_KEY, value = psiClass.getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<List<AopIntroduction>>() {
+      psiClass.putUserData(BOUND_INTROS_KEY, value = CachedValuesManager.getManager(psiClass.getProject()).createCachedValue(new CachedValueProvider<List<AopIntroduction>>() {
         public Result<List<AopIntroduction>> compute() {
           final List<AopProvider> providers = AopLanguageInjector.getAopProviders(psiClass);
           if (!providers.isEmpty()) {
@@ -251,7 +253,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
   public static Set<AopAspect> getAspects(final List<AopProvider> providers, final Module module) {
     CachedValue<Set<AopAspect>> aspects = module.getUserData(ASPECTS_CACHE);
     if (aspects == null) {
-      module.putUserData(ASPECTS_CACHE, aspects = PsiManager.getInstance(module.getProject()).getCachedValuesManager().createCachedValue(new CachedValueProvider<Set<AopAspect>>() {
+      module.putUserData(ASPECTS_CACHE, aspects = CachedValuesManager.getManager(module.getProject()).createCachedValue(new CachedValueProvider<Set<AopAspect>>() {
         public Result<Set<AopAspect>> compute() {
           Set<AopAspect> set = new THashSet<AopAspect>(ASPECT_HASHING_STRATEGY);
           collectAspects(providers, module, set);
@@ -377,7 +379,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
   public static Map<AopAdvice, Integer> getBoundAdvices(final PsiClass psiClass) {
     CachedValue<Map<AopAdvice, Integer>> value = psiClass.getUserData(BOUND_ADVICES_KEY);
     if (value == null) {
-      psiClass.putUserData(BOUND_ADVICES_KEY, value = psiClass.getManager().getCachedValuesManager().createCachedValue(new CachedValueProvider<Map<AopAdvice, Integer>>() {
+      psiClass.putUserData(BOUND_ADVICES_KEY, value = CachedValuesManager.getManager(psiClass.getProject()).createCachedValue(new CachedValueProvider<Map<AopAdvice, Integer>>() {
         public Result<Map<AopAdvice, Integer>> compute() {
           final Module module = ModuleUtil.findModuleForPsiElement(psiClass);
           if (module == null) return Result.create(Collections.<AopAdvice, Integer>emptyMap(), PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);

@@ -5,16 +5,20 @@
 package com.intellij.aop.psi;
 
 import com.intellij.aop.AopBundle;
-import static com.intellij.aop.psi.AopElementTypes.*;
-import static com.intellij.aop.psi.AopPrattParser.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.lang.pratt.*;
+import com.intellij.lang.pratt.MutableMarker;
+import com.intellij.lang.pratt.PathPattern;
+import com.intellij.lang.pratt.PrattBuilder;
+import com.intellij.lang.pratt.ReducingParser;
 import com.intellij.psi.tree.IElementType;
 import gnu.trove.THashMap;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;
 import java.util.Map;
+
+import static com.intellij.aop.psi.AopElementTypes.*;
+import static com.intellij.aop.psi.AopPrattParser.*;
 
 /**
  * @author peter
@@ -69,7 +73,6 @@ public class AopPointcutTypes {
         return new FieldPatternPointcut(node);
       }
     });
-
 
 
     registerPointcut(new PointcutDescriptor("args") {
@@ -210,7 +213,7 @@ public class AopPointcutTypes {
     final Collection<AopElementType> types = ourPointcutTokens.values();
   }
 
-  private static abstract class TypePatternPointcutDescriptor extends PointcutDescriptor{
+  private static abstract class TypePatternPointcutDescriptor extends PointcutDescriptor {
     protected TypePatternPointcutDescriptor(@NonNls final String tokenText) {
       super(tokenText);
     }
@@ -218,9 +221,10 @@ public class AopPointcutTypes {
     public void parseToken(final PrattBuilder builder) {
       parseTypePatternPointcut(builder, TYPE_PATTERN, AopBundle.message("error.type.name.pattern.expected"));
     }
-    
+
   }
-  private static abstract class AnnoPatternPointcutDescriptor extends PointcutDescriptor{
+
+  private static abstract class AnnoPatternPointcutDescriptor extends PointcutDescriptor {
     protected AnnoPatternPointcutDescriptor(@NonNls final String tokenText) {
       super(tokenText);
     }
@@ -247,7 +251,8 @@ public class AopPointcutTypes {
       while (true) {
         if (allowDotDot && builder.checkToken(AOP_DOT_DOT)) {
           allowDotDot = false;
-        } else {
+        }
+        else {
           final MutableMarker param = builder.mark();
           builder.parseChildren(level, expectedMessage);
           param.finish(AOP_REFERENCE_HOLDER);
@@ -270,7 +275,7 @@ public class AopPointcutTypes {
         return descriptor.createPsi(node);
       }
     };
-    PrattRegistry.registerParser(tokenType, POINTCUT, PathPattern.path().up(), new ReducingParser() {
+    AopPrattParser.ourPrattRegistry.registerParser(tokenType, POINTCUT, PathPattern.path().up(), new ReducingParser() {
       public IElementType parseFurther(final PrattBuilder builder) {
         descriptor.parseToken(builder);
         return directiveType;

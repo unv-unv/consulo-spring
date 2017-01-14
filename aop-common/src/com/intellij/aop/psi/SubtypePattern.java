@@ -25,7 +25,7 @@ public class SubtypePattern extends AopPsiTypePattern {
     return myBoundPattern;
   }
 
-  public boolean processPackages(final PsiManager manager, final Processor<PsiPackage> processor) {
+  public boolean processPackages(final PsiManager manager, final Processor<PsiJavaPackage> processor) {
     return TRUE.processPackages(manager, processor);
   }
 

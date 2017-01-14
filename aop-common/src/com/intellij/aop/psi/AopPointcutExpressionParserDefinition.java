@@ -8,13 +8,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
+import consulo.lang.LanguageVersion;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,7 +24,7 @@ public class AopPointcutExpressionParserDefinition implements ParserDefinition, 
   private static final TokenSet WHITE_SPACES = TokenSet.create(AopElementTypes.WHITE_SPACE);
 
   @NotNull
-  public Lexer createLexer(Project project) {
+  public Lexer createLexer(LanguageVersion languageVersion) {
     return new AopLexer();
   }
 
@@ -33,22 +33,22 @@ public class AopPointcutExpressionParserDefinition implements ParserDefinition, 
   }
 
   @NotNull
-  public TokenSet getWhitespaceTokens() {
+  public TokenSet getWhitespaceTokens(LanguageVersion languageVersion) {
     return WHITE_SPACES;
   }
 
   @NotNull
-  public TokenSet getCommentTokens() {
+  public TokenSet getCommentTokens(LanguageVersion languageVersion) {
     return TokenSet.EMPTY;
   }
 
   @NotNull
-  public TokenSet getStringLiteralElements() {
+  public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
     return TokenSet.EMPTY;
   }
 
   @NotNull
-  public PsiParser createParser(Project project) {
+  public PsiParser createParser(LanguageVersion languageVersion) {
     return new AopPrattParser();
   }
 

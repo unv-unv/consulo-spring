@@ -14,6 +14,7 @@ import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamAttributeMeta;
 import com.intellij.jam.reflect.JamMethodMeta;
 import com.intellij.jam.reflect.JamStringAttributeMeta;
+import com.intellij.lang.injection.InjectedLanguageManager;
 import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.TextRange;
@@ -77,7 +78,7 @@ public abstract class AopPointcutImpl implements JamElement, AopPointcut, Pointc
     }
 
     if (value instanceof PsiLanguageInjectionHost) {
-      final List<Pair<PsiElement,TextRange>> list = ((PsiLanguageInjectionHost)value).getInjectedPsi();
+      final List<Pair<PsiElement,TextRange>> list = InjectedLanguageManager.getInstance(value.getProject()).getInjectedPsiFiles(value);
       if (list != null) {
         Pair<PsiElement,TextRange> pair = ContainerUtil.find(list, new Condition<Pair<PsiElement, TextRange>>() {
           public boolean value(final Pair<PsiElement, TextRange> pair) {
