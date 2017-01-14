@@ -7,7 +7,6 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointerManager;
-import com.intellij.spring.SpringIcons;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -15,19 +14,18 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
  */
 public class SpringFileSet implements ElementsChooser.ElementProperties, Disposable {
 
-  @NonNls private static final String ID_PREFIX = "fileset";
+  @NonNls
+  private static final String ID_PREFIX = "fileset";
   private boolean myAutodetected;
-  private Icon myIcon = SpringIcons.FILESET;
+  private Icon myIcon = consulo.spring.SpringIcons.FileSet;
 
   public void setIcon(final Icon icon) {
     myIcon = icon;
@@ -42,7 +40,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
           final int i = Integer.parseInt(s);
           index = Math.max(i, index);
         }
-        catch(NumberFormatException ignored) {
+        catch (NumberFormatException ignored) {
 
         }
       }
@@ -58,7 +56,8 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
         int i;
         try {
           i = Integer.parseInt(s);
-        } catch(NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
           i = 0;
         }
         index = Math.max(i + 1, index);
@@ -67,9 +66,10 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     return index == 0 ? prefix : prefix + index;
   }
 
-  @NotNull private final String myId;
+  @NotNull
+  private final String myId;
   private String myName;
-  private final List<VirtualFilePointer> myFiles = new ArrayList<>();
+  private final Map<String, VirtualFilePointer> myFiles = new TreeMap<>();
   private final List<String> myDependencies = new ArrayList<>();
   private boolean myRemoved;
 
@@ -82,7 +82,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   public SpringFileSet(SpringFileSet original) {
     myId = original.myId;
     myName = original.myName;
-    myFiles.addAll(original.myFiles);
+    myFiles.putAll(original.myFiles);
     myDependencies.addAll(original.myDependencies);
     myAutodetected = original.isAutodetected();
     myIcon = original.getIcon();
@@ -92,7 +92,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   public boolean isNew() {
     return false;
   }
-  
+
   public boolean isAutodetected() {
     return myAutodetected;
   }
@@ -119,8 +119,8 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   }
 
   @NotNull
-  public List<VirtualFilePointer> getFiles() {
-    return myFiles;
+  public Collection<VirtualFilePointer> getFiles() {
+    return myFiles.values();
   }
 
   public List<String> getDependencies() {
@@ -143,7 +143,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   public void addFile(@NonNls String url) {
     if (!StringUtil.isEmptyOrSpaces(url)) {
       final VirtualFilePointer filePointer = VirtualFilePointerManager.getInstance().create(url, this, null);
-      myFiles.add(filePointer);
+      myFiles.put(filePointer.getUrl(), filePointer);
     }
   }
 
@@ -152,14 +152,14 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   }
 
   public void removeFile(VirtualFilePointer file) {
-    myFiles.remove(file);
+    myFiles.remove(file.getUrl());
   }
 
   public boolean hasFile(@Nullable VirtualFile file) {
     if (file == null) {
       return false;
     }
-    for (VirtualFilePointer pointer: myFiles) {
+    for (VirtualFilePointer pointer : myFiles.values()) {
       final VirtualFile virtualFile = pointer.getFile();
       if (virtualFile != null && file.equals(virtualFile)) {
         return true;
@@ -171,12 +171,11 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   @NotNull
   public SpringFileSet cloneTo(SpringModuleExtension extension) {
     SpringFileSet fileSet = new SpringFileSet(myId, myName, extension);
-    fileSet.myFiles.addAll(myFiles);
     fileSet.myDependencies.addAll(myDependencies);
     fileSet.myAutodetected = isAutodetected();
     //fileSet.myIcon = getIcon();
     fileSet.myRemoved = isRemoved();
-    for (VirtualFilePointer pointer : myFiles) {
+    for (VirtualFilePointer pointer : myFiles.values()) {
       fileSet.addFile(pointer.getUrl());
     }
     return fileSet;

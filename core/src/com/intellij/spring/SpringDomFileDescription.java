@@ -34,6 +34,7 @@ import com.intellij.spring.model.xml.util.*;
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileDescription;
+import consulo.spring.SpringIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -55,7 +56,7 @@ public class SpringDomFileDescription extends DomFileDescription<Beans> {
   @Nullable
   @Override
   public Icon getFileIcon(@Iconable.IconFlags int flags) {
-    return SpringIcons.CONFIG_FILE;
+    return SpringIcons.SpringConfig;
   }
 
   @Override

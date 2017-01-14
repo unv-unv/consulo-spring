@@ -4,31 +4,30 @@
 
 package com.intellij.spring;
 
-import com.intellij.openapi.util.IconLoader;
-
 import javax.swing.*;
 
+@Deprecated
 public interface SpringIcons {
-  Icon SPRING_ICON = IconLoader.getIcon("/resources/icons/spring.png");
+  Icon SPRING_ICON = consulo.spring.SpringIcons.Spring;
   
-  Icon SPRING_BEAN_ICON = IconLoader.getIcon("/resources/icons/springBean.png");
-  Icon SPRING_JAVA_BEAN_ICON = IconLoader.getIcon("/resources/icons/springJavaBean.png");
-  Icon SPRING_ALIAS_ICON = IconLoader.getIcon("/resources/icons/spring.png");
-  Icon SPRING_BEANS_ICON = IconLoader.getIcon("/resources/icons/beans.png");
-  Icon SPRING_BEAN_SCOPE_ICON = IconLoader.getIcon("/resources/icons/springBeanScope.png");
-  Icon SPRING_BEAN_PROPERTY_ICON = IconLoader.getIcon("/resources/icons/springProperty.png");
+  Icon SPRING_BEAN_ICON = consulo.spring.SpringIcons.BeanAlias;
+  Icon SPRING_JAVA_BEAN_ICON = consulo.spring.SpringIcons.SpringJavaBean;
+  Icon SPRING_ALIAS_ICON = consulo.spring.SpringIcons.Spring;
+  Icon SPRING_BEANS_ICON = consulo.spring.SpringIcons.Beans;
+  Icon SPRING_BEAN_SCOPE_ICON = consulo.spring.SpringIcons.SpringBeanScope;
+  Icon SPRING_BEAN_PROPERTY_ICON = consulo.spring.SpringIcons.SpringProperty;
 
-  Icon PARENT_GUTTER = IconLoader.getIcon("/resources/icons/parentBeanGutter.png");
-  Icon CHILD_GUTTER = IconLoader.getIcon("/resources/icons/childBeanGutter.png");
+  Icon PARENT_GUTTER = consulo.spring.SpringIcons.ParentBeanGutter;
+  Icon CHILD_GUTTER = consulo.spring.SpringIcons.ChildBeanGutter;
 
-  Icon CONFIG_FILE = IconLoader.getIcon("/resources/icons/springConfig.png");
-  Icon JAVA_CONFIG_FILE = IconLoader.getIcon("/resources/icons/springJavaConfig.png");
+  Icon CONFIG_FILE = consulo.spring.SpringIcons.SpringConfig;
+  Icon JAVA_CONFIG_FILE = consulo.spring.SpringIcons.SpringJavaConfig;
 
-  Icon FILESET = IconLoader.getIcon("/resources/icons/fileSet.png");
-  Icon DEPENDENCY = IconLoader.getIcon("/resources/icons/dependency.png");
+  Icon FILESET = consulo.spring.SpringIcons.FileSet;
+  Icon DEPENDENCY = consulo.spring.SpringIcons.Dependency;
 
-  Icon SPRING_BEAN_INSTANTIATED_BY_FACORY = IconLoader.getIcon("/resources/icons/factoryMethodBean.png");
-  Icon SPRING_BEAN_INSTANTIATED_BY_FACORY_METHOD = IconLoader.getIcon("/resources/icons/factoryMethodBean.png");
-  Icon SPRING_DEPENDENCIES_GRAPH_GROUP_BEANS = IconLoader.getIcon("/resources/icons/groupBeans.png");
-  Icon SPRING_DEPENDENCIES_GRAPH_SHOW_AUTOWIRED = IconLoader.getIcon("/resources/icons/showAutowiredDependencies.png");
+  Icon SPRING_BEAN_INSTANTIATED_BY_FACORY = consulo.spring.SpringIcons.FactoryMethodBean;
+  Icon SPRING_BEAN_INSTANTIATED_BY_FACORY_METHOD = consulo.spring.SpringIcons.FactoryMethodBean;
+  Icon SPRING_DEPENDENCIES_GRAPH_GROUP_BEANS = consulo.spring.SpringIcons.GroupBeans;
+  Icon SPRING_DEPENDENCIES_GRAPH_SHOW_AUTOWIRED = consulo.spring.SpringIcons.ShowAutowiredDependencies;
 }

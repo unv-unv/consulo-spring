@@ -42,7 +42,8 @@ public class FileSetEditor extends DialogWrapper {
                                                   final int index, final boolean isSelected, final boolean cellHasFocus) {
       if (value == null) {
         value = SpringBundle.message("fileset.none");
-      } else if (((SpringFileSet)value).isNew()) {
+      }
+      else if (((SpringFileSet) value).isNew()) {
         value = SpringBundle.message("fileset.new");
       }
 
@@ -90,7 +91,7 @@ public class FileSetEditor extends DialogWrapper {
     setTitle(SpringBundle.message("config.fileset.editor.title"));
     myFilesTree.setModel(new DefaultTreeModel(myRoot));
     searcher.search();
-    final MultiMap<Module,PsiFile> files = searcher.getFilesByModules();
+    final MultiMap<Module, PsiFile> files = searcher.getFilesByModules();
     final MultiMap<VirtualFile, PsiFile> jars = searcher.getJars();
     final Set<PsiFile> psiFiles = myFilesTree.buildModuleNodes(files, jars, fileSet);
     final List<VirtualFile> virtualFiles = searcher.getVirtualFiles();
@@ -101,8 +102,8 @@ public class FileSetEditor extends DialogWrapper {
 
     if (project != null) {
       final PsiManager psiManager = PsiManager.getInstance(project);
-      final List<VirtualFilePointer> list = fileSet.getFiles();
-      for (VirtualFilePointer pointer: list) {
+      final Collection<VirtualFilePointer> list = fileSet.getFiles();
+      for (VirtualFilePointer pointer : list) {
         final VirtualFile file = pointer.getFile();
         if (file != null) {
           final PsiFile psiFile = psiManager.findFile(file);
@@ -128,7 +129,7 @@ public class FileSetEditor extends DialogWrapper {
       }
     });
 
-    for (SpringFileSet set: allSets) {
+    for (SpringFileSet set : allSets) {
       if (set.getId().equals(fileSet.getId())) {
         continue;
       }
@@ -166,15 +167,15 @@ public class FileSetEditor extends DialogWrapper {
     if (myFileSet.getFiles().size() != myOriginalSet.getFiles().size()) {
       return true;
     }
-    final List<VirtualFilePointer> pointers = myFileSet.getFiles();
+    final List<VirtualFilePointer> pointers = new ArrayList<>(myFileSet.getFiles());
+    final List<VirtualFilePointer> originalPointers = new ArrayList<>(myOriginalSet.getFiles());
     for (int i = 0; i < pointers.size(); i++) {
-      if (!pointers.get(i).getUrl().equals(myOriginalSet.getFiles().get(i).getUrl())) {
+      if (!pointers.get(i).getUrl().equals(originalPointers.get(i).getUrl())) {
         return true;
       }
     }
     final boolean b = myFileSet.getDependencies().equals(myOriginalSet.getDependencies());
-    return !myFileSet.getName().equals(myOriginalSet.getName()) ||
-           !b;
+    return !myFileSet.getName().equals(myOriginalSet.getName()) || !b;
   }
 
   protected void doOKAction() {
@@ -185,7 +186,7 @@ public class FileSetEditor extends DialogWrapper {
   private void updateFileSet() {
     myFileSet.setName(mySetName.getText());
     myFilesTree.updateFileSet(myFileSet);
-    SpringFileSet parent = (SpringFileSet)myParentBox.getSelectedItem();
+    SpringFileSet parent = (SpringFileSet) myParentBox.getSelectedItem();
     myFileSet.setDependencies(parent == null ? Collections.<String>emptyList() : Arrays.asList(parent.getId()));
     getOKAction().setEnabled(isOKActionEnabled());
   }
@@ -199,7 +200,7 @@ public class FileSetEditor extends DialogWrapper {
       public void actionPerformed(final ActionEvent e) {
         final VirtualFile[] files = FileChooser.chooseFiles(new FileChooserDescriptor(true, false, true, false, true, true), myMainPanel, null, null);
         if (files.length > 0) {
-          for (VirtualFile file: files) {
+          for (VirtualFile file : files) {
             myFilesTree.addFile(file);
           }
           updateFileSet();
@@ -207,7 +208,7 @@ public class FileSetEditor extends DialogWrapper {
         }
       }
     };
-    return new Action[] { locateAction };
+    return new Action[]{locateAction};
   }
 
   public SpringFileSet getEditedFileSet() {
