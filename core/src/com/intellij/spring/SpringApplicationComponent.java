@@ -187,7 +187,7 @@ public class SpringApplicationComponent implements ApplicationComponent, Inspect
       InjectionValueStyleInspection.class, ReplacedMethodsInspection.class, InjectionValueConsistencyInspection.class,
       AbstractBeanReferencesInspection.class, AutowiredDependenciesInspection.class, DuplicatedBeanNamesInspection.class,
       UtilSchemaInspection.class, SpringBeanInstantiationInspection.class, SpringJavaConfigExternalBeansErrorInspection.class, SpringAopErrorsInspection.class,
-      SpringAopWarningsInspection.class, SpringFacetInspection.class, MissingAspectjAutoproxyInspection.class,
+      SpringAopWarningsInspection.class, SpringExtensionInspection.class, MissingAspectjAutoproxyInspection.class,
       SpringJavaAutowiringInspection.class, SpringRequiredAnnotationInspection.class, SpringRequiredPropertyInspection.class,
       UnparsedCustomBeanInspection.class, SpringJavaConfigInconsistencyInspection.class,
       JdkProxiedBeanTypeInspection.class, RequiredBeanTypeInspection.class};

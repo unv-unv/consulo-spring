@@ -50,14 +50,14 @@ import java.util.function.Consumer;
 /**
  * @author Dmitry Avdeev
  */
-public class SpringFacetInspection extends SpringBeanInspectionBase {
+public class SpringExtensionInspection extends SpringBeanInspectionBase {
 
   private JPanel myOptionsPanel;
   private JCheckBox myCheckBox;
 
   public boolean checkTestFiles = false;
 
-  public SpringFacetInspection() {
+  public SpringExtensionInspection() {
     myCheckBox.addActionListener(new ActionListener() {
       public void actionPerformed(final ActionEvent e) {
         checkTestFiles = myCheckBox.isSelected();
