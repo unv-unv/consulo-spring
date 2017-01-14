@@ -63,12 +63,12 @@ public abstract class SpringManager {
 
   /**
    * Returns all configured and provided file sets.
-   * @param facet
+   * @param extension
    * @return all working file sets for the module.
    * @see #getProvidedModels(SpringModuleExtension)
    */
   @NotNull
-  public abstract Set<SpringFileSet> getAllSets(final @NotNull SpringModuleExtension facet);
+  public abstract Set<SpringFileSet> getAllSets(final @NotNull SpringModuleExtension extension);
 
   public abstract GenericDomValueConvertersRegistry getValueProvidersRegistry();
 

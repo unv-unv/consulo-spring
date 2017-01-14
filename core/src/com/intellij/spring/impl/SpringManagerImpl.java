@@ -128,9 +128,9 @@ public class SpringManagerImpl extends SpringManager {
   }
 
   @NotNull
-  public Set<SpringFileSet> getAllSets(final @NotNull SpringModuleExtension facet) {
-    final Set<SpringFileSet> fileSets = new HashSet<SpringFileSet>(facet.getFileSets());
-    final List<SpringFileSet> providedModels = getProvidedModels(facet);
+  public Set<SpringFileSet> getAllSets(final @NotNull SpringModuleExtension extension) {
+    final Set<SpringFileSet> fileSets = new HashSet<SpringFileSet>(extension.getFileSets());
+    final List<SpringFileSet> providedModels = getProvidedModels(extension);
     fileSets.addAll(providedModels);
     return fileSets;
   }
