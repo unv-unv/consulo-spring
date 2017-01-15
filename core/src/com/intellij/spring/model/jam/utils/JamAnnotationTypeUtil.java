@@ -89,9 +89,9 @@ public class JamAnnotationTypeUtil {
     final PsiClass configurerClass = facade.findClass(SpringAnnotationsConstants.CUSTOM_AUTOWIRE_CONFIGURER_CLASS, moduleSearchScope);
 
     if (configurerClass != null) {
-      final List<SpringModel> models = SpringManager.getInstance(module.getProject()).getAllModels(module);
-      for (SpringModel model : models) {
-        final List<SpringBaseBeanPointer> beanPointers = model.findBeansByPsiClassWithInheritance(configurerClass);
+      final SpringModel springModel = SpringManager.getInstance(module.getProject()).getCombinedModel(module);
+      if(springModel != null) {
+        final List<SpringBaseBeanPointer> beanPointers = springModel.findBeansByPsiClassWithInheritance(configurerClass);
 
         for (SpringBaseBeanPointer beanPointer : beanPointers) {
           final CommonSpringBean bean = beanPointer.getSpringBean();

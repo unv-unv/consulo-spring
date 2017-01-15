@@ -150,11 +150,11 @@ public class SpringJamUtils {
       return Collections.emptyList();
     }
     List<SpringBaseBeanPointer> extBeans = new ArrayList<SpringBaseBeanPointer>();
-    final List<SpringModel> springModels = SpringManager.getInstance(psiMethod.getProject()).getAllModels(module);
-    for (SpringModel model : springModels) {
-      List<SpringBaseBeanPointer> javaConfigBeans = model.findBeansByPsiClass(psiClass);
+    final SpringModel springModel = SpringManager.getInstance(psiMethod.getProject()).getCombinedModel(module);
+    if(springModel != null) {
+      List<SpringBaseBeanPointer> javaConfigBeans = springModel.findBeansByPsiClass(psiClass);
       if (javaConfigBeans.size() > 0) {
-        for (SpringBaseBeanPointer springBean : model.getAllDomBeans()) {
+        for (SpringBaseBeanPointer springBean : springModel.getAllDomBeans()) {
 
           final String externalBeanName = psiMethod.getName();
           final String beanName = springBean.getName();

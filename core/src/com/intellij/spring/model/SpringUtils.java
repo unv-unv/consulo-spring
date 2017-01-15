@@ -92,28 +92,28 @@ public class SpringUtils {
   }
 
   @Nullable
-   public static String getReferencedName(final CommonSpringBean bean) {
+  public static String getReferencedName(final CommonSpringBean bean) {
     final SpringModel model = getSpringModelForBean(bean);
     return model != null ? getReferencedName(SpringBeanPointer.createSpringBeanPointer(bean), model.getAllCommonBeans(true)) : null;
   }
 
-   @Nullable
-   public static String getReferencedName(final SpringBeanPointer bean, final Collection<? extends SpringBeanPointer> allBeans) {
-     final String beanName = bean.getName();
-     if (beanName != null) return beanName;
+  @Nullable
+  public static String getReferencedName(final SpringBeanPointer bean, final Collection<? extends SpringBeanPointer> allBeans) {
+    final String beanName = bean.getName();
+    if (beanName != null) return beanName;
 
-     for (PsiClass psiClass : bean.getEffectiveBeanType()) {
-       final String className = psiClass.getQualifiedName();
-       if (className == null) continue;
+    for (PsiClass psiClass : bean.getEffectiveBeanType()) {
+      final String className = psiClass.getQualifiedName();
+      if (className == null) continue;
 
-       final List<SpringBeanPointer> list = findBeansByClassName(allBeans, className);
-       if (list.size() == 1) {
-         return className;
-       }
-     }
+      final List<SpringBeanPointer> list = findBeansByClassName(allBeans, className);
+      if (list.size() == 1) {
+        return className;
+      }
+    }
 
-     return null;
-   }
+    return null;
+  }
 
 
   @NotNull
@@ -132,7 +132,7 @@ public class SpringUtils {
     final Module module = ModuleUtil.findModuleForPsiElement(file);
     if (module == null) return Collections.singletonList(SpringManager.getInstance(file.getProject()).getSpringModelByFile(file));
 
-    final XmlFile originalFile = (XmlFile)file.getOriginalFile();
+    final XmlFile originalFile = (XmlFile) file.getOriginalFile();
 
     return ContainerUtil.findAll(getNonEmptySpringModels(module), new Condition<SpringModel>() {
       public boolean value(final SpringModel springModel) {
@@ -183,7 +183,7 @@ public class SpringUtils {
       List<DomFileElement<Beans>> models = new SmartList<DomFileElement<Beans>>();
       Set<XmlFile> modelFiles = new THashSet<XmlFile>();
       final GlobalSearchScope scope =
-        GlobalSearchScope.moduleWithDependentsScope(module).intersectWith(GlobalSearchScope.projectScope(project));
+          GlobalSearchScope.moduleWithDependentsScope(module).intersectWith(GlobalSearchScope.projectScope(project));
       final Collection<VirtualFile> files = DomService.getInstance().getDomFileCandidates(Beans.class, project, scope);
       for (final VirtualFile virtualFile : files) {
         final Module mod = ModuleUtil.findModuleForFile(virtualFile, project);
@@ -191,7 +191,7 @@ public class SpringUtils {
 
         final PsiFile file1 = PsiManager.getInstance(project).findFile(virtualFile);
         if (file1 instanceof XmlFile) {
-          final XmlFile xmlFile = (XmlFile)file1;
+          final XmlFile xmlFile = (XmlFile) file1;
           modelFiles.add(xmlFile);
           final DomFileElement<Beans> element = DomManager.getDomManager(project).getFileElement(xmlFile, Beans.class);
           ContainerUtil.addIfNotNull(element, models);
@@ -223,8 +223,9 @@ public class SpringUtils {
   @Nullable
   private static SpringModel getSpringModelForBean(final CommonSpringBean springBean) {
     if (springBean instanceof SpringModelElement) {
-      return getSpringModel((SpringModelElement)springBean);
-    } else {
+      return getSpringModel((SpringModelElement) springBean);
+    }
+    else {
       final Module module = springBean.getModule();
       return module == null ? null : SpringManager.getInstance(module.getProject()).getCombinedModel(module);
     }
@@ -246,7 +247,7 @@ public class SpringUtils {
     }
     final Ref<SpringPropertyDefinition> ref = new Ref<SpringPropertyDefinition>();
     if (searchInParentBean && bean instanceof SpringBean) {
-      visitParents((SpringBean)bean, true, new Processor<SpringBean>() {
+      visitParents((SpringBean) bean, true, new Processor<SpringBean>() {
         public boolean process(SpringBean springBean) {
           ref.set(findPropertyByName(springBean, propertyName, false));
           return ref.get() == null;
@@ -273,7 +274,7 @@ public class SpringUtils {
   public static Collection<String> getValueVariants(final GenericDomValue value) {
     final String stringValue = value.getStringValue();
     if (StringUtil.isEmpty(stringValue)) return Collections.emptyList();
-    final Converter converter = ((PropertyValueConverter)value.getConverter()).getConverter(value);
+    final Converter converter = ((PropertyValueConverter) value.getConverter()).getConverter(value);
     if (!(converter instanceof PlaceholderPropertiesConverter)) return Collections.singletonList(stringValue);
 
     return PlaceholderUtils.getExpandedVariants(value);
@@ -287,8 +288,8 @@ public class SpringUtils {
 
   public static List<SpringValueHolderDefinition> getValueHolders(@NotNull CommonSpringBean bean) {
     return bean instanceof DomSpringBean
-           ? DomUtil.getDefinedChildrenOfType((DomElement)bean, SpringValueHolderDefinition.class)
-           : Collections.<SpringValueHolderDefinition>emptyList();
+        ? DomUtil.getDefinedChildrenOfType((DomElement) bean, SpringValueHolderDefinition.class)
+        : Collections.<SpringValueHolderDefinition>emptyList();
   }
 
   public static List<CommonSpringBean> getChildBeans(@NotNull DomElement parent, final boolean includeParsedCustomBeanWrappers) {
@@ -298,7 +299,7 @@ public class SpringUtils {
         if (includeParsedCustomBeanWrappers || !((CustomBeanWrapper) bean).isParsed()) {
           result.add(bean);
         }
-        result.addAll(((CustomBeanWrapper)bean).getCustomBeans());
+        result.addAll(((CustomBeanWrapper) bean).getCustomBeans());
       }
       else {
         result.add(bean);
@@ -309,12 +310,12 @@ public class SpringUtils {
 
   public static List<SpringPropertyDefinition> getProperties(@NotNull CommonSpringBean bean) {
     return bean instanceof DomSpringBean
-           ? DomUtil.getDefinedChildrenOfType((DomElement)bean, SpringPropertyDefinition.class)
-           : Collections.<SpringPropertyDefinition>emptyList();
+        ? DomUtil.getDefinedChildrenOfType((DomElement) bean, SpringPropertyDefinition.class)
+        : Collections.<SpringPropertyDefinition>emptyList();
   }
 
   public static List<ConstructorArg> getConstructorArgs(@NotNull CommonSpringBean bean) {
-    return bean instanceof SpringBean ? ((SpringBean)bean).getConstructorArgs() : Collections.<ConstructorArg>emptyList();
+    return bean instanceof SpringBean ? ((SpringBean) bean).getConstructorArgs() : Collections.<ConstructorArg>emptyList();
   }
 
   @Nullable
@@ -368,20 +369,20 @@ public class SpringUtils {
   }
 
   public static boolean isEffectiveClassType(final PsiType psiType, @NotNull final CommonSpringBean context) {
-     return isEffectiveClassType(context, psiType, context.getModule());
+    return isEffectiveClassType(context, psiType, context.getModule());
   }
 
   @Nullable
   private static PsiClass resolvePsiClass(final PsiType psiType, final Module module) {
     if (psiType instanceof PsiClassType) {
-      return ((PsiClassType)psiType).resolve();
+      return ((PsiClassType) psiType).resolve();
     }
     if (psiType instanceof PsiPrimitiveType) {
       if (module != null) {
         final GlobalSearchScope scope = module.getModuleWithDependenciesAndLibrariesScope(false);
         final PsiManager psiManager = PsiManager.getInstance(module.getProject());
 
-        final PsiClassType boxedType = ((PsiPrimitiveType)psiType).getBoxedType(psiManager, scope);
+        final PsiClassType boxedType = ((PsiPrimitiveType) psiType).getBoxedType(psiManager, scope);
         if (boxedType != null) {
           return boxedType.resolve();
         }
@@ -397,7 +398,7 @@ public class SpringUtils {
       final SpringBeanPointer springBeanPointer = element.getValue();
       if (springBeanPointer != null) return springBeanPointer;
     }
-    return definition instanceof SpringInjection ? getReferencedSpringBean((SpringInjection)definition) : null;
+    return definition instanceof SpringInjection ? getReferencedSpringBean((SpringInjection) definition) : null;
   }
 
   @Nullable
@@ -510,7 +511,7 @@ public class SpringUtils {
 
       final CommonSpringBean springBean = pointer.getSpringBean();
       if (springBean instanceof SpringBean) {
-        final String unresolvedClassName = ((SpringBean)springBean).getClazz().getStringValue();
+        final String unresolvedClassName = ((SpringBean) springBean).getClazz().getStringValue();
         if (unresolvedClassName != null) beanName = unresolvedClassName;
       }
     }
@@ -521,7 +522,7 @@ public class SpringUtils {
 
     List<SpringBeanPointer> dependencies = new ArrayList<SpringBeanPointer>();
     if (springBean instanceof DomSpringBean) {
-      for (SpringPropertyDefinition property : getProperties((DomSpringBean)springBean)) {
+      for (SpringPropertyDefinition property : getProperties((DomSpringBean) springBean)) {
         if (property instanceof SpringValueHolder) {
           dependencies.addAll(getSpringValueHolderDependencies(property));
         }
@@ -533,7 +534,7 @@ public class SpringUtils {
   public static List<SpringBeanPointer> getConstructorDependencies(final CommonSpringBean springBean) {
     List<SpringBeanPointer> dependencies = new ArrayList<SpringBeanPointer>();
     if (springBean instanceof DomSpringBean) {
-      for (ConstructorArg arg : getConstructorArgs((DomSpringBean)springBean)) {
+      for (ConstructorArg arg : getConstructorArgs((DomSpringBean) springBean)) {
         dependencies.addAll(getSpringValueHolderDependencies(arg));
       }
     }
@@ -554,7 +555,7 @@ public class SpringUtils {
     }
 
     if (definition instanceof SpringValueHolder) {
-      final SpringValueHolder valueHolder = (SpringValueHolder)definition;
+      final SpringValueHolder valueHolder = (SpringValueHolder) definition;
       addSpringRefBeans(valueHolder.getRef(), beans);
       addIdrefBeans(valueHolder.getIdref(), beans);
 
@@ -627,8 +628,7 @@ public class SpringUtils {
     final PsiClass psiClass = type.resolve();
     if (psiClass != null) {
       final PsiManager psiManager = PsiManager.getInstance(project);
-      final PsiClass required = JavaPsiFacade.getInstance(psiManager.getProject()).findClass(className, GlobalSearchScope.allScope(project))
-          ;
+      final PsiClass required = JavaPsiFacade.getInstance(psiManager.getProject()).findClass(className, GlobalSearchScope.allScope(project));
       if (required != null && InheritanceUtil.isInheritorOrSelf(psiClass, required, true)) {
         return true;
       }
@@ -665,9 +665,9 @@ public class SpringUtils {
     final List<SpringBaseBeanPointer> beans = new SmartList<SpringBaseBeanPointer>();
     final Module module = ModuleUtil.findModuleForPsiElement(aClass);
     if (module != null) {
-      final List<SpringModel> models = SpringManager.getInstance(aClass.getProject()).getAllModels(module);
-      for (final SpringModel model : models) {
-        beans.addAll(model.findBeansByPsiClass(aClass));
+      final SpringModel springModel = SpringManager.getInstance(aClass.getProject()).getCombinedModel(module);
+      if (springModel != null) {
+        beans.addAll(springModel.findBeansByPsiClass(aClass));
       }
     }
     return beans;
@@ -695,7 +695,7 @@ public class SpringUtils {
 
   @Nullable
   public static PsiType getGenericCollectonType(final PsiType psiType) {
-    final List<PsiType> psiTypes = resolveGenerics((PsiClassType)psiType);
+    final List<PsiType> psiTypes = resolveGenerics((PsiClassType) psiType);
     return psiTypes.size() == 1 ? psiTypes.get(0) : null;
   }
 
@@ -731,11 +731,11 @@ public class SpringUtils {
     }
     CommonSpringBean bean = parent.getSpringBean();
     while (bean instanceof SpringBean) {
-      if (!processor.process((SpringBean)bean)) {
+      if (!processor.process((SpringBean) bean)) {
         return false;
       }
 
-      parent = ((SpringBean)bean).getParentBean().getValue();
+      parent = ((SpringBean) bean).getParentBean().getValue();
       if (parent == null) {
         return true;
       }
@@ -755,7 +755,7 @@ public class SpringUtils {
       public boolean process(final SpringBean springBean) {
         final List<? extends DomElement> list = description.getValues(springBean);
         if (list.size() == 1) {
-          final T t = (T)list.get(0);
+          final T t = (T) list.get(0);
           if (DomUtil.hasXml(t)) {
             ref.set(t);
             return false;
@@ -795,7 +795,7 @@ public class SpringUtils {
   @NotNull
   public static List<SpringBaseBeanPointer> getBeansByType(final PsiType type, final SpringModel model) {
     if (type instanceof PsiClassType) {
-      final PsiClass psiClass = ((PsiClassType)type).resolve();
+      final PsiClass psiClass = ((PsiClassType) type).resolve();
       if (psiClass != null) {
         return model.findBeansByEffectivePsiClassWithInheritance(psiClass);
       }
@@ -812,7 +812,7 @@ public class SpringUtils {
   @NotNull
   public static Set<String> getListOrSetValues(@NotNull final SpringPropertyDefinition property) {
     if (property instanceof SpringProperty) {
-      final SpringProperty springProperty = (SpringProperty)property;
+      final SpringProperty springProperty = (SpringProperty) property;
       if (DomUtil.hasXml(springProperty.getList())) {
         return getValues(springProperty.getList());
       }

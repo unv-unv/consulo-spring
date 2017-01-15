@@ -21,7 +21,8 @@ import java.util.Set;
 public class GotoSpringBeanProvider extends GoToSymbolProvider {
 
   protected void addNames(@NotNull final Module module, final Set<String> result) {
-    for (SpringModel springModel : SpringManager.getInstance(module.getProject()).getAllModels(module)) {
+    SpringModel springModel = SpringManager.getInstance(module.getProject()).getCombinedModel(module);
+    if(springModel != null) {
       for (SpringBaseBeanPointer pointer : springModel.getAllCommonBeans()) {
         result.addAll(getNames(pointer));
       }
@@ -35,7 +36,8 @@ public class GotoSpringBeanProvider extends GoToSymbolProvider {
   }
 
   protected void addItems(@NotNull final Module module, final String name, final List<NavigationItem> result) {
-    for (SpringModel springModel : SpringManager.getInstance(module.getProject()).getAllModels(module)) {
+    SpringModel springModel = SpringManager.getInstance(module.getProject()).getCombinedModel(module);
+    if(springModel != null) {
       for (SpringBaseBeanPointer pointer : springModel.getAllCommonBeans()) {
         final Set<String> beanNames = getNames(pointer);
         if (beanNames.contains(name)) {
