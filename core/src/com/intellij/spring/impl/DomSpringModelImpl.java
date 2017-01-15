@@ -36,6 +36,7 @@ import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.model.impl.DomModelImpl;
+import consulo.spring.DomSpringModel;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +47,7 @@ import java.util.*;
 /**
  * @author Dmitry Avdeev
  */
-public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel {
+public class DomSpringModelImpl extends DomModelImpl<Beans> implements DomSpringModel {
 
   private abstract static class Class2BeansMap {
     private final Map<String, List<SpringBaseBeanPointer>> myMap = new HashMap<String, List<SpringBaseBeanPointer>>();
@@ -71,19 +72,19 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
 
   @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection"})
   private final ConcurrentFactoryMap<SpringQualifier, List<SpringBaseBeanPointer>> myBeansByQualifier =
-    new ConcurrentFactoryMap<SpringQualifier, List<SpringBaseBeanPointer>>() {
-      protected List<SpringBaseBeanPointer> create(final SpringQualifier key) {
-        return computeBeansByQualifier(key);
-      }
-    };
+      new ConcurrentFactoryMap<SpringQualifier, List<SpringBaseBeanPointer>>() {
+        protected List<SpringBaseBeanPointer> create(final SpringQualifier key) {
+          return computeBeansByQualifier(key);
+        }
+      };
 
   @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection"})
   private final ConcurrentFactoryMap<PsiClass, List<SpringBaseBeanPointer>> myBeansByClass =
-    new ConcurrentFactoryMap<PsiClass, List<SpringBaseBeanPointer>>() {
-      protected List<SpringBaseBeanPointer> create(final PsiClass key) {
-        return computeBeansByPsiClass(key);
-      }
-    };
+      new ConcurrentFactoryMap<PsiClass, List<SpringBaseBeanPointer>>() {
+        protected List<SpringBaseBeanPointer> create(final PsiClass key) {
+          return computeBeansByPsiClass(key);
+        }
+      };
 
   private final Class2BeansMap myBeansByEffectiveClassWithInheritance = new Class2BeansMap() {
     @Override
@@ -99,38 +100,39 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
   };
 
   private final AtomicNotNullLazyValue<MultiMap<PsiClass, SpringBaseBeanPointer>> myBeansByClassWithInheritance =
-    new AtomicNotNullLazyValue<MultiMap<PsiClass, SpringBaseBeanPointer>>() {
-      @NotNull
-      @Override
-      protected MultiMap<PsiClass, SpringBaseBeanPointer> compute() {
-        return computeBeansByPsiClassWithInheritance();
-      }
-    };
+      new AtomicNotNullLazyValue<MultiMap<PsiClass, SpringBaseBeanPointer>>() {
+        @NotNull
+        @Override
+        protected MultiMap<PsiClass, SpringBaseBeanPointer> compute() {
+          return computeBeansByPsiClassWithInheritance();
+        }
+      };
 
   private final AtomicNotNullLazyValue<MultiMap<String, XmlTag>> myCustomBeanIdCandidates =
-    new AtomicNotNullLazyValue<MultiMap<String, XmlTag>>() {
-      @NotNull
-      @Override
-      protected MultiMap<String, XmlTag> compute() {
-        final MultiMap<String, XmlTag> map = new MultiMap<String, XmlTag>();
-        for (final DomFileElement<Beans> element : getRoots()) {
-          for (CustomBeanWrapper bean : DomUtil.getDefinedChildrenOfType(element.getRootElement(), CustomBeanWrapper.class)) {
-            if (!bean.isParsed()) {
-              final XmlTag tag = bean.getXmlTag();
-              for (XmlAttribute attribute : tag.getAttributes()) {
-                map.putValue(attribute.getDisplayValue(), tag);
+      new AtomicNotNullLazyValue<MultiMap<String, XmlTag>>() {
+        @NotNull
+        @Override
+        protected MultiMap<String, XmlTag> compute() {
+          final MultiMap<String, XmlTag> map = new MultiMap<String, XmlTag>();
+          for (final DomFileElement<Beans> element : getRoots()) {
+            for (CustomBeanWrapper bean : DomUtil.getDefinedChildrenOfType(element.getRootElement(), CustomBeanWrapper.class)) {
+              if (!bean.isParsed()) {
+                final XmlTag tag = bean.getXmlTag();
+                for (XmlAttribute attribute : tag.getAttributes()) {
+                  map.putValue(attribute.getDisplayValue(), tag);
+                }
               }
             }
           }
-        }
 
-        return map;
-      }
-    };
+          return map;
+        }
+      };
 
   private BeanNamesMapper myBeanNamesMapper;
 
-  @Nullable private final Module myModule;
+  @Nullable
+  private final Module myModule;
 
   private SpringModel[] myDependencies = EMPTY_ARRAY;
 
@@ -141,41 +143,41 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
   private Collection<? extends SpringBaseBeanPointer> myBeans;
 
   private final AtomicNotNullLazyValue<Collection<SpringBaseBeanPointer>> myOwnBeans =
-    new AtomicNotNullLazyValue<Collection<SpringBaseBeanPointer>>() {
-      @NotNull
-      protected Collection<SpringBaseBeanPointer> compute() {
-        Collection<SpringBaseBeanPointer> beans = null;
-        for (final DomFileElement<Beans> element : getRoots()) {
-          final List<CommonSpringBean> springBeanList = SpringUtils.getChildBeans(element.getRootElement(), false);
-          if (beans == null) {
-            beans = new ArrayList<SpringBaseBeanPointer>(springBeanList.size());
+      new AtomicNotNullLazyValue<Collection<SpringBaseBeanPointer>>() {
+        @NotNull
+        protected Collection<SpringBaseBeanPointer> compute() {
+          Collection<SpringBaseBeanPointer> beans = null;
+          for (final DomFileElement<Beans> element : getRoots()) {
+            final List<CommonSpringBean> springBeanList = SpringUtils.getChildBeans(element.getRootElement(), false);
+            if (beans == null) {
+              beans = new ArrayList<SpringBaseBeanPointer>(springBeanList.size());
+            }
+            for (CommonSpringBean bean : springBeanList) {
+              beans.add(SpringBeanPointer.createSpringBeanPointer(bean));
+            }
           }
-          for (CommonSpringBean bean : springBeanList) {
-            beans.add(SpringBeanPointer.createSpringBeanPointer(bean));
-          }
+          return beans == null ? Collections.<SpringBaseBeanPointer>emptySet() : beans;
         }
-        return beans == null ? Collections.<SpringBaseBeanPointer>emptySet() : beans;
-      }
-    };
+      };
 
   private final AtomicNotNullLazyValue<MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer>> myDirectInheritorsMap =
-    new AtomicNotNullLazyValue<MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer>>() {
-      @NotNull
-      protected MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer> compute() {
-        final MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer> map = new MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer>() {
-          protected Map<SpringBaseBeanPointer, Collection<SpringBaseBeanPointer>> createMap() {
-            return new ConcurrentHashMap<SpringBaseBeanPointer, Collection<SpringBaseBeanPointer>>();
+      new AtomicNotNullLazyValue<MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer>>() {
+        @NotNull
+        protected MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer> compute() {
+          final MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer> map = new MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer>() {
+            protected Map<SpringBaseBeanPointer, Collection<SpringBaseBeanPointer>> createMap() {
+              return new ConcurrentHashMap<SpringBaseBeanPointer, Collection<SpringBaseBeanPointer>>();
+            }
+          };
+          for (final SpringBaseBeanPointer pointer : getAllDomBeans()) {
+            final SpringBeanPointer parentPointer = pointer.getParentPointer();
+            if (parentPointer != null) {
+              map.putValue(parentPointer.getBasePointer(), pointer);
+            }
           }
-        };
-        for (final SpringBaseBeanPointer pointer : getAllDomBeans()) {
-          final SpringBeanPointer parentPointer = pointer.getParentPointer();
-          if (parentPointer != null) {
-            map.putValue(parentPointer.getBasePointer(), pointer);
-          }
+          return map;
         }
-        return map;
-      }
-    };
+      };
 
   private List<SpringJavaConfiguration> myJavaConfigurations;
 
@@ -190,10 +192,10 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
 
   }
 
-  public SpringModelImpl(@NotNull final DomFileElement<Beans> mergedModel,
-                         @NotNull final Set<XmlFile> configFiles,
-                         final Module module,
-                         final SpringFileSet fileSet) {
+  public DomSpringModelImpl(@NotNull final DomFileElement<Beans> mergedModel,
+                            @NotNull final Set<XmlFile> configFiles,
+                            final Module module,
+                            final SpringFileSet fileSet) {
 
     super(mergedModel, configFiles);
     myFileSet = fileSet;
@@ -210,8 +212,8 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
       if (!visitor.visit(dependency)) {
         return false;
       }
-      if (dependency instanceof SpringModelImpl) {
-        ((SpringModelImpl)dependency).visitDependencies(visitor);
+      if (dependency instanceof DomSpringModelImpl) {
+        ((DomSpringModelImpl) dependency).visitDependencies(visitor);
       }
     }
     return true;
@@ -318,8 +320,8 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
   public synchronized Collection<? extends SpringBaseBeanPointer> getAllCommonBeans(final boolean withDepenedencies) {
     if (!withDepenedencies || myDependencies.length == 0) {
       return myBeansWithoutDependencies == null
-             ? myBeansWithoutDependencies = calculateBeans(withDepenedencies)
-             : myBeansWithoutDependencies;
+          ? myBeansWithoutDependencies = calculateBeans(withDepenedencies)
+          : myBeansWithoutDependencies;
     }
     else {
       return myBeans == null ? myBeans = calculateBeans(withDepenedencies) : myBeans;
@@ -375,7 +377,7 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
     final List<SpringBaseBeanPointer> pointers = new ArrayList<SpringBaseBeanPointer>(myBeansByQualifier.get(qualifier));
     visitDependencies(new ModelVisitor() {
       public boolean visit(final SpringModel model) {
-        pointers.addAll(((SpringModelImpl)model).myBeansByQualifier.get(qualifier));
+        pointers.addAll(((DomSpringModelImpl) model).myBeansByQualifier.get(qualifier));
         return true;
       }
     });
@@ -403,7 +405,7 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
     final List<SpringBaseBeanPointer> pointers = new ArrayList<SpringBaseBeanPointer>(myBeansByClass.get(psiClass));
     visitDependencies(new ModelVisitor() {
       public boolean visit(final SpringModel model) {
-        pointers.addAll(((SpringModelImpl)model).myBeansByClass.get(psiClass));
+        pointers.addAll(((DomSpringModelImpl) model).myBeansByClass.get(psiClass));
         return true;
       }
     });
@@ -413,10 +415,10 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
   @NotNull
   public List<SpringBaseBeanPointer> findBeansByPsiClassWithInheritance(@NotNull final PsiClass psiClass) {
     final ArrayList<SpringBaseBeanPointer> pointers =
-      new ArrayList<SpringBaseBeanPointer>(myBeansByClassWithInheritance.getValue().get(psiClass));
+        new ArrayList<SpringBaseBeanPointer>(myBeansByClassWithInheritance.getValue().get(psiClass));
     visitDependencies(new ModelVisitor() {
       public boolean visit(final SpringModel model) {
-        pointers.addAll(((SpringModelImpl)model).myBeansByClassWithInheritance.getValue().get(psiClass));
+        pointers.addAll(((DomSpringModelImpl) model).myBeansByClassWithInheritance.getValue().get(psiClass));
         return true;
       }
     });
@@ -426,18 +428,18 @@ public class SpringModelImpl extends DomModelImpl<Beans> implements SpringModel 
 
   @NotNull
   public List<SpringBaseBeanPointer> findBeansByEffectivePsiClassWithInheritance(@NotNull final PsiClass psiClass) {
-    return collectBeans(psiClass, new Function<SpringModelImpl, Class2BeansMap>() {
-      public Class2BeansMap fun(SpringModelImpl springModel) {
+    return collectBeans(psiClass, new Function<DomSpringModelImpl, Class2BeansMap>() {
+      public Class2BeansMap fun(DomSpringModelImpl springModel) {
         return springModel.myBeansByEffectiveClassWithInheritance;
       }
     });
   }
 
-  private List<SpringBaseBeanPointer> collectBeans(final PsiClass psiClass, final Function<SpringModelImpl, Class2BeansMap> getter) {
+  private List<SpringBaseBeanPointer> collectBeans(final PsiClass psiClass, final Function<DomSpringModelImpl, Class2BeansMap> getter) {
     final ArrayList<SpringBaseBeanPointer> pointers = new ArrayList<SpringBaseBeanPointer>(getter.fun(this).get(psiClass));
     visitDependencies(new ModelVisitor() {
       public boolean visit(final SpringModel model) {
-        pointers.addAll(getter.fun((SpringModelImpl)model).get(psiClass));
+        pointers.addAll(getter.fun((DomSpringModelImpl) model).get(psiClass));
         return true;
       }
     });

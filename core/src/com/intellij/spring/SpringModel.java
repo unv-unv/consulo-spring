@@ -6,14 +6,15 @@ package com.intellij.spring;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.facet.SpringFileSet;
-import com.intellij.util.xml.model.DomModel;
+import com.intellij.util.xml.DomFileElement;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,10 +26,10 @@ import java.util.Set;
 /**
  * @author Dmitry Avdeev
  */
-public interface SpringModel extends DomModel<Beans> {
+public interface SpringModel {
 
   SpringModel[] EMPTY_ARRAY = new SpringModel[0];
-  
+
   @NotNull
   String getId();
 
@@ -90,4 +91,10 @@ public interface SpringModel extends DomModel<Beans> {
   List<SpringBaseBeanPointer> findQualifiedBeans(final @NotNull SpringQualifier qualifier);
 
   Collection<XmlTag> getCustomBeanCandidates(String id);
+
+  @NotNull
+  Set<XmlFile> getConfigFiles();
+
+  @NotNull
+  List<DomFileElement<Beans>> getRoots();
 }

@@ -38,7 +38,7 @@ import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.constants.SpringConstants;
 import com.intellij.spring.factories.SpringFactoryBeansManager;
-import com.intellij.spring.impl.SpringModelImpl;
+import com.intellij.spring.impl.DomSpringModelImpl;
 import com.intellij.spring.model.converters.SpringConverterUtil;
 import com.intellij.spring.model.values.PlaceholderUtils;
 import com.intellij.spring.model.values.PropertyValueConverter;
@@ -200,7 +200,7 @@ public class SpringUtils {
       if (models.isEmpty()) return Collections.emptyList();
 
       final DomFileElement<Beans> merged = DomService.getInstance().createModelMerger().mergeModels(DomFileElement.class, models);
-      return Collections.<SpringModel>singletonList(new SpringModelImpl(merged, modelFiles, module, null) {
+      return Collections.<SpringModel>singletonList(new DomSpringModelImpl(merged, modelFiles, module, null) {
         @Override
         public String toString() {
           return "No fileset mock model";

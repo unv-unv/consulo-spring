@@ -20,14 +20,12 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
+import consulo.spring.DomSpringModel;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -66,13 +64,9 @@ public class SpringManagerImpl extends SpringManager {
 
   @NotNull
   public List<SpringModel> getAllModels(@NotNull Module module) {
-    final List<SpringModel> list = myModelFactory.getAllModels(module);
-    /*for (final SpringModel springModel : list) {
-      for (final DomFileElement<Beans> element : springModel.getRoots()) {
-        ((RootBaseImpl)element.getRootElement()).registerDomModule(module);
-      }
-    }*/
-    return list;
+    List<DomSpringModel> domSpringModels = myModelFactory.getAllModels(module);
+
+    return new ArrayList<>(domSpringModels);
   }
 
   @Nullable
@@ -105,9 +99,8 @@ public class SpringManagerImpl extends SpringManager {
   @Nullable
   public SpringModel getLocalSpringModel(@NotNull XmlFile file) {
     final DomFileElement<Beans> beans = myModelFactory.getDomRoot(file);
-    return beans == null ? null : new SpringModelImpl(beans, Collections.singleton(file), ModuleUtil.findModuleForPsiElement(file), null);
+    return beans == null ? null : new DomSpringModelImpl(beans, Collections.singleton(file), ModuleUtil.findModuleForPsiElement(file), null);
   }
-
 
   @NotNull
   public List<SpringFileSet> getProvidedModels(@NotNull SpringModuleExtension facet) {

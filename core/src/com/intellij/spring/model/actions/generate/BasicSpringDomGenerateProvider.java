@@ -8,6 +8,7 @@ import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.actions.generate.AbstractDomGenerateProvider;
+import consulo.spring.DomSpringModel;
 
 /**
  * User: Sergey.Vasiliev
@@ -24,6 +25,9 @@ public abstract class BasicSpringDomGenerateProvider<T extends DomElement> exten
 
   protected DomElement getParentDomElement(final Project project, final Editor editor, final PsiFile file) {
     final SpringModel springModel = SpringManager.getInstance(project).getLocalSpringModel((XmlFile)file);
-    return springModel == null ? null : springModel.getMergedModel();
+    if(springModel instanceof DomSpringModel) {
+      return ((DomSpringModel) springModel).getMergedModel();
+    }
+    return null;
   }
 }

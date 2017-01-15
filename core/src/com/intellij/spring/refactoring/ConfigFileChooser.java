@@ -14,7 +14,7 @@ import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.facet.SpringFileSet;
-import com.intellij.spring.impl.SpringModelImpl;
+import com.intellij.spring.impl.DomSpringModelImpl;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.treeStructure.SimpleNode;
@@ -138,8 +138,8 @@ public class ConfigFileChooser extends DialogWrapper {
 
     private FileSetNode(SpringModel model) {
       myModel = model;
-      if (model instanceof SpringModelImpl && ((SpringModelImpl)model).getFileSet() != null) {
-        final SpringFileSet springFileSet = ((SpringModelImpl)model).getFileSet();
+      if (model instanceof DomSpringModelImpl && ((DomSpringModelImpl)model).getFileSet() != null) {
+        final SpringFileSet springFileSet = ((DomSpringModelImpl)model).getFileSet();
         setPlainText(springFileSet.getName());
         setUniformIcon(springFileSet.getIcon());
       } else {

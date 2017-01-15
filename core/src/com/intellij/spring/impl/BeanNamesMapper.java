@@ -29,7 +29,7 @@ class BeanNamesMapper {
 
   private final Set<String> myDuplicatedNames = new HashSet<String>();
 
-  public BeanNamesMapper(SpringModelImpl model) {
+  public BeanNamesMapper(DomSpringModelImpl model) {
 
     final Collection<? extends SpringBaseBeanPointer> springBeans = model.getAllCommonBeans();
     final Collection<SpringBaseBeanPointer> ownBeans = model.getOwnBeans();
