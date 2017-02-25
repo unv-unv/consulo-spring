@@ -53,12 +53,7 @@ import java.util.*;
 /**
  * @author peter
  */
-@State(
-    name = "CustomBeanRegistry",
-    storages = {
-        @Storage(id = "default", file = "$WORKSPACE_FILE$"),
-        @Storage(id = "dir", file = "$PROJECT_CONFIG_DIR$/customSpringBeans.xml", scheme = StorageScheme.DIRECTORY_BASED)
-    })
+@State(name = "CustomBeanRegistry", storages = @Storage(file = StoragePathMacros.PROJECT_CONFIG_DIR + "/customSpringBeans.xml"))
 public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRegistry.MyBean> {
   private static boolean isDebug() {
     return false;
