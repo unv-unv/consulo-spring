@@ -6,6 +6,7 @@ package com.intellij.spring;
 
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.spring.facet.SpringFileSet;
+import consulo.annotations.RequiredReadAction;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,5 +20,6 @@ public interface SpringModelProvider {
   ExtensionPointName<SpringModelProvider> EP_NAME = new ExtensionPointName<SpringModelProvider>("com.intellij.spring.modelProvider");
 
   @NotNull
-  List<SpringFileSet> getFilesets(@NotNull SpringModuleExtension facet);
+  @RequiredReadAction
+  List<SpringFileSet> getFilesets(@NotNull SpringModuleExtension extension);
 }

@@ -250,6 +250,7 @@ public class DomSpringModelImpl extends DomModelImpl<Beans> implements DomSpring
     return myDependencies == null ? EMPTY_ARRAY : myDependencies;
   }
 
+  @NotNull
   public Collection<XmlTag> getCustomBeanCandidates(String id) {
     return myCustomBeanIdCandidates.getValue().get(id);
   }
@@ -284,6 +285,7 @@ public class DomSpringModelImpl extends DomModelImpl<Beans> implements DomSpring
     return getAllDomBeans(true);
   }
 
+  @NotNull
   public Collection<SpringBaseBeanPointer> getOwnBeans() {
     return myOwnBeans.getValue();
   }
@@ -373,6 +375,7 @@ public class DomSpringModelImpl extends DomModelImpl<Beans> implements DomSpring
     return allBeans;
   }
 
+  @NotNull
   public List<SpringBaseBeanPointer> findQualifiedBeans(@NotNull final SpringQualifier qualifier) {
     final List<SpringBaseBeanPointer> pointers = new ArrayList<SpringBaseBeanPointer>(myBeansByQualifier.get(qualifier));
     visitDependencies(new ModelVisitor() {

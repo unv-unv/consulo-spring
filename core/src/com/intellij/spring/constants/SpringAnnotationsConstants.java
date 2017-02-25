@@ -53,7 +53,7 @@ public interface SpringAnnotationsConstants {
   @NonNls
   String CUSTOM_AUTOWIRE_CONFIGURER_CLASS = "org.springframework.beans.factory.annotation.CustomAutowireConfigurer";
 
-  String SPRING_BOOT_APPLICATION = "org.springframework.boot.autoconfigure.SpringBootApplication"
+  String SPRING_BOOT_APPLICATION = "org.springframework.boot.autoconfigure.SpringBootApplication";
 
   // predefined component annotations
   @NonNls

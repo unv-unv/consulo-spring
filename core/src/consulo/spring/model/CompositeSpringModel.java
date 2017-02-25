@@ -12,13 +12,12 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
 import com.intellij.util.xml.DomFileElement;
+import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -53,31 +52,55 @@ public class CompositeSpringModel implements SpringModel {
   @Nullable
   @Override
   public SpringBeanPointer findBean(@NonNls @NotNull String beanName) {
+    for (SpringModel model : myModels) {
+      SpringBeanPointer bean = model.findBean(beanName);
+      if (bean != null) {
+        return bean;
+      }
+    }
     return null;
   }
 
   @Nullable
   @Override
   public SpringBeanPointer findParentBean(@NonNls @NotNull String beanName) {
+    for (SpringModel model : myModels) {
+      SpringBeanPointer bean = model.findParentBean(beanName);
+      if (bean != null) {
+        return bean;
+      }
+    }
     return null;
   }
 
   @NotNull
   @Override
   public Collection<SpringBaseBeanPointer> getAllDomBeans() {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getAllDomBeans());
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public Collection<SpringBaseBeanPointer> getAllDomBeans(boolean withDepenedencies) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getAllDomBeans(withDepenedencies));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public Set<String> getAllBeanNames(@NotNull String beanName) {
-    return null;
+    Set<String> list = new THashSet<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getAllBeanNames(beanName));
+    }
+    return list;
   }
 
   @Override
@@ -88,49 +111,81 @@ public class CompositeSpringModel implements SpringModel {
   @NotNull
   @Override
   public Collection<? extends SpringBaseBeanPointer> getAllCommonBeans(boolean withDepenedencies) {
-    return null;
+    Collection<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getAllCommonBeans(withDepenedencies));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public Collection<? extends SpringBaseBeanPointer> getAllCommonBeans() {
-    return null;
+    Collection<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getAllCommonBeans());
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public Collection<? extends SpringBaseBeanPointer> getAllParentBeans() {
-    return null;
+    Collection<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getAllParentBeans());
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public List<SpringBaseBeanPointer> findBeansByPsiClass(@NotNull PsiClass psiClass) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.findBeansByPsiClass(psiClass));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public List<SpringBaseBeanPointer> findBeansByPsiClassWithInheritance(@NotNull PsiClass psiClass) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.findBeansByPsiClassWithInheritance(psiClass));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public List<SpringBaseBeanPointer> findBeansByEffectivePsiClassWithInheritance(@NotNull PsiClass psiClass) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.findBeansByEffectivePsiClassWithInheritance(psiClass));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public List<SpringBaseBeanPointer> getChildren(@NotNull SpringBeanPointer parent) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getChildren(parent));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public List<SpringBaseBeanPointer> getDescendants(@NotNull CommonSpringBean context) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getDescendants(context));
+    }
+    return list;
   }
 
   @Nullable
@@ -139,30 +194,45 @@ public class CompositeSpringModel implements SpringModel {
     return myModule;
   }
 
+  @NotNull
   @Override
   public Collection<SpringBaseBeanPointer> getOwnBeans() {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getOwnBeans());
+    }
+    return list;
   }
 
+  @NotNull
   @Override
   public List<SpringBaseBeanPointer> findQualifiedBeans(@NotNull SpringQualifier qualifier) {
-    return null;
+    List<SpringBaseBeanPointer> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.findQualifiedBeans(qualifier));
+    }
+    return list;
   }
 
+  @NotNull
   @Override
   public Collection<XmlTag> getCustomBeanCandidates(String id) {
-    return null;
+    List<XmlTag> list = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      list.addAll(model.getCustomBeanCandidates(id));
+    }
+    return list;
   }
 
   @NotNull
   @Override
   public Set<XmlFile> getConfigFiles() {
-    return null;
+    return Collections.emptySet();
   }
 
   @NotNull
   @Override
   public List<DomFileElement<Beans>> getRoots() {
-    return null;
+    return Collections.emptyList();
   }
 }

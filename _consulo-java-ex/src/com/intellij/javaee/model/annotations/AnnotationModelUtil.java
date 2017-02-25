@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class AnnotationModelUtil {
   private static class AnnotationGenericValueImpl<T> implements AnnotationGenericValue<T> {
-
     private T myValue;
     private String myStringValue;
 
@@ -38,8 +37,16 @@ public class AnnotationModelUtil {
   }
 
   @NotNull
-  public static AnnotationGenericValue<String> getStringValue(PsiAnnotation annotation, String value, String defaultValue) {
-    throw new UnsupportedOperationException();
+  public static AnnotationGenericValue<String> getStringValue(PsiAnnotation annotation, String name, String defaultValue) {
+    PsiAnnotationMemberValue attributeValue = annotation.findAttributeValue(name);
+    String value = defaultValue;
+    if (attributeValue instanceof PsiLiteral) {
+      Object literalValue = ((PsiLiteral) attributeValue).getValue();
+      if (literalValue instanceof String) {
+        value = (String) literalValue;
+      }
+    }
+    return new AnnotationGenericValueImpl<>(value, value);
   }
 
   @RequiredReadAction

@@ -11,6 +11,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.converters.CustomConverterRegistry;
 import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
+import consulo.annotations.RequiredReadAction;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -40,6 +41,7 @@ public abstract class SpringManager {
    * @see #getCombinedModel(Module)
    */
   @NotNull
+  @RequiredReadAction
   public abstract List<SpringModel> getAllModels(@NotNull Module module);
 
   /**
@@ -50,16 +52,18 @@ public abstract class SpringManager {
    * @see #getAllModels(Module)
    */
   @Nullable
+  @RequiredReadAction
   public abstract SpringModel getCombinedModel(@Nullable Module module);
 
   /**
    * Returns models provided by all {@link SpringModelProvider}s.
-   * @param facet
+   * @param extension
    * @return models provided by {@link SpringModelProvider}.
    * @see SpringModelProvider
    */
   @NotNull
-  public abstract List<SpringFileSet> getProvidedModels(final @NotNull SpringModuleExtension facet);
+  @RequiredReadAction
+  public abstract List<SpringFileSet> getProvidedModels(final @NotNull SpringModuleExtension extension);
 
   /**
    * Returns all configured and provided file sets.
@@ -73,7 +77,4 @@ public abstract class SpringManager {
   public abstract GenericDomValueConvertersRegistry getValueProvidersRegistry();
 
   public abstract CustomConverterRegistry getCustomConverterRegistry();
-
-  @Nullable
-  public abstract SpringModel createModel(SpringFileSet set, Module module);
 }

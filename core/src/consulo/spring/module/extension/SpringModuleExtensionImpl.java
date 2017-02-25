@@ -5,6 +5,7 @@ import com.intellij.spring.facet.SpringFileSet;
 import consulo.annotations.RequiredReadAction;
 import consulo.module.extension.impl.ModuleExtensionImpl;
 import consulo.roots.ModuleRootLayer;
+import consulo.spring.boot.SpringBootFileSet;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -86,6 +87,10 @@ public class SpringModuleExtensionImpl extends ModuleExtensionImpl<SpringModuleE
     super.getStateImpl(element);
 
     for (SpringFileSet fileSet : myFileSets) {
+      if (fileSet instanceof SpringBootFileSet) {
+        continue;
+      }
+
       final Element setElement = new Element(FILESET);
       setElement.setAttribute(SET_ID, fileSet.getId());
       setElement.setAttribute(SET_NAME, fileSet.getName());

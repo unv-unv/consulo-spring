@@ -86,10 +86,13 @@ public interface SpringModel {
   @Nullable
   Module getModule();
 
+  @NotNull
   Collection<SpringBaseBeanPointer> getOwnBeans();
 
+  @NotNull
   List<SpringBaseBeanPointer> findQualifiedBeans(final @NotNull SpringQualifier qualifier);
 
+  @NotNull
   Collection<XmlTag> getCustomBeanCandidates(String id);
 
   @NotNull

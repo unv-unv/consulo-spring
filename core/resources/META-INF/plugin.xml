@@ -26,6 +26,10 @@
     <!-- <extensionPoint name="mvcViewProvider" interface="com.intellij.spring.web.mvc.MVCViewProvider"/> -->
   </extensionPoints>
 
+  <extensions defaultExtensionNs="com.intellij.spring">
+    <modelProvider implementation="consulo.spring.boot.SpringBootModelProvider"/>
+  </extensions>
+
   <extensions defaultExtensionNs="com.intellij">
     <elementDescriptionProvider implementation="com.intellij.spring.model.jam.javaConfig.SpringJamPomTargetDescriptionProvider"/>
     <semContributor implementation="com.intellij.spring.model.jam.SpringSemContributor"/>

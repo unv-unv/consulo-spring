@@ -6,6 +6,10 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.facet.SpringFileSet;
+import com.intellij.spring.model.jam.SpringJamModel;
+import com.intellij.spring.model.jam.javaConfig.SpringJavaBean;
+import com.intellij.spring.model.jam.javaConfig.SpringJavaConfiguration;
+import com.intellij.spring.model.jam.stereotype.SpringStereotypeElement;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.spring.model.xml.beans.Beans;
@@ -26,6 +30,12 @@ import java.util.Set;
  * @since 15-Jan-17
  */
 public class AnnotationSpringModel implements SpringModel {
+  private Module myModule;
+
+  public AnnotationSpringModel(Module module) {
+    myModule = module;
+  }
+
   @NotNull
   @Override
   public String getId() {
@@ -46,6 +56,27 @@ public class AnnotationSpringModel implements SpringModel {
   @Nullable
   @Override
   public SpringBeanPointer findBean(@NonNls @NotNull String beanName) {
+    SpringJamModel model = SpringJamModel.getModel(myModule);
+
+    List<SpringJavaConfiguration> configurations = model.getConfigurations();
+    for (SpringJavaConfiguration configuration : configurations) {
+      List<? extends SpringJavaBean> beans = configuration.getBeans();
+
+      for (SpringJavaBean bean : beans) {
+        String beanName1 = bean.getBeanName();
+        if (beanName.equals(beanName1)) {
+          return SpringBeanPointer.createSpringBeanPointer(bean);
+        }
+      }
+    }
+
+    List<? extends SpringStereotypeElement> allStereotypeComponents = model.getAllStereotypeComponents();
+    for (SpringStereotypeElement allStereotypeComponent : allStereotypeComponents) {
+      String beanName1 = allStereotypeComponent.getBeanName();
+      if (beanName.equals(beanName1)) {
+        return SpringBeanPointer.createSpringBeanPointer(allStereotypeComponent);
+      }
+    }
     return null;
   }
 
@@ -132,19 +163,22 @@ public class AnnotationSpringModel implements SpringModel {
     return null;
   }
 
+  @NotNull
   @Override
   public Collection<SpringBaseBeanPointer> getOwnBeans() {
-    return null;
+    return Collections.emptyList();
   }
 
+  @NotNull
   @Override
   public List<SpringBaseBeanPointer> findQualifiedBeans(@NotNull SpringQualifier qualifier) {
-    return null;
+    return Collections.emptyList();
   }
 
+  @NotNull
   @Override
   public Collection<XmlTag> getCustomBeanCandidates(String id) {
-    return null;
+    return Collections.emptyList();
   }
 
   @NotNull

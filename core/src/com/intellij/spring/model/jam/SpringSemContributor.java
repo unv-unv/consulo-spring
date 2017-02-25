@@ -18,6 +18,7 @@ import com.intellij.spring.model.jam.javaConfig.JavaSpringConfiguration;
 import com.intellij.spring.model.jam.stereotype.*;
 import com.intellij.spring.model.jam.utils.JamAnnotationTypeUtil;
 import com.intellij.util.NullableFunction;
+import consulo.spring.boot.SpringBootModelProvider;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class SpringSemContributor extends SemContributor {
   public void registerSemProviders(SemRegistrar registrar) {
     PsiClassPattern psiClassPattern = psiClass().nonAnnotationType();
 
+    SpringBootModelProvider.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.SPRING_BOOT_APPLICATION));
     JavaConfigConfiguration.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.JAVA_CONFIG_CONFIGURATION_ANNOTATION));
     JavaSpringConfiguration.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.JAVA_SPRING_CONFIGURATION_ANNOTATION));
 

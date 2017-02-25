@@ -30,6 +30,7 @@ import java.util.*;
 /**
  * @author Dmitry Avdeev
 */
+@Deprecated
 public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, PsiElement> {
 
   protected SpringModelFactory(Project project) {
