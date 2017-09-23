@@ -5,7 +5,7 @@
 package com.intellij.spring.model.converters;
 
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInsight.lookup.LookupValueFactory;
+import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.LocalQuickFixProvider;
 import com.intellij.psi.*;
@@ -105,10 +105,7 @@ public abstract class PsiMethodConverter extends Converter<PsiMethod> implements
                                           PsiFormatUtil.SHOW_NAME | PsiFormatUtil.SHOW_TYPE);
 
         final PsiType returnType = method.getReturnType();
-        final Object value = LookupValueFactory.createLookupValueWithHintAndTail(method.getName(),
-                                     IconDescriptorUpdaters.getIcon(method, 0),
-                                     returnType == null ? null : returnType.getPresentableText(),
-                                     tail);
+        LookupElementBuilder value = LookupElementBuilder.create(method.getName()).withIcon(IconDescriptorUpdaters.getIcon(method, 0)).withTailText(tail).withTypeText(returnType == null ? null : returnType.getPresentableText());
         result.add(value);
       }
     }
