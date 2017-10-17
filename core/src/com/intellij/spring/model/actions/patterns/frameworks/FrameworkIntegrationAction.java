@@ -63,17 +63,17 @@ public abstract class FrameworkIntegrationAction extends AnAction {
 
   @Nullable
   protected static Editor getEditor(final DataContext dataContext) {
-    return PlatformDataKeys.EDITOR.getData(dataContext);
+    return dataContext.getData(PlatformDataKeys.EDITOR);
   }
 
   @Nullable
   protected static Project getProject(final DataContext dataContext) {
-    return PlatformDataKeys.PROJECT.getData(dataContext);
+    return dataContext.getData(PlatformDataKeys.PROJECT);
   }
 
   @Nullable
   protected static Module getModule(final DataContext dataContext) {
-    return LangDataKeys.MODULE.getData(dataContext);
+    return dataContext.getData(LangDataKeys.MODULE);
   }
 
   protected boolean accept(final XmlFile file) {

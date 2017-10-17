@@ -467,7 +467,7 @@ public class JamCommonUtil {
     final List<JamDeleteProvider> jamProviders = new ArrayList<JamDeleteProvider>();
     for (JamNodeDescriptor descriptor : builder.getSelectedElements(JamNodeDescriptor.class)) {
       final DeleteProvider provider = descriptor.isValid() ? (DeleteProvider)descriptor
-        .getDataForElement(PlatformDataKeys.DELETE_ELEMENT_PROVIDER.getName()) : null;
+        .getDataForElement(PlatformDataKeys.DELETE_ELEMENT_PROVIDER) : null;
       if (provider instanceof JamDeleteProvider) jamProviders.add((JamDeleteProvider)provider);
       else if (provider != null) toRun.add(provider);
     }

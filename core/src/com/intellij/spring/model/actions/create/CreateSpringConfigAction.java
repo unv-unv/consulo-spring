@@ -31,7 +31,7 @@ public class CreateSpringConfigAction extends CreateFileAction {
     if (!super.isAvailable(dataContext)) {
       return false;
     }
-    final Module module = LangDataKeys.MODULE.getData(dataContext);
+    final Module module = dataContext.getData(LangDataKeys.MODULE);
     return module != null && JavaPsiFacade.getInstance(module.getProject()).findPackage("org.springframework") != null;
   }
 

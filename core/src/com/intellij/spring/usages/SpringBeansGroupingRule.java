@@ -1,11 +1,11 @@
 package com.intellij.spring.usages;
 
-import com.intellij.openapi.actionSystem.DataKey;
 import com.intellij.openapi.actionSystem.DataSink;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.TypeSafeDataProvider;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vcs.FileStatus;
 import com.intellij.openapi.vcs.FileStatusManager;
 import com.intellij.psi.PsiElement;
@@ -130,7 +130,7 @@ public class SpringBeansGroupingRule implements UsageGroupingRule {
       return myName.compareTo(((SpringBeansUsageGroup)usageGroup).myName);
     }
 
-    public void calcData(final DataKey key, final DataSink sink) {
+    public void calcData(final Key<?> key, final DataSink sink) {
       if (!isValid()) return;
       if (LangDataKeys.PSI_ELEMENT == key) {
         final XmlElement element = getPsiElement();

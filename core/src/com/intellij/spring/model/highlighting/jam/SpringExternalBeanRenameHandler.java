@@ -34,7 +34,7 @@ public class SpringExternalBeanRenameHandler implements RenameHandler {
 
   @Nullable
   private SpringJavaExternalBean getExternalBean(final DataContext dataContext) {
-    PsiElement element = LangDataKeys.PSI_ELEMENT.getData(dataContext);
+    PsiElement element = dataContext.getData(LangDataKeys.PSI_ELEMENT);
 
     return element instanceof PsiMethod ? SpringJamUtils.getExternalBean((PsiMethod)element) : null;
   }

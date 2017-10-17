@@ -22,10 +22,9 @@ public abstract class AbstarctSpringConfigActionGroup extends DefaultActionGroup
 
   public void update(final AnActionEvent event) {
     Presentation presentation = event.getPresentation();
-    DataContext dataContext = event.getDataContext();
 
-    Project project = PlatformDataKeys.PROJECT.getData(dataContext);
-    final Editor editor = PlatformDataKeys.EDITOR.getData(dataContext);
+    Project project = event.getProject();
+    final Editor editor = event.getData(PlatformDataKeys.EDITOR);
     if (project == null || editor == null) {
       presentation.setVisible(false);
       return;

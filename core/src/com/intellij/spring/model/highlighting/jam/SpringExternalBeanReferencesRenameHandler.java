@@ -32,7 +32,7 @@ public class SpringExternalBeanReferencesRenameHandler implements RenameHandler 
   }
 
   public boolean isRenaming(DataContext dataContext) {
-    final DomSpringBean springBean = SpringBeanUtil.getTargetSpringBean(CommonDataKeys.EDITOR.getData(dataContext));
+    final DomSpringBean springBean = SpringBeanUtil.getTargetSpringBean(dataContext.getData(CommonDataKeys.EDITOR));
     if (springBean == null) return false;
 
     final List<SpringJavaExternalBean> list = SpringJamUtils.findExternalBeanReferences(springBean);

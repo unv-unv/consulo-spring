@@ -20,12 +20,12 @@ public class SpringCustomBeanRenameHandler implements RenameHandler {
   }
 
   public boolean isRenaming(DataContext dataContext) {
-    PsiElement element = LangDataKeys.PSI_ELEMENT.getData(dataContext);
+    PsiElement element = dataContext.getData(LangDataKeys.PSI_ELEMENT);
     return element instanceof CustomBeanFakePsiElement;
   }
 
   public void invoke(@NotNull Project project, Editor editor, PsiFile file, DataContext dataContext) {
-    final PsiElement element = LangDataKeys.PSI_ELEMENT.getData(dataContext);
+    final PsiElement element = dataContext.getData(LangDataKeys.PSI_ELEMENT);
     doInvoke(project, editor, element);
   }
 
