@@ -19,12 +19,14 @@ import com.intellij.spring.SpringIcons;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 public class CreateSpringConfigAction extends CreateFileAction {
 
   public CreateSpringConfigAction() {
     super(SpringBundle.message("config.new.file"),
-          SpringBundle.message("create.new.spring.configuration.file"),
-          SpringIcons.CONFIG_FILE);
+        SpringBundle.message("create.new.spring.configuration.file"),
+        SpringIcons.CONFIG_FILE);
   }
 
   protected boolean isAvailable(final DataContext dataContext) {
@@ -39,7 +41,7 @@ public class CreateSpringConfigAction extends CreateFileAction {
   protected PsiElement[] invokeDialog(final Project project, PsiDirectory directory) {
     MyInputValidator validator = new MyInputValidator(project, directory);
     Messages.showInputDialog(project, IdeBundle.message("prompt.enter.new.file.name"),
-                             IdeBundle.message("title.new.file"), Messages.getQuestionIcon(), null, validator);
+        IdeBundle.message("title.new.file"), Messages.getQuestionIcon(), null, validator);
     return validator.getCreatedElements();
   }
 
@@ -48,7 +50,7 @@ public class CreateSpringConfigAction extends CreateFileAction {
     final Module module = ModuleUtil.findModuleForPsiElement(directory);
     final FileTemplate template = null;///SpringFrameworkSupportProvider.chooseTemplate(module);
     @NonNls final String fileName = FileUtil.getExtension(newName).length() == 0 ? newName + ".xml" : newName;
-    final PsiElement psiElement = FileTemplateUtil.createFromTemplate(template, fileName, null, directory);
-    return new PsiElement[] {psiElement};
+    final PsiElement psiElement = FileTemplateUtil.createFromTemplate(template, fileName, (Map<String, Object>) null, directory);
+    return new PsiElement[]{psiElement};
   }
 }
