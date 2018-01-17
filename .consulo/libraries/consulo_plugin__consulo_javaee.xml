@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="consulo-plugin: consulo.javaee" type="consulo-plugin">
+  <library name="consulo-plugin: consulo.javaee">
     <binaries>
       <root url="jar://$PROJECT_DIR$/dep/consulo.javaee/lib/javaee.jar!/" />
     </binaries>

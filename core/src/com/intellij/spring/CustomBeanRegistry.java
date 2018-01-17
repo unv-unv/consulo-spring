@@ -35,6 +35,7 @@ import com.intellij.spring.schemas.SpringSchemaProvider;
 import com.intellij.util.*;
 import com.intellij.util.concurrency.Semaphore;
 import com.intellij.util.containers.ContainerUtil;
+import consulo.java.execution.configurations.OwnJavaParameters;
 import consulo.java.module.extension.JavaModuleExtension;
 import consulo.roots.ContentFolderScopes;
 import gnu.trove.THashMap;
@@ -293,7 +294,7 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
       return new ParseResult(SpringBundle.message("parse.no.namespace.handler", namespace));
     }
 
-    final JavaParameters javaParameters = new JavaParameters();
+    final OwnJavaParameters javaParameters = new OwnJavaParameters();
     javaParameters.setJdk(ModuleUtilCore.getSdk(module, JavaModuleExtension.class));
     javaParameters.setMainClass("com.intellij.spring.model.xml.custom.CustomBeanParser");
     if (isDebug()) {
@@ -302,7 +303,7 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
     computeUrls(module, javaParameters.getClassPath());
     final Process process;
     try {
-      process = CommandLineBuilder.createFromJavaParameters(javaParameters, true).createProcess();
+      process = javaParameters.toCommandLine().createProcess();
     }
     catch (ExecutionException e) {
       return new ParseResult(e);
