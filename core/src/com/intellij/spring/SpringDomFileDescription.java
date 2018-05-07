@@ -34,12 +34,11 @@ import com.intellij.spring.model.xml.util.*;
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileDescription;
-import consulo.awt.TargetAWT;
 import consulo.spring.SpringIcons;
+import consulo.ui.image.Image;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,8 +55,8 @@ public class SpringDomFileDescription extends DomFileDescription<Beans> {
 
   @Nullable
   @Override
-  public Icon getFileIcon(@Iconable.IconFlags int flags) {
-    return TargetAWT.to(SpringIcons.SpringConfig);
+  public Image getFileIcon(@Iconable.IconFlags int flags) {
+    return SpringIcons.SpringConfig;
   }
 
   @Override
