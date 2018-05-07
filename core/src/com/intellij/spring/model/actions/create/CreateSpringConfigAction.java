@@ -16,6 +16,7 @@ import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
+import consulo.awt.TargetAWT;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +27,7 @@ public class CreateSpringConfigAction extends CreateFileAction {
   public CreateSpringConfigAction() {
     super(SpringBundle.message("config.new.file"),
         SpringBundle.message("create.new.spring.configuration.file"),
-        SpringIcons.CONFIG_FILE);
+        TargetAWT.to(SpringIcons.CONFIG_FILE));
   }
 
   protected boolean isAvailable(final DataContext dataContext) {

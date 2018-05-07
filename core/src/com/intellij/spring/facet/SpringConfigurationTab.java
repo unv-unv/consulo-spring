@@ -19,6 +19,7 @@ import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.ui.SimpleTextAttributes;
 import com.intellij.ui.treeStructure.*;
+import consulo.awt.TargetAWT;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.Nullable;
 
@@ -132,7 +133,7 @@ public class SpringConfigurationTab {
             Disposer.register(configuration, edited);
             myBuffer.add(edited);
             edited.setAutodetected(false);
-            edited.setIcon(SpringIcons.FILESET);
+            edited.setIcon(TargetAWT.to(SpringIcons.FILESET));
             myBuilder.updateFromRoot();
             selectFileSet(edited);
             apply();
@@ -325,7 +326,7 @@ public class SpringConfigurationTab {
     ConfigFileNode(VirtualFilePointer name, SimpleNode parent) {
       super(parent);
       myFilePointer = name;
-      setIcon(SpringIcons.CONFIG_FILE);
+      setIcon(TargetAWT.to(SpringIcons.CONFIG_FILE));
     }
 
     protected void doUpdate() {

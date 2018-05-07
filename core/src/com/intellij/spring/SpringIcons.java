@@ -4,6 +4,8 @@
 
 package com.intellij.spring;
 
+import consulo.ui.image.Image;
+
 import javax.swing.*;
 
 @Deprecated
@@ -20,10 +22,10 @@ public interface SpringIcons {
   Icon PARENT_GUTTER = consulo.spring.SpringIcons.ParentBeanGutter;
   Icon CHILD_GUTTER = consulo.spring.SpringIcons.ChildBeanGutter;
 
-  Icon CONFIG_FILE = consulo.spring.SpringIcons.SpringConfig;
+  Image CONFIG_FILE = consulo.spring.SpringIcons.SpringConfig;
   Icon JAVA_CONFIG_FILE = consulo.spring.SpringIcons.SpringJavaConfig;
 
-  Icon FILESET = consulo.spring.SpringIcons.FileSet;
+  Image FILESET = consulo.spring.SpringIcons.FileSet;
   Icon DEPENDENCY = consulo.spring.SpringIcons.Dependency;
 
   Icon SPRING_BEAN_INSTANTIATED_BY_FACORY = consulo.spring.SpringIcons.FactoryMethodBean;

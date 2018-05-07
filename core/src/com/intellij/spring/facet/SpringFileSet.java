@@ -7,6 +7,7 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointerManager;
+import consulo.awt.TargetAWT;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +26,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   @NonNls
   private static final String ID_PREFIX = "fileset";
   private boolean myAutodetected;
-  private Icon myIcon = consulo.spring.SpringIcons.FileSet;
+  private Icon myIcon = TargetAWT.to(consulo.spring.SpringIcons.FileSet);
 
   public void setIcon(final Icon icon) {
     myIcon = icon;

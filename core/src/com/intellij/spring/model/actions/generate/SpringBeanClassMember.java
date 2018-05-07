@@ -9,6 +9,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringIcons;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
+import consulo.awt.TargetAWT;
 import org.jetbrains.annotations.NotNull;
 
 public class SpringBeanClassMember extends MemberChooserObjectBase implements ClassMember {
@@ -30,7 +31,7 @@ public class SpringBeanClassMember extends MemberChooserObjectBase implements Cl
   private static class SpringFileMemberChooserObjectBase extends PsiElementMemberChooserObject {
 
     public SpringFileMemberChooserObjectBase(@NotNull final PsiFile psiFile) {
-      super(psiFile, psiFile.getName(), psiFile instanceof XmlFile ?  SpringIcons.CONFIG_FILE: SpringIcons.JAVA_CONFIG_FILE);
+      super(psiFile, psiFile.getName(), psiFile instanceof XmlFile ? TargetAWT.to(SpringIcons.CONFIG_FILE): SpringIcons.JAVA_CONFIG_FILE);
     }
 
   }

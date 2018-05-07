@@ -25,6 +25,7 @@ import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
+import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 import consulo.vfs.util.ArchiveVfsUtil;
 import org.jetbrains.annotations.Nullable;
@@ -144,7 +145,7 @@ public class ConfigFileChooser extends DialogWrapper {
         setUniformIcon(springFileSet.getIcon());
       } else {
         setPlainText(model.getId());
-        setUniformIcon(SpringIcons.FILESET);
+        setUniformIcon(TargetAWT.to(SpringIcons.FILESET));
       }
     }
 

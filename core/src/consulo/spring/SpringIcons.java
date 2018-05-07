@@ -1,6 +1,7 @@
 package consulo.spring;
 
 import com.intellij.openapi.util.IconLoader;
+import consulo.ui.image.Image;
 
 import javax.swing.*;
 
@@ -31,7 +32,7 @@ public interface SpringIcons {
   Icon Dependency = IconLoader.getIcon("/icons/dependency.png");  // 16x16
   Icon FactoryMethodBean = IconLoader.getIcon("/icons/factoryMethodBean.png");  // 16x16
   Icon FactoryMethodBean2 = IconLoader.getIcon("/icons/factoryMethodBean2.png");  // 16x16
-  Icon FileSet = IconLoader.getIcon("/icons/fileSet.png");  // 16x16
+  Image FileSet = IconLoader.getIcon("/icons/fileSet.png");  // 16x16
   Icon GroupBeans = IconLoader.getIcon("/icons/groupBeans.png");  // 18x18
   Icon IncludedFile = IconLoader.getIcon("/icons/IncludedFile.png");  // 16x16
   Icon ParentBeanGutter = IconLoader.getIcon("/icons/parentBeanGutter.png");  // 16x16
@@ -39,7 +40,7 @@ public interface SpringIcons {
   Icon Spring = IconLoader.getIcon("/icons/spring.png");  // 16x16
   Icon SpringBean = IconLoader.getIcon("/icons/springBean.png");  // 16x16
   Icon SpringBeanScope = IconLoader.getIcon("/icons/springBeanScope.png");  // 16x16
-  Icon SpringConfig = IconLoader.getIcon("/icons/springConfig.png");  // 16x16
+  Image SpringConfig = IconLoader.getIcon("/icons/springConfig.png");  // 16x16
   Icon SpringJavaBean = IconLoader.getIcon("/icons/springJavaBean.png");  // 16x16
   Icon SpringJavaConfig = IconLoader.getIcon("/icons/springJavaConfig.png");  // 16x16
   Icon SpringProperty = IconLoader.getIcon("/icons/springProperty.png");  // 16x16

@@ -4,11 +4,10 @@
 package com.intellij.aop.psi;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.ui.image.Image;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
 
 /**
  * @author peter
@@ -38,7 +37,7 @@ public class AopPointcutExpressionFileType extends LanguageFileType {
   }
 
   @Nullable
-  public Icon getIcon() {
+  public Image getIcon() {
     return null;
   }
 }
