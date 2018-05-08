@@ -15,8 +15,10 @@ import com.intellij.ui.*;
 import com.intellij.util.containers.Convertor;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.ui.tree.TreeUtil;
+import consulo.awt.TargetAWT;
 import consulo.fileTypes.impl.VfsIconUtil;
 import consulo.ide.IconDescriptorUpdaters;
+import consulo.ui.image.Image;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
@@ -52,8 +54,8 @@ public class SpringFilesTree extends CheckboxTreeBase {
           renderer.append(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
         } else if (object instanceof PsiFile) {
           final PsiFile psiFile = (PsiFile)object;
-          final Icon icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
-          renderer.setIcon(icon);
+          final Image icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
+          renderer.setIcon(TargetAWT.to(icon));
           final String fileName = psiFile.getName();
           renderer.append(fileName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
           final VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -67,7 +69,7 @@ public class SpringFilesTree extends CheckboxTreeBase {
           }
         } else if (object instanceof VirtualFile) {
           VirtualFile file = (VirtualFile)object;
-          renderer.setIcon(VfsIconUtil.getIcon(file, 0, null));
+          renderer.setIcon(TargetAWT.to(VfsIconUtil.getIcon(file, 0, null)));
           renderer.append(file.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
           String path = file.getPath();
           final int i = path.indexOf(StandardFileSystems.JAR_SEPARATOR);

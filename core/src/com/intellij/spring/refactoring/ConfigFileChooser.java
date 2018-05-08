@@ -168,7 +168,7 @@ public class ConfigFileChooser extends DialogWrapper {
 
     private ConfigFileNode(XmlFile file) {
       myFile = file;
-      setUniformIcon(IconDescriptorUpdaters.getIcon(file, 0));
+      setIcon(IconDescriptorUpdaters.getIcon(file, 0));
       addColoredFragment(myFile.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
       final VirtualFile virtualFile = myFile.getVirtualFile();
       assert virtualFile != null;
