@@ -16,8 +16,8 @@ import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.util.Processor;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,7 +81,7 @@ public class PointcutAcceptTest extends JavaCodeInsightFixtureTestCase {
 
   private void createAopPoincut(final PsiMethod method) {
     new AopPointcutImpl() {
-      @NotNull
+      @Nonnull
       public PsiMethod getPsiElement() {
         return method;
       }

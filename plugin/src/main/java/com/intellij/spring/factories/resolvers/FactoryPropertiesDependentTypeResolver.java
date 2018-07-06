@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2000-2007 JetBrains s.r.o. All Rights Reserved.
+ */
+
+package com.intellij.spring.factories.resolvers;
+
+import com.intellij.spring.model.xml.CommonSpringBean;
+import javax.annotation.Nonnull;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+public class FactoryPropertiesDependentTypeResolver extends AbstractTypeResolver {
+  private final List<String> myPropertyNames;
+
+  public FactoryPropertiesDependentTypeResolver(final List<String> propertyNames) {
+    myPropertyNames = propertyNames;
+  }
+
+  @Nonnull
+  public Set<String> getObjectType(@Nonnull final CommonSpringBean context) {
+    for (String propertyName : myPropertyNames) {
+      String propertyValue = getPropertyValue(context, propertyName);
+      if (propertyValue != null) {
+        return Collections.singleton(propertyValue);
+      }
+    }
+    return Collections.emptySet();
+  }
+
+  public boolean accept(@Nonnull final String factoryClassName) {
+    return true;
+  }
+}

@@ -3,6 +3,8 @@
  */
 package com.intellij.aop.psi;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.aop.AopAdvice;
 import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopAdvisedElementsSearcher;
@@ -11,8 +13,8 @@ import com.intellij.psi.*;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.MockDomElement;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -31,7 +33,7 @@ public class MockAopAdvice extends MockDomElement implements AopAdvice {
     return myPointcutExpression;
   }
 
-  @NotNull
+  @Nonnull
   public AopAdviceType getAdviceType() {
     throw new UnsupportedOperationException("Method getAdviceType is not yet implemented in " + getClass().getName());
   }

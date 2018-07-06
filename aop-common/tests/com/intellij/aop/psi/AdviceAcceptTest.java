@@ -27,7 +27,7 @@ import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import gnu.trove.THashSet;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Set;
 
@@ -73,8 +73,8 @@ public class AdviceAcceptTest extends LightCodeInsightFixtureTestCase {
     domManager.registerFileDescription(new SpringDomFileDescription(), getTestRootDisposable());
     final Beans beans = domManager.getFileElement(file, Beans.class).getRootElement();
     IdeaTestUtil.registerExtension(AopProvider.EXTENSION_POINT_NAME, new SpringAopProvider() {
-      @NotNull
-      public Set<? extends AopAspect> getAdditionalAspects(@NotNull final Module module) {
+      @Nonnull
+      public Set<? extends AopAspect> getAdditionalAspects(@Nonnull final Module module) {
         return addAopAspects(new THashSet<AopAspect>(), beans);
       }
     }, myTestRootDisposable);
@@ -120,8 +120,8 @@ public class AdviceAcceptTest extends LightCodeInsightFixtureTestCase {
     domManager.registerFileDescription(new SpringDomFileDescription(), getTestRootDisposable());
     final Beans beans = domManager.getFileElement(file, Beans.class).getRootElement();
     IdeaTestUtil.registerExtension(AopProvider.EXTENSION_POINT_NAME, new SpringAopProvider() {
-      @NotNull
-      public Set<? extends AopAspect> getAdditionalAspects(@NotNull final Module module) {
+      @Nonnull
+      public Set<? extends AopAspect> getAdditionalAspects(@Nonnull final Module module) {
         return addAopAspects(new THashSet<AopAspect>(), beans);
       }
     }, myTestRootDisposable);

@@ -1,0 +1,19 @@
+/*
+ * Copyright (c) 2000-2007 JetBrains s.r.o. All Rights Reserved.
+ */
+package com.intellij.aop.psi;
+
+import com.intellij.psi.PsiMember;
+
+import javax.annotation.Nonnull;
+
+/**
+ * @author peter
+ */
+public interface PsiPointcutExpression extends AopPatternContainer {
+  @Nonnull
+  PointcutMatchDegree acceptsSubject(final PointcutContext context, PsiMember member);
+
+  @Nonnull
+  AopPointcutExpressionFile getContainingFile();
+}

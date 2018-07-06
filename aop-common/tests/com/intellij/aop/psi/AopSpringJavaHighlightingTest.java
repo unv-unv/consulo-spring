@@ -27,8 +27,8 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.util.xml.DomManager;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 
@@ -87,8 +87,8 @@ public class AopSpringJavaHighlightingTest extends JavaCodeInsightFixtureTestCas
         "</beans>").getBeans().get(0);
 
     IdeaTestUtil.registerExtension(Extensions.getRootArea(), AopProvider.EXTENSION_POINT_NAME, new SpringAopProvider() {
-      @NotNull
-      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@NotNull final PsiClass aClass) {
+      @Nonnull
+      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@Nonnull final PsiClass aClass) {
         return new SpringAdvisedElementsSearcher(aClass.getManager(), Collections.singletonList(SpringUtils.getSpringModel(bean)));
       }
     }, myTestRootDisposable);
@@ -105,7 +105,7 @@ public class AopSpringJavaHighlightingTest extends JavaCodeInsightFixtureTestCas
 
     IdeaTestUtil.registerExtension(Extensions.getRootArea(), AopProvider.EXTENSION_POINT_NAME, new SpringAopProvider() {
       @Nullable
-      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@NotNull final PsiClass aClass) {
+      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@Nonnull final PsiClass aClass) {
         return new SpringAdvisedElementsSearcher(aClass.getManager(), Collections.singletonList(SpringUtils.getSpringModel(bean)));
       }
     }, myTestRootDisposable);

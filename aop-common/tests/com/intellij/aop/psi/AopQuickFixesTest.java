@@ -28,7 +28,7 @@ import com.intellij.testFramework.MockProblemDescriptor;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.xml.util.XmlTagUtil;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Arrays;
 
@@ -149,7 +149,7 @@ public class AopQuickFixesTest extends JavaCodeInsightFixtureTestCase {
     assertEquals(XmlTagUtil.getStartTagNameElement(pointcutTag), manipulator.getArgNamesProblemElement());
   }
 
-  @NotNull
+  @Nonnull
   private ArgNamesManipulator getManipulator(final XmlFile file) {
     AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile)InjectedLanguageUtil.findElementAtNoCommit(file, myFixture.getEditor().getCaretModel().getOffset()).getContainingFile();
     return aopFile.getAopModel().getArgNamesManipulator();

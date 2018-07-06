@@ -15,8 +15,8 @@ import com.intellij.util.Processor;
 import com.intellij.util.xml.GenericValue;
 import com.intellij.util.xml.ReadOnlyGenericValue;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
 */
 public abstract class MockAopModel extends LocalAopModel {
 
-  protected MockAopModel(@Nullable final PsiElement host, @NotNull final PsiMethod pointcutMethod) {
+  protected MockAopModel(@Nullable final PsiElement host, @Nonnull final PsiMethod pointcutMethod) {
     super(host, pointcutMethod, new AopAdvisedElementsSearcher(pointcutMethod.getManager()) {
       public boolean process(final Processor<PsiClass> processor) {
         throw new UnsupportedOperationException("Method doProcess is not yet implemented");

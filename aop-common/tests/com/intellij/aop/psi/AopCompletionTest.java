@@ -15,7 +15,7 @@ import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.psi.*;
 import com.intellij.testFramework.fixtures.InjectedLanguageFixtureTestCase;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import org.junit.AfterClass;
 
 import java.util.Arrays;
@@ -57,13 +57,13 @@ public class AopCompletionTest extends InjectedLanguageFixtureTestCase {
     final PsiMethod ObjsomePointcutMethod = contextClass.findMethodsByName("ObjsomePointcut", false)[0];
 
     final AopPointcutImpl somePointcut = new AopPointcutImpl() {
-      @NotNull
+      @Nonnull
       public PsiMethod getPsiElement() {
         return somePointcutMethod;
       }
     };
     final AopPointcutImpl ObjsomePointcut = new AopPointcutImpl() {
-      @NotNull
+      @Nonnull
       public PsiMethod getPsiElement() {
         return ObjsomePointcutMethod;
       }

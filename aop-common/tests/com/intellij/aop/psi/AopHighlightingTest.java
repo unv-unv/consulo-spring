@@ -14,8 +14,8 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.testFramework.LiteFixture;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +42,7 @@ public class AopHighlightingTest extends JavaCodeInsightFixtureTestCase {
       "}");
     final PsiMethod method = contextClass.findMethodsByName("pointcut", false)[0];
     final AopPointcutImpl pointcut = new AopPointcutImpl() {
-      @NotNull
+      @Nonnull
       public PsiMethod getPsiElement() {
         return method;
       }

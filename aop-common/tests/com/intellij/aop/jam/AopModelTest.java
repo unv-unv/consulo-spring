@@ -16,8 +16,8 @@ import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.util.Consumer;
 import com.intellij.util.Processor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -122,7 +122,7 @@ public class AopModelTest extends JavaCodeInsightFixtureTestCase {
   public void testGetIntroductions() throws Throwable {
     IdeaTestUtil.registerExtension(Extensions.getRootArea(), AopProvider.EXTENSION_POINT_NAME, new AopProvider() {
       @Nullable
-      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@NotNull final PsiClass aClass) {
+      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@Nonnull final PsiClass aClass) {
         return new AllAdvisedElementsSearcher(getPsiManager());
       }
     }, getTestRootDisposable());
@@ -168,7 +168,7 @@ public class AopModelTest extends JavaCodeInsightFixtureTestCase {
     final PsiMethod method = getJavaFacade().getElementFactory()
       .createMethodFromText("@" + AopConstants.POINTCUT_ANNO + "(\"xxx\")\n" + "void foo(int a) {}", null);
     final AopPointcut pointcut = new AopPointcutImpl() {
-      @NotNull
+      @Nonnull
       public PsiMethod getPsiElement() {
         return method;
       }
@@ -179,7 +179,7 @@ public class AopModelTest extends JavaCodeInsightFixtureTestCase {
   public void testPointcutExpressionInPointcutAttribute() throws Throwable {
     IdeaTestUtil.registerExtension(Extensions.getRootArea(), AopProvider.EXTENSION_POINT_NAME, new AopProvider() {
 
-      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@NotNull final PsiClass aClass) {
+      public AopAdvisedElementsSearcher getAdvisedElementsSearcher(@Nonnull final PsiClass aClass) {
         return new AopAdvisedElementsSearcher(aClass.getManager()) {
           public boolean process(final Processor<PsiClass> processor) {
             throw new UnsupportedOperationException("Method doProcess is not yet implemented in " + getClass().getName());
