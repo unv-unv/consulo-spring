@@ -4,6 +4,17 @@
 
 package com.intellij.spring.factories;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.openapi.project.Project;
@@ -15,17 +26,24 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.CachedValue;
 import com.intellij.psi.util.CachedValueProvider;
 import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.spring.factories.resolvers.*;
+import com.intellij.spring.factories.resolvers.BeanReferenceFactoryBeanTypeResolver;
+import com.intellij.spring.factories.resolvers.FactoryPropertiesDependentTypeResolver;
+import com.intellij.spring.factories.resolvers.JndiObjectFactoryBeanTypeResolver;
+import com.intellij.spring.factories.resolvers.ProxyFactoryBeanTypeResolver;
+import com.intellij.spring.factories.resolvers.ScopedProxyFactoryBeanTypeResolver;
+import com.intellij.spring.factories.resolvers.SingleObjectTypeResolver;
+import com.intellij.spring.factories.resolvers.SpringEjbTypeResolver;
+import com.intellij.spring.factories.resolvers.TransactionProxyFactoryBeanTypeResolver;
+import com.intellij.spring.factories.resolvers.UtilConstantTypeResolver;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.util.containers.HashMap;
 import com.intellij.util.xmlb.XmlSerializer;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import org.jetbrains.org.objectweb.asm.*;
-
-import java.io.IOException;
-import java.util.*;
+import consulo.internal.org.objectweb.asm.ClassReader;
+import consulo.internal.org.objectweb.asm.ClassVisitor;
+import consulo.internal.org.objectweb.asm.Label;
+import consulo.internal.org.objectweb.asm.MethodVisitor;
+import consulo.internal.org.objectweb.asm.Opcodes;
+import consulo.internal.org.objectweb.asm.Type;
 
 /**
  * @author Serega Vasiliev, Taras Tielkes
