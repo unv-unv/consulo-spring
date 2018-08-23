@@ -4,17 +4,14 @@
 
 package com.intellij.spring;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.fileTemplates.FileTemplateDescriptor;
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptor;
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptorFactory;
-import com.intellij.openapi.components.ApplicationComponent;
 import com.intellij.spring.facet.SpringSchemaVersion;
 
-public class SpringBeansTemplatesFactory implements FileTemplateGroupDescriptorFactory, ApplicationComponent {
+public class SpringBeansTemplatesFactory implements FileTemplateGroupDescriptorFactory {
 
+  @Override
   public FileTemplateGroupDescriptor getFileTemplatesDescriptor() {
     final FileTemplateGroupDescriptor group = new FileTemplateGroupDescriptor(SpringBundle.message("spring"), SpringIcons.FILESET);
 
@@ -22,17 +19,5 @@ public class SpringBeansTemplatesFactory implements FileTemplateGroupDescriptorF
     group.addTemplate(new FileTemplateDescriptor(SpringSchemaVersion.Spring_2_DTD.getTemplateName(), SpringIcons.CONFIG_FILE));
     group.addTemplate(new FileTemplateDescriptor(SpringSchemaVersion.Spring_2_Schema.getTemplateName(), SpringIcons.CONFIG_FILE));
     return group;
-  }
-
-  @NonNls
-  @Nonnull
-  public String getComponentName() {
-    return "SpringBeansTemplatesFactory";
-  }
-
-  public void initComponent() {
-  }
-
-  public void disposeComponent() {
   }
 }

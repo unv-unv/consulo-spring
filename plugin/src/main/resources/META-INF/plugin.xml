@@ -113,6 +113,15 @@
 								 immutableClass="consulo.spring.module.extension.SpringModuleExtensionImpl"
 								 mutableClass="consulo.spring.module.extension.SpringMutableModuleExtensionImpl"/>
 
+		<fileTemplateGroup implementation="com.intellij.spring.SpringBeansTemplatesFactory" />
+
+		<inspectionToolProvider implementation="consulo.spring.SpringInspectionToolProvider" />
+
+		<defaultLiveTemplatesProvider implementation="consulo.spring.SpringDefaultLiveTemplatesProvider" />
+
+		<applicationService serviceImplementation="com.intellij.spring.factories.SpringFactoryBeansManager" />
+		<applicationService serviceImplementation="com.intellij.spring.SpringApplicationComponent" lazy="false" />
+
 		<intentionAction>
 			<className>com.intellij.spring.model.intentions.HardCodedStringToPlaceholderMoveIntention</className>
 			<category>Spring</category>
@@ -158,18 +167,6 @@
 		<dom.extender domClass="com.intellij.spring.model.xml.beans.SpringBean" extenderClass="com.intellij.spring.SpringPNamespaceDomExtender"/>
 		<dom.extender domClass="com.intellij.spring.model.xml.CustomBeanWrapper" extenderClass="com.intellij.spring.SpringToolDomExtender"/>
 	</extensions>
-
-	<application-components>
-		<component>
-			<implementation-class>com.intellij.spring.SpringApplicationComponent</implementation-class>
-		</component>
-		<component>
-			<implementation-class>com.intellij.spring.factories.SpringFactoryBeansManager</implementation-class>
-		</component>
-		<component>
-			<implementation-class>com.intellij.spring.SpringBeansTemplatesFactory</implementation-class>
-		</component>
-	</application-components>
 
 	<actions>
 		<action id="Spring.Beans.Generate.Action" class="com.intellij.spring.model.actions.GenerateSpringDomElementActionGroup" text="Generate">

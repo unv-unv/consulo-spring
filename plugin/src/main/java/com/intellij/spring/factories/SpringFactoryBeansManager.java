@@ -15,8 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.util.text.StringUtil;
@@ -48,7 +47,7 @@ import consulo.internal.org.objectweb.asm.Type;
 /**
  * @author Serega Vasiliev, Taras Tielkes
  */
-public class SpringFactoryBeansManager implements ApplicationComponent {
+public class SpringFactoryBeansManager {
   private static final Key<CachedValue<Set<String>>> CACHED_OBJECT_TYPE = Key.create("CACHED_OBJECT_TYPE");
 
   @NonNls private static final String BEAN_FACTORY_CLASSNAME = "org.springframework.beans.factory.FactoryBean";
@@ -235,20 +234,8 @@ public class SpringFactoryBeansManager implements ApplicationComponent {
     return Collections.emptySet();
   }
 
-  @NonNls
-  @Nonnull
-  public String getComponentName() {
-    return SpringFactoryBeansManager.class.getName();
-  }
-
-  public void initComponent() {
-  }
-
-  public void disposeComponent() {
-  }
-
   public static SpringFactoryBeansManager getInstance() {
-    return ApplicationManager.getApplication().getComponent(SpringFactoryBeansManager.class);
+    return ServiceManager.getService(SpringFactoryBeansManager.class);
   }
 
   public void registerFactory(String className, ObjectTypeResolver reslover) {
