@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.codeInsight.lookup.LookupValueFactory;
 import com.intellij.codeInspection.LocalQuickFix;
@@ -27,7 +28,6 @@ import com.intellij.psi.impl.beanProperties.CreateBeanPropertyFix;
 import com.intellij.psi.util.InheritanceUtil;
 import com.intellij.psi.util.PropertyUtil;
 import com.intellij.spring.SpringBundle;
-import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.converters.SpringConverterUtil;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
@@ -37,7 +37,7 @@ import com.intellij.util.Function;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.NullableFunction;
 import com.intellij.util.containers.ContainerUtil;
-import consulo.awt.TargetAWT;
+import consulo.spring.SpringIcons;
 
 /**
  * @author Dmitry Avdeev
@@ -206,8 +206,7 @@ public class PropertyReference extends PsiReferenceBase<PsiElement> implements P
       final String propertyName = entry.getKey();
       final PsiType propertyType = PropertyUtil.getPropertyType(entry.getValue());
       assert propertyType != null;
-      variants[i++] = LookupValueFactory.createLookupValueWithHint(propertyName, TargetAWT.to(SpringIcons.SPRING_BEAN_PROPERTY_ICON),
-                                                                   propertyType.getPresentableText());
+      variants[i++] = LookupValueFactory.createLookupValueWithHint(propertyName, SpringIcons.SpringProperty, propertyType.getPresentableText());
     }
     return variants;
   }
