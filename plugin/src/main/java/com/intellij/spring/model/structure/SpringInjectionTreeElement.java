@@ -3,16 +3,13 @@ package com.intellij.spring.model.structure;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
+import javax.annotation.Nullable;
 
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.impl.beanProperties.BeanProperty;
 import com.intellij.spring.SpringIcons;
@@ -23,7 +20,7 @@ import com.intellij.spring.model.xml.beans.SpringValueHolderDefinition;
 import com.intellij.util.xml.DomElementNavigationProvider;
 import com.intellij.util.xml.DomElementsNavigationManager;
 import com.intellij.util.xml.GenericDomValue;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 public class SpringInjectionTreeElement implements StructureViewTreeElement, ItemPresentation {
 
@@ -80,12 +77,8 @@ public class SpringInjectionTreeElement implements StructureViewTreeElement, Ite
     return null;
   }
 
-  public Icon getIcon(boolean open) {
-    return isConstructorArg() ? AllIcons.Nodes.Method : TargetAWT.to(SpringIcons.SPRING_BEAN_PROPERTY_ICON);
-  }
-
-  public TextAttributesKey getTextAttributesKey() {
-    return null;
+  public Image getIcon() {
+    return isConstructorArg() ? AllIcons.Nodes.Method : SpringIcons.SPRING_BEAN_PROPERTY_ICON;
   }
 
   public TreeElement[] getChildren() {

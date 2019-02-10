@@ -46,7 +46,7 @@ public class GotoSpringBeanProvider extends GoToSymbolProvider {
           final PsiElement element = pointer.getSpringBean().getIdentifyingPsiElement();
 
           if (element != null) {
-            result.add(createNavigationItem(element, name, TargetAWT.to(pointer.getBeanIcon())));
+            result.add(createNavigationItem(element, name, pointer.getBeanIcon()));
           }
         }
       }

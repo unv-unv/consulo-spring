@@ -3,8 +3,6 @@
  */
 package com.intellij.aop.jam;
 
-import javax.swing.Icon;
-
 import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.util.IconLoader;
 import consulo.ui.image.Image;
@@ -41,9 +39,9 @@ public interface AopConstants
 	String JOIN_POINT_STATIC_PART = "org.aspectj.lang.JoinPoint.StaticPart";
 	String PROCEEDING_JOIN_POINT = "org.aspectj.lang.ProceedingJoinPoint";
 
-	Icon POINTCUT_ICON = IconLoader.getIcon("/icons/pointcut.png");
-	Icon TO_POINTCUT_ICON = IconLoader.getIcon("/icons/to_pointcut.png");
-	Icon FROM_POINTCUT_ICON = IconLoader.getIcon("/icons/from_pointcut.png");
+	Image POINTCUT_ICON = IconLoader.getIcon("/icons/pointcut.png");
+	Image TO_POINTCUT_ICON = IconLoader.getIcon("/icons/to_pointcut.png");
+	Image FROM_POINTCUT_ICON = IconLoader.getIcon("/icons/from_pointcut.png");
 
 	Image FROM_ICON = IconLoader.getIcon("/icons/from_arrow.png");
 	Image TO_ICON = IconLoader.getIcon("/icons/to_arrow.png");

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.util.text.StringUtil;
@@ -31,7 +30,7 @@ import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.impl.XmlAttributeDescriptorEx;
 import com.intellij.xml.impl.schema.XmlNSDescriptorImpl;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -162,8 +161,8 @@ public class PNamespaceDescriptor extends XmlNSDescriptorImpl {
     }
 
     @Nullable
-    public Icon getIcon() {
-      return TargetAWT.to(SpringIcons.SPRING_BEAN_PROPERTY_ICON);
+    public Image getIcon() {
+      return SpringIcons.SPRING_BEAN_PROPERTY_ICON;
     }
 
     @NonNls

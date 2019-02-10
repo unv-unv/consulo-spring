@@ -4,10 +4,9 @@
  */
 package com.intellij.spring.model.xml.custom;
 
-import javax.swing.Icon;
+import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.RenameableFakePsiElement;
 import com.intellij.psi.xml.XmlAttribute;
@@ -15,7 +14,7 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
 import com.intellij.util.IncorrectOperationException;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 /**
  * @author peter
@@ -68,7 +67,7 @@ public class CustomBeanFakePsiElement extends RenameableFakePsiElement {
     return false;
   }
 
-  public Icon getIcon() {
-    return TargetAWT.to(SpringIcons.SPRING_BEAN_ICON);
+  public Image getIcon() {
+    return SpringIcons.SPRING_BEAN_ICON;
   }
 }

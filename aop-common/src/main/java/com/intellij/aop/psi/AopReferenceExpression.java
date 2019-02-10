@@ -3,6 +3,18 @@
  */
 package com.intellij.aop.psi;
 
+import gnu.trove.THashSet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.aop.AopPointcut;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.jam.AopConstants;
@@ -28,12 +40,6 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.psi.PsiPackage;
-import gnu.trove.THashSet;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * @author peter
@@ -200,8 +206,7 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
             final PsiMethod method = (PsiMethod)element;
             if (method.getModifierList().findAnnotation(AopConstants.POINTCUT_ANNO) != null) {
               final String methodName = method.getName();
-              list.add(LookupElementBuilder.create(prefix + methodName).setIcon(AopConstants.POINTCUT_ICON)
-                .setInsertHandler(new MethodParenthesesHandler(method, true)));
+              list.add(LookupElementBuilder.create(prefix + methodName).withIcon(AopConstants.POINTCUT_ICON).withInsertHandler(new MethodParenthesesHandler(method, true)));
               final PsiClass aClass = method.getContainingClass();
               if (aClass != null && !(aClass instanceof PsiAnonymousClass)) {
                 PsiFile file = aClass.getContainingFile().getOriginalFile();
@@ -226,8 +231,8 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
             final String qname = pointcut.getQualifiedName().getStringValue();
             if (qname != null && qname.startsWith(prefix) && !qnames.contains(qname)) {
               list.add(LookupElementBuilder.create(qname).
-                setIcon(AopConstants.POINTCUT_ICON).
-                setInsertHandler(new MethodParenthesesHandler(method, false)));
+                withIcon(AopConstants.POINTCUT_ICON).
+                withInsertHandler(new MethodParenthesesHandler(method, false)));
             }
           }
         }

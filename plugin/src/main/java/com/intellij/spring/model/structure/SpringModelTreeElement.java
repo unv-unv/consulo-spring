@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlTagTreeElement;
@@ -25,7 +24,7 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomElementNavigationProvider;
 import com.intellij.util.xml.DomElementsNavigationManager;
 import com.intellij.util.xml.DomManager;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 public class SpringModelTreeElement implements StructureViewTreeElement, ItemPresentation {
 
@@ -105,7 +104,7 @@ public class SpringModelTreeElement implements StructureViewTreeElement, ItemPre
     return null;
   }
 
-  public Icon getIcon(boolean open) {
-    return TargetAWT.to(SpringIcons.SPRING_BEANS_ICON);
+  public Image getIcon() {
+    return SpringIcons.SPRING_BEANS_ICON;
   }
 }

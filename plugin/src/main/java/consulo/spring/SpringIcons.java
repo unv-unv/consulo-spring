@@ -1,7 +1,5 @@
 package consulo.spring;
 
-import javax.swing.Icon;
-
 import com.intellij.openapi.util.IconLoader;
 import consulo.ui.image.Image;
 
@@ -11,20 +9,20 @@ public interface SpringIcons
 	interface Patterns
 	{
 		Image Beans = IconLoader.getIcon("/icons/patterns/beans.png");  // 16x16
-		Icon DataAccess = IconLoader.getIcon("/icons/patterns/dataAccess.png");  // 16x16
-		Icon Datasource = IconLoader.getIcon("/icons/patterns/datasource.png");  // 16x16
-		Icon Ejb = IconLoader.getIcon("/icons/patterns/ejb.png");  // 16x16
-		Icon FactoryBean = IconLoader.getIcon("/icons/patterns/factoryBean.png");  // 16x16
-		Icon Hibernate = IconLoader.getIcon("/icons/patterns/hibernate.png");  // 16x16
-		Icon Ibatis = IconLoader.getIcon("/icons/patterns/ibatis.png");  // 16x16
-		Icon Integration = IconLoader.getIcon("/icons/patterns/integration.png");  // 16x16
-		Icon Jdk = IconLoader.getIcon("/icons/patterns/jdk.png");  // 16x16
-		Icon Jdo = IconLoader.getIcon("/icons/patterns/jdo.png");  // 16x16
-		Icon Jpa = IconLoader.getIcon("/icons/patterns/jpa.png");  // 16x16
-		Icon Patterns = IconLoader.getIcon("/icons/patterns/patterns.png");  // 16x16
-		Icon Scheduler = IconLoader.getIcon("/icons/patterns/scheduler.png");  // 16x16
-		Icon Toplink = IconLoader.getIcon("/icons/patterns/toplink.png");  // 16x16
-		Icon TransactionManager = IconLoader.getIcon("/icons/patterns/transactionManager.png");  // 16x16
+		Image DataAccess = IconLoader.getIcon("/icons/patterns/dataAccess.png");  // 16x16
+		Image Datasource = IconLoader.getIcon("/icons/patterns/datasource.png");  // 16x16
+		Image Ejb = IconLoader.getIcon("/icons/patterns/ejb.png");  // 16x16
+		Image FactoryBean = IconLoader.getIcon("/icons/patterns/factoryBean.png");  // 16x16
+		Image Hibernate = IconLoader.getIcon("/icons/patterns/hibernate.png");  // 16x16
+		Image Ibatis = IconLoader.getIcon("/icons/patterns/ibatis.png");  // 16x16
+		Image Integration = IconLoader.getIcon("/icons/patterns/integration.png");  // 16x16
+		Image Jdk = IconLoader.getIcon("/icons/patterns/jdk.png");  // 16x16
+		Image Jdo = IconLoader.getIcon("/icons/patterns/jdo.png");  // 16x16
+		Image Jpa = IconLoader.getIcon("/icons/patterns/jpa.png");  // 16x16
+		Image Patterns = IconLoader.getIcon("/icons/patterns/patterns.png");  // 16x16
+		Image Scheduler = IconLoader.getIcon("/icons/patterns/scheduler.png");  // 16x16
+		Image Toplink = IconLoader.getIcon("/icons/patterns/toplink.png");  // 16x16
+		Image TransactionManager = IconLoader.getIcon("/icons/patterns/transactionManager.png");  // 16x16
 	}
 
 	Image AbstractBean = IconLoader.getIcon("/icons/AbstractBean.png");  // 16x16

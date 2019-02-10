@@ -4,15 +4,16 @@
 
 package com.intellij.spring.gutter;
 
+import javax.annotation.Nullable;
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.Nls;
 import com.intellij.ide.util.PsiElementListCellRenderer;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-import org.jetbrains.annotations.Nls;
-
-import javax.annotation.Nullable;
-import javax.swing.*;
+import consulo.awt.TargetAWT;
 
 /**
  * @author Dmitry Avdeev
@@ -48,7 +49,7 @@ public class DomElementListCellRenderer extends PsiElementListCellRenderer<XmlTa
   protected Icon getIcon(final PsiElement element) {
     final DomElement domElement = getDomElement((XmlTag)element);
     if (domElement != null && domElement.getPresentation().getIcon() != null) {
-      return  domElement.getPresentation().getIcon();
+      return TargetAWT.to(domElement.getPresentation().getIcon());
     }
 
     return super.getIcon(element);
