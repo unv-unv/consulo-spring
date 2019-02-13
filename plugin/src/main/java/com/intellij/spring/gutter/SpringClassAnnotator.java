@@ -9,9 +9,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.swing.Icon;
-
 import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.navigation.DomNavigationGutterIconBuilder;
 import com.intellij.codeInsight.navigation.NavigationGutterIconBuilder;
 import com.intellij.ide.util.DefaultPsiElementCellRenderer;
@@ -45,7 +44,7 @@ import com.intellij.spring.model.xml.beans.SpringPropertyDefinition;
 import com.intellij.util.NotNullFunction;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 public class SpringClassAnnotator implements Annotator {
 
@@ -91,7 +90,7 @@ public class SpringClassAnnotator implements Annotator {
 
     @Nullable
     @Override
-    protected Icon getIcon(final PsiElement element) {
+    protected Image getIcon(final PsiElement element) {
       if (element instanceof XmlTag) {
         return DOM_RENDERER.getIcon(element);
       }
@@ -100,7 +99,7 @@ public class SpringClassAnnotator implements Annotator {
         final CommonSpringBean springBean =
           member == null ? null : JamService.getJamService(element.getProject()).getJamElement(JamPsiMemberSpringBean.class, member);
         if (springBean != null) {
-          return TargetAWT.to(SpringIcons.SPRING_JAVA_BEAN_ICON);
+          return consulo.spring.SpringIcons.SpringJavaBean;
         }
       }
       return super.getIcon(element);
@@ -248,10 +247,10 @@ public class SpringClassAnnotator implements Annotator {
 
         @Nullable
         @Override
-        protected Icon getIcon(final PsiElement element) {
+        protected Image getIcon(final PsiElement element) {
           final SpringBean springBean = getSpringBean(element);
           assert springBean != null;
-          return TargetAWT.to(SpringIcons.SPRING_BEAN_ICON);
+          return consulo.spring.SpringIcons.SpringBean;
         }
 
         @Override

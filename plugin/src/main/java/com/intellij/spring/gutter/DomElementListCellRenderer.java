@@ -5,7 +5,6 @@
 package com.intellij.spring.gutter;
 
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import org.jetbrains.annotations.Nls;
 import com.intellij.ide.util.PsiElementListCellRenderer;
@@ -13,7 +12,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 /**
  * @author Dmitry Avdeev
@@ -46,10 +45,10 @@ public class DomElementListCellRenderer extends PsiElementListCellRenderer<XmlTa
     return 0;
   }
 
-  protected Icon getIcon(final PsiElement element) {
+  protected Image getIcon(final PsiElement element) {
     final DomElement domElement = getDomElement((XmlTag)element);
     if (domElement != null && domElement.getPresentation().getIcon() != null) {
-      return TargetAWT.to(domElement.getPresentation().getIcon());
+      return domElement.getPresentation().getIcon();
     }
 
     return super.getIcon(element);

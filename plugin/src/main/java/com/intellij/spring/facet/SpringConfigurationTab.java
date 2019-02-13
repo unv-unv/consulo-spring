@@ -140,7 +140,7 @@ public class SpringConfigurationTab {
             Disposer.register(configuration, edited);
             myBuffer.add(edited);
             edited.setAutodetected(false);
-            edited.setIcon(TargetAWT.to(SpringIcons.FILESET));
+            edited.setIcon(consulo.spring.SpringIcons.FileSet);
             myBuilder.updateFromRoot();
             selectFileSet(edited);
             apply();
@@ -273,7 +273,7 @@ public class SpringConfigurationTab {
 
       final String name = mySet.getName();
       setPlainText(mySet.isAutodetected() ? name + " " + SpringBundle.message("config.fileset.autodetected") : name);
-      setIcon(fileSet.getIcon());
+      setIcon(TargetAWT.from(fileSet.getIcon()));
     }
 
     public SimpleNode[] getChildren() {
@@ -333,7 +333,7 @@ public class SpringConfigurationTab {
     ConfigFileNode(VirtualFilePointer name, SimpleNode parent) {
       super(parent);
       myFilePointer = name;
-      setIcon(TargetAWT.to(SpringIcons.CONFIG_FILE));
+      setIcon(consulo.spring.SpringIcons.SpringConfig);
     }
 
     protected void doUpdate() {

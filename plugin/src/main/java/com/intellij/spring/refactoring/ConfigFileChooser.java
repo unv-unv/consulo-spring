@@ -1,5 +1,16 @@
 package com.intellij.spring.refactoring;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.tree.DefaultTreeModel;
+
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -10,7 +21,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringBundle;
-import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.facet.SpringFileSet;
@@ -28,155 +38,179 @@ import com.intellij.util.xml.DomService;
 import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 import consulo.vfs.util.ArchiveVfsUtil;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
-import javax.swing.tree.DefaultTreeModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
  */
-public class ConfigFileChooser extends DialogWrapper {
+public class ConfigFileChooser extends DialogWrapper
+{
 
-  private SimpleTree myTree;
-  private JPanel myPanel;
+	private SimpleTree myTree;
+	private JPanel myPanel;
 
-  public ConfigFileChooser(Project project, final PsiFile fileToIgnore) {
+	public ConfigFileChooser(Project project, final PsiFile fileToIgnore)
+	{
 
-    super(project, false);
-    setTitle(SpringBundle.message("choose.configuration.file"));
+		super(project, false);
+		setTitle(SpringBundle.message("choose.configuration.file"));
 
-    final List<DomFileElement<Beans>> list = DomService.getInstance().getFileElements(Beans.class,
-                                                                                      project, GlobalSearchScope.allScope(project));
-    final Module[] modules = ModuleManager.getInstance(project).getModules();
-    final List<SpringModel> springModels = new ArrayList<SpringModel>();
-    for (Module module : modules) {
-      springModels.addAll(SpringManager.getInstance(project).getAllModels(module));
-    }
-    final SimpleTreeStructure structure = new SimpleTreeStructure() {
-      public Object getRootElement() {
-        return new SimpleNode() {
-          public SimpleNode[] getChildren() {
-            final ArrayList<XmlFile> files = new ArrayList<XmlFile>(list.size());
-            for (DomFileElement<Beans> element : list) {
-              files.add(element.getFile());
-            }
-            if (fileToIgnore instanceof XmlFile) {
-              files.remove((XmlFile)fileToIgnore);
-            }
-            final List<SimpleNode> nodes = new ArrayList<SimpleNode>();
-            for (SpringModel springModel : springModels) {
-              nodes.add(new FileSetNode(springModel));
-              for (XmlFile file: springModel.getConfigFiles()) {
-                files.remove(file);
-              }
-            }
-            for (XmlFile file : files) {
-              final VirtualFile vFile = file.getVirtualFile();
-              if (vFile != null && (vFile.getPath().indexOf(StandardFileSystems.JAR_SEPARATOR) < 0 || ArchiveVfsUtil.getVirtualFileForArchive(vFile) == null)) {
-                nodes.add(new ConfigFileNode(file));
-              }
-            }
-            return nodes.toArray(new SimpleNode[nodes.size()]);
-          }
+		final List<DomFileElement<Beans>> list = DomService.getInstance().getFileElements(Beans.class, project, GlobalSearchScope.allScope(project));
+		final Module[] modules = ModuleManager.getInstance(project).getModules();
+		final List<SpringModel> springModels = new ArrayList<SpringModel>();
+		for(Module module : modules)
+		{
+			springModels.addAll(SpringManager.getInstance(project).getAllModels(module));
+		}
+		final SimpleTreeStructure structure = new SimpleTreeStructure()
+		{
+			public Object getRootElement()
+			{
+				return new SimpleNode()
+				{
+					public SimpleNode[] getChildren()
+					{
+						final ArrayList<XmlFile> files = new ArrayList<XmlFile>(list.size());
+						for(DomFileElement<Beans> element : list)
+						{
+							files.add(element.getFile());
+						}
+						if(fileToIgnore instanceof XmlFile)
+						{
+							files.remove((XmlFile) fileToIgnore);
+						}
+						final List<SimpleNode> nodes = new ArrayList<SimpleNode>();
+						for(SpringModel springModel : springModels)
+						{
+							nodes.add(new FileSetNode(springModel));
+							for(XmlFile file : springModel.getConfigFiles())
+							{
+								files.remove(file);
+							}
+						}
+						for(XmlFile file : files)
+						{
+							final VirtualFile vFile = file.getVirtualFile();
+							if(vFile != null && (vFile.getPath().indexOf(StandardFileSystems.JAR_SEPARATOR) < 0 || ArchiveVfsUtil.getVirtualFileForArchive(vFile) == null))
+							{
+								nodes.add(new ConfigFileNode(file));
+							}
+						}
+						return nodes.toArray(new SimpleNode[nodes.size()]);
+					}
 
-          public boolean isAutoExpandNode() {
-            return true;
-          }
-        };
-      }
-    };
-    myTree.setRootVisible(false);
-    final SimpleTreeBuilder builder = new SimpleTreeBuilder(myTree, (DefaultTreeModel)myTree.getModel(), structure, null);
-    builder.initRoot();
+					public boolean isAutoExpandNode()
+					{
+						return true;
+					}
+				};
+			}
+		};
+		myTree.setRootVisible(false);
+		final SimpleTreeBuilder builder = new SimpleTreeBuilder(myTree, (DefaultTreeModel) myTree.getModel(), structure, null);
+		builder.initRoot();
 
-    init();
-    
-    builder.updateFromRoot();
+		init();
+
+		builder.updateFromRoot();
 
 
-    myTree.addMouseListener(new MouseAdapter() {
-      public void mouseClicked(final MouseEvent e) {
-        if (e.getClickCount() == 2 && getSelectedFile() != null) {
-          doOKAction();
-        }
-      }
-    });
+		myTree.addMouseListener(new MouseAdapter()
+		{
+			public void mouseClicked(final MouseEvent e)
+			{
+				if(e.getClickCount() == 2 && getSelectedFile() != null)
+				{
+					doOKAction();
+				}
+			}
+		});
 
-    myTree.requestFocus();
-  }
+		myTree.requestFocus();
+	}
 
-  @Nullable
-  public XmlFile getSelectedFile() {
-    final SimpleNode simpleNode = myTree.getSelectedNode();
-    return simpleNode instanceof ConfigFileNode ? ((ConfigFileNode)simpleNode).myFile : null;
-  }
+	@Nullable
+	public XmlFile getSelectedFile()
+	{
+		final SimpleNode simpleNode = myTree.getSelectedNode();
+		return simpleNode instanceof ConfigFileNode ? ((ConfigFileNode) simpleNode).myFile : null;
+	}
 
-  public boolean isOKActionEnabled() {
-    return getSelectedFile() != null;
-  }
+	public boolean isOKActionEnabled()
+	{
+		return getSelectedFile() != null;
+	}
 
-  protected JComponent createCenterPanel() {
-    return myPanel;
-  }
+	protected JComponent createCenterPanel()
+	{
+		return myPanel;
+	}
 
-  public JComponent getPreferredFocusedComponent() {
-    return myTree;
-  }
+	public JComponent getPreferredFocusedComponent()
+	{
+		return myTree;
+	}
 
-  protected String getDimensionServiceKey() {
-    return "spring config file chooser";
-  }
+	protected String getDimensionServiceKey()
+	{
+		return "spring config file chooser";
+	}
 
-  private static class FileSetNode extends SimpleNode {
+	private static class FileSetNode extends SimpleNode
+	{
 
-    private final SpringModel myModel;
+		private final SpringModel myModel;
 
-    private FileSetNode(SpringModel model) {
-      myModel = model;
-      if (model instanceof DomSpringModelImpl && ((DomSpringModelImpl)model).getFileSet() != null) {
-        final SpringFileSet springFileSet = ((DomSpringModelImpl)model).getFileSet();
-        setPlainText(springFileSet.getName());
-        setUniformIcon(springFileSet.getIcon());
-      } else {
-        setPlainText(model.getId());
-        setUniformIcon(TargetAWT.to(SpringIcons.FILESET));
-      }
-    }
+		private FileSetNode(SpringModel model)
+		{
+			myModel = model;
+			if(model instanceof DomSpringModelImpl && ((DomSpringModelImpl) model).getFileSet() != null)
+			{
+				final SpringFileSet springFileSet = ((DomSpringModelImpl) model).getFileSet();
+				setPlainText(springFileSet.getName());
+				setIcon(TargetAWT.from(springFileSet.getIcon()));
+			}
+			else
+			{
+				setPlainText(model.getId());
+				setIcon(consulo.spring.SpringIcons.FileSet);
+			}
+		}
 
-    public boolean isAutoExpandNode() {
-      return true;
-    }
+		public boolean isAutoExpandNode()
+		{
+			return true;
+		}
 
-    public SimpleNode[] getChildren() {
-      final Set<XmlFile> files = myModel.getConfigFiles();
-      return ContainerUtil.map2Array(files, SimpleNode.class, new Function<XmlFile, SimpleNode>() {
-        public SimpleNode fun(final XmlFile xmlFile) {
-          return new ConfigFileNode(xmlFile);
-        }
-      });
-    }
-  }
+		public SimpleNode[] getChildren()
+		{
+			final Set<XmlFile> files = myModel.getConfigFiles();
+			return ContainerUtil.map2Array(files, SimpleNode.class, new Function<XmlFile, SimpleNode>()
+			{
+				public SimpleNode fun(final XmlFile xmlFile)
+				{
+					return new ConfigFileNode(xmlFile);
+				}
+			});
+		}
+	}
 
-  private static class ConfigFileNode extends SimpleNode {
-    private final XmlFile myFile;
+	private static class ConfigFileNode extends SimpleNode
+	{
+		private final XmlFile myFile;
 
-    private ConfigFileNode(XmlFile file) {
-      myFile = file;
-      setIcon(IconDescriptorUpdaters.getIcon(file, 0));
-      addColoredFragment(myFile.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
-      final VirtualFile virtualFile = myFile.getVirtualFile();
-      assert virtualFile != null;
-      addColoredFragment(" (" + virtualFile.getPath() + ")", SimpleTextAttributes.GRAYED_ATTRIBUTES);
-    }
+		private ConfigFileNode(XmlFile file)
+		{
+			myFile = file;
+			setIcon(IconDescriptorUpdaters.getIcon(file, 0));
+			addColoredFragment(myFile.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
+			final VirtualFile virtualFile = myFile.getVirtualFile();
+			assert virtualFile != null;
+			addColoredFragment(" (" + virtualFile.getPath() + ")", SimpleTextAttributes.GRAYED_ATTRIBUTES);
+		}
 
-    public SimpleNode[] getChildren() {
-      return new SimpleNode[0];
-    }
-  }
+		public SimpleNode[] getChildren()
+		{
+			return new SimpleNode[0];
+		}
+	}
 }

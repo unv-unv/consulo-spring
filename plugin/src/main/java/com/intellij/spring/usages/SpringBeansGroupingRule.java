@@ -1,9 +1,8 @@
 package com.intellij.spring.usages;
 
-import javax.swing.Icon;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
 import com.intellij.openapi.actionSystem.DataSink;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.TypeSafeDataProvider;
@@ -17,7 +16,6 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringBundle;
-import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.xml.DomSpringBean;
@@ -29,7 +27,7 @@ import com.intellij.usages.rules.PsiElementUsage;
 import com.intellij.usages.rules.UsageGroupingRule;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import consulo.awt.TargetAWT;
+import consulo.ui.image.Image;
 
 public class SpringBeansGroupingRule implements UsageGroupingRule {
   private static final Logger LOG = Logger.getInstance("#com.intellij.spring.usages.SpringBeansGroupingRule");
@@ -87,8 +85,8 @@ public class SpringBeansGroupingRule implements UsageGroupingRule {
       return result;
     }
 
-    public Icon getIcon(boolean isOpen) {
-      return TargetAWT.to(SpringIcons.SPRING_BEAN_ICON);
+    public Image getIcon() {
+      return consulo.spring.SpringIcons.SpringBean;
     }
 
     @Nonnull

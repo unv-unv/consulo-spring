@@ -1,5 +1,19 @@
 package com.intellij.spring.facet;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.util.ElementsChooser;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.util.Disposer;
@@ -9,14 +23,7 @@ import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointerManager;
 import consulo.awt.TargetAWT;
 import consulo.spring.module.extension.SpringModuleExtension;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
-import java.util.List;
+import consulo.ui.image.Image;
 
 /**
  * @author Dmitry Avdeev
@@ -26,9 +33,9 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   @NonNls
   private static final String ID_PREFIX = "fileset";
   private boolean myAutodetected;
-  private Icon myIcon = TargetAWT.to(consulo.spring.SpringIcons.FileSet);
+  private Image myIcon = consulo.spring.SpringIcons.FileSet;
 
-  public void setIcon(final Icon icon) {
+  public void setIcon(final Image icon) {
     myIcon = icon;
   }
 
@@ -86,7 +93,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     myFiles.putAll(original.myFiles);
     myDependencies.addAll(original.myDependencies);
     myAutodetected = original.isAutodetected();
-    myIcon = original.getIcon();
+    myIcon = TargetAWT.from(original.getIcon());
     myRemoved = original.isRemoved();
   }
 
@@ -183,7 +190,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   }
 
   public Icon getIcon() {
-    return myIcon;
+    return TargetAWT.to(myIcon);
   }
 
   public Color getColor() {
