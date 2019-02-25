@@ -15,6 +15,7 @@
 		<lang.findUsagesProvider language="PointcutExpression" implementationClass="com.intellij.aop.psi.AopPointcutExpressionFindUsagesProvider"/>
 		<highlightErrorFilter implementation="com.intellij.aop.jam.AopHighlightErrorFilter"/>
 		<completion.contributor language="PointcutExpression" implementationClass="com.intellij.aop.psi.AopCompletionData" order="before javaClassName" id="aop"/>
+		<lang.syntaxHighlighterFactory language="PointcutExpression" implementationClass="com.intellij.aop.psi.AopSyntaxHighlighterFactory" />
 	</extensions>
 
 	<extensions defaultExtensionNs="consulo.java">

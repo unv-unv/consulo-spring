@@ -3,11 +3,9 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.lang.InjectableLanguage;
 import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.*;
+import com.intellij.openapi.fileTypes.LanguageFileType;
 
 /**
  * @author peter
@@ -15,12 +13,6 @@ import com.intellij.openapi.fileTypes.*;
 public class AopPointcutExpressionLanguage extends Language implements InjectableLanguage {
   protected AopPointcutExpressionLanguage() {
     super("PointcutExpression");
-    SyntaxHighlighterFactory.LANGUAGE_FACTORY.addExplicitExtension(this, new SingleLazyInstanceSyntaxHighlighterFactory() {
-      @Nonnull
-      protected SyntaxHighlighter createHighlighter() {
-        return new AopSyntaxHighlighter();
-      }
-    });
   }
 
   @Override
