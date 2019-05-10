@@ -3,26 +3,28 @@
  */
 package com.intellij.aop.psi;
 
+import gnu.trove.THashMap;
+
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
+import com.intellij.aop.lexer.AopLexer;
 import com.intellij.lexer.Lexer;
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
-import com.intellij.openapi.editor.SyntaxHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.aop.lexer.AopLexer;
-import gnu.trove.THashMap;
-import javax.annotation.Nonnull;
-
-import java.util.Map;
 
 /**
  * @author peter
  */
 public class AopSyntaxHighlighter extends SyntaxHighlighterBase implements AopElementTypes {
-  public static final TextAttributesKey AOP_KEYWORD = SyntaxHighlighterColors.KEYWORD;
-  public static final TextAttributesKey AOP_OPERATION_SIGN = SyntaxHighlighterColors.OPERATION_SIGN;
-  public static final TextAttributesKey AOP_PARENTHS = SyntaxHighlighterColors.PARENTHS;
-  public static final TextAttributesKey AOP_DOT = SyntaxHighlighterColors.DOT;
+  public static final TextAttributesKey AOP_KEYWORD = DefaultLanguageHighlighterColors.KEYWORD;
+  public static final TextAttributesKey AOP_OPERATION_SIGN = DefaultLanguageHighlighterColors.OPERATION_SIGN;
+  public static final TextAttributesKey AOP_PARENTHS = DefaultLanguageHighlighterColors.PARENTHESES;
+  public static final TextAttributesKey AOP_DOT = DefaultLanguageHighlighterColors.DOT;
   public static final TextAttributesKey AOP_IDENTIFIER = HighlighterColors.TEXT;
 
   private static final Map<IElementType,TextAttributesKey> ourMap;
