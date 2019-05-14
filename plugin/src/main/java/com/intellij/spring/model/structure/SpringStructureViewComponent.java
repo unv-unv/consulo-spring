@@ -1,13 +1,10 @@
 package com.intellij.spring.model.structure;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.ide.structureView.StructureViewModel;
 import com.intellij.ide.structureView.newStructureView.StructureViewComponent;
 import com.intellij.ide.util.treeView.AbstractTreeNode;
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.AsyncResult;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.psi.xml.XmlTag;
@@ -15,6 +12,9 @@ import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
+import org.jetbrains.concurrency.Promise;
+
+import javax.annotation.Nonnull;
 
 public class SpringStructureViewComponent extends StructureViewComponent {
 
@@ -23,7 +23,7 @@ public class SpringStructureViewComponent extends StructureViewComponent {
   }
 
   @Override
-  public AsyncResult<AbstractTreeNode> expandPathToElement(Object element) {
+  public Promise<AbstractTreeNode> expandPathToElement(Object element) {
     if (element instanceof XmlElement) {
       final XmlElement xmlElement = (XmlElement) element;
       XmlTag tag = PsiTreeUtil.getParentOfType(xmlElement, XmlTag.class);
