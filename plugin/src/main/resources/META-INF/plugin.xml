@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<idea-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
+<consulo-plugin xmlns:xi="http://www.w3.org/2001/XInclude">
 	<id>com.intellij.spring</id>
 	<name>Spring Support</name>
 	<description>Spring Support</description>
@@ -13,7 +13,7 @@
 	<depends>consulo.java</depends>
 	<depends>com.intellij.xml</depends>
 
-	<xi:include href="/META-INF/aop.xml" xpointer="xpointer(/idea-plugin/*)"/>
+	<import path="/META-INF/aop.xml"/>
 
 	<!--<depends optional="true" config-file="spring-javaee-integration.xml">com.intellij.javaee</depends>
 	<depends optional="true" config-file="spring-jsf-integration.xml">JSF</depends>
@@ -205,4 +205,4 @@
 		</group>
 
 	</actions>
-</idea-plugin>
+</consulo-plugin>

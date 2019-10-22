@@ -3,28 +3,7 @@
  */
 package com.intellij.aop.jam;
 
-import static com.intellij.patterns.StandardPatterns.or;
-import static com.intellij.patterns.StandardPatterns.string;
-
-import gnu.trove.THashSet;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
-import com.intellij.aop.AopAdvisedElementsSearcher;
-import com.intellij.aop.AopIntroduction;
-import com.intellij.aop.AopProvider;
-import com.intellij.aop.ArgNamesManipulator;
-import com.intellij.aop.IntroductionManipulator;
-import com.intellij.aop.JavaArgNamesManipulator;
-import com.intellij.aop.LocalAopModel;
+import com.intellij.aop.*;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
 import com.intellij.aop.psi.AopPointcutExpressionLanguage;
 import com.intellij.codeInspection.ProblemDescriptor;
@@ -40,15 +19,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.patterns.ElementPattern;
 import com.intellij.patterns.PsiJavaPatterns;
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiLanguageInjectionHost;
-import com.intellij.psi.PsiLiteralExpression;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilBase;
@@ -56,6 +27,15 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.java.util.AnnotationTextUtil;
+import gnu.trove.THashSet;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+
+import static com.intellij.patterns.StandardPatterns.or;
+import static com.intellij.patterns.StandardPatterns.string;
 
 /**
  * @author peter
@@ -75,7 +55,8 @@ public class AopLanguageInjector implements ConcatenationAwareInjector {
     PsiJavaPatterns.literalExpression().withText(string().longerThan(1)).annotationParam(AopConstants.DECLARE_PARENTS_ANNO, "value").inside(true,
                                                                                                                         PsiJavaPatterns.psiField().save(AOP_FIELD_KEY));
 
-  public void getLanguagesToInject(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement... operands) {
+  @Override
+  public void inject(@Nonnull MultiHostRegistrar registrar, @Nonnull PsiElement... operands) {
     PsiElement host = operands[0];
     final ProcessingContext context = new ProcessingContext();
     if (AOP_ANNO_PATTERN.accepts(host, context)) {

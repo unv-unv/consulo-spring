@@ -1,4 +1,4 @@
-<idea-plugin>
+<consulo-plugin>
 	<extensionPoints>
 		<extensionPoint name="provider" interface="com.intellij.aop.AopProvider"/>
 	</extensionPoints>
@@ -22,4 +22,4 @@
 		<jam.meta class="com.intellij.aop.jam.AopAdviceMetas" field="AFTER_RETURNING_METHOD_META"/>
 		<jam.meta class="com.intellij.aop.jam.AopAdviceMetas" field="AFTER_THROWING_METHOD_META"/>
 	</extensions>
-</idea-plugin>
+</consulo-plugin>
