@@ -26,7 +26,7 @@ import java.util.Set;
  * @author peter
  */
 public class SpringAopParameterReferencesSearcher implements QueryExecutor<PsiReference, ReferencesSearch.SearchParameters> {
-  public boolean execute(final ReferencesSearch.SearchParameters queryParameters, final Processor<PsiReference> consumer) {
+  public boolean execute(final ReferencesSearch.SearchParameters queryParameters, final Processor<? super PsiReference> consumer) {
     //noinspection AutoUnboxing
     return ApplicationManager.getApplication().runReadAction(new Computable<Boolean>() {
       public Boolean compute() {
