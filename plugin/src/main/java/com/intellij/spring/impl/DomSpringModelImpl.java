@@ -31,7 +31,6 @@ import com.intellij.util.Function;
 import com.intellij.util.Processor;
 import com.intellij.util.SmartList;
 import com.intellij.util.containers.ConcurrentFactoryMap;
-import com.intellij.util.containers.ConcurrentHashMap;
 import com.intellij.util.containers.MultiMap;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
@@ -43,6 +42,7 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dmitry Avdeev

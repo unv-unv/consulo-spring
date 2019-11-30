@@ -3,13 +3,13 @@ package com.intellij.spring.model.highlighting;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.spring.facet.SpringFileSet;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.roots.ModuleRootLayer;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jdom.Element;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 

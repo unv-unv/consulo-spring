@@ -2,14 +2,14 @@ package consulo.spring.module.extension;
 
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.spring.facet.SpringFileSet;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.module.extension.impl.ModuleExtensionImpl;
 import consulo.roots.ModuleRootLayer;
 import consulo.spring.boot.SpringBootFileSet;
 import org.jdom.Element;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;

@@ -4,14 +4,13 @@
 
 package com.intellij.spring;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.openapi.extensions.ExtensionPointName;
 import com.intellij.spring.facet.SpringFileSet;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.spring.module.extension.SpringModuleExtension;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

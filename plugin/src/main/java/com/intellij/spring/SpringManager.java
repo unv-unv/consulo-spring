@@ -4,12 +4,6 @@
 
 package com.intellij.spring;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
@@ -17,8 +11,13 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.converters.CustomConverterRegistry;
 import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.spring.module.extension.SpringModuleExtension;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Set;
 
 public abstract class SpringManager {
   

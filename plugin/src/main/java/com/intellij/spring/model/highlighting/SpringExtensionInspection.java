@@ -33,13 +33,13 @@ import com.intellij.util.Processor;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
 import com.intellij.util.xml.highlighting.DomElementAnnotationsManager;
-import consulo.annotations.RequiredDispatchThread;
 import consulo.spring.module.extension.SpringModuleExtension;
 import consulo.spring.module.extension.SpringMutableModuleExtension;
+import consulo.ui.annotation.RequiredUIAccess;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -148,7 +148,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
     }
 
     @Override
-    @RequiredDispatchThread
+    @RequiredUIAccess
     protected void doFix(final Project project) {
       final SpringModuleExtension extension = SpringModuleExtension.getInstance(myModule);
       if (extension != null) {
@@ -167,7 +167,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
           list.add(newSet);
           final BaseListPopupStep<SpringFileSet> step =
               new BaseListPopupStep<SpringFileSet>(SpringBundle.message("choose.file.set"), list) {
-                @RequiredDispatchThread
+                @RequiredUIAccess
                 public PopupStep onChosen(final SpringFileSet selectedValue, final boolean finalChoice) {
                   if (selectedValue == newSet) {
                     final String name = SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets);
@@ -234,7 +234,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       DaemonCodeAnalyzer.getInstance(project).restart();
     }
 
-    @RequiredDispatchThread
+    @RequiredUIAccess
     protected void doFix(final Project project) {
       SpringModuleExtension extension = new DummySpringModuleExtension(myModule);
 
@@ -247,7 +247,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       addNewSet(myModule, sets);
     }
 
-    @RequiredDispatchThread
+    @RequiredUIAccess
     protected void addNewSet(final Module module, final Set<SpringFileSet> sets) {
       final SpringFileSet set = new SpringFileSet(SpringFileSet.getUniqueId(sets), SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets), module) {
         public boolean isNew() {
@@ -257,7 +257,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       editSet(module, sets, set);
     }
 
-    @RequiredDispatchThread
+    @RequiredUIAccess
     protected void editSet(final Module module, final Set<SpringFileSet> sets, final SpringFileSet set) {
       set.addFile(myVirtualFile);
       final FileSetEditor editor = new FileSetEditor(myModule, set, sets);
@@ -267,7 +267,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       }
     }
 
-    @RequiredDispatchThread
+    @RequiredUIAccess
     @Nonnull
     public static SpringModuleExtension modifyExtensionOnce(Module module, Consumer<SpringMutableModuleExtension> consumer) {
       WriteAction.run(() -> {

@@ -1,12 +1,12 @@
 package consulo.spring.module.extension;
 
+import com.intellij.spring.facet.SpringConfigurationTab;
+import consulo.roots.ModuleRootLayer;
+import consulo.ui.annotation.RequiredUIAccess;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.JComponent;
-
-import com.intellij.spring.facet.SpringConfigurationTab;
-import consulo.annotations.RequiredDispatchThread;
-import consulo.roots.ModuleRootLayer;
+import javax.swing.*;
 
 /**
  * @author VISTALL
@@ -17,7 +17,7 @@ public class SpringMutableModuleExtensionImpl extends SpringModuleExtensionImpl 
     super(id, moduleRootLayer);
   }
 
-  @RequiredDispatchThread
+  @RequiredUIAccess
   @Nullable
   @Override
   public JComponent createConfigurablePanel(@Nonnull Runnable updateOnCheck) {

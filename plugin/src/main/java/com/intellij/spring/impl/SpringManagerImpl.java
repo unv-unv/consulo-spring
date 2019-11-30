@@ -4,14 +4,6 @@
 
 package com.intellij.spring.impl;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
@@ -24,22 +16,25 @@ import com.intellij.spring.SpringModel;
 import com.intellij.spring.SpringModelProvider;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.converters.CustomConverterRegistry;
-import com.intellij.spring.model.values.converters.EnumValueConverter;
-import com.intellij.spring.model.values.converters.FieldRetrievingFactoryBeanConverter;
-import com.intellij.spring.model.values.converters.PlaceholderPropertiesConverter;
-import com.intellij.spring.model.values.converters.ResourceValueConverter;
-import com.intellij.spring.model.values.converters.SpringBooleanValueConverter;
+import com.intellij.spring.model.values.converters.*;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.util.SmartList;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.spring.boot.AnnotationSpringModel;
 import consulo.spring.boot.SpringBootFileSet;
 import consulo.spring.dom.SpringDomUtil;
 import consulo.spring.model.CompositeSpringModel;
 import consulo.spring.module.extension.SpringModuleExtension;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev

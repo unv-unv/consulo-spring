@@ -1,11 +1,5 @@
 package consulo.spring.boot;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import com.intellij.jam.JamService;
 import com.intellij.jam.reflect.JamClassMeta;
 import com.intellij.openapi.module.Module;
@@ -14,9 +8,14 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.spring.SpringModelProvider;
 import com.intellij.spring.constants.SpringAnnotationsConstants;
 import com.intellij.spring.facet.SpringFileSet;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.spring.boot.jam.SpringBootApplication;
 import consulo.spring.module.extension.SpringModuleExtension;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author VISTALL
