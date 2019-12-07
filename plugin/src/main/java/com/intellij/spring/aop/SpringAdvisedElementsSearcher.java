@@ -7,7 +7,7 @@ import com.intellij.aop.AopAdvisedElementsSearcher;
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.AtomicNotNullLazyValue;
-import com.intellij.openapi.util.Key;
+import consulo.util.dataholder.Key;
 import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.*;

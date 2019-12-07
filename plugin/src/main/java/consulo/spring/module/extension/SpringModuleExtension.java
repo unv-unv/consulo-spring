@@ -15,7 +15,7 @@ import java.util.Set;
  * @author VISTALL
  * @since 14-Jan-17
  */
-public interface SpringModuleExtension extends ModuleExtension<SpringModuleExtension>, Disposable{
+public interface SpringModuleExtension extends ModuleExtension<SpringModuleExtension>, Disposable {
   @Nullable
   @RequiredReadAction
   static SpringModuleExtension getInstance(@Nonnull Module module) {

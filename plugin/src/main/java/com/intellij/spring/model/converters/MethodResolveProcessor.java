@@ -16,7 +16,7 @@
 
 package com.intellij.spring.model.converters;
 
-import com.intellij.openapi.util.Key;
+import consulo.util.dataholder.Key;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.ResolveState;
