@@ -7,7 +7,7 @@ import com.intellij.aop.AopAspect;
 import com.intellij.aop.AopModel;
 import com.intellij.aop.AopPointcut;
 import com.intellij.jam.JamService;
-import com.intellij.openapi.Disposable;
+import consulo.disposer.Disposable;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleServiceManager;
 import com.intellij.openapi.util.NotNullLazyValue;

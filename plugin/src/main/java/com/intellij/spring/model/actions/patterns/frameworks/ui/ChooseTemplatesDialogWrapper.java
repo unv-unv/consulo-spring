@@ -4,7 +4,7 @@ import com.intellij.codeInsight.template.Template;
 import com.intellij.facet.ui.libraries.LibrariesValidationComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
-import com.intellij.openapi.util.Disposer;
+import consulo.disposer.Disposer;
 import com.intellij.spring.SpringBundle;
 
 import javax.swing.*;

@@ -2,8 +2,8 @@ package com.intellij.spring.model.actions.patterns.frameworks.ui;
 
 import com.intellij.facet.ui.libraries.LibrariesValidationComponent;
 import com.intellij.ide.BrowserUtil;
-import com.intellij.openapi.Disposable;
 import com.intellij.ui.HyperlinkLabel;
+import consulo.disposer.Disposable;
 import org.jetbrains.annotations.NonNls;
 
 import javax.swing.*;
@@ -14,7 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ChooseTemplatesForm implements Disposable {
+public class ChooseTemplatesForm implements Disposable
+{
   private JPanel myChoosePanel;
   private JPanel myTableViewPanel;
   private JPanel myLibsPanel;

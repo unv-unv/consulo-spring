@@ -15,8 +15,8 @@ import javax.swing.Icon;
 
 import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.util.ElementsChooser;
-import com.intellij.openapi.Disposable;
-import com.intellij.openapi.util.Disposer;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
@@ -28,7 +28,8 @@ import consulo.ui.image.Image;
 /**
  * @author Dmitry Avdeev
  */
-public class SpringFileSet implements ElementsChooser.ElementProperties, Disposable {
+public class SpringFileSet implements ElementsChooser.ElementProperties, Disposable
+{
 
   @NonNls
   private static final String ID_PREFIX = "fileset";

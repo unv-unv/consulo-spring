@@ -3,7 +3,7 @@ package consulo.spring.boot;
 import javax.annotation.Nonnull;
 
 import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.Disposable;
+import consulo.disposer.Disposable;
 import com.intellij.spring.facet.SpringFileSet;
 
 /**

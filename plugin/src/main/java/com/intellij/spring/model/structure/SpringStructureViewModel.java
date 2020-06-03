@@ -3,13 +3,15 @@ package com.intellij.spring.model.structure;
 import com.intellij.ide.structureView.StructureViewTreeElement;
 import com.intellij.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import com.intellij.ide.util.treeView.smartTree.Sorter;
-import com.intellij.openapi.Disposable;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.util.xml.DomElementNavigationProvider;
 import com.intellij.util.xml.DomElementsNavigationManager;
+import consulo.disposer.Disposable;
+
 import javax.annotation.Nonnull;
 
-public class SpringStructureViewModel extends XmlStructureViewTreeModel implements Disposable {
+public class SpringStructureViewModel extends XmlStructureViewTreeModel implements Disposable
+{
 
   private final SpringModelTreeElement myRoot;
 

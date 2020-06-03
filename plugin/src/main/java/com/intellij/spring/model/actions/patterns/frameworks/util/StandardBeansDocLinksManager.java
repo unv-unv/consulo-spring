@@ -1,6 +1,6 @@
 package com.intellij.spring.model.actions.patterns.frameworks.util;
 
-import com.intellij.openapi.Disposable;
+import consulo.disposer.Disposable;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
