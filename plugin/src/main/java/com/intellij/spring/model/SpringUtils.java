@@ -16,6 +16,22 @@
 
 package com.intellij.spring.model;
 
+import gnu.trove.THashSet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.module.Module;
@@ -34,7 +50,11 @@ import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.codeStyle.SuggestedNameInfo;
 import com.intellij.psi.codeStyle.VariableKind;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.*;
+import com.intellij.psi.util.CachedValue;
+import com.intellij.psi.util.CachedValueProvider;
+import com.intellij.psi.util.CachedValuesManager;
+import com.intellij.psi.util.InheritanceUtil;
+import com.intellij.psi.util.PsiModificationTracker;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringManager;
@@ -46,23 +66,30 @@ import com.intellij.spring.model.converters.SpringConverterUtil;
 import com.intellij.spring.model.values.PlaceholderUtils;
 import com.intellij.spring.model.values.PropertyValueConverter;
 import com.intellij.spring.model.values.converters.PlaceholderPropertiesConverter;
-import com.intellij.spring.model.xml.*;
+import com.intellij.spring.model.xml.CommonSpringBean;
+import com.intellij.spring.model.xml.CustomBeanWrapper;
+import com.intellij.spring.model.xml.DomSpringBean;
+import com.intellij.spring.model.xml.QualifierAttribute;
+import com.intellij.spring.model.xml.SpringModelElement;
+import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.spring.model.xml.beans.*;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.Function;
 import com.intellij.util.Processor;
 import com.intellij.util.SmartList;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.xml.*;
+import com.intellij.util.xml.Converter;
+import com.intellij.util.xml.DomElement;
+import com.intellij.util.xml.DomElementsNavigationManager;
+import com.intellij.util.xml.DomFileElement;
+import com.intellij.util.xml.DomManager;
+import com.intellij.util.xml.DomService;
+import com.intellij.util.xml.DomUtil;
+import com.intellij.util.xml.GenericDomValue;
+import com.intellij.util.xml.GenericValue;
 import com.intellij.util.xml.reflect.AbstractDomChildrenDescription;
 import consulo.spring.module.extension.SpringModuleExtension;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashSet;
-import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.*;
 
 public class SpringUtils {
   public static final String SPRING_DELIMITERS = ",; ";
@@ -383,7 +410,7 @@ public class SpringUtils {
     }
     if (psiType instanceof PsiPrimitiveType) {
       if (module != null) {
-        final GlobalSearchScope scope = module.getModuleWithDependenciesAndLibrariesScope(false);
+        final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module, false);
         final PsiManager psiManager = PsiManager.getInstance(module.getProject());
 
         final PsiClassType boxedType = ((PsiPrimitiveType) psiType).getBoxedType(psiManager, scope);

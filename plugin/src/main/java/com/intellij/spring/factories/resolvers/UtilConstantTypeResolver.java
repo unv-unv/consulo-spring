@@ -1,18 +1,25 @@
 package com.intellij.spring.factories.resolvers;
 
+import java.util.Collections;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiPrimitiveType;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.spring.factories.ObjectTypeResolver;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.util.SpringConstant;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import java.util.Collections;
-import java.util.Set;
 
 /**
  * @author Taras Tielkes
@@ -62,7 +69,7 @@ public class UtilConstantTypeResolver implements ObjectTypeResolver {
   private static PsiClass findClassByExternalName(@Nonnull final CommonSpringBean context, @Nonnull final String externalName) {
     final Module module = context.getModule();
     if (module != null) {
-      final GlobalSearchScope scope = module.getModuleWithDependenciesAndLibrariesScope(false);
+      final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module, false);
       final PsiManager psiManager = context.getPsiManager();
       final String className = externalName.replace('$', '.');
       return JavaPsiFacade.getInstance(psiManager.getProject()).findClass(className, scope);
