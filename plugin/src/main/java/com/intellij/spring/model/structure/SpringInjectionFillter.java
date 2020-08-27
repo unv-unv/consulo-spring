@@ -1,15 +1,14 @@
 package com.intellij.spring.model.structure;
 
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.util.treeView.smartTree.ActionPresentation;
 import com.intellij.ide.util.treeView.smartTree.ActionPresentationData;
 import com.intellij.ide.util.treeView.smartTree.Filter;
 import com.intellij.ide.util.treeView.smartTree.TreeElement;
 import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
-import consulo.awt.TargetAWT;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 public class SpringInjectionFillter implements Filter {
   @NonNls public static final String ID = "SHOW_PROPERTIES";
@@ -20,7 +19,7 @@ public class SpringInjectionFillter implements Filter {
 
   @Nonnull
   public ActionPresentation getPresentation() {
-    return new ActionPresentationData(SpringBundle.message("show.properties.and.constructor.args"), null, TargetAWT.to(SpringIcons.SPRING_BEAN_PROPERTY_ICON));
+    return new ActionPresentationData(SpringBundle.message("show.properties.and.constructor.args"), null, SpringIcons.SPRING_BEAN_PROPERTY_ICON);
   }
 
   @Nonnull
