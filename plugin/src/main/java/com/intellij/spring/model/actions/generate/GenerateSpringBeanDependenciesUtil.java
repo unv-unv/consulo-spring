@@ -32,12 +32,12 @@ import com.intellij.spring.model.xml.beans.*;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
-import consulo.awt.TargetAWT;
+import consulo.localize.LocalizeValue;
 import consulo.spring.module.extension.SpringModuleExtension;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 public class GenerateSpringBeanDependenciesUtil {
@@ -160,7 +160,7 @@ public class GenerateSpringBeanDependenciesUtil {
     MemberChooser<SpringBeanClassMember> chooser = new MemberChooser<SpringBeanClassMember>(
       candidates.toArray(new SpringBeanClassMember[candidates.size()]), false, setterDependency, project) {
       protected ShowContainersAction getShowContainersAction() {
-        return new ShowContainersAction(SpringBundle.message("spring.beans.chooser.show.context.files"), TargetAWT.to(SpringIcons.CONFIG_FILE));
+        return new ShowContainersAction(LocalizeValue.of(SpringBundle.message("spring.beans.chooser.show.context.files")), SpringIcons.CONFIG_FILE);
       }
 
       protected String getAllContainersNodeName() {
