@@ -1,16 +1,5 @@
 package com.intellij.spring.refactoring;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.project.Project;
@@ -35,9 +24,17 @@ import com.intellij.util.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomService;
-import consulo.awt.TargetAWT;
 import consulo.ide.IconDescriptorUpdaters;
 import consulo.vfs.util.ArchiveVfsUtil;
+
+import javax.annotation.Nullable;
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -157,7 +154,6 @@ public class ConfigFileChooser extends DialogWrapper
 
 	private static class FileSetNode extends SimpleNode
 	{
-
 		private final SpringModel myModel;
 
 		private FileSetNode(SpringModel model)
@@ -167,7 +163,7 @@ public class ConfigFileChooser extends DialogWrapper
 			{
 				final SpringFileSet springFileSet = ((DomSpringModelImpl) model).getFileSet();
 				setPlainText(springFileSet.getName());
-				setIcon(TargetAWT.from(springFileSet.getIcon()));
+				setIcon(springFileSet.getIcon());
 			}
 			else
 			{

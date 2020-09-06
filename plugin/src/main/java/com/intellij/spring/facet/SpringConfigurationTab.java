@@ -4,26 +4,10 @@
 
 package com.intellij.spring.facet;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nullable;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultTreeModel;
-
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
-import consulo.disposer.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.psi.PsiFile;
@@ -33,13 +17,21 @@ import com.intellij.spring.SpringBundle;
 import com.intellij.spring.SpringIcons;
 import com.intellij.spring.SpringManager;
 import com.intellij.ui.SimpleTextAttributes;
-import com.intellij.ui.treeStructure.SimpleNode;
-import com.intellij.ui.treeStructure.SimpleNodeVisitor;
-import com.intellij.ui.treeStructure.SimpleTree;
-import com.intellij.ui.treeStructure.SimpleTreeBuilder;
-import com.intellij.ui.treeStructure.SimpleTreeStructure;
-import consulo.awt.TargetAWT;
+import com.intellij.ui.treeStructure.*;
+import consulo.disposer.Disposer;
 import consulo.spring.module.extension.SpringModuleExtension;
+
+import javax.annotation.Nullable;
+import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultTreeModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Dmitry Avdeev
@@ -273,7 +265,7 @@ public class SpringConfigurationTab {
 
       final String name = mySet.getName();
       setPlainText(mySet.isAutodetected() ? name + " " + SpringBundle.message("config.fileset.autodetected") : name);
-      setIcon(TargetAWT.from(fileSet.getIcon()));
+      setIcon(fileSet.getIcon());
     }
 
     public SimpleNode[] getChildren() {

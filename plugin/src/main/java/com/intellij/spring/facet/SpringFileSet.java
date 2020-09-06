@@ -1,29 +1,21 @@
 package com.intellij.spring.facet;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeMap;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.swing.Icon;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.ide.util.ElementsChooser;
-import consulo.disposer.Disposable;
-import consulo.disposer.Disposer;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
 import com.intellij.openapi.vfs.pointers.VirtualFilePointerManager;
-import consulo.awt.TargetAWT;
+import consulo.disposer.Disposable;
+import consulo.disposer.Disposer;
 import consulo.spring.module.extension.SpringModuleExtension;
 import consulo.ui.image.Image;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.awt.*;
+import java.util.List;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -94,7 +86,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     myFiles.putAll(original.myFiles);
     myDependencies.addAll(original.myDependencies);
     myAutodetected = original.isAutodetected();
-    myIcon = TargetAWT.from(original.getIcon());
+    myIcon = original.getIcon();
     myRemoved = original.isRemoved();
   }
 
@@ -190,8 +182,8 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     return fileSet;
   }
 
-  public Icon getIcon() {
-    return TargetAWT.to(myIcon);
+  public Image getIcon() {
+    return myIcon;
   }
 
   public Color getColor() {
