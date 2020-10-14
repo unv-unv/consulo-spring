@@ -60,14 +60,13 @@ public class SpringFilesTree extends CheckboxTreeBase {
         final Object object = ((CheckedTreeNode)value).getUserObject();
         if (object instanceof Module) {
           final Module module = (Module)object;
-          final Icon icon = AllIcons.Nodes.Module;
-          renderer.setIcon(icon);
+          renderer.setIcon(AllIcons.Nodes.Module);
           final String moduleName = module.getName();
           renderer.append(moduleName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
         } else if (object instanceof PsiFile) {
           final PsiFile psiFile = (PsiFile)object;
           final Image icon = IconDescriptorUpdaters.getIcon(psiFile, 0);
-          renderer.setIcon(TargetAWT.to(icon));
+          renderer.setIcon(icon);
           final String fileName = psiFile.getName();
           renderer.append(fileName, SimpleTextAttributes.REGULAR_ATTRIBUTES);
           final VirtualFile virtualFile = psiFile.getVirtualFile();
@@ -81,7 +80,7 @@ public class SpringFilesTree extends CheckboxTreeBase {
           }
         } else if (object instanceof VirtualFile) {
           VirtualFile file = (VirtualFile)object;
-          renderer.setIcon(TargetAWT.to(VfsIconUtil.getIcon(file, 0, null)));
+          renderer.setIcon(VfsIconUtil.getIcon(file, 0, null));
           renderer.append(file.getName(), SimpleTextAttributes.REGULAR_ATTRIBUTES);
           String path = file.getPath();
           final int i = path.indexOf(StandardFileSystems.JAR_SEPARATOR);

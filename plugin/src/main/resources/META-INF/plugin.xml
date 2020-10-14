@@ -108,7 +108,7 @@
 		<typeIcon className="BeanProperty.class" icon="/resources/icons/springProperty.png"/>
 		<typeIcon className="SpringImport.class" icon="/resources/icons/springConfig.png"/>
 
-		<moduleExtensionProvider icon="/resources/icons/spring.png"
+		<moduleExtensionProvider icon="consulo.spring.SpringImplIconGroup@spring"
 								 key="spring"
 								 name="Spring"
 								 parentKey="java"

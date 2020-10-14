@@ -1,7 +1,5 @@
 package com.intellij.spring.model.actions.generate;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.codeInsight.generation.ClassMember;
 import com.intellij.codeInsight.generation.MemberChooserObject;
 import com.intellij.codeInsight.generation.MemberChooserObjectBase;
@@ -11,13 +9,14 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringIcons;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import consulo.awt.TargetAWT;
+
+import javax.annotation.Nonnull;
 
 public class SpringBeanClassMember extends MemberChooserObjectBase implements ClassMember {
   private final SpringBeanPointer mySpringBean;
 
   public SpringBeanClassMember(final SpringBeanPointer springBean) {
-    super(SpringUtils.getPresentationBeanName(springBean), TargetAWT.to(springBean.getBeanIcon()));
+    super(SpringUtils.getPresentationBeanName(springBean), springBean.getBeanIcon());
     mySpringBean = springBean;
   }
 
@@ -32,7 +31,7 @@ public class SpringBeanClassMember extends MemberChooserObjectBase implements Cl
   private static class SpringFileMemberChooserObjectBase extends PsiElementMemberChooserObject {
 
     public SpringFileMemberChooserObjectBase(@Nonnull final PsiFile psiFile) {
-      super(psiFile, psiFile.getName(), psiFile instanceof XmlFile ? TargetAWT.to(SpringIcons.CONFIG_FILE): TargetAWT.to(SpringIcons.JAVA_CONFIG_FILE));
+      super(psiFile, psiFile.getName(), psiFile instanceof XmlFile ? SpringIcons.CONFIG_FILE: SpringIcons.JAVA_CONFIG_FILE);
     }
 
   }

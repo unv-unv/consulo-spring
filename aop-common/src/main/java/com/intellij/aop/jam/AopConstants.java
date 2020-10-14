@@ -3,9 +3,9 @@
  */
 package com.intellij.aop.jam;
 
-import org.jetbrains.annotations.NonNls;
-import com.intellij.openapi.util.IconLoader;
+import consulo.aop.icon.AopIconGroup;
 import consulo.ui.image.Image;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter
@@ -39,18 +39,18 @@ public interface AopConstants
 	String JOIN_POINT_STATIC_PART = "org.aspectj.lang.JoinPoint.StaticPart";
 	String PROCEEDING_JOIN_POINT = "org.aspectj.lang.ProceedingJoinPoint";
 
-	Image POINTCUT_ICON = IconLoader.getIcon("/icons/pointcut.png");
-	Image TO_POINTCUT_ICON = IconLoader.getIcon("/icons/to_pointcut.png");
-	Image FROM_POINTCUT_ICON = IconLoader.getIcon("/icons/from_pointcut.png");
+	Image POINTCUT_ICON = AopIconGroup.pointcut();
+	Image TO_POINTCUT_ICON = AopIconGroup.to_pointcut();
+	Image FROM_POINTCUT_ICON = AopIconGroup.from_pointcut();
 
-	Image FROM_ICON = IconLoader.getIcon("/icons/from_arrow.png");
-	Image TO_ICON = IconLoader.getIcon("/icons/to_arrow.png");
+	Image FROM_ICON = AopIconGroup.from_arrow();
+	Image TO_ICON = AopIconGroup.to_arrow();
 
-	Image ABSTRACT_ADVICE_ICON = IconLoader.getIcon("/icons/abstract_advice.png");
-	Image BEFORE_ADVICE_ICON = IconLoader.getIcon("/icons/before_advice.png");
-	Image AFTER_ADVICE_ICON = IconLoader.getIcon("/icons/after_advice.png");
-	Image AFTER_THROWING_ADVICE_ICON = IconLoader.getIcon("/icons/after_throwing_advice.png");
-	Image AFTER_RETURNING_ADVICE_ICON = IconLoader.getIcon("/icons/after_returning_advice.png");
-	Image AROUND_ADVICE_ICON = IconLoader.getIcon("/icons/around_advice.png");
-	Image INTRODUCTION_ICON = IconLoader.getIcon("/icons/introduction.png");
+	Image ABSTRACT_ADVICE_ICON = AopIconGroup.abstract_advice();
+	Image BEFORE_ADVICE_ICON = AopIconGroup.before_advice();
+	Image AFTER_ADVICE_ICON = AopIconGroup.after_advice();
+	Image AFTER_THROWING_ADVICE_ICON = AopIconGroup.after_throwing_advice();
+	Image AFTER_RETURNING_ADVICE_ICON = AopIconGroup.after_returning_advice();
+	Image AROUND_ADVICE_ICON = AopIconGroup.around_advice();
+	Image INTRODUCTION_ICON = AopIconGroup.introduction();
 }

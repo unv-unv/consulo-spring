@@ -1,36 +1,42 @@
 package com.intellij.spring.model.actions.patterns;
 
-import com.intellij.openapi.util.IconLoader;
+import consulo.annotation.DeprecationInfo;
+import consulo.spring.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
 
+@Deprecated
+@DeprecationInfo("Use SpringImplIconGroup")
 public interface PatternIcons
 {
-	Image SPRING_BEANS_ICON = IconLoader.getIcon("/resources/icons/patterns/beans.png");
+	Image SPRING_BEANS_ICON = SpringImplIconGroup.patternsBeans();
 
-	Image SPRING_PATTERNS_ICON = IconLoader.getIcon("/resources/icons/patterns/patterns.png");
+	Image SPRING_PATTERNS_ICON = SpringImplIconGroup.patternsPatterns();
 
-	Image HIBERNATE_ICON = IconLoader.getIcon("/resources/icons/patterns/hibernate.png");
+	Image HIBERNATE_ICON = SpringImplIconGroup.patternsHibernate();
 
-	Image DATASOURCE_ICON = IconLoader.getIcon("/resources/icons/patterns/datasource.png");
+	Image DATASOURCE_ICON = SpringImplIconGroup.patternsDatasource();
 
-	Image JDO_ICON = IconLoader.getIcon("/resources/icons/patterns/jdo.png");
+	Image JDO_ICON = SpringImplIconGroup.patternsJdo();
 
-	Image TOPLINK_ICON = IconLoader.getIcon("/resources/icons/patterns/toplink.png");
+	Image TOPLINK_ICON = SpringImplIconGroup.patternsToplink();
 
-	Image IBATIS_ICON = IconLoader.getIcon("/resources/icons/patterns/ibatis.png");
+	Image IBATIS_ICON = SpringImplIconGroup.patternsIbatis();
 
-	Image JPA_ICON = IconLoader.getIcon("/resources/icons/patterns/jpa.png");
+	Image JPA_ICON = SpringImplIconGroup.patternsJpa();
 
-	Image TRANSACTION_MANAGER_ICON = IconLoader.getIcon("/resources/icons/patterns/transactionManager.png");
+	Image TRANSACTION_MANAGER_ICON = SpringImplIconGroup.patternsTransactionManager();
 
-	Image DATA_ACCESS_GROUP_ICON = IconLoader.getIcon("/resources/icons/patterns/dataAccess.png");
-	Image INTEGRATION_GROUP_ICON = IconLoader.getIcon("/resources/icons/patterns/integration.png");
+	Image DATA_ACCESS_GROUP_ICON = SpringImplIconGroup.patternsDataAccess();
 
-	Image FACTORY_BEAN_ICON = IconLoader.getIcon("/resources/icons/patterns/factoryBean.png");
+	Image INTEGRATION_GROUP_ICON = SpringImplIconGroup.patternsIntegration();
 
-	Image SCHEDULER_ICON = IconLoader.getIcon("/resources/icons/patterns/scheduler.png");
-	Image EJB_ICON = IconLoader.getIcon("/resources/icons/patterns/ejb.png");
-	Image JDK_ICON = IconLoader.getIcon("/resources/icons/patterns/jdk.png");
+	Image FACTORY_BEAN_ICON = SpringImplIconGroup.patternsFactoryBean();
 
-	Image SPRING_WEBFLOW_ICON = IconLoader.getIcon("/resources/icons/springBean.png");
+	Image SCHEDULER_ICON = SpringImplIconGroup.patternsScheduler();
+
+	Image EJB_ICON = SpringImplIconGroup.patternsEjb();
+
+	Image JDK_ICON = SpringImplIconGroup.patternsJdk();
+
+	Image SPRING_WEBFLOW_ICON = SpringImplIconGroup.springBean();
 }
