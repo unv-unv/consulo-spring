@@ -9,7 +9,7 @@ import static com.intellij.aop.psi.AopElementTypes.AOP_RIGHT_PAR;
 import static com.intellij.aop.psi.AopPrattParser.parsePatternPart;
 
 import javax.annotation.Nullable;
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.psi.AopPointcutTypes;
