@@ -35,7 +35,7 @@ import com.intellij.spring.factories.resolvers.SpringEjbTypeResolver;
 import com.intellij.spring.factories.resolvers.TransactionProxyFactoryBeanTypeResolver;
 import com.intellij.spring.factories.resolvers.UtilConstantTypeResolver;
 import com.intellij.spring.model.xml.CommonSpringBean;
-import com.intellij.util.containers.HashMap;
+import java.util.HashMap;
 import com.intellij.util.xmlb.XmlSerializer;
 import consulo.internal.org.objectweb.asm.ClassReader;
 import consulo.internal.org.objectweb.asm.ClassVisitor;

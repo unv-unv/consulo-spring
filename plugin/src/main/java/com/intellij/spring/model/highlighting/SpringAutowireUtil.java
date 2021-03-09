@@ -36,7 +36,7 @@ import com.intellij.spring.model.xml.beans.ConstructorArg;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.spring.model.xml.beans.SpringPropertyDefinition;
-import com.intellij.util.containers.HashMap;
+import java.util.HashMap;
 import consulo.java.model.annotations.AnnotationModelUtil;
 
 public class SpringAutowireUtil {

@@ -15,11 +15,11 @@ import com.intellij.spring.model.xml.SpringQualifier;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
 import com.intellij.util.ArrayUtil;
-import com.intellij.util.containers.HashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

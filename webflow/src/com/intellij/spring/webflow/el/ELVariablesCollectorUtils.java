@@ -25,7 +25,7 @@ import com.intellij.spring.el.SpringBeansAsJsfVariableUtil;
 import com.intellij.spring.webflow.model.xml.*;
 import com.intellij.spring.webflow.util.WebflowUtil;
 import com.intellij.util.Processor;
-import com.intellij.util.containers.HashMap;
+import java.util.HashMap;
 import com.intellij.util.xml.*;
 import com.intellij.pom.references.PomService;
 import org.jetbrains.annotations.NotNull;

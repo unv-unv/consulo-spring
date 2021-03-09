@@ -16,7 +16,7 @@ import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.DomSpringBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.spring.model.xml.beans.SpringPropertyDefinition;
-import com.intellij.util.containers.HashSet;
+import java.util.HashSet;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 

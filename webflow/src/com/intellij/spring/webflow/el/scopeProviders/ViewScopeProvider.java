@@ -15,7 +15,7 @@ import com.intellij.spring.webflow.el.WebflowScope;
 import com.intellij.spring.webflow.el.WebflowScopeProvider;
 import com.intellij.spring.webflow.model.xml.*;
 import com.intellij.spring.webflow.resources.messages.WebflowBundle;
-import com.intellij.util.containers.HashMap;
+import java.util.HashMap;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import org.jetbrains.annotations.NotNull;

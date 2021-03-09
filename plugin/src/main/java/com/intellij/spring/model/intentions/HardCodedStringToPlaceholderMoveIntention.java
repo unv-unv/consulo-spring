@@ -20,7 +20,7 @@ import com.intellij.spring.model.values.PlaceholderUtils;
 import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.spring.model.xml.beans.*;
-import com.intellij.util.containers.HashMap;
+import java.util.HashMap;
 import com.intellij.util.xml.*;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

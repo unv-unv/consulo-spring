@@ -12,7 +12,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
-import com.intellij.util.containers.HashSet;
+import java.util.HashSet;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;
 import consulo.awt.TargetAWT;
 import consulo.spring.module.extension.SpringModuleExtension;

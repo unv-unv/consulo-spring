@@ -19,17 +19,17 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.xml.CommonSpringBean;
-import com.intellij.spring.model.xml.DomSpringBean;
-import com.intellij.spring.model.xml.CustomBeanWrapper;
 import com.intellij.spring.model.xml.CustomBean;
-import com.intellij.util.containers.HashMap;
+import com.intellij.spring.model.xml.CustomBeanWrapper;
+import com.intellij.spring.model.xml.DomSpringBean;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

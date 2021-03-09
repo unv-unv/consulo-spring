@@ -11,7 +11,7 @@ import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.webflow.el.ELVariablesCollectorUtils;
 import com.intellij.spring.webflow.el.WebflowScopeProvider;
 import com.intellij.spring.webflow.model.xml.*;
-import com.intellij.util.containers.HashMap;
+import java.util.HashMap;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
