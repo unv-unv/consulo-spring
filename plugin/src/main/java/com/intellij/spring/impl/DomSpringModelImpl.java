@@ -511,25 +511,15 @@ public class DomSpringModelImpl extends DomModelImpl<Beans> implements DomSpring
 	@Nonnull
 	public List<SpringBaseBeanPointer> findBeansByEffectivePsiClassWithInheritance(@Nonnull final PsiClass psiClass)
 	{
-		return collectBeans(psiClass, new Function<DomSpringModelImpl, Class2BeansMap>()
-		{
-			public Class2BeansMap fun(DomSpringModelImpl springModel)
-			{
-				return springModel.myBeansByEffectiveClassWithInheritance;
-			}
-		});
+		return collectBeans(psiClass, springModel -> springModel.myBeansByEffectiveClassWithInheritance);
 	}
 
 	private List<SpringBaseBeanPointer> collectBeans(final PsiClass psiClass, final Function<DomSpringModelImpl, Class2BeansMap> getter)
 	{
 		final ArrayList<SpringBaseBeanPointer> pointers = new ArrayList<SpringBaseBeanPointer>(getter.fun(this).get(psiClass));
-		visitDependencies(new ModelVisitor()
-		{
-			public boolean visit(final SpringModel model)
-			{
-				pointers.addAll(getter.fun((DomSpringModelImpl) model).get(psiClass));
-				return true;
-			}
+		visitDependencies(model -> {
+			pointers.addAll(getter.fun((DomSpringModelImpl) model).get(psiClass));
+			return true;
 		});
 
 		return pointers;

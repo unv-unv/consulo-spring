@@ -9,12 +9,13 @@ import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.spring.constants.SpringConstants;
 import com.intellij.spring.model.converters.SpringBeanResolveConverter;
 import com.intellij.spring.model.xml.CustomBeanWrapper;
 import com.intellij.spring.model.xml.beans.MetadataPropertyValueConverter;
 import com.intellij.spring.model.xml.beans.MetadataRefValue;
 import com.intellij.spring.model.xml.beans.MetadataValue;
-import com.intellij.spring.constants.SpringConstants;
+import com.intellij.util.ParameterizedTypeImpl;
 import com.intellij.util.xml.*;
 import com.intellij.util.xml.reflect.DomExtender;
 import com.intellij.util.xml.reflect.DomExtension;
@@ -22,11 +23,9 @@ import com.intellij.util.xml.reflect.DomExtensionsRegistrar;
 import com.intellij.xml.XmlAttributeDescriptor;
 import com.intellij.xml.impl.schema.XmlAttributeDescriptorImpl;
 import com.intellij.xml.util.XmlUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
-
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
@@ -90,8 +89,7 @@ public class SpringToolDomExtender extends DomExtender<CustomBeanWrapper> {
                });
              } else {
                if (CommonClassNames.JAVA_LANG_CLASS.equals(expectedType.getCanonicalText())) {
-                 final DomExtension extension = registrar.registerAttributeChildExtension(xmlName, ParameterizedTypeImpl.make(
-                   GenericAttributeValue.class, new Type[]{PsiClass.class}, null));
+                 final DomExtension extension = registrar.registerAttributeChildExtension(xmlName, new ParameterizedTypeImpl(GenericAttributeValue.class, PsiClass.class));
                  final XmlTag[] tags1 = annotationTag.findSubTags("assignable-to", SpringConstants.TOOL_NAMESPACE);
                  if (tags1.length > 0) {
                    final String assignableFrom = tags1[0].getAttributeValue("type");
