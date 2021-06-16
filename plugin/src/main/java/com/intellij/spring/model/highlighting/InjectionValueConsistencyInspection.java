@@ -27,16 +27,12 @@ import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.xml.highlighting.AddDomElementQuickFix;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
 import com.intellij.util.xml.highlighting.RemoveDomElementQuickFix;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -167,7 +163,7 @@ public class InjectionValueConsistencyInspection extends SpringBeanInspectionBas
 
   @Nonnull
   private static Set<DomElement> getValues(final SpringElementsHolder elementsHolder) {
-    Set<DomElement> values = new THashSet<DomElement>(DomUtil.getDefinedChildrenOfType(elementsHolder, DomSpringBean.class));
+    Set<DomElement> values = new HashSet<DomElement>(DomUtil.getDefinedChildrenOfType(elementsHolder, DomSpringBean.class));
     addValue(elementsHolder.getIdref(), values);
     addValue(elementsHolder.getList(), values);
     addValue(elementsHolder.getMap(), values);

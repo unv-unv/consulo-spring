@@ -1,17 +1,5 @@
 package consulo.spring.model;
 
-import gnu.trove.THashSet;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.module.Module;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.xml.XmlFile;
@@ -24,6 +12,11 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
 import com.intellij.util.xml.DomFileElement;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -102,7 +95,7 @@ public class CompositeSpringModel implements SpringModel {
   @Nonnull
   @Override
   public Set<String> getAllBeanNames(@Nonnull String beanName) {
-    Set<String> list = new THashSet<>();
+    Set<String> list = new HashSet<>();
     for (SpringModel model : myModels) {
       list.addAll(model.getAllBeanNames(beanName));
     }

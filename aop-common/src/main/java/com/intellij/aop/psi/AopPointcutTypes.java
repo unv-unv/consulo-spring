@@ -11,10 +11,10 @@ import com.intellij.lang.pratt.PathPattern;
 import com.intellij.lang.pratt.PrattBuilder;
 import com.intellij.lang.pratt.ReducingParser;
 import com.intellij.psi.tree.IElementType;
-import gnu.trove.THashMap;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.intellij.aop.psi.AopElementTypes.*;
@@ -24,8 +24,8 @@ import static com.intellij.aop.psi.AopPrattParser.*;
  * @author peter
  */
 public class AopPointcutTypes {
-  private static final Map<String, AopElementType> ourPointcutTokens = new THashMap<String, AopElementType>();
-  private static final Map<String, PointcutDescriptor> ourPointcutDescriptors = new THashMap<String, PointcutDescriptor>();
+  private static final Map<String, AopElementType> ourPointcutTokens = new HashMap<String, AopElementType>();
+  private static final Map<String, PointcutDescriptor> ourPointcutDescriptors = new HashMap<String, PointcutDescriptor>();
 
   public static Map<String, AopElementType> getPointcutTokens() {
     return ourPointcutTokens;

@@ -9,8 +9,8 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiRecursiveElementVisitor;
 import com.intellij.spring.model.xml.aop.SpringPointcut;
-import gnu.trove.THashSet;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,7 +25,7 @@ public abstract class SpringPointcutImpl implements SpringPointcut {
     final PsiPointcutExpression expression = getExpression().getValue();
     if (expression == null) return -1;
 
-    final Set<String> paramNames = new THashSet<String>();
+    final Set<String> paramNames = new HashSet<String>();
     expression.acceptChildren(new PsiRecursiveElementVisitor() {
       @Override public void visitElement(final PsiElement element) {
         if (element instanceof AopReferenceExpression) {

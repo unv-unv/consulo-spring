@@ -3,10 +3,10 @@
  */
 package com.intellij.spring.constants;
 
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public interface SpringConstants {
@@ -41,7 +41,7 @@ public interface SpringConstants {
   @NonNls String SPRING_VERSION_CLASS = "org.springframework.core.SpringVersion";
 
   
-  @NonNls Set<String> INSIDER_NAMESPACES = new THashSet<String>(Arrays.asList(AOP_NAMESPACE, JEE_NAMESPACE, UTIL_NAMESPACE,
+  @NonNls Set<String> INSIDER_NAMESPACES = new HashSet<String>(Arrays.asList(AOP_NAMESPACE, JEE_NAMESPACE, UTIL_NAMESPACE,
                                                                        TX_NAMESPACE, LANG_NAMESPACE, TOOL_NAMESPACE,
                                                                        BEANS_XSD, P_NAMESPACE));
   @NonNls String ASPECTJ_AUTOPROXY = "aspectj-autoproxy";

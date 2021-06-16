@@ -3,18 +3,6 @@
  */
 package com.intellij.aop.psi;
 
-import gnu.trove.THashSet;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.aop.AopPointcut;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.jam.AopConstants;
@@ -40,6 +28,11 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.ObjectUtils;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.psi.PsiPackage;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author peter
@@ -198,7 +191,7 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
       final LocalAopModel model = getContainingFile().getAopModel();
       final PsiMethod pointcutMethod = model.getPointcutMethod();
 
-      final Set<String> qnames = new THashSet<String>();
+      final Set<String> qnames = new HashSet<String>();
       final String prefix = getText().substring(0, getRangeInElement().getStartOffset());
       processVariantsInner(new BaseScopeProcessor() {
         public boolean execute(final PsiElement element, final ResolveState state) {

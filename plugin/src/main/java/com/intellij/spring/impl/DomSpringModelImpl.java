@@ -36,7 +36,6 @@ import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.model.impl.DomModelImpl;
 import consulo.spring.DomSpringModel;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -558,7 +557,7 @@ public class DomSpringModelImpl extends DomModelImpl<Beans> implements DomSpring
 	@Nonnull
 	public List<SpringBaseBeanPointer> getDescendants(final @Nonnull CommonSpringBean context)
 	{
-		final Set<SpringBaseBeanPointer> visited = new THashSet<SpringBaseBeanPointer>();
+		final Set<SpringBaseBeanPointer> visited = new HashSet<SpringBaseBeanPointer>();
 		final SpringBaseBeanPointer pointer = SpringBeanPointer.createSpringBeanPointer(context);
 		visited.add(pointer);
 		final MultiMap<SpringBaseBeanPointer, SpringBaseBeanPointer> map = myDirectInheritorsMap.getValue();

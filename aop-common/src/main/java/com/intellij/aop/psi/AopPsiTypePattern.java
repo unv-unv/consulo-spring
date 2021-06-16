@@ -3,19 +3,13 @@
  */
 package com.intellij.aop.psi;
 
-import gnu.trove.THashSet;
-
-import java.util.Collection;
-import java.util.Set;
+import com.intellij.psi.*;
+import com.intellij.util.Processor;
 
 import javax.annotation.Nonnull;
-
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiJavaPackage;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.PsiWildcardType;
-import com.intellij.util.Processor;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author peter
@@ -62,7 +56,7 @@ public abstract class AopPsiTypePattern {
 
   @Nonnull
   public PointcutMatchDegree canBeAssignableFrom(@Nonnull PsiType type) {
-    return canBeAssignableFrom(type, new THashSet<PsiType>());
+    return canBeAssignableFrom(type, new HashSet<PsiType>());
   }
 
   private PointcutMatchDegree canBeAssignableFrom(final PsiType type, final Set<PsiType> visited) {

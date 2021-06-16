@@ -29,7 +29,6 @@ import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.util.AbstractProgressIndicatorBase;
 import com.intellij.openapi.project.Project;
-import consulo.util.dataholder.Key;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiClassType;
@@ -51,14 +50,11 @@ import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.highlighting.DomElementAnnotationHolder;
-import gnu.trove.THashSet;
+import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.Nls;
-import javax.annotation.Nonnull;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import javax.annotation.Nonnull;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -77,7 +73,7 @@ public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
     if (psiClass == null || psiClass.isInterface()) {
       return;
     }
-    final Set<PsiClass> interfaces = new THashSet<PsiClass>();
+    final Set<PsiClass> interfaces = new HashSet<PsiClass>();
 
     final long startTime = System.currentTimeMillis();
     try {
@@ -132,7 +128,7 @@ public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
             if (elementsSearcher instanceof SpringAdvisedElementsSearcher) {
               final SpringAdvisedElementsSearcher searcher = (SpringAdvisedElementsSearcher)elementsSearcher;
               if (searcher.isJdkProxyType() && isAdvised(psiClass)) {
-                final Set<PsiClass> interfaces = new THashSet<PsiClass>();
+                final Set<PsiClass> interfaces = new HashSet<PsiClass>();
                 JamCommonUtil.processSuperClassList(psiClass, new ArrayListSet<PsiClass>(), new Processor<PsiClass>() {
                   public boolean process(final PsiClass psiClass) {
                     interfaces.addAll(Arrays.asList(psiClass.getInterfaces()));

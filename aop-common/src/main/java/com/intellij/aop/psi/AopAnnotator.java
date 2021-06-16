@@ -16,10 +16,10 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.intellij.psi.xml.XmlElement;
 import com.intellij.ui.SimpleTextAttributes;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -169,7 +169,7 @@ public class AopAnnotator implements Annotator {
 
   private static void checkEllipsisAllowance(final PsiElement psiElement, final AnnotationHolder holder) {
     final AopParameterList list = (AopParameterList)psiElement;
-    final Set<PsiElement> ellipsises = new THashSet<PsiElement>();
+    final Set<PsiElement> ellipsises = new HashSet<PsiElement>();
     for (final PsiElement parameter : list.getParameters()) {
       if (parameter.getNode().getElementType() == AopElementTypes.AOP_DOT_DOT) {
         ellipsises.add(parameter);

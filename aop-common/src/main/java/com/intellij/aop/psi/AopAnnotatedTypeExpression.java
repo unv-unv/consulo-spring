@@ -5,12 +5,13 @@
 package com.intellij.aop.psi;
 
 import com.intellij.lang.ASTNode;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author peter
@@ -59,7 +60,7 @@ public class AopAnnotatedTypeExpression extends AopElementBase implements AopTyp
 
     final Collection<AopPsiTypePattern> typePatterns = typeExpression.getPatterns();
     final Collection<AopPsiTypePattern> annoPatterns = annotationHolder.getPatterns();
-    final THashSet<AopPsiTypePattern> result = new THashSet<AopPsiTypePattern>();
+    final Set<AopPsiTypePattern> result = new HashSet<AopPsiTypePattern>();
     AopBinaryExpression.conjunctPatterns(typePatterns, annoPatterns, result);
     return result;
   }

@@ -9,8 +9,10 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiType;
 import com.intellij.util.CommonProcessors;
 import com.intellij.util.Processor;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author peter
@@ -34,12 +36,12 @@ public class AndPsiTypePattern extends AopPsiTypePattern {
   }
 
   public boolean processPackages(final PsiManager manager, final Processor<PsiJavaPackage> processor) {
-    final Ref<THashSet<PsiJavaPackage>> set = Ref.create(new THashSet<PsiJavaPackage>());
+    final Ref<Set<PsiJavaPackage>> set = Ref.create(new HashSet<PsiJavaPackage>());
     myPatterns[0].processPackages(manager, new CommonProcessors.CollectProcessor<PsiJavaPackage>(set.get()));
     for (int i = 1; i < myPatterns.length; i++) {
       AopPsiTypePattern pattern = myPatterns[i];
-      final THashSet<PsiJavaPackage> all = set.get();
-      set.set(new THashSet<PsiJavaPackage>());
+      final Set<PsiJavaPackage> all = set.get();
+      set.set(new HashSet<PsiJavaPackage>());
       pattern.processPackages(manager, new Processor<PsiJavaPackage>() {
         public boolean process(final PsiJavaPackage psiPackage) {
           if (all.contains(psiPackage)) {

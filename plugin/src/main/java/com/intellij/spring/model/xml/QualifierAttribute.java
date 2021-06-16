@@ -1,7 +1,8 @@
 package com.intellij.spring.model.xml;
 
 import com.intellij.openapi.util.Comparing;
-import gnu.trove.TObjectHashingStrategy;
+import consulo.util.collection.HashingStrategy;
+
 import javax.annotation.Nullable;
 
 /**
@@ -15,9 +16,9 @@ public interface QualifierAttribute {
   @Nullable
   String getAttributeValue();
 
-  TObjectHashingStrategy<QualifierAttribute> HASHING_STRATEGY = new TObjectHashingStrategy<QualifierAttribute>() {
+  HashingStrategy<QualifierAttribute> HASHING_STRATEGY = new HashingStrategy<QualifierAttribute>() {
 
-    public int computeHashCode(final QualifierAttribute object) {
+    public int hashCode(final QualifierAttribute object) {
       final String key = object.getAttributeKey();
       final String value = object.getAttributeValue();
       return (key == null ? 0 : key.hashCode()) + (value == null ? 0 : value.hashCode());

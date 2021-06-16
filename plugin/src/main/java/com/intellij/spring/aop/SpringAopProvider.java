@@ -3,33 +3,16 @@
  */
 package com.intellij.spring.aop;
 
-import gnu.trove.THashSet;
-
-import java.util.Collections;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.intellij.aop.AopAdvice;
-import com.intellij.aop.AopAdvisedElementsSearcher;
-import com.intellij.aop.AopAspect;
-import com.intellij.aop.AopProvider;
-import com.intellij.aop.ArgNamesManipulator;
+import com.intellij.aop.*;
 import com.intellij.aop.psi.AllAdvisedElementsSearcher;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.roots.ProjectRootManager;
-import consulo.util.dataholder.Key;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.JavaConstantExpressionEvaluator;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiModificationTracker;
-import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.util.*;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlTag;
@@ -46,6 +29,13 @@ import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;
 import com.intellij.util.xml.DomUtil;
 import consulo.spring.module.extension.SpringModuleExtension;
+import consulo.util.dataholder.Key;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author peter
@@ -61,7 +51,7 @@ public class SpringAopProvider extends AopProvider {
     if (module.getUserData(CACHED_SPRING_MODELS) == null) {
       module.putUserData(CACHED_SPRING_MODELS, CachedValuesManager.getManager(module.getProject()).createCachedValue(new CachedValueProvider<Set<? extends AopAspect>>() {
         public Result<Set<? extends AopAspect>> compute() {
-          final THashSet<AopAspect> set = new THashSet<AopAspect>();
+          final Set<AopAspect> set = new HashSet<AopAspect>();
           for (final SpringModel model : SpringUtils.getNonEmptySpringModels(module)) {
             for (final DomFileElement<Beans> element : model.getRoots()) {
               addAopAspects(set, element.getRootElement());

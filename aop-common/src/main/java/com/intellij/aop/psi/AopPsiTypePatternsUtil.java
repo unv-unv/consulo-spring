@@ -5,12 +5,8 @@ package com.intellij.aop.psi;
 
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.PairFunction;
-import gnu.trove.THashSet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author peter
@@ -33,7 +29,7 @@ public class AopPsiTypePatternsUtil {
 
     addAnder(AopPsiTypePattern.class, AndPsiTypePattern.class, new PairFunction<AopPsiTypePattern, AndPsiTypePattern, AopPsiTypePattern>() {
       public AopPsiTypePattern fun(final AopPsiTypePattern aopPsiTypePattern, final AndPsiTypePattern aopPsiTypePattern1) {
-        final Set<AopPsiTypePattern> result = new THashSet<AopPsiTypePattern>();
+        final Set<AopPsiTypePattern> result = new HashSet<AopPsiTypePattern>();
         final AopPsiTypePattern[] patterns = aopPsiTypePattern1.getPatterns();
         for (final AopPsiTypePattern pattern : patterns) {
           final AopPsiTypePattern pattern1 = conjunctPatterns(pattern, aopPsiTypePattern);

@@ -7,12 +7,12 @@ import com.intellij.lang.ASTNode;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMember;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * @author peter
@@ -73,7 +73,7 @@ public class AopBinaryExpression extends AopElementBase implements PsiPointcutEx
 
     final Collection<AopPsiTypePattern> leftPatterns = pair.first.getPatterns();
     final Collection<AopPsiTypePattern> rightPatterns = pair.second.getPatterns();
-    final Collection<AopPsiTypePattern> result = new THashSet<AopPsiTypePattern>();
+    final Collection<AopPsiTypePattern> result = new HashSet<AopPsiTypePattern>();
     if (getOperation() == AopOperation.AND) {
       conjunctPatterns(leftPatterns, rightPatterns, result);
     } else {

@@ -9,13 +9,10 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.spring.model.xml.beans.Alias;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import java.util.HashSet;
 import com.intellij.util.containers.MultiMap;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 /**
@@ -34,8 +31,8 @@ class BeanNamesMapper {
     final Collection<? extends SpringBaseBeanPointer> springBeans = model.getAllCommonBeans();
     final Collection<SpringBaseBeanPointer> ownBeans = model.getOwnBeans();
 
-    myBeansMap = new THashMap<String, SpringBaseBeanPointer>(springBeans.size());
-    myAliasesMap = new THashMap<String, String>();
+    myBeansMap = new HashMap<String, SpringBaseBeanPointer>(springBeans.size());
+    myAliasesMap = new HashMap<String, String>();
     myAllBeanNames = new MultiMap<String, String>() {
       @Override
       protected Collection<String> createCollection() {
@@ -84,7 +81,7 @@ class BeanNamesMapper {
       if (newName == null || (visited != null && visited.contains(curName))) return null;
 
       if (visited == null) {
-        visited = new THashSet<String>();
+        visited = new HashSet<String>();
       }
       visited.add(curName);
       curName = newName;

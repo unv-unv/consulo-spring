@@ -13,17 +13,17 @@ import com.intellij.lexer.LexerPosition;
 import com.intellij.lexer.MergingLexerAdapter;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import gnu.trove.THashMap;
 import org.jetbrains.annotations.NonNls;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author peter
  */
 public class AopLexer extends DelegateLexer implements AopElementTypes {
-  @NonNls public static final Map<String,AopElementType> PRIMITIVE_TYPES = new THashMap<String, AopElementType>();
-  @NonNls public static final Map<String,AopElementType> LOGICAL_OP_TYPES = new THashMap<String, AopElementType>();
+  @NonNls public static final Map<String,AopElementType> PRIMITIVE_TYPES = new HashMap<String, AopElementType>();
+  @NonNls public static final Map<String,AopElementType> LOGICAL_OP_TYPES = new HashMap<String, AopElementType>();
 
   static {
     PRIMITIVE_TYPES.put("int", AOP_INT);

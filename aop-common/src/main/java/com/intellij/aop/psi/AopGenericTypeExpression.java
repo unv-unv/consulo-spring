@@ -6,11 +6,11 @@ package com.intellij.aop.psi;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
-import gnu.trove.THashSet;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -46,7 +46,7 @@ public class AopGenericTypeExpression extends AopElementBase implements AopTypeE
       final Collection<AopPsiTypePattern> patterns = expression.getPatterns();
       parameterPatterns[i] = patterns.toArray(new AopPsiTypePattern[patterns.size()]);
     }
-    final Set<AopPsiTypePattern> result = new THashSet<AopPsiTypePattern>();
+    final Set<AopPsiTypePattern> result = new HashSet<AopPsiTypePattern>();
     for (final AopPsiTypePattern erasurePattern : erasurePatterns) {
       final int[] indices = new int[parameterPatterns.length];
       while (true) {

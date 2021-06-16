@@ -5,17 +5,17 @@ package com.intellij.aop.psi;
 
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiParameter;
-import gnu.trove.THashMap;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author peter
  */
 public class PointcutContext {
-  private final Map<String,AopReferenceTarget> myMap = new THashMap<String, AopReferenceTarget>();
+  private final Map<String,AopReferenceTarget> myMap = new HashMap<String, AopReferenceTarget>();
 
   public PointcutContext() {
   }

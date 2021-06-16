@@ -23,15 +23,11 @@ import com.intellij.util.ArrayUtil;
 import com.intellij.util.Function;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericAttributeValue;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -129,7 +125,7 @@ public abstract class SpringBeanImpl extends DomSpringBeanImpl implements Spring
     final SpringBeanPointer parent = getParentBean().getValue();
     if (parent != null) {
       if (visited == null) {
-        visited = new THashSet<AbstractDomSpringBean>();
+        visited = new HashSet<AbstractDomSpringBean>();
       }
       visited.add(this);
       final CommonSpringBean bean = parent.getSpringBean();

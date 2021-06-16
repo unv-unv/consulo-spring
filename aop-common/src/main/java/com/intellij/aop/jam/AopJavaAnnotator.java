@@ -27,10 +27,9 @@ import com.intellij.util.NotNullFunction;
 import com.intellij.util.Processor;
 import consulo.ui.image.Image;
 import consulo.ui.image.ImageEffects;
+import consulo.util.collection.HashingStrategy;
+import consulo.util.collection.Sets;
 import consulo.util.dataholder.Key;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-import gnu.trove.TObjectHashingStrategy;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,8 +43,8 @@ public class AopJavaAnnotator implements LineMarkerProvider {
   private static final Key<CachedValue<Set<AopAspect>>> ASPECTS_CACHE = Key.create("ASPECTS_CACHE");
   private static final Key<CachedValue<List<AopIntroduction>>> BOUND_INTROS_KEY = Key.create("ClassBoundIntroductions");
   private static final Key<CachedValue<Map<AopAdvice, Integer>>> BOUND_ADVICES_KEY = Key.create("ClassBoundAdvices");
-  private static final TObjectHashingStrategy<AopAspect> ASPECT_HASHING_STRATEGY = new TObjectHashingStrategy<AopAspect>() {
-    public int computeHashCode(final AopAspect object) {
+  private static final HashingStrategy<AopAspect> ASPECT_HASHING_STRATEGY = new HashingStrategy<AopAspect>() {
+    public int hashCode(final AopAspect object) {
       final PsiElement element = object.getIdentifyingPsiElement();
       return element == null ? 0 : element.hashCode();
     }
@@ -165,7 +164,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
       }
     });
 
-    final Map<PsiElement, AopAdvice> psi2Advice = new THashMap<PsiElement, AopAdvice>();
+    final Map<PsiElement, AopAdvice> psi2Advice = new HashMap<PsiElement, AopAdvice>();
     return NavigationGutterIconBuilder
       .<AopAdvice>create(createToIcon(AopConstants.ABSTRACT_ADVICE_ICON),
                          new NotNullFunction<AopAdvice, Collection<? extends PsiElement>>() {
@@ -249,7 +248,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
     if (aspects == null) {
       module.putUserData(ASPECTS_CACHE, aspects = CachedValuesManager.getManager(module.getProject()).createCachedValue(new CachedValueProvider<Set<AopAspect>>() {
         public Result<Set<AopAspect>> compute() {
-          Set<AopAspect> set = new THashSet<AopAspect>(ASPECT_HASHING_STRATEGY);
+          Set<AopAspect> set = Sets.newHashSet(ASPECT_HASHING_STRATEGY);
           collectAspects(providers, module, set);
           for (final Module module1 : ModuleUtil.getAllDependentModules(module)) {
             collectAspects(providers, module1, set);
@@ -319,7 +318,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
           public Collection<? extends PsiElement> compute() {
             if (!advice.isValid()) return Collections.emptyList();
 
-            final Set<PsiMethod> result = new THashSet<PsiMethod>();
+            final Set<PsiMethod> result = new HashSet<PsiMethod>();
             searcher.process(new Processor<PsiClass>() {
               public boolean process(final PsiClass psiClass) {
                 if (advice.isValid()) {
@@ -351,7 +350,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
     final NotNullLazyValue<Collection<? extends PsiElement>> targets = new NotNullLazyValue<Collection<? extends PsiElement>>() {
       @Nonnull
       public Collection<? extends PsiElement> compute() {
-        final Set<PsiClass> result = new THashSet<PsiClass>();
+        final Set<PsiClass> result = new HashSet<PsiClass>();
         searcher.process(new Processor<PsiClass>() {
           public boolean process(final PsiClass psiClass) {
             if (isAcceptable(createPsiType(psiClass), expression)) {
@@ -378,7 +377,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
           final Module module = ModuleUtil.findModuleForPsiElement(psiClass);
           if (module == null) return Result.create(Collections.<AopAdvice, Integer>emptyMap(), PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
 
-          Map<AopAdvice, Integer> result = new THashMap<AopAdvice, Integer>();
+          Map<AopAdvice, Integer> result = new HashMap<AopAdvice, Integer>();
           final List<AopProvider> providers = AopLanguageInjector.getAopProviders(psiClass);
           final Set<AopAspect> aspects = getAspects(providers, module);
           for (final PsiMethod method : psiClass.getMethods()) {

@@ -4,15 +4,14 @@ import com.intellij.openapi.util.Condition;
 import com.intellij.openapi.util.Pair;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.GenericDomValue;
-import gnu.trove.THashMap;
-
-import java.util.Map;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomConverterRegistry {
   private final Map<Class, Pair<Condition<GenericDomValue>, Converter>> myCustomConverters =
-    new THashMap<Class, Pair<Condition<GenericDomValue>, Converter>>();
+    new HashMap<Class, Pair<Condition<GenericDomValue>, Converter>>();
 
   public void registryConverter(Class aClass, Pair<Condition<GenericDomValue>, Converter> pair) {
     myCustomConverters.put(aClass, pair);

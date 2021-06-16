@@ -5,11 +5,11 @@ package com.intellij.aop.psi;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.*;
-import gnu.trove.THashSet;
-import javax.annotation.Nonnull;
 
-import java.util.Set;
+import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author peter
@@ -48,7 +48,7 @@ public class PsiExecutionExpression extends MethodPatternPointcut {
     if (parameterList != null && parameterList.matches(context, method.getParameterList(), TypeArgumentMatcher.NO_AUTOBOXING) != PointcutMatchDegree.TRUE) return PointcutMatchDegree.FALSE;
     if (annotationHolder != null && !annotationHolder.accepts(method)) return PointcutMatchDegree.FALSE;
 
-    if (processClass(member.getContainingClass(), method, new THashSet<PsiClass>(), methodReference.getPatterns())) return PointcutMatchDegree.TRUE;
+    if (processClass(member.getContainingClass(), method, new HashSet<PsiClass>(), methodReference.getPatterns())) return PointcutMatchDegree.TRUE;
 
     return PointcutMatchDegree.FALSE;
 

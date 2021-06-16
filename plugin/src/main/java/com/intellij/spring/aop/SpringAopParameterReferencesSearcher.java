@@ -18,8 +18,8 @@ import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.util.Processor;
 import com.intellij.util.QueryExecutor;
-import gnu.trove.THashSet;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -39,7 +39,7 @@ public class SpringAopParameterReferencesSearcher implements QueryExecutor<PsiRe
         if (element instanceof PsiParameter) {
           final Module module = ModuleUtil.findModuleForPsiElement(element);
           if (module != null) {
-            final Set<XmlFile> visited = new THashSet<XmlFile>();
+            final Set<XmlFile> visited = new HashSet<XmlFile>();
             for (final SpringModel model : SpringUtils.getNonEmptySpringModels(module)) {
               for (final XmlFile xmlFile : model.getConfigFiles()) {
                 if (!visited.contains(xmlFile)) {

@@ -10,16 +10,16 @@ import com.intellij.codeInsight.completion.util.ParenthesesInsertHandler;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
 import com.intellij.codeInsight.lookup.TailTypeDecorator;
-import consulo.util.dataholder.Key;
 import com.intellij.patterns.ElementPattern;
 import com.intellij.psi.*;
 import com.intellij.util.Consumer;
 import com.intellij.util.ProcessingContext;
 import consulo.codeInsight.completion.CompletionProvider;
-import gnu.trove.THashSet;
+import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.intellij.patterns.PlatformPatterns.psiElement;
@@ -101,7 +101,7 @@ public class AopCompletionData extends CompletionContributor implements AopEleme
                     }
                 });
 
-        @NonNls final Set<String> primitiveTypes = new THashSet<String>(AopLexer.PRIMITIVE_TYPES.keySet());
+        @NonNls final Set<String> primitiveTypes = new HashSet<String>(AopLexer.PRIMITIVE_TYPES.keySet());
         primitiveTypes.remove("void");
         extend(CompletionType.BASIC,
                 psiElement().withParent(psiElement(AopReferenceExpression.class)).

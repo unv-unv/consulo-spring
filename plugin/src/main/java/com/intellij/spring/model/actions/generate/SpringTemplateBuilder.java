@@ -19,10 +19,10 @@ import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.model.SpringUtils;
 import com.intellij.util.xml.DomElement;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,7 +35,7 @@ public class SpringTemplateBuilder {
   private final Project myProject;
   private int myCount;
 
-  private static final Set<String> myConvertableTypes = new THashSet<String>();
+  private static final Set<String> myConvertableTypes = new HashSet<String>();
 
   static {
     String[] classes = {"java.lang.String", "java.lang.Boolean", "java.lang.Character", "java.lang.Byte", "java.lang.Short",

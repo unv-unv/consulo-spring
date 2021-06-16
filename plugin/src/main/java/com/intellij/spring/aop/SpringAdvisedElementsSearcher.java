@@ -5,11 +5,10 @@ package com.intellij.spring.aop;
 
 import com.intellij.aop.AopAdvisedElementsSearcher;
 import com.intellij.aop.jam.AopConstants;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.util.AtomicNotNullLazyValue;
-import consulo.util.dataholder.Key;
 import com.intellij.openapi.util.Computable;
-import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.search.MethodSuperSearcher;
 import com.intellij.psi.search.searches.SuperMethodsSearch;
@@ -28,14 +27,15 @@ import com.intellij.util.Processor;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomUtil;
-import gnu.trove.THashSet;
+import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.Collection;
 
 /**
  * @author peter
@@ -114,7 +114,7 @@ public class SpringAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
 
   public boolean process(final Processor<PsiClass> processor) {
     final MyBeanVisitor visitor = new MyBeanVisitor(processor);
-    final Set<SpringModel> visited = new THashSet<SpringModel>();
+    final Set<SpringModel> visited = new HashSet<SpringModel>();
     for (final SpringModel model : myModels) {
       ProgressManager.getInstance().checkCanceled();
       if (!visited.add(model)) continue;
@@ -210,7 +210,7 @@ public class SpringAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
   public boolean acceptsBoundMethodHeavy(@Nonnull PsiMethod method) {
     if (isJdkProxyType()) {
       final PsiClass psiClass = method.getContainingClass();
-      if (psiClass == null || hasInterfaces(psiClass, new THashSet<PsiClass>()) && !isFromInterface(method, psiClass)) return false;
+      if (psiClass == null || hasInterfaces(psiClass, new HashSet<PsiClass>()) && !isFromInterface(method, psiClass)) return false;
     }
     return super.acceptsBoundMethodHeavy(method);
   }

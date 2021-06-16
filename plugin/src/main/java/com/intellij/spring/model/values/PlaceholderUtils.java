@@ -35,8 +35,6 @@ import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.GenericDomValue;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -116,7 +114,7 @@ public class PlaceholderUtils {
   @Nullable
   private static Set<PropertiesFile> getPropertiesFile(final Pair<String, PsiElement> location) {
     return ResourceResolverUtils
-        .addResourceFilesFrom(location.second, location.first, ",", new THashSet<PropertiesFile>(), new Condition<PsiFileSystemItem>() {
+        .addResourceFilesFrom(location.second, location.first, ",", new HashSet<PropertiesFile>(), new Condition<PsiFileSystemItem>() {
           public boolean value(final PsiFileSystemItem item) {
             return item instanceof PropertiesFile;
           }
@@ -321,7 +319,7 @@ public class PlaceholderUtils {
   }
 
   private static Map<TextRange, Info> getTextRanges(final List<SpringBaseBeanPointer> configurers, final PsiElement element) {
-    Map<TextRange, Info> textRanges = new THashMap<TextRange, Info>();
+    Map<TextRange, Info> textRanges = new HashMap<TextRange, Info>();
     for (SpringBaseBeanPointer configurer : configurers) {
       final CommonSpringBean bean = configurer.getSpringBean();
       if (!(bean instanceof DomSpringBean)) continue;
@@ -378,7 +376,7 @@ public class PlaceholderUtils {
     }
 
     public Object[] getVariants() {
-      Set<Object> variants = new THashSet<Object>();
+      Set<Object> variants = new HashSet<Object>();
       for (SpringBaseBeanPointer placeholder : myPlaceholders) {
         for (PropertiesFile propertiesFile : getResources(placeholder.getSpringBean())) {
           addVariantsFromFile(propertiesFile, variants);
@@ -496,7 +494,7 @@ public class PlaceholderUtils {
     });
     final XmlElement valueElement = DomUtil.getValueElement(value);
     assert valueElement != null;
-    final THashSet<String> result = new THashSet<String>();
+    final HashSet<String> result = new HashSet<String>();
     final ResolveResult[][] variants = new ResolveResult[ranges.length][];
     for (int i = 0; i < ranges.length; i++) {
       final TextRange range = ranges[i];

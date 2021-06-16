@@ -4,9 +4,9 @@
 package com.intellij.aop.psi;
 
 import com.intellij.psi.*;
-import gnu.trove.THashSet;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -32,7 +32,7 @@ public class PsiAnnotatedTypePattern extends AopPsiTypePattern{
   }
 
   public static boolean acceptsAnnotationPattern(@Nonnull final PsiModifierListOwner owner, final AopPsiTypePattern annoPattern, boolean shoulBeInherited) {
-    return acceptsAnnotationPattern(owner, annoPattern, shoulBeInherited, new THashSet<PsiModifierListOwner>());
+    return acceptsAnnotationPattern(owner, annoPattern, shoulBeInherited, new HashSet<PsiModifierListOwner>());
   }
 
   private static boolean acceptsAnnotationPattern(final PsiModifierListOwner owner, final AopPsiTypePattern annoPattern,

@@ -14,7 +14,6 @@ import com.intellij.openapi.extensions.Extensions;
 import com.intellij.openapi.fileEditor.OpenFileDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Condition;
-import consulo.util.dataholder.Key;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.patterns.ElementPattern;
@@ -27,7 +26,7 @@ import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.java.util.AnnotationTextUtil;
-import gnu.trove.THashSet;
+import consulo.util.dataholder.Key;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -42,7 +41,7 @@ import static com.intellij.patterns.StandardPatterns.string;
  */
 public class AopLanguageInjector implements ConcatenationAwareInjector {
   private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.AopLanguageInjector");
-  private static final Set<String> POINTCUT_ANNOTATIONS = new THashSet<String>(Arrays.asList(AopConstants.POINTCUT_ANNO, AopConstants.AFTER_ANNO, AopConstants.AFTER_RETURNING_ANNO, AopConstants.AFTER_THROWING_ANNO, AopConstants.AROUND_ANNO, AopConstants.BEFORE_ANNO));
+  private static final Set<String> POINTCUT_ANNOTATIONS = new HashSet<String>(Arrays.asList(AopConstants.POINTCUT_ANNO, AopConstants.AFTER_ANNO, AopConstants.AFTER_RETURNING_ANNO, AopConstants.AFTER_THROWING_ANNO, AopConstants.AROUND_ANNO, AopConstants.BEFORE_ANNO));
   private static final Key<PsiMethod> AOP_METHOD_KEY = Key.create("AopMethod");
   private static final Key<PsiField> AOP_FIELD_KEY = Key.create("AopField");
   private static final ElementPattern AOP_ANNO_PATTERN =

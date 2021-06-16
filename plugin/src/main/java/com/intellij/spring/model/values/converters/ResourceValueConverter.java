@@ -9,19 +9,19 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.spring.model.converters.ResourceResolverUtils;
+import com.intellij.util.PairProcessor;
 import com.intellij.util.xml.ConvertContext;
 import com.intellij.util.xml.Converter;
 import com.intellij.util.xml.CustomReferenceConverter;
 import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.PairProcessor;
-import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 
 public class ResourceValueConverter extends Converter<Object> implements CustomReferenceConverter {
 
@@ -29,7 +29,7 @@ public class ResourceValueConverter extends Converter<Object> implements CustomR
     final GenericDomValue domValue = (GenericDomValue)context.getInvocationElement();
     return StringUtil.isEmpty(s)
            ? Collections.emptySet()
-           : ResourceResolverUtils.addResourceFilesFrom(domValue, s, new THashSet<PsiFileSystemItem>(), Condition.TRUE);
+           : ResourceResolverUtils.addResourceFilesFrom(domValue, s, new HashSet<PsiFileSystemItem>(), Condition.TRUE);
   }
 
   public String toString(@Nullable Object o, final ConvertContext context) {

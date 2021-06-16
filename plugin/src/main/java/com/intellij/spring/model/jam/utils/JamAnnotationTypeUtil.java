@@ -1,28 +1,9 @@
 package com.intellij.spring.model.jam.utils;
 
-import gnu.trove.THashSet;
-import gnu.trove.TObjectHashingStrategy;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.util.Comparing;
-import consulo.util.dataholder.Key;
 import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiMember;
-import com.intellij.psi.PsiModifierList;
+import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.searches.AnnotatedMembersSearch;
 import com.intellij.psi.util.CachedValue;
@@ -41,6 +22,15 @@ import com.intellij.util.Processor;
 import com.intellij.util.containers.ContainerUtil;
 import consulo.java.model.annotations.AnnotationGenericValue;
 import consulo.java.model.annotations.AnnotationModelUtil;
+import consulo.util.collection.HashingStrategy;
+import consulo.util.collection.Sets;
+import consulo.util.dataholder.Key;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+import java.util.*;
 
 /**
  * User: Sergey.Vasiliev
@@ -50,8 +40,8 @@ public class JamAnnotationTypeUtil {
     new Key<CachedValue<Collection<PsiClass>>>("SPRING_MODULE_QUALIIFIER_ANNOTATIONS");
   private static final Key<CachedValue<Collection<PsiClass>>> SPRING_MODULE_COMPONENT_ANNOTATIONS =
     new Key<CachedValue<Collection<PsiClass>>>("SPRING_MODULE_COMPONENT_ANNOTATIONS");
-  private static final TObjectHashingStrategy<PsiClass> HASHING_STRATEGY = new TObjectHashingStrategy<PsiClass>() {
-    public int computeHashCode(final PsiClass object) {
+  private static final HashingStrategy<PsiClass> HASHING_STRATEGY = new HashingStrategy<PsiClass>() {
+    public int hashCode(final PsiClass object) {
       final String qualifiedName = object.getQualifiedName();
       return qualifiedName == null ? 0 : qualifiedName.hashCode();
     }
@@ -69,7 +59,7 @@ public class JamAnnotationTypeUtil {
     final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(module, false);
     final PsiClass psiClass = JavaPsiFacade.getInstance(module.getProject()).findClass(annotationName, scope);
 
-    final Set<PsiClass> classes = new THashSet<PsiClass>(HASHING_STRATEGY);
+    final Set<PsiClass> classes = Sets.newHashSet(HASHING_STRATEGY);
 
     if (psiClass == null || !psiClass.isAnnotationType()) return Collections.emptyList();
 
@@ -180,7 +170,7 @@ public class JamAnnotationTypeUtil {
     final String name = psiClass.getQualifiedName();
     if (name == null) return Collections.emptySet();
 
-    final Set<PsiClass> result = new THashSet<PsiClass>(HASHING_STRATEGY);
+    final Set<PsiClass> result = Sets.newHashSet(HASHING_STRATEGY);
 
     AnnotatedMembersSearch.search(psiClass, scope).forEach(new Processor<PsiMember>() {
       public boolean process(final PsiMember psiMember) {

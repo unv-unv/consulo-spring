@@ -7,12 +7,12 @@ package com.intellij.aop.psi;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.*;
 import com.intellij.util.PairFunction;
-import gnu.trove.THashSet;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -84,7 +84,7 @@ public class PsiAtArgsExpression extends AopElementBase implements PsiPointcutEx
 
     if (psiClass.isInterface()) return maybeFalse;
 
-    Set<PsiClass> visited = new THashSet<PsiClass>();
+    Set<PsiClass> visited = new HashSet<PsiClass>();
     visited.add(psiClass);
 
     while (true) {

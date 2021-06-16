@@ -36,8 +36,6 @@ import com.intellij.util.containers.ContainerUtil;
 import consulo.java.execution.configurations.OwnJavaParameters;
 import consulo.java.module.extension.JavaModuleExtension;
 import consulo.roots.ContentFolderScopes;
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
 import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jetbrains.annotations.NonNls;
@@ -61,8 +59,8 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
   private static final Logger LOG = Logger.getInstance("#com.intellij.spring.CustomBeanRegistry");
 
   @NonNls private static final String CUSTOM_BEAN_PARSER = "com.intellij.spring.model.xml.custom.CustomBeanParser";
-  private Map<String, List<CustomBeanInfo>> myText2Infos = new THashMap<String, List<CustomBeanInfo>>();
-  private Map<MyQName,CustomBeanInfo> myPolicies = new THashMap<MyQName, CustomBeanInfo>();
+  private Map<String, List<CustomBeanInfo>> myText2Infos = new HashMap<String, List<CustomBeanInfo>>();
+  private Map<MyQName,CustomBeanInfo> myPolicies = new HashMap<MyQName, CustomBeanInfo>();
   @NonNls private static final String FAKE_ID = "IntelliJIDEARulezzz";
 
   @NonNls public static final String CUSTOM_SPRING_BEANS_PARSING_TIMEOUT = "custom.spring.beans.parsing.timeout";
@@ -179,7 +177,7 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
   }
 
   private static Set<String> collectReferencedNamespaces(final XmlTag tag) {
-    final Set<String> usedNamespaces = new THashSet<String>();
+    final Set<String> usedNamespaces = new HashSet<String>();
     tag.accept(new XmlElementVisitor(){
       @Override
       public final void visitXmlTag(final XmlTag tag) {
@@ -228,8 +226,8 @@ public class CustomBeanRegistry implements PersistentStateComponent<CustomBeanRe
   public static class MyBean {
     public int version = CURRENT_VERSION;
 
-    public Map<String,List<CustomBeanInfo>> map = new THashMap<String, List<CustomBeanInfo>>();
-    public Map<MyQName,CustomBeanInfo> policies = new THashMap<MyQName,CustomBeanInfo>();
+    public Map<String,List<CustomBeanInfo>> map = new HashMap<String, List<CustomBeanInfo>>();
+    public Map<MyQName,CustomBeanInfo> policies = new HashMap<MyQName,CustomBeanInfo>();
   }
 
   public static class MyQName {
