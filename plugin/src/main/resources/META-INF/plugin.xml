@@ -15,6 +15,12 @@
 
 	<import path="/META-INF/aop.xml"/>
 
+	<tags>
+		<tag>software.framework</tag>
+		<tag>web.framework</tag>
+		<tag>experimental</tag>
+	</tags>
+
 	<experimental>true</experimental>
 
 	<!--<depends optional="true" config-file="spring-javaee-integration.xml">com.intellij.javaee</depends>
