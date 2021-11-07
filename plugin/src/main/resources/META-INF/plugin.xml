@@ -18,7 +18,6 @@
 	<tags>
 		<tag>software.framework</tag>
 		<tag>web.framework</tag>
-		<tag>experimental</tag>
 	</tags>
 
 	<experimental>true</experimental>
