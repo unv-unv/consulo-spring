@@ -3,12 +3,13 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -22,13 +23,13 @@ public class AopPointcutExpressionFileType extends LanguageFileType {
 
   @Nonnull
   @NonNls
-  public String getName() {
+  public String getId() {
     return "Pointcut Expression";
   }
 
   @Nonnull
-  public String getDescription() {
-    return getName();
+  public LocalizeValue getDescription() {
+    return LocalizeValue.localizeTODO("Pointcut Expression");
   }
 
   @Nonnull
