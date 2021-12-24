@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<consulo-plugin>
+<consulo-plugin url="https://github.com/consulo/incubating-consulo-spring">
 	<id>com.intellij.spring</id>
 	<name>Spring Support</name>
 	<description>Spring Support</description>
