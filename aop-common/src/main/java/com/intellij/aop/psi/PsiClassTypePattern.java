@@ -3,11 +3,11 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.*;
-import com.intellij.util.Processor;
+import com.intellij.java.language.psi.*;
+import consulo.application.util.function.Processor;
+import consulo.language.psi.PsiManager;
 
 import javax.annotation.Nonnull;
-
 import java.util.regex.Pattern;
 
 /**

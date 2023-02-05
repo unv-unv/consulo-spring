@@ -7,12 +7,12 @@ package com.intellij.aop.lexer;
 import com.intellij.aop.psi.AopElementType;
 import com.intellij.aop.psi.AopElementTypes;
 import com.intellij.aop.psi.AopPointcutTypes;
-import com.intellij.lexer.DelegateLexer;
-import com.intellij.lexer.FlexAdapter;
-import com.intellij.lexer.LexerPosition;
-import com.intellij.lexer.MergingLexerAdapter;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
+import consulo.language.lexer.LexerPosition;
+import consulo.language.ast.IElementType;
+import consulo.language.lexer.DelegateLexer;
+import consulo.language.lexer.FlexAdapter;
+import consulo.language.lexer.MergingLexerAdapter;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.HashMap;

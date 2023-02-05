@@ -4,41 +4,34 @@
 
 package com.intellij.aop.jam;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
 import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.ArgNamesManipulator;
 import com.intellij.aop.LocalAopModel;
-import com.intellij.aop.psi.AopReferenceExpression;
-import com.intellij.aop.psi.PsiArgsExpression;
-import com.intellij.aop.psi.PsiAtPointcutDesignator;
-import com.intellij.aop.psi.PsiPointcutExpression;
-import com.intellij.aop.psi.PsiTargetExpression;
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.openapi.util.Condition;
-import com.intellij.psi.CommonClassNames;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClassType;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiPrimitiveType;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.PsiThisExpression;
-import com.intellij.psi.search.searches.ReferencesSearch;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.Processor;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.aop.psi.PsiThisExpression;
+import com.intellij.aop.psi.*;
+import com.intellij.java.language.psi.*;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.util.function.Processor;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.search.ReferencesSearch;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class ArgNamesWarningsInspection extends AbstractArgNamesInspection {
   @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
@@ -70,7 +63,7 @@ public class ArgNamesWarningsInspection extends AbstractArgNamesInspection {
   private static boolean canInferParameters(final PsiParameter[] parameters, ArgNamesManipulator manipulator, PsiMethod method) {
     if (parameters.length == 0) return true;
 
-    Set<PsiParameter> set = ContainerUtil.newTroveSet(parameters);
+    Set<PsiParameter> set = new HashSet<>(Set.of(parameters));
     if (LocalAopModel.isJoinPointParamer(parameters[0])) {
       set.remove(parameters[0]);
       if (set.isEmpty()) return true;
@@ -130,7 +123,7 @@ public class ArgNamesWarningsInspection extends AbstractArgNamesInspection {
 
   private static boolean containsOnlyOneParameter(final PsiMethod method, final Set<PsiParameter> set, final String className) {
     final PsiClassType baseType = JavaPsiFacade.getInstance(method.getManager().getProject()).getElementFactory()
-      .createTypeByFQClassName(className, method.getResolveScope());
+                                               .createTypeByFQClassName(className, method.getResolveScope());
     List<PsiParameter> instanceofs = ContainerUtil.findAll(set, new Condition<PsiParameter>() {
       public boolean value(final PsiParameter psiParameter) {
         return baseType.isAssignableFrom(psiParameter.getType());

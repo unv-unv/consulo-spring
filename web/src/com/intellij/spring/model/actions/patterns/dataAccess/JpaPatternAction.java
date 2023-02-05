@@ -1,6 +1,6 @@
 package com.intellij.spring.model.actions.patterns.dataAccess;
 
-import com.intellij.codeInsight.template.impl.TemplateImpl;
+import consulo.language.editor.impl.internal.template.TemplateImpl;
 import com.intellij.codeInsight.template.impl.TemplateSettings;
 import com.intellij.facet.ui.libraries.LibraryInfo;
 import com.intellij.openapi.module.Module;

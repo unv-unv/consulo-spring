@@ -3,24 +3,26 @@
  */
 package com.intellij.aop;
 
-import java.util.Collections;
-import java.util.Set;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ExtensionAPI;
+import consulo.component.extension.ExtensionPointName;
+import consulo.language.psi.PsiElement;
+import consulo.module.Module;
+import consulo.util.lang.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.openapi.extensions.ExtensionPointName;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author peter
  */
+@ExtensionAPI(ComponentScope.APPLICATION)
 public abstract class AopProvider {
-  public static final ExtensionPointName<AopProvider> EXTENSION_POINT_NAME = ExtensionPointName.create("com.intellij.spring.aop.provider");
+  public static final ExtensionPointName<AopProvider> EXTENSION_POINT_NAME = ExtensionPointName.create(AopProvider.class);
 
   @Nonnull
   public Set<? extends AopAspect> getAdditionalAspects(@Nonnull Module module) {

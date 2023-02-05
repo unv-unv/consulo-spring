@@ -5,8 +5,9 @@ package com.intellij.aop.jam;
 
 import com.intellij.aop.AopModel;
 import com.intellij.jam.JamService;
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.search.GlobalSearchScope;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.Module;
+
 import javax.annotation.Nonnull;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class AopModelImpl implements AopModel {
   private final Module myModule;
 
-  public AopModelImpl(@Nonnull final Module module) {
+  public AopModelImpl(@Nonnull final consulo.module.Module module) {
     myModule = module;
   }
 

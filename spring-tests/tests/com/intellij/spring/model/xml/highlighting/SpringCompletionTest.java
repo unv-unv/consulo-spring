@@ -6,9 +6,9 @@ package com.intellij.spring.model.xml.highlighting;
 
 import com.intellij.codeInsight.CodeInsightSettings;
 import com.intellij.codeInsight.template.TemplateManager;
-import com.intellij.codeInsight.template.impl.TemplateManagerImpl;
+import consulo.ide.impl.idea.codeInsight.template.impl.TemplateManagerImpl;
 import com.intellij.codeInsight.completion.CompletionType;
-import com.intellij.codeInsight.completion.CodeCompletionHandlerBase;
+import consulo.ide.impl.idea.codeInsight.completion.CodeCompletionHandlerBase;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.ModuleRootManager;

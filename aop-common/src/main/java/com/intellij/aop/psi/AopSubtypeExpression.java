@@ -4,11 +4,10 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.Function;
-import javax.annotation.Nonnull;
+import consulo.language.ast.ASTNode;
+import consulo.util.collection.ContainerUtil;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
@@ -30,11 +29,7 @@ public class AopSubtypeExpression extends AopElementBase implements AopReference
 
   @Nonnull
   public Collection<AopPsiTypePattern> getPatterns() {
-    return ContainerUtil.map2List(getSupertypeExpression().getPatterns(), new Function<AopPsiTypePattern, AopPsiTypePattern>() {
-      public AopPsiTypePattern fun(final AopPsiTypePattern aopPsiTypePattern) {
-        return new SubtypePattern(aopPsiTypePattern);
-      }
-    });
+    return ContainerUtil.map2List(getSupertypeExpression().getPatterns(), SubtypePattern::new);
   }
 
   public String getTypePattern() {

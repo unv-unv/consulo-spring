@@ -1,18 +1,20 @@
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.spring.model.xml.beans.ListOrSet;
-import com.intellij.spring.model.xml.beans.TypeHolder;
-import com.intellij.util.xml.DomElement;
+import com.intellij.java.language.psi.PsiArrayType;
+import com.intellij.java.language.psi.PsiClassType;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.xml.beans.ListOrSet;
+import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.project.Project;
+import consulo.xml.util.xml.DomElement;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 @SuppressWarnings({"AbstractClassNeverImplemented"})
 public abstract class ListOrSetImpl extends TypedCollectionImpl implements ListOrSet {

@@ -2,12 +2,20 @@ package components;
 
 import org.springframework.stereotype.Component;
 
-@java.lang.annotation.Target({java.lang.annotation.ElementType.TYPE})
-@java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
-@java.lang.annotation.Inherited
-@java.lang.annotation.Documented
+import java.lang.String;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
 
 @CustomComponentAnnotation
 public @interface CustomComponentAnnotationChild {
-    java.lang.String value() default "";
+    String value() default "";
 }

@@ -2,7 +2,7 @@ package com.intellij.spring.security.model.xml.converters.roles;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleServiceManager;
+import consulo.ide.impl.idea.openapi.module.ModuleServiceManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiFileFactory;
 import org.jetbrains.annotations.NotNull;

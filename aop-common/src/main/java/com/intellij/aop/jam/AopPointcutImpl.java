@@ -10,21 +10,27 @@ import com.intellij.jam.JamConverter;
 import com.intellij.jam.JamElement;
 import com.intellij.jam.JamStringAttributeElement;
 import com.intellij.jam.annotations.JamPsiConnector;
+import com.intellij.jam.model.common.ReadOnlyGenericValue;
 import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamAttributeMeta;
 import com.intellij.jam.reflect.JamMethodMeta;
 import com.intellij.jam.reflect.JamStringAttributeMeta;
-import com.intellij.lang.injection.InjectedLanguageManager;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.xml.GenericValue;
-import com.intellij.util.xml.ReadOnlyGenericValue;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiBinaryExpression;
+import com.intellij.java.language.psi.PsiMethod;
+import consulo.document.util.TextRange;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.psi.PsiManager;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.Pair;
+import consulo.util.lang.function.Condition;
+import consulo.xml.util.xml.GenericValue;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 /**
@@ -78,9 +84,9 @@ public abstract class AopPointcutImpl implements JamElement, AopPointcut, Pointc
     }
 
     if (value instanceof PsiLanguageInjectionHost) {
-      final List<Pair<PsiElement,TextRange>> list = InjectedLanguageManager.getInstance(value.getProject()).getInjectedPsiFiles(value);
+      final List<Pair<PsiElement, TextRange>> list = InjectedLanguageManager.getInstance(value.getProject()).getInjectedPsiFiles(value);
       if (list != null) {
-        Pair<PsiElement,TextRange> pair = ContainerUtil.find(list, new Condition<Pair<PsiElement, TextRange>>() {
+        Pair<PsiElement, TextRange> pair = ContainerUtil.find(list, new Condition<Pair<PsiElement, TextRange>>() {
           public boolean value(final Pair<PsiElement, TextRange> pair) {
             return pair.first instanceof AopPointcutExpressionFile;
           }

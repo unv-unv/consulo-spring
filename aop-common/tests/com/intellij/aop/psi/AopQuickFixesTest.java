@@ -9,15 +9,13 @@ import com.intellij.aop.JavaArgNamesManipulator;
 import com.intellij.aop.jam.AopAdviceImpl;
 import static com.intellij.aop.jam.AopConstants.*;
 import com.intellij.aop.jam.SetArgNamesQuickFix;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.facet.FacetManager;
 import com.intellij.jam.JamService;
 import com.intellij.lang.StdLanguages;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
+import consulo.application.Result;
+import consulo.document.util.TextRange;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.inject.impl.internal.InjectedLanguageUtil;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.spring.SpringApplicationComponent;
@@ -27,6 +25,10 @@ import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.testFramework.MockProblemDescriptor;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.xml.util.XmlTagUtil;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.PsiReference;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
@@ -117,7 +119,7 @@ public class AopQuickFixesTest extends JavaCodeInsightFixtureTestCase {
   }
 
   protected PsiClass parseClass(@NonNls final String text) {
-    return ((PsiJavaFile)PsiFileFactory.getInstance(myFixture.getProject()).createFileFromText("a.java", text)).getClasses()[0];
+    return ((PsiJavaFile) PsiFileFactory.getInstance(myFixture.getProject()).createFileFromText("a.java", text)).getClasses()[0];
   }
 
   protected String getBasePath() {
@@ -151,12 +153,12 @@ public class AopQuickFixesTest extends JavaCodeInsightFixtureTestCase {
 
   @Nonnull
   private ArgNamesManipulator getManipulator(final XmlFile file) {
-    AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile)InjectedLanguageUtil.findElementAtNoCommit(file, myFixture.getEditor().getCaretModel().getOffset()).getContainingFile();
+    AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile) consulo.language.inject.impl.internal.InjectedLanguageUtil.findElementAtNoCommit(file, myFixture.getEditor().getCaretModel().getOffset()).getContainingFile();
     return aopFile.getAopModel().getArgNamesManipulator();
   }
 
   private XmlFile createXmlFile(final String text) {
-    return (XmlFile)PsiFileFactory.getInstance(myFixture.getProject()).createFileFromText("a.xml", text);
+    return (XmlFile) PsiFileFactory.getInstance(myFixture.getProject()).createFileFromText("a.xml", text);
   }
 
   public void testSpringArgNamesManipulator_Returning() throws Throwable {

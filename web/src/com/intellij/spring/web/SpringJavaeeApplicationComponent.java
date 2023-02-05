@@ -16,7 +16,7 @@ import com.intellij.spring.model.actions.patterns.dataAccess.GenerateDataAccessP
 import com.intellij.spring.model.actions.patterns.dataAccess.JpaActionGroup;
 import com.intellij.spring.model.actions.patterns.dataAccess.JpaPatternAction;
 import com.intellij.spring.web.mvc.jam.SpringMVCRequestMapping;
-import com.intellij.util.NullableFunction;
+import consulo.ide.impl.idea.util.NullableFunction;
 import com.intellij.util.ProcessingContext;
 import com.intellij.util.xml.ElementPresentationManager;
 import org.jetbrains.annotations.NonNls;

@@ -3,11 +3,11 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiArrayType;
+import com.intellij.java.language.psi.PsiEllipsisType;
+import com.intellij.java.language.psi.PsiType;
 
-import com.intellij.psi.PsiType;
-import com.intellij.psi.PsiArrayType;
-import com.intellij.psi.PsiEllipsisType;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter

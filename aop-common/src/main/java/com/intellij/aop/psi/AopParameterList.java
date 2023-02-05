@@ -3,11 +3,12 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiParameterList;
-import com.intellij.psi.PsiType;
-import com.intellij.util.PairFunction;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiParameterList;
+import com.intellij.java.language.psi.PsiType;
+import consulo.language.ast.ASTNode;
+import consulo.util.lang.function.PairFunction;
+
 import javax.annotation.Nonnull;
 
 /**

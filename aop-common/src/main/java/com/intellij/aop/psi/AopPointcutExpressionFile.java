@@ -3,19 +3,25 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.aop.LocalAopModel;
-import com.intellij.extapi.psi.PsiFileBase;
-import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiJavaPackage;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.language.file.FileViewProvider;
+import consulo.language.impl.psi.PsiFileBase;
+import consulo.language.impl.psi.PsiFileImpl;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.psi.resolve.ResolveState;
 import consulo.util.dataholder.Key;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.PsiFileImpl;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.xml.XmlElement;
-
-import javax.annotation.Nullable;
+import consulo.virtualFileSystem.fileType.FileType;
+import consulo.xml.psi.xml.XmlElement;
 import org.jetbrains.annotations.TestOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter

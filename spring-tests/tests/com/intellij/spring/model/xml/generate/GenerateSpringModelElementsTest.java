@@ -1,6 +1,6 @@
 package com.intellij.spring.model.xml.generate;
 
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.util.Pair;
@@ -22,7 +22,7 @@ import com.intellij.spring.model.xml.CommonSpringBean;
 import com.intellij.spring.model.xml.SpringHighlightingTestCase;
 import com.intellij.spring.model.xml.beans.*;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomManager;
 

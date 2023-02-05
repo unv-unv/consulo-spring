@@ -4,19 +4,19 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.*;
-import com.intellij.spring.SpringModel;
-import com.intellij.spring.model.ResolvedConstructorArgs;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.spring.model.converters.SpringBeanFactoryMethodConverter;
-import com.intellij.spring.model.highlighting.SpringAutowireUtil;
-import com.intellij.spring.model.xml.beans.ConstructorArg;
-import com.intellij.spring.model.xml.beans.SpringBean;
-import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
-import com.intellij.util.xml.DomUtil;
+import com.intellij.java.language.psi.*;
+import com.intellij.spring.impl.ide.SpringModel;
+import com.intellij.spring.impl.ide.model.ResolvedConstructorArgs;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.converters.SpringBeanFactoryMethodConverter;
+import com.intellij.spring.impl.ide.model.highlighting.SpringAutowireUtil;
+import com.intellij.spring.impl.ide.model.xml.beans.ConstructorArg;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
+import consulo.xml.util.xml.DomUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 /**

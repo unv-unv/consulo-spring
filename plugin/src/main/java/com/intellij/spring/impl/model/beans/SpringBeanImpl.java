@@ -4,30 +4,30 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.util.CachedValue;
-import com.intellij.psi.util.CachedValueProvider;
-import com.intellij.psi.util.CachedValuesManager;
-import com.intellij.psi.util.PsiModificationTracker;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.spring.impl.ide.model.ResolvedConstructorArgs;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.highlighting.SpringConstructorArgResolveUtil;
+import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
+import com.intellij.spring.impl.ide.model.xml.SpringQualifier;
+import com.intellij.spring.impl.ide.model.xml.beans.*;
 import com.intellij.spring.impl.model.AbstractDomSpringBean;
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.ResolvedConstructorArgs;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.spring.model.highlighting.SpringConstructorArgResolveUtil;
-import com.intellij.spring.model.xml.CommonSpringBean;
-import com.intellij.spring.model.xml.SpringQualifier;
-import com.intellij.spring.model.xml.beans.*;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.Function;
-import com.intellij.util.xml.DomUtil;
-import com.intellij.util.xml.GenericAttributeValue;
+import consulo.application.util.CachedValue;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.language.psi.PsiModificationTracker;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+import consulo.xml.util.xml.DomUtil;
+import consulo.xml.util.xml.GenericAttributeValue;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 
 /**
  * @author Dmitry Avdeev
@@ -36,16 +36,10 @@ import java.util.*;
 public abstract class SpringBeanImpl extends DomSpringBeanImpl implements SpringBean {
 
   private CachedValue<ResolvedConstructorArgsImpl> myResolvedConstructorArgs;
-  public static final Function<SpringBean,Collection<SpringPropertyDefinition>> PROPERTIES_GETTER = new Function<SpringBean, Collection<SpringPropertyDefinition>>() {
-    public Collection<SpringPropertyDefinition> fun(final SpringBean springBean) {
-      return SpringUtils.getProperties(springBean);
-    }
-  };
-  public static final Function<SpringBean,Collection<ConstructorArg>> CTOR_ARGS_GETTER = new Function<SpringBean, Collection<ConstructorArg>>() {
-    public Collection<ConstructorArg> fun(final SpringBean springBean) {
-      return SpringUtils.getConstructorArgs(springBean);
-    }
-  };
+  public static final Function<SpringBean, Collection<SpringPropertyDefinition>> PROPERTIES_GETTER =
+    SpringUtils::getProperties;
+  public static final Function<SpringBean, Collection<ConstructorArg>> CTOR_ARGS_GETTER =
+    SpringUtils::getConstructorArgs;
 
   /**
    * Returns bean name (id or the first name from "name" attribute).
@@ -99,8 +93,9 @@ public abstract class SpringBeanImpl extends DomSpringBeanImpl implements Spring
         if (first >= 0) {
           String newValue = newName + name.substring(first);
           getName().setStringValue(newValue);
-        } else {
-          getName().setStringValue(newName);          
+        }
+        else {
+          getName().setStringValue(newName);
         }
       }
       else {

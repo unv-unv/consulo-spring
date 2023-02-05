@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ViewScopeProvider implements WebflowScopeProvider {
   private static final Key<CachedValue<Map<String, PsiElement>>> VIEW_SCOPE_VARIABLES_KEY = Key.create("VIEW_SCOPE_VARIABLES_KEY");
@@ -44,7 +45,7 @@ public class ViewScopeProvider implements WebflowScopeProvider {
   }
 
   @NotNull
-  public java.util.Set<DomElement> getScopes(@Nullable final DomElement domElement) {
+  public Set<DomElement> getScopes(@Nullable final DomElement domElement) {
     if(domElement != null) {
       final ViewState state = domElement.getParentOfType(ViewState.class, false);
       if (state != null) {

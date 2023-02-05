@@ -3,12 +3,11 @@
  */
 package com.intellij.aop;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-
-import java.util.List;
+import com.intellij.java.language.psi.PsiClass;
+import consulo.language.psi.PsiElement;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * @author peter

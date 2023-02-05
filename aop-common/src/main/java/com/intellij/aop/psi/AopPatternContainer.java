@@ -3,7 +3,8 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 
 import java.util.Collection;
@@ -11,7 +12,8 @@ import java.util.Collection;
 /**
  * @author peter
  */
-public interface AopPatternContainer extends PsiElement {
+public interface AopPatternContainer extends PsiElement
+{
   @Nonnull
   Collection<AopPsiTypePattern> getPatterns();
 }

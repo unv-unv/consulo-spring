@@ -4,10 +4,10 @@
 
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiType;
+import consulo.language.ast.ASTNode;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiType;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter

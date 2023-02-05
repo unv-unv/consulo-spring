@@ -5,13 +5,13 @@
 package com.intellij.aop.psi;
 
 import com.intellij.facet.FacetManager;
-import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
+import consulo.application.Result;
+import consulo.ide.impl.idea.openapi.application.PathManager;
+import consulo.language.editor.WriteCommandAction;
 import com.intellij.spring.facet.SpringFacetType;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.ArrayUtil;
+import consulo.util.collection.ArrayUtil;
 
 import java.io.File;
 
@@ -23,7 +23,7 @@ public class SpringAopCompletionTest extends JavaCodeInsightFixtureTestCase {
   protected void tuneFixture(final JavaModuleFixtureBuilder moduleBuilder) {
     if ("testSpringPointcutsWithBean".equals(getName())) {
       moduleBuilder
-        .addLibraryJars("spring2_5", PathManager.getHomePath().replace(File.separatorChar, '/') + "/svnPlugins/spring/spring-tests/testData/", "spring2_5.jar");
+        .addLibraryJars("spring2_5", consulo.ide.impl.idea.openapi.application.PathManager.getHomePath().replace(File.separatorChar, '/') + "/svnPlugins/spring/spring-tests/testData/", "spring2_5.jar");
     }
   }
 

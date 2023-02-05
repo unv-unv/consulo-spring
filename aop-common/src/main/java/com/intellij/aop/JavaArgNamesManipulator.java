@@ -3,17 +3,19 @@
  */
 package com.intellij.aop;
 
-import javax.annotation.Nonnull;
-
-import com.intellij.aop.jam.*;
+import com.intellij.aop.jam.AopAfterReturningAdviceImpl;
+import com.intellij.aop.jam.AopAfterThrowingAdviceImpl;
+import com.intellij.aop.jam.AopConstants;
+import com.intellij.aop.jam.PointcutContainer;
 import com.intellij.jam.JamStringAttributeElement;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiReference;
-import com.intellij.util.IncorrectOperationException;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReference;
+import consulo.language.util.IncorrectOperationException;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -83,7 +85,8 @@ public class JavaArgNamesManipulator extends ArgNamesManipulator {
     return myContainer instanceof AopAdvice ? ((AopAdvice)myContainer).getAdviceType() : null;
   }
 
-  public void setArgNames(@Nullable final String argNames) throws IncorrectOperationException {
+  public void setArgNames(@Nullable final String argNames) throws IncorrectOperationException
+  {
     myContainer.getArgNames().setStringValue(argNames);
   }
 }

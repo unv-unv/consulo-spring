@@ -1,6 +1,8 @@
+import java.lang.String;
+
 public class OverloadedSetters {
 
-  public void setProp(java.lang.String value) {}
+  public void setProp(String value) {}
   public void setProp(boolean value) {}
   public void setProp(int value) {}
 

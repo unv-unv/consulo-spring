@@ -4,8 +4,8 @@
 package com.intellij.aop;
 
 import com.intellij.aop.psi.PsiPointcutExpression;
-import com.intellij.psi.PsiElement;
-import com.intellij.util.xml.GenericValue;
+import consulo.language.psi.PsiElement;
+import consulo.xml.util.xml.GenericValue;
 
 /**
  * @author peter

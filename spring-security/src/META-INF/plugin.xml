@@ -25,7 +25,7 @@
   </project-components>
 
   <extensions defaultExtensionNs="com.intellij">
-    <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+    <errorHandler implementation="consulo.ide.impl.idea.diagnostic.ITNReporter"/>
 
     <moduleService serviceInterface="com.intellij.spring.security.model.xml.converters.roles.SpringSecurityRolesFactory"
                    serviceImplementation="com.intellij.spring.security.model.xml.converters.roles.SpringSecurityRolesFactory" />

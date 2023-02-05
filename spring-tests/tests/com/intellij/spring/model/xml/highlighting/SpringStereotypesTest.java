@@ -2,7 +2,7 @@ package com.intellij.spring.model.xml.highlighting;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.spring.SpringManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.facet.SpringFileSet;
@@ -10,8 +10,8 @@ import com.intellij.spring.model.xml.SpringHighlightingTestCase;
 import com.intellij.spring.model.xml.beans.JamSpringBeanPointer;
 import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NonNls;
 

@@ -3,10 +3,10 @@
  */
 package com.intellij.aop.jam;
 
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.meta.PsiMetaData;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiMethod;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.meta.PsiMetaData;
 import org.jetbrains.annotations.NonNls;
 
 /**

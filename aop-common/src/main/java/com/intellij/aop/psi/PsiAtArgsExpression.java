@@ -4,9 +4,9 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.*;
-import com.intellij.util.PairFunction;
+import com.intellij.java.language.psi.*;
+import consulo.language.ast.ASTNode;
+import consulo.util.lang.function.PairFunction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

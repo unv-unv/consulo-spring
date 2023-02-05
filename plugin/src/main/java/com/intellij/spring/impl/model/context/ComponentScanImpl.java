@@ -1,7 +1,7 @@
 package com.intellij.spring.impl.model.context;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.xml.context.ComponentScan;
+import com.intellij.spring.impl.ide.model.xml.context.ComponentScan;
 import javax.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 

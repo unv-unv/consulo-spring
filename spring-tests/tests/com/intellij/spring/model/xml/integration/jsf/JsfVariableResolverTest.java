@@ -9,7 +9,7 @@ import com.intellij.javaee.web.facet.WebFacet;
 import com.intellij.jsf.model.FacesConfig;
 import com.intellij.jsf.model.FacesDomModel;
 import com.intellij.jsf.model.FacesDomModelManager;
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;

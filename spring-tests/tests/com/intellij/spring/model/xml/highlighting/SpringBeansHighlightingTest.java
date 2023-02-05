@@ -21,7 +21,7 @@ import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;

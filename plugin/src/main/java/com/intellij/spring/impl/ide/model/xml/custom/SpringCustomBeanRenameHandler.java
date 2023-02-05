@@ -1,0 +1,52 @@
+package com.intellij.spring.impl.ide.model.xml.custom;
+
+import com.intellij.spring.impl.ide.SpringBundle;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.codeEditor.Editor;
+import consulo.dataContext.DataContext;
+import consulo.language.editor.LangDataKeys;
+import consulo.language.editor.refactoring.rename.PsiElementRenameHandler;
+import consulo.language.editor.refactoring.rename.RenameHandler;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.project.Project;
+import consulo.ui.ex.awt.Messages;
+import consulo.xml.psi.xml.XmlAttribute;
+
+import javax.annotation.Nonnull;
+
+@ExtensionImpl
+public class SpringCustomBeanRenameHandler implements RenameHandler {
+
+  public boolean isAvailableOnDataContext(DataContext dataContext) {
+    return false;
+  }
+
+  public boolean isRenaming(DataContext dataContext) {
+    PsiElement element = dataContext.getData(LangDataKeys.PSI_ELEMENT);
+    return element instanceof CustomBeanFakePsiElement;
+  }
+
+  public void invoke(@Nonnull Project project, Editor editor, PsiFile file, DataContext dataContext) {
+    final PsiElement element = dataContext.getData(LangDataKeys.PSI_ELEMENT);
+    doInvoke(project, editor, element);
+  }
+
+  private static void doInvoke(final Project project, final Editor editor, final PsiElement element) {
+    final XmlAttribute idAttribute = ((CustomBeanFakePsiElement)element).getBean().getIdAttribute();
+    if (idAttribute == null) {
+      final int i = Messages
+        .showOkCancelDialog(project,
+                            SpringBundle.message("custom.bean.no.id"),
+                            SpringBundle.message("custom.bean.no.id.title"),
+                            Messages.getWarningIcon());
+      if (i != 0) return;
+    }
+
+    PsiElementRenameHandler.invoke(element, project, element, editor);
+  }
+
+  public void invoke(@Nonnull Project project, @Nonnull PsiElement[] elements, DataContext dataContext) {
+  }
+
+}

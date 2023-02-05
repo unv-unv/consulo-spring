@@ -4,7 +4,7 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 

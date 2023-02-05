@@ -4,18 +4,18 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiClassType;
-import com.intellij.psi.PsiType;
-import com.intellij.spring.model.converters.SpringBeanResolveConverter;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.model.xml.beans.TypedBeanPointerAttribute;
-import com.intellij.util.xml.AbstractConvertContext;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericDomValue;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiClassType;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.TypedBeanPointerAttribute;
+import consulo.xml.util.xml.AbstractConvertContext;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.GenericDomValue;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author peter

@@ -1,11 +1,13 @@
 package components;
 
 
+import java.util.List;
+
 @org.springframework.stereotype.Service()
 public class AutowiredField {
 
   @org.springframework.beans.factory.annotation.Autowired
-  private java.util.List<String> st<caret>rList;
+  private List<String> st<caret>rList;
 
   @org.springframework.beans.factory.annotation.Autowired
   private String[] strArray;

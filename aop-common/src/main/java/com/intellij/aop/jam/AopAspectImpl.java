@@ -9,9 +9,11 @@ import com.intellij.jam.annotations.JamPsiConnector;
 import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamChildrenQuery;
 import com.intellij.jam.reflect.JamClassMeta;
-import com.intellij.psi.*;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiClass;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementRef;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 /**

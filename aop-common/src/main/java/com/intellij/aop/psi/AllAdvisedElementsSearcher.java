@@ -5,13 +5,15 @@ package com.intellij.aop.psi;
 
 import com.intellij.aop.AopAdvisedElementsSearcher;
 import com.intellij.aop.jam.AopConstants;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.util.Function;
-import com.intellij.util.Processor;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiJavaPackage;
+import consulo.application.util.function.Processor;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.logging.Logger;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.TestOnly;
 
 import java.util.ArrayList;
@@ -19,9 +21,9 @@ import java.util.List;
 
 /**
  * @author peter
-*/
+ */
 public class AllAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.aop.psi.AllAdvisedElementsSearcher");
+  private static final Logger LOG = Logger.getInstance(AllAdvisedElementsSearcher.class);
   private GlobalSearchScope myScope;
 
   @TestOnly
@@ -48,15 +50,10 @@ public class AllAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
 
   private boolean processPackage(final Processor<PsiClass> processor, final PsiJavaPackage psiPackage, final List<PsiJavaPackage> visited) {
     if (visited.contains(psiPackage)) {
-      LOG.error("Circular package structure:\n" + StringUtil.join(visited, new Function<PsiJavaPackage, String>() {
-        public String fun(final PsiJavaPackage psiPackage) {
-          return psiPackage.getQualifiedName() + " === " + StringUtil.join(psiPackage.getDirectories(), new Function<PsiDirectory, String>() {
-            public String fun(final PsiDirectory psiDirectory) {
-              return psiDirectory.getVirtualFile().getPath();
-            }
-          }, "; ");
-        }
-      }, "\n"));
+      LOG.error("Circular package structure:\n" + StringUtil.join(visited,
+                                                                  psiPackage1 -> psiPackage1.getQualifiedName() + " === " + StringUtil.join(
+                                                                    psiPackage1.getDirectories(),
+                                                                    psiDirectory -> psiDirectory.getVirtualFile().getPath(), "; "), "\n"));
     }
 
     visited.add(psiPackage);

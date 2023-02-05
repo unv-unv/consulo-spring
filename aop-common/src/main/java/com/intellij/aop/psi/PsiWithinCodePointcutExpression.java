@@ -4,14 +4,15 @@
  */
 package com.intellij.aop.psi;
 
+import com.intellij.java.language.psi.PsiMember;
+import consulo.language.ast.ASTNode;
+
 import javax.annotation.Nonnull;
-import com.intellij.psi.PsiMember;
-import com.intellij.lang.ASTNode;
 
 /**
  * @author peter
  */
-public class PsiWithinCodePointcutExpression extends MethodPatternPointcut{
+public class PsiWithinCodePointcutExpression extends MethodPatternPointcut {
 
   public PsiWithinCodePointcutExpression(@Nonnull final ASTNode node) {
     super(node);

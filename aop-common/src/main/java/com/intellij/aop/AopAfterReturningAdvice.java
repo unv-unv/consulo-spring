@@ -3,8 +3,8 @@
  */
 package com.intellij.aop;
 
-import com.intellij.util.xml.GenericValue;
-import com.intellij.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.xml.util.xml.GenericValue;
 
 /**
  * @author peter

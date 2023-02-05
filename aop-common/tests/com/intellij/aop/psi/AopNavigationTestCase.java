@@ -5,19 +5,19 @@
 package com.intellij.aop.psi;
 
 import com.intellij.aop.AopLiteFixture;
-import com.intellij.codeInsight.daemon.LineMarkerInfo;
-import com.intellij.codeInsight.navigation.NavigationGutterIconRenderer;
-import com.intellij.openapi.editor.markup.GutterIconRenderer;
-import com.intellij.openapi.util.text.StringUtil;
+import consulo.codeEditor.markup.GutterIconRenderer;
+import consulo.language.editor.gutter.LineMarkerInfo;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.testFramework.UsefulTestCase;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import consulo.util.collection.ContainerUtil;
+import consulo.language.editor.ui.navigation.NavigationGutterIconRenderer;
+import consulo.util.lang.StringUtil;
 import gnu.trove.THashSet;
 
 import java.util.ArrayList;

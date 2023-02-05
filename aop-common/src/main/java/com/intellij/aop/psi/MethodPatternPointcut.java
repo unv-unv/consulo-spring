@@ -4,10 +4,10 @@
  */
 package com.intellij.aop.psi;
 
+import consulo.language.ast.ASTNode;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.lang.ASTNode;
 
 import java.util.Collection;
 import java.util.Arrays;

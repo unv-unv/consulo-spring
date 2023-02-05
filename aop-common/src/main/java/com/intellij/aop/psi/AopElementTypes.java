@@ -18,12 +18,12 @@ package com.intellij.aop.psi;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.TokenType;
-import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.ILeafElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.IFileElementType;
+import consulo.language.ast.ILeafElementType;
+import consulo.language.ast.TokenType;
+import consulo.language.ast.TokenSet;
+import consulo.language.ast.ASTNode;
+import consulo.language.impl.psi.PsiWhiteSpaceImpl;
 
 /**
  * @author peter
@@ -133,7 +133,8 @@ public interface AopElementTypes extends TokenType {
   AopElementType AOP_THROWS_LIST_ITEM = new AopElementType("AOP_THROWS_LIST_ITEM");
   AopElementType AOP_TYPE_PARAMETER_LIST = new AopElementType("AOP_TYPE_PARAMETER_LIST");
 
-  public static class AopWhitespaceElementType extends AopElementType implements ILeafElementType{
+  public static class AopWhitespaceElementType extends AopElementType implements ILeafElementType
+  {
     public AopWhitespaceElementType() {
       super("ANNO_WHITE_SPACE");
     }

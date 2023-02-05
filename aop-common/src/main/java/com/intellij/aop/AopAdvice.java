@@ -6,7 +6,8 @@ package com.intellij.aop;
 import com.intellij.aop.psi.PointcutMatchDegree;
 import com.intellij.aop.psi.PsiPointcutExpression;
 import com.intellij.jam.model.common.CommonModelElement;
-import com.intellij.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiMethod;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

@@ -4,25 +4,15 @@
  */
 package com.intellij.aop.psi;
 
-import org.jetbrains.annotations.NonNls;
-import com.intellij.lang.pratt.PrattBuilder;
-import com.intellij.lang.pratt.MutableMarker;
-import static com.intellij.aop.psi.AopElementTypes.AOP_LEFT_PAR;
-import static com.intellij.aop.psi.AopElementTypes.AOP_AT;
-import static com.intellij.aop.psi.AopElementTypes.AOP_NOT;
-import static com.intellij.aop.psi.AopElementTypes.AOP_NOT_EXPRESSION;
-import static com.intellij.aop.psi.AopElementTypes.AOP_MODIFIER_LIST;
-import static com.intellij.aop.psi.AopElementTypes.AOP_CONSTRUCTOR_REFERENCE_EXPRESSION;
-import static com.intellij.aop.psi.AopElementTypes.AOP_REFERENCE_HOLDER;
-import static com.intellij.aop.psi.AopElementTypes.AOP_MEMBER_REFERENCE_EXPRESSION;
-import static com.intellij.aop.psi.AopElementTypes.AOP_RIGHT_PAR;
-import static com.intellij.aop.psi.AopElementTypes.AOP_THROWS;
-import static com.intellij.aop.psi.AopElementTypes.AOP_COMMA;
-import static com.intellij.aop.psi.AopElementTypes.AOP_THROWS_LIST;
-import static com.intellij.aop.psi.AopPrattParser.parseAnnotations;
-import static com.intellij.aop.psi.AopPrattParser.TYPE_PATTERN;
 import com.intellij.aop.AopBundle;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
+import consulo.language.pratt.MutableMarker;
+import consulo.language.pratt.PrattBuilder;
+import org.jetbrains.annotations.NonNls;
+
+import static com.intellij.aop.psi.AopElementTypes.*;
+import static com.intellij.aop.psi.AopPrattParser.TYPE_PATTERN;
+import static com.intellij.aop.psi.AopPrattParser.parseAnnotations;
 
 /**
  * @author peter

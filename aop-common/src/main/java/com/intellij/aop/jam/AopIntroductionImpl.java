@@ -4,26 +4,31 @@
 
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.aop.AopIntroduction;
 import com.intellij.aop.psi.AopReferenceHolder;
 import com.intellij.aop.psi.PsiPointcutExpression;
 import com.intellij.aop.psi.PsiTargetExpression;
+import com.intellij.jam.JamClassAttributeElement;
 import com.intellij.jam.JamConverter;
 import com.intellij.jam.JamElement;
 import com.intellij.jam.JamStringAttributeElement;
-import com.intellij.jam.JamClassAttributeElement;
-import com.intellij.jam.annotations.JamPsiConnector;
 import com.intellij.jam.annotations.JamAnnotation;
 import com.intellij.jam.annotations.JamAttribute;
-import com.intellij.jam.reflect.*;
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.*;
-import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.xml.GenericValue;
-import com.intellij.util.xml.ReadOnlyGenericValue;
+import com.intellij.jam.annotations.JamPsiConnector;
+import com.intellij.jam.model.common.ReadOnlyGenericValue;
+import com.intellij.jam.reflect.JamAnnotationMeta;
+import com.intellij.jam.reflect.JamAttributeMeta;
+import com.intellij.jam.reflect.JamStringAttributeMeta;
+import com.intellij.java.language.psi.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
+import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.util.xml.GenericValue;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter

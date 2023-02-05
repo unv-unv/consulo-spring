@@ -6,13 +6,13 @@ package com.intellij.aop.psi;
 
 import com.intellij.aop.AopIntroduction;
 import com.intellij.aop.jam.AopJavaAnnotator;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElementFactory;
-import com.intellij.psi.PsiMember;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiElementFactory;
+import com.intellij.java.language.psi.PsiMember;
+import consulo.language.ast.ASTNode;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collection;
 

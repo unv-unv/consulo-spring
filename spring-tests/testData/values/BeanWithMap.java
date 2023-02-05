@@ -1,10 +1,15 @@
+import java.lang.Boolean;
+import java.lang.Integer;
+import java.lang.String;
+import java.util.Map;
+
 public class BeanWithMap {
-    public void setMap(java.util.Map<java.lang.Integer, java.lang.Boolean> map) {
+    public void setMap(Map<Integer, Boolean> map) {
     }
 
-    public void setStringMap(java.util.Map<java.lang.String, java.lang.String> map) {
+    public void setStringMap(Map<String, String> map) {
     }
 
-    public void setObjectMap(java.util.Map map) {
+    public void setObjectMap(Map map) {
     }
 }

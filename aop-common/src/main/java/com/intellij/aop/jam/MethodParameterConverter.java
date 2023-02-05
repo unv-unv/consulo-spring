@@ -4,12 +4,16 @@
  */
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.jam.JamConverter;
 import com.intellij.jam.JamStringAttributeElement;
-import com.intellij.psi.*;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiLiteral;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.language.psi.PsiReference;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author peter

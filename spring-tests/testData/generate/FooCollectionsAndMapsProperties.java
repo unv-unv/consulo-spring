@@ -1,7 +1,11 @@
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class FooCollectionsAndMapsProperties {
-  public void setMap(java.util.Map boo) {}
+  public void setMap(Map boo) {}
 
-  public void setList(java.util.List boo) {}
+  public void setList(List boo) {}
 
-  public void setSet(java.util.Set boo) {}
+  public void setSet(Set boo) {}
 }

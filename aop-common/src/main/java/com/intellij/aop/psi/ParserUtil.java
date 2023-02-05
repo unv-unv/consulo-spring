@@ -3,10 +3,10 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.PsiBuilder;
+import consulo.language.parser.PsiBuilder;
 import com.intellij.aop.AopBundle;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.ast.IElementType;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;

@@ -17,7 +17,7 @@
 package com.intellij.spring.model.xml.highlighting;
 
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInspection.ex.QuickFixWrapper;
+import consulo.ide.impl.idea.codeInspection.ex.QuickFixWrapper;
 import com.intellij.codeInspection.jsp.ELValidationInspection;
 import com.intellij.spring.model.xml.SpringHighlightingTestCase;
 

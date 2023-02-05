@@ -3,19 +3,21 @@
  */
 package com.intellij.spring.impl.model;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.spring.model.converters.SpringBeanFactoryMethodConverter;
-import com.intellij.spring.model.xml.CommonSpringBean;
-import com.intellij.spring.model.xml.SpringQualifier;
-import com.intellij.spring.model.xml.beans.SpringBean;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.xml.GenericValue;
-import com.intellij.util.xml.converters.values.ClassValueConverter;
-import javax.annotation.Nullable;
+import com.intellij.java.impl.util.xml.converters.values.ClassValueConverter;
+import com.intellij.java.language.psi.*;
+import com.intellij.spring.impl.ide.model.converters.SpringBeanFactoryMethodConverter;
+import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
+import com.intellij.spring.impl.ide.model.xml.SpringQualifier;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.module.Module;
+import consulo.util.lang.StringUtil;
+import consulo.xml.util.xml.GenericValue;
 
+import javax.annotation.Nullable;
 import java.util.Set;
 
 /**

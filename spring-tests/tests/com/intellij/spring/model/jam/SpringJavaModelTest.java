@@ -1,10 +1,10 @@
 package com.intellij.spring.model.jam;
 
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.vfs.VfsUtil;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiJavaFile;
@@ -13,7 +13,7 @@ import com.intellij.spring.model.jam.javaConfig.SpringJavaConfiguration;
 import com.intellij.spring.model.jam.javaConfig.SpringJavaBean;
 import com.intellij.testFramework.IdeaTestCase;
 import com.intellij.testFramework.PsiTestUtil;
-import com.intellij.util.Consumer;
+import java.util.function.Consumer;
 
 import java.util.List;
 

@@ -3,12 +3,13 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
+import consulo.language.psi.PsiElement;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.Consumer;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
 import org.jetbrains.annotations.NonNls;
+
+import java.util.function.Consumer;
 
 /**
  * @author peter

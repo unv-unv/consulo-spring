@@ -7,9 +7,9 @@ import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopAfterReturningAdvice;
 import com.intellij.aop.psi.PointcutMatchDegree;
 import com.intellij.jam.JamStringAttributeElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiType;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiType;
 
 /**
  * @author peter

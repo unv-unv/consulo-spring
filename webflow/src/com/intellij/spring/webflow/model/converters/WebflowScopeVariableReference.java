@@ -1,7 +1,7 @@
 package com.intellij.spring.webflow.model.converters;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReferenceBase;

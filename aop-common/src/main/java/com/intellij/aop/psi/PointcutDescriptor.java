@@ -4,13 +4,13 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.pratt.PrattBuilder;
-import com.intellij.lang.ASTNode;
+import consulo.language.ast.ASTNode;
+import consulo.language.pratt.PrattBuilder;
 import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter
-*/
+ */
 public abstract class PointcutDescriptor {
   private final String myTokenText;
 
@@ -23,5 +23,6 @@ public abstract class PointcutDescriptor {
   }
 
   public abstract void parseToken(final PrattBuilder builder);
+
   public abstract PsiPointcutExpression createPsi(final ASTNode node);
 }

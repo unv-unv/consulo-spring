@@ -4,14 +4,14 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiType;
-import com.intellij.spring.model.xml.beans.PNamespaceRefValue;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.xml.GenericDomValue;
-import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.xml.beans.PNamespaceRefValue;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.xml.util.xml.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**

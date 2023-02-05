@@ -1,3 +1,7 @@
+import java.lang.Short;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class FooBean10 {
   public FooBean10() {}
 
@@ -13,7 +17,7 @@ public class FooBean10 {
   public void setByteClass(Byte boo) {}
   public void setByte(byte boo) {}
 
-  public void setShortClass(java.lang.Short boo) {}
+  public void setShortClass(Short boo) {}
   public void setShort(short boo) {}
 
   public void setIntegerClass(Integer boo) {}
@@ -28,8 +32,8 @@ public class FooBean10 {
   public void setDoubleClass(Double boo) {}
   public void setDouble(double boo) {}
   
-  public void setBigDecimal(java.math.BigDecimal boo) {}
-  public void setBigInteger(java.math.BigInteger boo) {}
+  public void setBigDecimal(BigDecimal boo) {}
+  public void setBigInteger(BigInteger boo) {}
 
   public void setStringArray(String[] boo) {}
 

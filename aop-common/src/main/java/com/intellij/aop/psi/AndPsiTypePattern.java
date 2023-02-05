@@ -3,12 +3,12 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.openapi.util.Ref;
-import com.intellij.psi.PsiJavaPackage;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiType;
-import com.intellij.util.CommonProcessors;
-import com.intellij.util.Processor;
+import com.intellij.java.language.psi.PsiJavaPackage;
+import com.intellij.java.language.psi.PsiType;
+import consulo.application.util.function.CommonProcessors;
+import consulo.application.util.function.Processor;
+import consulo.language.psi.PsiManager;
+import consulo.util.lang.ref.Ref;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;

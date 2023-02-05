@@ -3,8 +3,8 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.openapi.util.Pair;
-import com.intellij.util.PairFunction;
+import consulo.util.lang.Pair;
+import consulo.util.lang.function.PairFunction;
 
 import java.util.*;
 

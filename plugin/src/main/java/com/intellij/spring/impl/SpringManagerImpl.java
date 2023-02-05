@@ -4,30 +4,31 @@
 
 package com.intellij.spring.impl;
 
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.spring.SpringManager;
-import com.intellij.spring.SpringModel;
-import com.intellij.spring.SpringModelProvider;
-import com.intellij.spring.facet.SpringFileSet;
-import com.intellij.spring.model.converters.CustomConverterRegistry;
-import com.intellij.spring.model.values.converters.*;
-import com.intellij.spring.model.xml.beans.Beans;
-import com.intellij.util.SmartList;
-import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.DomManager;
-import com.intellij.util.xml.converters.values.GenericDomValueConvertersRegistry;
+import com.intellij.java.impl.util.xml.converters.values.GenericDomValueConvertersRegistry;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.SpringManager;
+import com.intellij.spring.impl.ide.SpringModel;
+import com.intellij.spring.impl.ide.SpringModelProvider;
+import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.model.converters.CustomConverterRegistry;
+import com.intellij.spring.impl.ide.model.values.converters.*;
+import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import consulo.annotation.access.RequiredReadAction;
-import consulo.spring.boot.AnnotationSpringModel;
-import consulo.spring.boot.SpringBootFileSet;
-import consulo.spring.dom.SpringDomUtil;
-import consulo.spring.model.CompositeSpringModel;
-import consulo.spring.module.extension.SpringModuleExtension;
+import consulo.annotation.component.ServiceImpl;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.spring.impl.boot.AnnotationSpringModel;
+import consulo.spring.impl.boot.SpringBootFileSet;
+import consulo.spring.impl.dom.SpringDomUtil;
+import consulo.spring.impl.model.CompositeSpringModel;
+import consulo.spring.impl.module.extension.SpringModuleExtension;
+import consulo.util.collection.SmartList;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.util.xml.DomManager;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,6 +40,8 @@ import java.util.Set;
 /**
  * @author Dmitry Avdeev
  */
+@Singleton
+@ServiceImpl
 public class SpringManagerImpl extends SpringManager {
 
   @Deprecated
@@ -46,6 +49,7 @@ public class SpringManagerImpl extends SpringManager {
   private final GenericDomValueConvertersRegistry myValueProvidersRegistry;
   private final CustomConverterRegistry myCustomConvertersRegistry;
 
+  @Inject
   public SpringManagerImpl(Project project) {
     myModelFactory = new SpringModelFactory(project);
     myValueProvidersRegistry = new GenericDomValueConvertersRegistry();
@@ -56,7 +60,7 @@ public class SpringManagerImpl extends SpringManager {
 
   private void registerValueConverters() {
     myValueProvidersRegistry
-        .registerConverter(new PlaceholderPropertiesConverter(), new PlaceholderPropertiesConverter.PlaceholderPropertiesCondition());
+      .registerConverter(new PlaceholderPropertiesConverter(), new PlaceholderPropertiesConverter.PlaceholderPropertiesCondition());
 
     myValueProvidersRegistry.registerConverter(new SpringBooleanValueConverter(false), PsiType.BOOLEAN);
     myValueProvidersRegistry.registerConverter(new SpringBooleanValueConverter(true), Boolean.class);
@@ -68,14 +72,14 @@ public class SpringManagerImpl extends SpringManager {
 
     myValueProvidersRegistry.registerConverter(new ResourceValueConverter(), new ResourceValueConverter.ResourceValueConverterCondition());
     myValueProvidersRegistry.registerConverter(new FieldRetrievingFactoryBeanConverter(),
-        new FieldRetrievingFactoryBeanConverter.FactoryClassAndPropertyCondition());
+                                               new FieldRetrievingFactoryBeanConverter.FactoryClassAndPropertyCondition());
     myValueProvidersRegistry.registerConverter(new EnumValueConverter(), new EnumValueConverter.TypeCondition());
   }
 
   @Override
   @Nonnull
   @RequiredReadAction
-  public List<SpringModel> getAllModels(@Nonnull Module module) {
+  public List<SpringModel> getAllModels(@Nonnull consulo.module.Module module) {
     SpringModuleExtension extension = ModuleUtilCore.getExtension(module, SpringModuleExtension.class);
     if (extension == null) {
       return Collections.emptyList();
@@ -87,7 +91,7 @@ public class SpringManagerImpl extends SpringManager {
 
     List<SpringModel> list = new SmartList<>();
     for (SpringFileSet set : allSets) {
-      if(set instanceof SpringBootFileSet) {
+      if (set instanceof SpringBootFileSet) {
         list.add(new AnnotationSpringModel(module));
       }
       else {
@@ -134,7 +138,10 @@ public class SpringManagerImpl extends SpringManager {
   @Nullable
   public SpringModel getLocalSpringModel(@Nonnull XmlFile file) {
     final DomFileElement<Beans> beans = myModelFactory.getDomRoot(file);
-    return beans == null ? null : new DomSpringModelImpl(beans, Collections.singleton(file), ModuleUtil.findModuleForPsiElement(file), null);
+    return beans == null ? null : new DomSpringModelImpl(beans,
+                                                         Collections.singleton(file),
+                                                         ModuleUtilCore.findModuleForPsiElement(file),
+                                                         null);
   }
 
   @Override
@@ -143,7 +150,7 @@ public class SpringManagerImpl extends SpringManager {
   public List<SpringFileSet> getProvidedModels(@Nonnull SpringModuleExtension extension) {
     List<SpringFileSet> result = null;
 
-    for (SpringModelProvider modelProvider : Extensions.getExtensions(SpringModelProvider.EP_NAME)) {
+    for (SpringModelProvider modelProvider : SpringModelProvider.EP_NAME.getExtensionList()) {
       final List<SpringFileSet> list = modelProvider.getFilesets(extension);
       if (list.size() > 0) {
         if (result == null) {

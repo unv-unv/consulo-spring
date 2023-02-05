@@ -16,10 +16,10 @@
 package com.intellij.spring.model.xml.highlighting;
 
 import com.intellij.codeInsight.intention.IntentionAction;
-import com.intellij.codeInsight.navigation.actions.GotoTypeDeclarationAction;
+import consulo.ide.impl.idea.codeInsight.navigation.actions.GotoTypeDeclarationAction;
 import com.intellij.javaee.ExternalResourceManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;

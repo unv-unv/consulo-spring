@@ -4,19 +4,19 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiSubstitutor;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.impl.beanProperties.BeanProperty;
-import com.intellij.psi.impl.source.PsiClassReferenceType;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.TypeConversionUtil;
-import com.intellij.spring.model.xml.DomSpringBean;
-import com.intellij.spring.model.xml.beans.SpringProperty;
-import com.intellij.util.containers.ComparatorUtil;
+import com.intellij.java.impl.psi.impl.beanProperties.BeanProperty;
+import com.intellij.java.language.impl.psi.impl.source.PsiClassReferenceType;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiSubstitutor;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.java.language.psi.util.TypeConversionUtil;
+import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringProperty;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.lang.ComparatorUtil;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

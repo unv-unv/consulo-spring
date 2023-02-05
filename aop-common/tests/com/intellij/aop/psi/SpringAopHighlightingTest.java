@@ -8,19 +8,20 @@ import com.intellij.aop.jam.AopConstants;
 import com.intellij.aop.jam.ArgNamesErrorsInspection;
 import com.intellij.aop.jam.ArgNamesWarningsInspection;
 import com.intellij.aop.jam.DeclareParentsInspection;
-import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.codeInspection.deadCode.DeadCodeInspection;
 import com.intellij.codeInspection.unusedSymbol.UnusedSymbolLocalInspection;
 import com.intellij.facet.FacetManager;
 import com.intellij.javaee.ExternalResourceManagerEx;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.progress.impl.ProgressManagerImpl;
+import com.intellij.xml.util.XmlUtil;
+import consulo.application.Result;
+import consulo.ide.impl.idea.openapi.progress.impl.ProgressManagerImpl;
 import com.intellij.spring.SpringApplicationComponent;
 import com.intellij.spring.constants.SpringConstants;
 import com.intellij.spring.facet.SpringFacetType;
 import com.intellij.spring.model.highlighting.*;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
+import consulo.language.editor.WriteCommandAction;
+import consulo.language.editor.inspection.LocalInspectionTool;
 
 /**
  * @author peter
@@ -35,7 +36,7 @@ public class SpringAopHighlightingTest extends JavaCodeInsightFixtureTestCase {
     ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(SpringConstants.AOP_NAMESPACE);
     ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(SpringConstants.TX_NAMESPACE);
     ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(SpringConstants.BEANS_XSD);
-    ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(com.intellij.xml.util.XmlUtil.XML_SCHEMA_INSTANCE_URI);
+    ExternalResourceManagerEx.getInstanceEx().addIgnoredResource(XmlUtil.XML_SCHEMA_INSTANCE_URI);
   }
 
   public void testAdviceShouldDefinePointcut() throws Throwable {
@@ -133,7 +134,7 @@ public class SpringAopHighlightingTest extends JavaCodeInsightFixtureTestCase {
     createFacet();
 
     myFixture.configureByFiles("spring-jdk-proxy-timeout.xml", "spring-proxy-type.java");
-    ProgressManagerImpl.setNeedToCheckCancel(true);
+    consulo.ide.impl.idea.openapi.progress.impl.ProgressManagerImpl.setNeedToCheckCancel(true);
     try {
       JdkProxiedBeanTypeInspection.TEST_ME = true;
       myFixture.testHighlighting(false, false, true);

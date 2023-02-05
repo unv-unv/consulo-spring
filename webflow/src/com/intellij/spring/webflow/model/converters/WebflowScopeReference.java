@@ -5,7 +5,7 @@ import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.impl.FakePsiElement;
 import com.intellij.util.xml.GenericDomValue;
 import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.module.Module;
 import com.intellij.spring.webflow.el.WebflowScopeProvider;

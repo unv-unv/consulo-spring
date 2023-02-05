@@ -20,7 +20,7 @@ import com.intellij.spring.model.xml.beans.SpringPropertyDefinition;
 import com.intellij.spring.web.mvc.MVCViewProvider;
 import com.intellij.struts.dom.tiles.Definition;
 import com.intellij.struts.dom.tiles.TilesDefinitions;
-import com.intellij.util.Consumer;
+import java.util.function.Consumer;
 import com.intellij.util.containers.hash.HashSet;
 import com.intellij.util.xml.DomFileElement;
 import com.intellij.util.xml.DomManager;

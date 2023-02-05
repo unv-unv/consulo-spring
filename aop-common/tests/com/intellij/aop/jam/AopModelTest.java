@@ -6,16 +6,17 @@ package com.intellij.aop.jam;
 import com.intellij.aop.*;
 import com.intellij.aop.psi.AllAdvisedElementsSearcher;
 import com.intellij.testFramework.IdeaTestUtil;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import consulo.application.util.function.Processor;
+import consulo.language.editor.WriteCommandAction;
+import consulo.component.extension.Extensions;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
+import consulo.virtualFileSystem.VirtualFile;
 import com.intellij.testFramework.PsiTestUtil;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.Consumer;
-import com.intellij.util.Processor;
+import java.util.function.Consumer;
+
+import consulo.application.Result;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -155,7 +156,7 @@ public class AopModelTest extends JavaCodeInsightFixtureTestCase {
       protected void run(Result<VirtualFile> result) throws Throwable {
         final VirtualFile file = myRoot.createChildData(this, "Aspects.java");
 
-        VfsUtil.saveText(file, text);
+        consulo.ide.impl.idea.openapi.vfs.VfsUtil.saveText(file, text);
         result.setResult(file);
       }
     }.execute().getResultObject();

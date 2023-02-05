@@ -5,20 +5,22 @@
 package com.intellij.aop.psi;
 
 import com.intellij.aop.AopBundle;
-import com.intellij.lang.pratt.*;
-import com.intellij.patterns.ElementPattern;
-import com.intellij.patterns.IElementTypePattern;
-import com.intellij.patterns.PsiJavaPatterns;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.java.language.patterns.PsiJavaPatterns;
+import consulo.language.ast.IElementType;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.pattern.IElementTypePattern;
+import consulo.language.pratt.*;
+
 import javax.annotation.Nullable;
 
 import static com.intellij.aop.psi.AopElementTypes.*;
-import static com.intellij.lang.pratt.PathPattern.path;
+import static consulo.language.pratt.PathPattern.path;
 
 /**
  * @author peter
  */
-public class AopPrattParser extends PrattParser {
+public class AopPrattParser extends PrattParser
+{
     public static final PrattRegistry ourPrattRegistry = new PrattRegistry();
 
     static final int LOGIC = 30;

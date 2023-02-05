@@ -3,40 +3,37 @@
  */
 package com.intellij.aop.jam;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.ArgNamesManipulator;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
-import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.CommonClassNames;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiLiteralExpression;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiReference;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.searches.ReferencesSearch;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.Processor;
+import com.intellij.java.language.psi.*;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.application.util.function.Processor;
+import consulo.document.util.TextRange;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.inspection.scheme.InspectionManager;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.language.psi.search.ReferencesSearch;
+import consulo.xml.psi.xml.XmlElement;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class ArgNamesErrorsInspection extends AbstractArgNamesInspection {
   @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
@@ -79,7 +76,7 @@ public class ArgNamesErrorsInspection extends AbstractArgNamesInspection {
       else if (psiElement instanceof PsiParameter) {
         final PsiManager psiManager = psiElement.getManager();
         final PsiClass throwableClass = JavaPsiFacade.getInstance(psiManager.getProject())
-          .findClass(CommonClassNames.JAVA_LANG_THROWABLE, GlobalSearchScope.allScope(psiElement.getProject()));
+                                                     .findClass(CommonClassNames.JAVA_LANG_THROWABLE, GlobalSearchScope.allScope(psiElement.getProject()));
         if (throwableClass != null &&
             !JavaPsiFacade.getInstance(psiManager.getProject()).getElementFactory().createType(throwableClass).isAssignableFrom(((PsiParameter)psiElement).getType())) {
           holder.registerProblem(throwingReference.getElement(), AopBundle.message("error.throwable.expected"));

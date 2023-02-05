@@ -6,11 +6,11 @@ package com.intellij.spring.impl.model.aop;
 
 import javax.annotation.Nullable;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.spring.model.xml.aop.DeclareParents;
-import com.intellij.util.xml.DomUtil;
+import consulo.language.psi.PsiFile;
+import com.intellij.spring.impl.ide.model.xml.aop.DeclareParents;
+import consulo.xml.util.xml.DomUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
 
 /**
  * @author peter

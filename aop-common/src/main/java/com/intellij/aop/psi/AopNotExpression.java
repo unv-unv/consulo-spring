@@ -4,21 +4,20 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMember;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.java.language.psi.PsiMember;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.util.collection.ContainerUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.Collections;
 
 /**
  * @author peter
  */
-public class AopNotExpression extends AopElementBase implements PsiPointcutExpression, AopTypeExpression, AopAnnotationPattern{
+public class AopNotExpression extends AopElementBase implements PsiPointcutExpression, AopTypeExpression, AopAnnotationPattern {
   public AopNotExpression(@Nonnull final ASTNode node) {
     super(node);
   }
@@ -53,11 +52,7 @@ public class AopNotExpression extends AopElementBase implements PsiPointcutExpre
 
   @Nonnull
   public Collection<AopPsiTypePattern> getPatterns() {
-    return ContainerUtil.map2List(getInnerPatterns(), new Function<AopPsiTypePattern, AopPsiTypePattern>() {
-      public AopPsiTypePattern fun(final AopPsiTypePattern aopPsiTypePattern) {
-        return new NotPattern(aopPsiTypePattern);
-      }
-    });
+    return ContainerUtil.map2List(getInnerPatterns(), NotPattern::new);
   }
 
   public String getTypePattern() {

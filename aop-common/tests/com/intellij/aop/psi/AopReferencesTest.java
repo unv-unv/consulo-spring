@@ -9,26 +9,29 @@ import com.intellij.aop.AopPointcut;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.aop.lexer.AopLexer;
-import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.mock.MockPsiClassType;
 import com.intellij.mock.MockXmlTag;
-import com.intellij.openapi.fileTypes.FileType;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiFileFactory;
+import consulo.language.psi.ResolveResult;
+import consulo.virtualFileSystem.fileType.FileType;
 import com.intellij.openapi.fileTypes.StdFileTypes;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import com.intellij.psi.meta.PsiMetaData;
+import consulo.document.util.TextRange;
+import consulo.language.psi.meta.PsiMetaData;
 import com.intellij.testFramework.LiteFixture;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.Consumer;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.Processor;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.application.util.function.Processor;
+import consulo.util.collection.ContainerUtil;
+import consulo.language.editor.completion.lookup.LookupElement;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author peter
@@ -215,7 +218,7 @@ public class AopReferencesTest extends JavaCodeInsightFixtureTestCase {
   }
 
   private PsiClass parseClass(String text) {
-    return ((PsiJavaFile)PsiFileFactory.getInstance(getProject()).createFileFromText("a.java", text)).getClasses()[0];
+    return ((PsiJavaFile) PsiFileFactory.getInstance(getProject()).createFileFromText("a.java", text)).getClasses()[0];
   }
 
   public void testBindToElement() throws Throwable {
@@ -265,7 +268,8 @@ public class AopReferencesTest extends JavaCodeInsightFixtureTestCase {
     assertBinds("a.b.c.d", bindTo, expectedText);
   }
 
-  private void assertBinds(final String refText, final PsiElement bindTo, final String expectedText) throws IncorrectOperationException {
+  private void assertBinds(final String refText, final PsiElement bindTo, final String expectedText) throws IncorrectOperationException
+  {
     final AopMemberReferenceExpression reference =
       assertInstanceOf(parse("execution(* " + refText + "())"), PsiExecutionExpression.class).getMethodReference();
     LiteFixture.setContext(reference.getContainingFile(), getJavaFacade().findClass("abc.Def"));

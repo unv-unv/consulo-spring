@@ -3,8 +3,13 @@
  */
 package com.intellij.aop;
 
-import com.intellij.psi.*;
-import com.intellij.util.Processor;
+import com.intellij.java.language.psi.CommonClassNames;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiModifier;
+import consulo.application.util.function.Processor;
+import consulo.language.psi.PsiManager;
+
 import javax.annotation.Nonnull;
 
 /**

@@ -12,7 +12,7 @@ import com.intellij.struts.TilesModelProvider;
 import com.intellij.struts.StrutsPluginDomFactory;
 import com.intellij.struts.dom.tiles.TilesDefinitions;
 import com.intellij.struts.psi.TilesModelImpl;
-import com.intellij.util.Consumer;
+import java.util.function.Consumer;
 import com.intellij.util.xml.DomFileElement;
 import org.jetbrains.annotations.NotNull;
 

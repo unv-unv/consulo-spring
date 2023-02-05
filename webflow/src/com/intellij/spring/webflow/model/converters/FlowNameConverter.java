@@ -9,7 +9,7 @@ import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.webflow.model.xml.Flow;
 import com.intellij.spring.webflow.util.WebflowUtil;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.*;

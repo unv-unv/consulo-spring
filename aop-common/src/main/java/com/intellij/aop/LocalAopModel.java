@@ -5,17 +5,17 @@ package com.intellij.aop;
 
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.aop.jam.AopModuleService;
-import com.intellij.openapi.module.ModuleUtil;
-import com.intellij.openapi.util.NotNullLazyValue;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.util.SmartList;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.application.util.NotNullLazyValue;
+import consulo.language.psi.PsiElement;
+import consulo.language.util.ModuleUtilCore;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.collection.SmartList;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 /**
@@ -32,7 +32,7 @@ public class LocalAopModel implements AopModel {
 
 
   private AopModel getAopModel() {
-    return AopModuleService.getAopModel(myHost != null ? ModuleUtil.findModuleForPsiElement(myHost) : null);
+    return AopModuleService.getAopModel(myHost != null ? ModuleUtilCore.findModuleForPsiElement(myHost) : null);
   }
 
   private final PsiMethod myMethod;
@@ -61,7 +61,7 @@ public class LocalAopModel implements AopModel {
   }
 
   public List<AopIntroduction> getIntroductions() {
-    final SmartList<AopIntroduction> introductions = new SmartList<AopIntroduction>();
+    final consulo.util.collection.SmartList<AopIntroduction> introductions = new SmartList<AopIntroduction>();
     for (final AopAspect aspect : getAspects()) {
       introductions.addAll(aspect.getIntroductions());
     }

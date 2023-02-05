@@ -2,7 +2,7 @@ package com.intellij.spring.model.xml.webflow;
 
 import com.intellij.codeInspection.jsp.ELValidationInspection;
 import com.intellij.idea.Bombed;
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.spring.model.xml.SpringHighlightingTestCase;

@@ -10,17 +10,17 @@ import com.intellij.aop.AopPointcut;
 import com.intellij.aop.psi.PointcutContext;
 import com.intellij.aop.psi.PointcutMatchDegree;
 import com.intellij.aop.psi.PsiPointcutExpression;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiMethod;
-import com.intellij.spring.aop.SpringAdvisedElementsSearcher;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.spring.impl.ide.aop.SpringAdvisedElementsSearcher;
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.xml.aop.Advisor;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.util.xml.DomUtil;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.xml.aop.Advisor;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.xml.util.xml.DomUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 

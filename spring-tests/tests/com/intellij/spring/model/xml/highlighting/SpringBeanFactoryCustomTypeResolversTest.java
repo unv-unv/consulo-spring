@@ -11,7 +11,7 @@ import com.intellij.spring.model.xml.SpringHighlightingTestCase;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.beans.SpringBean;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.util.NullableFunction;
+import consulo.ide.impl.idea.util.NullableFunction;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;

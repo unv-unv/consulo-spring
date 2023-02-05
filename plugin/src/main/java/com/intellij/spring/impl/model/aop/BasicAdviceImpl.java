@@ -9,11 +9,12 @@ import com.intellij.aop.psi.PointcutContext;
 import com.intellij.aop.psi.PointcutMatchDegree;
 import com.intellij.aop.psi.PsiPointcutExpression;
 import com.intellij.jam.model.common.BaseImpl;
-import com.intellij.psi.PsiMethod;
-import com.intellij.spring.aop.SpringAdvisedElementsSearcher;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.spring.model.xml.aop.BasicAdvice;
-import com.intellij.util.xml.DomUtil;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.spring.impl.ide.aop.SpringAdvisedElementsSearcher;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.xml.aop.BasicAdvice;
+import consulo.xml.util.xml.DomUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

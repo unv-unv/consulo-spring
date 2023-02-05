@@ -4,13 +4,13 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiType;
-import com.intellij.spring.model.xml.beans.MetadataPropertyValueConverter;
-import com.intellij.spring.model.xml.beans.MetadataValue;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.xml.GenericDomValue;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.xml.beans.MetadataPropertyValueConverter;
+import com.intellij.spring.impl.ide.model.xml.beans.MetadataValue;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.xml.util.xml.GenericDomValue;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

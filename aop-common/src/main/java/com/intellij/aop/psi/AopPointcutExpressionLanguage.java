@@ -3,14 +3,17 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.InjectableLanguage;
-import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.LanguageFileType;
+import com.intellij.aop.AopBundle;
+import consulo.language.InjectableLanguage;
+import consulo.language.Language;
+import consulo.language.file.LanguageFileType;
 
 /**
  * @author peter
  */
 public class AopPointcutExpressionLanguage extends Language implements InjectableLanguage {
+  public static final AopPointcutExpressionLanguage INSTANCE = new AopPointcutExpressionLanguage();
+
   protected AopPointcutExpressionLanguage() {
     super("PointcutExpression");
   }
@@ -20,10 +23,13 @@ public class AopPointcutExpressionLanguage extends Language implements Injectabl
     return AopPointcutExpressionFileType.INSTANCE;
   }
 
+  @Deprecated
   public static AopPointcutExpressionLanguage getInstance() {
-    // to initialize
-    //noinspection UnusedDeclaration
-    final AopPointcutExpressionFileType fileType = AopPointcutExpressionFileType.INSTANCE;
-    return findInstance(com.intellij.aop.psi.AopPointcutExpressionLanguage.class);
+    return INSTANCE;
+  }
+
+  @Override
+  public String getDisplayName() {
+    return AopBundle.message("inspection.group.display.name.aop");
   }
 }

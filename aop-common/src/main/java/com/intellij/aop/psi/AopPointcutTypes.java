@@ -5,12 +5,12 @@
 package com.intellij.aop.psi;
 
 import com.intellij.aop.AopBundle;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.pratt.MutableMarker;
-import com.intellij.lang.pratt.PathPattern;
-import com.intellij.lang.pratt.PrattBuilder;
-import com.intellij.lang.pratt.ReducingParser;
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.pratt.MutableMarker;
+import consulo.language.pratt.PathPattern;
+import consulo.language.pratt.PrattBuilder;
+import consulo.language.pratt.ReducingParser;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;

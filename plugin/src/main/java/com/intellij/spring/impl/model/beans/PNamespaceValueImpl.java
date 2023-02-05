@@ -3,23 +3,22 @@
  */
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.util.PropertyUtil;
-import com.intellij.spring.model.xml.beans.PNamespaceValue;
-import com.intellij.spring.model.xml.beans.SpringBean;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.containers.ContainerUtil;
-import com.intellij.util.NullableFunction;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.java.language.psi.util.PropertyUtil;
+import com.intellij.spring.impl.ide.model.xml.beans.PNamespaceValue;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.util.collection.ContainerUtil;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author peter
@@ -38,11 +37,7 @@ public abstract class PNamespaceValueImpl implements PNamespaceValue {
     final PsiClass beanClass = bean.getBeanClass();
     if (beanClass != null) {
       final List<PsiMethod> methods = PropertyUtil.getSetters(beanClass, name);
-      return ContainerUtil.map2List(methods, new NullableFunction<PsiMethod, PsiType>() {
-        public PsiType fun(final PsiMethod psiMethod) {
-          return PropertyUtil.getPropertyType(psiMethod);
-        }
-      });
+      return ContainerUtil.map2List(methods, psiMethod -> PropertyUtil.getPropertyType(psiMethod));
     }
     return Collections.emptyList();
   }

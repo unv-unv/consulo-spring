@@ -8,30 +8,32 @@ import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.aop.jam.AopModuleService;
 import com.intellij.aop.jam.AopPointcutImpl;
-import com.intellij.codeInsight.TailType;
-import com.intellij.codeInsight.completion.util.MethodParenthesesHandler;
-import com.intellij.codeInsight.lookup.LookupElement;
-import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.codeInsight.lookup.TailTypeDecorator;
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.CheckUtil;
-import com.intellij.psi.scope.BaseScopeProcessor;
-import com.intellij.psi.scope.PsiScopeProcessor;
-import com.intellij.psi.util.MethodSignature;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtilBase;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.Function;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.ObjectUtils;
-import com.intellij.util.containers.ContainerUtil;
-import consulo.psi.PsiPackage;
+import com.intellij.java.impl.codeInsight.completion.util.MethodParenthesesHandler;
+import com.intellij.java.impl.psi.AbstractQualifiedReference;
+import com.intellij.java.language.psi.*;
+import com.intellij.java.language.psi.util.MethodSignature;
+import consulo.language.ast.ASTNode;
+import consulo.language.editor.completion.lookup.LookupElement;
+import consulo.language.editor.completion.lookup.LookupElementBuilder;
+import consulo.language.editor.completion.lookup.TailType;
+import consulo.language.editor.completion.lookup.TailTypeDecorator;
+import consulo.language.editor.util.PsiUtilBase;
+import consulo.language.impl.psi.CheckUtil;
+import consulo.language.psi.*;
+import consulo.language.psi.resolve.BaseScopeProcessor;
+import consulo.language.psi.resolve.PsiScopeProcessor;
+import consulo.language.psi.resolve.ResolveState;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.ObjectUtil;
+import consulo.util.lang.StringUtil;
+import consulo.xml.psi.xml.XmlElement;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
@@ -48,7 +50,9 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
   }
 
   enum Resolvability {
-    PLAIN, POLYVARIANT, NONE
+    PLAIN,
+    POLYVARIANT,
+    NONE
   }
 
   @Nullable
@@ -151,7 +155,7 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
       psiClass = parentClass;
     }
 
-      PsiJavaPackage psiPackage = facade.findPackage("java.lang");
+    PsiJavaPackage psiPackage = facade.findPackage("java.lang");
     if (psiPackage != null && !psiPackage.processDeclarations(processor, state, null, this)) return false;
 
     psiPackage = facade.findPackage("");
@@ -167,9 +171,11 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
   @Nonnull
   protected final AopReferenceExpression parseReference(final String newText) {
     final AopPointcutExpressionFile file = (AopPointcutExpressionFile)PsiFileFactory.getInstance(getProject())
-      .createFileFromText("a", AopPointcutExpressionFileType.INSTANCE, newText + "()");
+                                                                                    .createFileFromText("a",
+                                                                                                        AopPointcutExpressionFileType.INSTANCE,
+                                                                                                        newText + "()");
     final PsiPointcutReferenceExpression pointcutExpression = (PsiPointcutReferenceExpression)file.getPointcutExpression();
-    return ObjectUtils.assertNotNull(ObjectUtils.assertNotNull(pointcutExpression).getReferenceExpression());
+    return ObjectUtil.assertNotNull(ObjectUtil.assertNotNull(pointcutExpression).getReferenceExpression());
   }
 
   @Nullable
@@ -179,13 +185,14 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
 
   protected boolean isAccessible(final PsiElement element) {
     if (element instanceof PsiMethod) {
-      if (!((PsiMethod)element).hasModifierProperty(PsiModifier.PUBLIC) && getContainingFile().getContext() instanceof XmlElement) return false;
+      if (!((PsiMethod)element).hasModifierProperty(PsiModifier.PUBLIC) && getContainingFile().getContext() instanceof XmlElement)
+        return false;
     }
     return super.isAccessible(element);
   }
 
   public LookupElement[] getVariants() {
-    final Set<MethodSignature> signatures = ContainerUtil.newTroveSet();
+    final Set<MethodSignature> signatures = new HashSet<>();
     final List<LookupElement> list = new ArrayList<LookupElement>();
     if (isPointcutReference()) {
       final LocalAopModel model = getContainingFile().getAopModel();
@@ -195,11 +202,15 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
       final String prefix = getText().substring(0, getRangeInElement().getStartOffset());
       processVariantsInner(new BaseScopeProcessor() {
         public boolean execute(final PsiElement element, final ResolveState state) {
-          if (element instanceof PsiMethod && element != pointcutMethod && PsiUtilBase.getOriginalElement(element, PsiMethod.class) != pointcutMethod && isAccessible(element)) {
+          if (element instanceof PsiMethod && element != pointcutMethod && PsiUtilBase.getOriginalElement(element,
+                                                                                                          PsiMethod.class) != pointcutMethod && isAccessible(
+            element)) {
             final PsiMethod method = (PsiMethod)element;
             if (method.getModifierList().findAnnotation(AopConstants.POINTCUT_ANNO) != null) {
               final String methodName = method.getName();
-              list.add(LookupElementBuilder.create(prefix + methodName).withIcon(AopConstants.POINTCUT_ICON).withInsertHandler(new MethodParenthesesHandler(method, true)));
+              list.add(LookupElementBuilder.create(prefix + methodName)
+                                           .withIcon(AopConstants.POINTCUT_ICON)
+                                           .withInsertHandler(new MethodParenthesesHandler(method, true)));
               final PsiClass aClass = method.getContainingClass();
               if (aClass != null && !(aClass instanceof PsiAnonymousClass)) {
                 PsiFile file = aClass.getContainingFile().getOriginalFile();
@@ -220,17 +231,19 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
         if ((element instanceof PsiAnnotation)) {
           final PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
           assert method != null;
-          if (method != pointcutMethod && PsiUtilBase.getOriginalElement(method, PsiMethod.class) != pointcutMethod && isAccessible(method)) {
+          if (method != pointcutMethod && PsiUtilBase.getOriginalElement(method,
+                                                                         PsiMethod.class) != pointcutMethod && isAccessible(method)) {
             final String qname = pointcut.getQualifiedName().getStringValue();
             if (qname != null && qname.startsWith(prefix) && !qnames.contains(qname)) {
               list.add(LookupElementBuilder.create(qname).
                 withIcon(AopConstants.POINTCUT_ICON).
-                withInsertHandler(new MethodParenthesesHandler(method, false)));
+                                             withInsertHandler(new MethodParenthesesHandler(method, false)));
             }
           }
         }
       }
-    } else {
+    }
+    else {
       processVariantsInner(new BaseScopeProcessor() {
         public boolean execute(final PsiElement element, final ResolveState state) {
           if (isAcceptableTarget(element)) {
@@ -247,7 +260,8 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
             }
             if (element instanceof PsiPackage) {
               list.add(TailTypeDecorator.withTail(item, TailType.DOT));
-            } else {
+            }
+            else {
               list.add(item);
             }
           }
@@ -269,8 +283,8 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
 
     final PsiElement grandParent = parent.getParent();
     return grandParent instanceof AopParameterList
-           ? grandParent.getParent() instanceof PsiAtPointcutDesignator
-           : grandParent instanceof PsiAtPointcutDesignator;
+      ? grandParent.getParent() instanceof PsiAtPointcutDesignator
+      : grandParent instanceof PsiAtPointcutDesignator;
   }
 
   @Nonnull
@@ -290,9 +304,11 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
         final String prefix;
         if (pattern instanceof PsiClassTypePattern) {
           prefix = ((PsiClassTypePattern)pattern).getText();
-        } else if (pattern == AopPsiTypePattern.TRUE) {
+        }
+        else if (pattern == AopPsiTypePattern.TRUE) {
           prefix = "*";
-        } else {
+        }
+        else {
           prefix = null;
         }
         if (prefix != null) {
@@ -302,12 +318,13 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
 
 
       final AopPsiTypePattern rightPattern = "*".equals(ownText) ? PsiClassTypePattern.TRUE : new PsiClassTypePattern(ownText);
-      return ContainerUtil.map2List(patterns, new Function<AopPsiTypePattern, AopPsiTypePattern>() {
-        public AopPsiTypePattern fun(final AopPsiTypePattern aopPsiTypePattern) {
-          return new ConcatenationPattern(aopPsiTypePattern, rightPattern, doubleDot);
-        }
-      });
-    } else {
+      return ContainerUtil.map2List(patterns,
+                                    (Function<AopPsiTypePattern, AopPsiTypePattern>)aopPsiTypePattern -> new ConcatenationPattern(
+                                      aopPsiTypePattern,
+                                      rightPattern,
+                                      doubleDot));
+    }
+    else {
       final PsiElement psiElement = resolve();
       if (psiElement instanceof PsiClass) {
         final String qualifiedName = ((PsiClass)psiElement).getQualifiedName();
@@ -332,7 +349,7 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
 
     final String text = getText().replaceAll(" ", "");
     String regex = "*".equals(text) ? ".*" : text.
-        //replaceAll("([\\[\\]\\^\\(\\)\\{\\}\\-])", "\\\\$1").
+      //replaceAll("([\\[\\]\\^\\(\\)\\{\\}\\-])", "\\\\$1").
         replaceAll("\\*", "\\[\\^\\\\.]\\+").
         replaceAll("\\.", "\\\\.").
         replaceAll("\\\\.\\\\.", "\\\\..*\\\\.");
@@ -349,10 +366,10 @@ public class AopReferenceExpression extends AbstractQualifiedReference<AopRefere
 
   private static class AopPointcutResolveResult extends PsiElementResolveResult {
     @Nonnull
-	private final AopPointcut myPointcut;
+    private final AopPointcut myPointcut;
 
     public AopPointcutResolveResult(@Nonnull final AopPointcutImpl pointcut) {
-      super(ObjectUtils.assertNotNull(pointcut.getPsiElement()));
+      super(ObjectUtil.assertNotNull(pointcut.getPsiElement()));
       myPointcut = pointcut;
     }
 

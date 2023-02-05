@@ -4,26 +4,28 @@
  */
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-
+import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.LocalAopModel;
-import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.psi.*;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.util.IncorrectOperationException;
+import com.intellij.java.language.psi.*;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
 import org.jetbrains.annotations.Nls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class AroundAdviceStyleInspection extends AbstractAopInspection {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.AroundAdviceStyleInspection");
+  private static final Logger LOG = Logger.getInstance(AroundAdviceStyleInspection.class);
 
   protected void checkAopMethod(final PsiMethod pointcutMethod, final LocalAopModel model, final ProblemsHolder holder,
                                 final AopPointcutExpressionFile aopFile) {

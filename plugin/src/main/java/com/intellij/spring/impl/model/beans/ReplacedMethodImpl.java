@@ -1,7 +1,7 @@
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.spring.model.xml.beans.ReplacedMethod;
-import com.intellij.util.containers.ComparatorUtil;
+import com.intellij.spring.impl.ide.model.xml.beans.ReplacedMethod;
+import consulo.util.lang.ComparatorUtil;
 
 /**
  * @author Dmitry Avdeev

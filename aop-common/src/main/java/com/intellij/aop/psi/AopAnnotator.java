@@ -7,15 +7,19 @@ import com.intellij.aop.AopBundle;
 import com.intellij.aop.AopPointcut;
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.aop.jam.AopModuleService;
-import com.intellij.lang.annotation.AnnotationHolder;
-import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtil;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.ui.SimpleTextAttributes;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.java.language.psi.util.PsiUtil;
+import consulo.document.util.TextRange;
+import consulo.language.editor.annotation.AnnotationHolder;
+import consulo.language.editor.annotation.Annotator;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiRecursiveElementVisitor;
+import consulo.language.psi.ResolveResult;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.lang.ref.Ref;
+import consulo.xml.psi.xml.XmlElement;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
@@ -27,7 +31,8 @@ import java.util.Set;
  */
 public class AopAnnotator implements Annotator {
   public void annotate(final PsiElement psiElement, final AnnotationHolder holder) {
-    if (((AopPointcutExpressionFile)psiElement.getContainingFile()).getAopModel().getAdvisedElementsSearcher().shouldSuppressErrors()) return;
+    if (((AopPointcutExpressionFile)psiElement.getContainingFile()).getAopModel().getAdvisedElementsSearcher().shouldSuppressErrors())
+      return;
 
     final PsiElement parent = psiElement.getParent();
     if (psiElement instanceof AopReferenceExpression) {
@@ -38,10 +43,13 @@ public class AopAnnotator implements Annotator {
     }
     if (psiElement instanceof AopArrayExpression) {
       if (((AopArrayExpression)psiElement).isVarargs()) {
-        if (!(parent instanceof AopReferenceHolder) || parent.getParent() instanceof AopTypeParameterList || parent.getParent() instanceof AopParameterList && parent.getParent().getParent() instanceof PsiArgsExpression) {
+        if (!(parent instanceof AopReferenceHolder) || parent.getParent() instanceof AopTypeParameterList || parent.getParent() instanceof AopParameterList && parent
+          .getParent()
+          .getParent() instanceof PsiArgsExpression) {
           holder.createErrorAnnotation(psiElement.getLastChild(), AopBundle.message("error.varargs.not.allowed.here"));
           return;
-        } else if (parent.getParent() instanceof AopParameterList) {
+        }
+        else if (parent.getParent() instanceof AopParameterList) {
           final PsiElement[] parameters = ((AopParameterList)parent.getParent()).getParameters();
           if (parent != parameters[parameters.length - 1]) {
             holder.createErrorAnnotation(psiElement.getLastChild(), AopBundle.message("error.varargs.not.last"));
@@ -58,14 +66,15 @@ public class AopAnnotator implements Annotator {
     if (psiElement instanceof AopGenericTypeExpression) {
       final PsiPointcutExpression expression = PsiTreeUtil.getParentOfType(psiElement, PsiPointcutExpression.class);
       if (expression instanceof PsiThisExpression || expression instanceof PsiTargetExpression || expression instanceof PsiWithinExpression) {
-        holder.createErrorAnnotation(((AopGenericTypeExpression)psiElement).getTypeParameterList(), AopBundle.message("error.generics.not.allowed.here"));
+        holder.createErrorAnnotation(((AopGenericTypeExpression)psiElement).getTypeParameterList(),
+                                     AopBundle.message("error.generics.not.allowed.here"));
       }
     }
 
     if ((psiElement instanceof AopSubtypeExpression || psiElement instanceof AopReferenceHolder && "*".equals(psiElement.getText())) &&
-        PsiTreeUtil.getParentOfType(psiElement, PsiArgsExpression.class) != null &&
-        PsiTreeUtil.getParentOfType(psiElement, AopTypeParameterList.class) != null &&
-        PsiTreeUtil.getParentOfType(psiElement, AopParameterList.class) != null) {
+      PsiTreeUtil.getParentOfType(psiElement, PsiArgsExpression.class) != null &&
+      PsiTreeUtil.getParentOfType(psiElement, AopTypeParameterList.class) != null &&
+      PsiTreeUtil.getParentOfType(psiElement, AopParameterList.class) != null) {
       holder.createErrorAnnotation(psiElement.getLastChild(), AopBundle.message("error.wildcards.not.allowed.here"));
     }
     else if (psiElement instanceof PsiPointcutReferenceExpression) {
@@ -133,14 +142,17 @@ public class AopAnnotator implements Annotator {
     final String message;
     if (referenceExpression.isPointcutReference()) {
       message = AopBundle.message("error.cannot.resolve.pointcut", referenceExpression.getReferenceName());
-    } else {
+    }
+    else {
       message = AopBundle.message("error.cannot.resolve.symbol", referenceExpression.getReferenceName());
     }
-    holder.createErrorAnnotation(range, message).setEnforcedTextAttributes(SimpleTextAttributes.ERROR_ATTRIBUTES.toTextAttributes());
+    holder.createErrorAnnotation(range, message);
     return false;
   }
 
-  private static boolean isRecursivePointcutRef(@Nonnull final AopReferenceExpression aopReferenceExpression, @Nonnull final AopPointcut startPointcut, final int depth) {
+  private static boolean isRecursivePointcutRef(@Nonnull final AopReferenceExpression aopReferenceExpression,
+                                                @Nonnull final AopPointcut startPointcut,
+                                                final int depth) {
     final AopPointcut pointcut = aopReferenceExpression.resolvePointcut();
     if (pointcut == null) return false;
     if (pointcut.equals(startPointcut)) return true;
@@ -150,12 +162,13 @@ public class AopAnnotator implements Annotator {
     final Ref<Boolean> result = Ref.create(false);
     if (expression != null) {
       expression.accept(new PsiRecursiveElementVisitor() {
-        @Override public void visitElement(final PsiElement element) {
+        @Override
+        public void visitElement(final PsiElement element) {
           if (result.get()) return;
           if (element instanceof PsiPointcutExpression) super.visitElement(element);
 
           if (element instanceof PsiPointcutReferenceExpression) {
-            final PsiPointcutReferenceExpression pointcutReferenceExpression = (PsiPointcutReferenceExpression) element;
+            final PsiPointcutReferenceExpression pointcutReferenceExpression = (PsiPointcutReferenceExpression)element;
             final AopReferenceExpression referenceExpression = pointcutReferenceExpression.getReferenceExpression();
             if (referenceExpression != null && isRecursivePointcutRef(referenceExpression, startPointcut, depth - 1)) {
               result.set(true);

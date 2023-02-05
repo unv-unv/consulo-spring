@@ -4,12 +4,11 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.ast.ASTNode;
+import consulo.util.collection.ContainerUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -50,18 +49,15 @@ public class AopMemberReferenceExpression extends AopElementBase {
 
     final AopTypeExpression typeExpression = getTypeExpression();
 
-    return typeExpression instanceof AopAnnotatedTypeExpression ? ((AopAnnotatedTypeExpression) typeExpression).getQualifierPatterns() : qualifier.getPatterns();
+    return typeExpression instanceof AopAnnotatedTypeExpression ? ((AopAnnotatedTypeExpression)typeExpression).getQualifierPatterns() : qualifier
+      .getPatterns();
   }
 
   public Collection<AopPsiTypePattern> getPatterns() {
     final AopReferenceExpression expression = getReferenceExpression();
     final Collection<AopPsiTypePattern> patterns = getQualifierPatterns();
     if (expression != null && expression.isDoubleDot()) {
-      return ContainerUtil.map(patterns, new Function<AopPsiTypePattern, AopPsiTypePattern>() {
-        public AopPsiTypePattern fun(final AopPsiTypePattern aopPsiTypePattern) {
-          return new ConcatenationPattern(aopPsiTypePattern, AopPsiTypePattern.TRUE, true);
-        }
-      });
+      return ContainerUtil.map(patterns, it -> new ConcatenationPattern(it, AopPsiTypePattern.TRUE, true));
     }
     return patterns;
   }

@@ -4,8 +4,8 @@
  */
 package com.intellij.aop.jam;
 
-import com.intellij.psi.PsiAnnotation;
 import com.intellij.jam.JamStringAttributeElement;
+import com.intellij.java.language.psi.PsiAnnotation;
 
 /**
  * @author peter
@@ -15,5 +15,4 @@ public interface PointcutContainer {
   PsiAnnotation getAnnotation();
 
   JamStringAttributeElement<String> getArgNames();
-
 }

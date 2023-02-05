@@ -3,16 +3,21 @@
  */
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.LocalAopModel;
-import com.intellij.codeInsight.daemon.EmptyResolveMessageProvider;
 import com.intellij.jam.model.util.JamCommonUtil;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.psi.*;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.util.ArrayUtil;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiLiteral;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.language.psi.EmptyResolveMessageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiReferenceBase;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.util.collection.ArrayUtil;
+import consulo.util.lang.StringUtil;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter

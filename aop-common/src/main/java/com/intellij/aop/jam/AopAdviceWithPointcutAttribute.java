@@ -3,13 +3,13 @@
  */
 package com.intellij.aop.jam;
 
-import javax.annotation.Nullable;
-
 import com.intellij.aop.AopAdviceType;
 import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamAttributeMeta;
 import com.intellij.jam.reflect.JamStringAttributeMeta;
-import com.intellij.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter

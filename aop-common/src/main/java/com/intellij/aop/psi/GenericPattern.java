@@ -3,10 +3,10 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiClassType;
+import com.intellij.java.language.psi.PsiType;
 
-import com.intellij.psi.PsiClassType;
-import com.intellij.psi.PsiType;
+import javax.annotation.Nonnull;
 
 /**
  * @author peter

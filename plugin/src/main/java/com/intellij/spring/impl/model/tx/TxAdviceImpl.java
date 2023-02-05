@@ -4,7 +4,7 @@
 package com.intellij.spring.impl.model.tx;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.xml.tx.Advice;
+import com.intellij.spring.impl.ide.model.xml.tx.Advice;
 import javax.annotation.Nonnull;
 
 /**

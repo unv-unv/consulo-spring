@@ -14,7 +14,7 @@ import com.intellij.spring.model.SpringUtils;
 import com.intellij.spring.model.converters.ResourceResolverUtils;
 import com.intellij.util.ArrayUtil;
 import com.intellij.util.ProcessingContext;
-import com.intellij.util.text.StringTokenizer;
+import consulo.util.lang.text.StringTokenizer;
 import com.intellij.xml.util.XmlUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;

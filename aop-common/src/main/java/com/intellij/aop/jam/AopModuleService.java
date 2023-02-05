@@ -7,22 +7,30 @@ import com.intellij.aop.AopAspect;
 import com.intellij.aop.AopModel;
 import com.intellij.aop.AopPointcut;
 import com.intellij.jam.JamService;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiField;
+import com.intellij.java.language.psi.PsiMethod;
+import consulo.annotation.component.ComponentScope;
+import consulo.annotation.component.ServiceAPI;
+import consulo.annotation.component.ServiceImpl;
+import consulo.application.util.NotNullLazyValue;
 import consulo.disposer.Disposable;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleServiceManager;
-import com.intellij.openapi.util.NotNullLazyValue;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiMethod;
+import consulo.ide.ServiceManager;
+import consulo.module.Module;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 
 /**
  * @author peter
  */
+@ServiceAPI(ComponentScope.MODULE)
+@ServiceImpl
+@Singleton
 public class AopModuleService implements Disposable {
   private final NotNullLazyValue<AopModelImpl> myModel;
   private static final AopModel EMPTY_AOP_MODEL = new AopModel() {
@@ -37,7 +45,7 @@ public class AopModuleService implements Disposable {
 
   @Nonnull
   public static AopModuleService getService(@Nonnull Module module) {
-    return ModuleServiceManager.getService(module, AopModuleService.class);
+    return ServiceManager.getService(module, AopModuleService.class);
   }
 
   @Nonnull
@@ -45,6 +53,7 @@ public class AopModuleService implements Disposable {
     return module == null ? EMPTY_AOP_MODEL : getService(module).getModel();
   }
 
+  @Inject
   public AopModuleService(final @Nonnull Module module) {
     myModel = new NotNullLazyValue<AopModelImpl>() {
       @Nonnull
@@ -63,10 +72,12 @@ public class AopModuleService implements Disposable {
   public static AopAdviceImpl getAdvice(@Nonnull PsiMethod method) {
     return JamService.getJamService(method.getProject()).getJamElement(AopAdviceImpl.class, method);
   }
+
   @Nullable
   public static AopPointcutImpl getPointcut(@Nonnull PsiMethod method) {
     return JamService.getJamService(method.getProject()).getJamElement(AopPointcutImpl.class, method);
   }
+
   @Nullable
   public static AopIntroductionImpl getIntroduction(@Nonnull PsiField field) {
     return JamService.getJamService(field.getProject()).getJamElement(AopIntroductionImpl.class, field);

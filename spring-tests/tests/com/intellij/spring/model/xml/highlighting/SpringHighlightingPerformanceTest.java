@@ -9,7 +9,7 @@ import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.vfs.LocalFileSystem;
-import com.intellij.openapi.vfs.VfsUtil;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -17,8 +17,8 @@ import com.intellij.spring.SpringApplicationComponent;
 import com.intellij.spring.facet.SpringFileSet;
 import com.intellij.spring.model.xml.SpringHighlightingTestCase;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.util.Function;
-import com.intellij.util.PatchedWeakReference;
+import java.util.function.Function;
+import consulo.util.lang.ref.PatchedWeakReference;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.semantic.SemService;
 import org.jetbrains.annotations.NonNls;
@@ -36,7 +36,7 @@ public class SpringHighlightingPerformanceTest extends SpringHighlightingTestCas
 
   public void testLargeProject() throws Throwable {
     myFixture.copyFileToProject("performance.xml");
-    final String fileText = VfsUtil.loadText(myFixture.getTempDirFixture().getFile("performance.xml"));
+    final String fileText = consulo.ide.impl.idea.openapi.vfs.VfsUtil.loadText(myFixture.getTempDirFixture().getFile("performance.xml"));
     final SpringFileSet fileSet = configureFileSet();
     final String path = myFixture.getTempDirFixture().getTempDirPath();
     final List<PsiFile> files = new ArrayList<PsiFile>();

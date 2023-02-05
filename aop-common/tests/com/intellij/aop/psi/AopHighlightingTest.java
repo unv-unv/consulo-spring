@@ -13,7 +13,8 @@ import com.intellij.psi.XmlElementFactory;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.testFramework.LiteFixture;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
+
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
 

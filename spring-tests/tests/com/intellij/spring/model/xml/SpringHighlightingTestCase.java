@@ -5,7 +5,7 @@
 package com.intellij.spring.model.xml;
 
 import com.intellij.facet.FacetManager;
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.application.Result;
 import com.intellij.openapi.application.RunResult;
 import com.intellij.openapi.command.WriteCommandAction;

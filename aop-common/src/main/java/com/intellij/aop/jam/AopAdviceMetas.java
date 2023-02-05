@@ -4,12 +4,13 @@
  */
 package com.intellij.aop.jam;
 
-import static com.intellij.aop.jam.AopConstants.*;
 import com.intellij.jam.reflect.JamAnnotationArchetype;
 import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamAttributeMeta;
 import com.intellij.jam.reflect.JamStringAttributeMeta;
-import com.intellij.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiParameter;
+
+import static com.intellij.aop.jam.AopConstants.*;
 
 /**
  * @author peter

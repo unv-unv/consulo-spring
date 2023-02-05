@@ -8,10 +8,12 @@ import javax.annotation.Nonnull;
 import com.intellij.aop.AopAdvice;
 import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopAdvisedElementsSearcher;
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.*;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.util.IncorrectOperationException;
+import consulo.language.util.IncorrectOperationException;
 import com.intellij.util.xml.MockDomElement;
 
 import javax.annotation.Nullable;

@@ -4,7 +4,7 @@
 
 package com.intellij.spring.web;
 
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.testFramework.builders.WebModuleFixtureBuilder;
 import com.intellij.spring.model.xml.SpringHighlightingTestCase;
 import org.jetbrains.annotations.NonNls;

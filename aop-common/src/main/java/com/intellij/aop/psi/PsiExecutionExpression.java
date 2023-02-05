@@ -3,8 +3,8 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.*;
+import com.intellij.java.language.psi.*;
+import consulo.language.ast.ASTNode;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;

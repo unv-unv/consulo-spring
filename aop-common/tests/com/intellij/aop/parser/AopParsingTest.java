@@ -2,8 +2,8 @@ package com.intellij.aop.parser;
 
 import com.intellij.aop.psi.AopPointcutExpressionFile;
 import com.intellij.aop.psi.AopPointcutExpressionFileType;
-import com.intellij.openapi.application.PathManager;
-import com.intellij.psi.impl.DebugUtil;
+import consulo.ide.impl.idea.openapi.application.PathManager;
+import consulo.language.impl.DebugUtil;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import org.jetbrains.annotations.NonNls;
 

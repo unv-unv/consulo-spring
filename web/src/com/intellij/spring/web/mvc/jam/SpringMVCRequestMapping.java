@@ -5,7 +5,7 @@ import com.intellij.jam.JamStringAttributeElement;
 import com.intellij.jam.annotations.JamPsiConnector;
 import com.intellij.jam.reflect.*;
 import com.intellij.psi.*;
-import com.intellij.util.NullableFunction;
+import consulo.ide.impl.idea.util.NullableFunction;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;

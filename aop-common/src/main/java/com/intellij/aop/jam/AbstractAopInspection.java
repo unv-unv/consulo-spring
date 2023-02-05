@@ -4,17 +4,25 @@
  */
 package com.intellij.aop.jam;
 
-import com.intellij.aop.AopBundle;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.codeInspection.XmlSuppressableInspectionTool;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.xml.XmlAttributeValue;
+import com.intellij.aop.psi.AopPointcutExpressionLanguage;
+import com.intellij.java.language.psi.PsiLiteralExpression;
+import com.intellij.java.language.psi.PsiMethod;
+import consulo.language.Language;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.psi.xml.XmlAttributeValue;
 import org.jetbrains.annotations.Nls;
-import javax.annotation.Nonnull;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -23,6 +31,18 @@ import java.util.List;
 public abstract class AbstractAopInspection extends XmlSuppressableInspectionTool {
   public boolean isEnabledByDefault() {
     return true;
+  }
+
+  @Nonnull
+  @Override
+  public HighlightDisplayLevel getDefaultLevel() {
+    return HighlightDisplayLevel.WARNING;
+  }
+
+  @Nullable
+  @Override
+  public Language getLanguage() {
+    return AopPointcutExpressionLanguage.getInstance();
   }
 
   @Nonnull
@@ -37,7 +57,7 @@ public abstract class AbstractAopInspection extends XmlSuppressableInspectionToo
   }
 
   protected void checkElement(final PsiElement element, final ProblemsHolder holder) {
-    InjectedLanguageUtil.enumerate(element, new PsiLanguageInjectionHost.InjectedPsiVisitor() {
+    InjectedLanguageManager.getInstance(element.getProject()).enumerate(element, new PsiLanguageInjectionHost.InjectedPsiVisitor() {
       public void visit(@Nonnull PsiFile file, @Nonnull List<PsiLanguageInjectionHost.Shred> places) {
         if (file instanceof AopPointcutExpressionFile && file.getContext() == element) {
           final AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile)file;
@@ -57,6 +77,6 @@ public abstract class AbstractAopInspection extends XmlSuppressableInspectionToo
   @Nls
   @Nonnull
   public String getGroupDisplayName() {
-    return AopBundle.message("inspection.group.display.name.aop");
+    return "";
   }
 }

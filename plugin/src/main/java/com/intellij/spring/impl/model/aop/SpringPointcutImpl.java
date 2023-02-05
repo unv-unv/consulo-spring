@@ -5,10 +5,10 @@ package com.intellij.spring.impl.model.aop;
 
 import com.intellij.aop.psi.AopReferenceExpression;
 import com.intellij.aop.psi.PsiPointcutExpression;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiRecursiveElementVisitor;
-import com.intellij.spring.model.xml.aop.SpringPointcut;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.spring.impl.ide.model.xml.aop.SpringPointcut;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiRecursiveElementVisitor;
 
 import java.util.HashSet;
 import java.util.Set;

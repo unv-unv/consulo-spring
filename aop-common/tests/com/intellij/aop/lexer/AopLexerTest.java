@@ -3,9 +3,9 @@
  */
 package com.intellij.aop.lexer;
 
-import com.intellij.lexer.Lexer;
 import com.intellij.spring.SpringApplicationComponent;
 import com.intellij.testFramework.LexerTestCase;
+import consulo.language.lexer.Lexer;
 
 /**
  * @author peter

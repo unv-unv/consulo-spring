@@ -11,9 +11,8 @@ import com.intellij.aop.AopProvider;
 import com.intellij.aop.jam.AopAfterReturningAdviceImpl;
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.openapi.fileTypes.StdFileTypes;
-import com.intellij.openapi.module.Module;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiFileFactory;
+import consulo.language.psi.PsiFileFactory;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.SpringDomFileDescription;
@@ -26,6 +25,7 @@ import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.impl.DomManagerImpl;
+import consulo.module.Module;
 import gnu.trove.THashSet;
 import javax.annotation.Nonnull;
 
@@ -99,7 +99,7 @@ public class AdviceAcceptTest extends LightCodeInsightFixtureTestCase {
                                                                    "}");
 
 
-    XmlFile file = (XmlFile)PsiFileFactory.getInstance(getProject()).createFileFromText("a.xml", StdFileTypes.XML,
+    XmlFile file = (XmlFile) PsiFileFactory.getInstance(getProject()).createFileFromText("a.xml", StdFileTypes.XML,
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                                  "<beans xmlns=\"http://www.springframework.org/schema/beans\"\n" +
                                  "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
@@ -121,7 +121,7 @@ public class AdviceAcceptTest extends LightCodeInsightFixtureTestCase {
     final Beans beans = domManager.getFileElement(file, Beans.class).getRootElement();
     IdeaTestUtil.registerExtension(AopProvider.EXTENSION_POINT_NAME, new SpringAopProvider() {
       @Nonnull
-      public Set<? extends AopAspect> getAdditionalAspects(@Nonnull final Module module) {
+      public Set<? extends AopAspect> getAdditionalAspects(@Nonnull final consulo.module.Module module) {
         return addAopAspects(new THashSet<AopAspect>(), beans);
       }
     }, myTestRootDisposable);

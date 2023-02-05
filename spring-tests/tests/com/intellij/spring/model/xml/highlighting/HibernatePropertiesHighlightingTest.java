@@ -1,6 +1,6 @@
 package com.intellij.spring.model.xml.highlighting;
 
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.spring.model.SpringUtils;

@@ -4,19 +4,19 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.*;
-import com.intellij.spring.factories.SpringFactoryBeansManager;
-import com.intellij.spring.model.ResolvedConstructorArgs;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.spring.model.converters.ConstructorArgIndexConverter;
-import com.intellij.spring.model.converters.SpringConverterUtil;
-import com.intellij.spring.model.xml.beans.ConstructorArg;
-import com.intellij.spring.model.xml.beans.SpringBean;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.containers.ComparatorUtil;
-import com.intellij.util.xml.GenericAttributeValue;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.*;
+import com.intellij.spring.impl.ide.factories.SpringFactoryBeansManager;
+import com.intellij.spring.impl.ide.model.ResolvedConstructorArgs;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.converters.ConstructorArgIndexConverter;
+import com.intellij.spring.impl.ide.model.converters.SpringConverterUtil;
+import com.intellij.spring.impl.ide.model.xml.beans.ConstructorArg;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.util.lang.ComparatorUtil;
+import consulo.xml.util.xml.GenericAttributeValue;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

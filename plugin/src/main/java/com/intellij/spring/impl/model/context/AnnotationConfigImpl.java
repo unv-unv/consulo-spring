@@ -1,11 +1,11 @@
 package com.intellij.spring.impl.model.context;
 
-import javax.annotation.Nullable;
-
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.xml.context.AnnotationConfig;
-import com.intellij.psi.xml.XmlTag;
+import com.intellij.spring.impl.ide.model.xml.context.AnnotationConfig;
+import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nullable;
 
 /**
  * User: Sergey.Vasiliev

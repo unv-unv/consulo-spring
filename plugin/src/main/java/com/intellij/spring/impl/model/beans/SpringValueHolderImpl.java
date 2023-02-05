@@ -3,12 +3,12 @@
  */
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.spring.model.xml.beans.SpringValueHolder;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.model.xml.beans.SpringRef;
-import com.intellij.spring.model.xml.beans.SpringValue;
-import com.intellij.util.xml.GenericDomValue;
-import com.intellij.util.xml.DomUtil;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringValueHolder;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringRef;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringValue;
+import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.util.xml.DomUtil;
 
 /**
  * @author peter

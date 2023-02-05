@@ -13,7 +13,7 @@ import com.intellij.javaee.model.xml.persistence.PersistenceUnit;
 import com.intellij.jpa.facet.JpaFacet;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiDocumentManager;

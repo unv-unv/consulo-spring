@@ -1,9 +1,9 @@
 package com.intellij.spring.webflow.el;
 
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleServiceManager;
+import consulo.ide.impl.idea.openapi.module.ModuleServiceManager;
 import com.intellij.spring.webflow.el.scopeProviders.*;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import com.intellij.util.containers.ContainerUtil;
 import com.intellij.util.xml.DomElement;
 import org.jetbrains.annotations.NotNull;

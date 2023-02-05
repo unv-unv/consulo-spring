@@ -11,8 +11,8 @@
 package com.intellij.spring.model.xml;
 
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.util.Ref;
+import consulo.ide.impl.idea.openapi.application.PathManager;
+import consulo.util.lang.ref.Ref;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.spring.model.xml.beans.Beans;

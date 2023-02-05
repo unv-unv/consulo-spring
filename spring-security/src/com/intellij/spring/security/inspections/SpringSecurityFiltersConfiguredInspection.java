@@ -28,7 +28,7 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.security.SpringSecurityBundle;
 import com.intellij.spring.security.constants.SpringSecurityClassesConstants;
 import com.intellij.spring.security.util.SpringSecurityUtil;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.Processor;
 import com.intellij.util.containers.ContainerUtil;

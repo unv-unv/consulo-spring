@@ -3,8 +3,8 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.PsiType;
-import com.intellij.util.PairFunction;
+import com.intellij.java.language.psi.PsiType;
+import consulo.util.lang.function.PairFunction;
 
 /**
  * @author peter

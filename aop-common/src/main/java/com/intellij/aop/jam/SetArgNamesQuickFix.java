@@ -3,22 +3,23 @@
  */
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.aop.ArgNamesManipulator;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.impl.CheckUtil;
-import com.intellij.util.IncorrectOperationException;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.impl.psi.CheckUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
-public class SetArgNamesQuickFix implements LocalQuickFix {
+public class SetArgNamesQuickFix implements LocalQuickFix
+{
   private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.SetArgNamesQuickFix");
   private final String myName;
   private final boolean mySet;

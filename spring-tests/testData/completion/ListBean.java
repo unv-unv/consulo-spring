@@ -1,3 +1,4 @@
+import java.lang.String;
 import java.util.List;
 
 public class ListBean {
@@ -10,6 +11,6 @@ public class ListBean {
     public void setList(final List list) {
     }
 
-    public void setGenericsList(final List<java.lang.String> list) {
+    public void setGenericsList(final List<String> list) {
     }
 }

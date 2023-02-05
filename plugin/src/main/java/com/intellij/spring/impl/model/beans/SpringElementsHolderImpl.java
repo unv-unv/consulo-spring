@@ -4,24 +4,23 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.spring.model.SpringUtils;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.model.xml.beans.SpringElementsHolder;
-import com.intellij.spring.model.xml.beans.SpringRef;
-import com.intellij.util.xml.DomUtil;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringElementsHolder;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringRef;
+import consulo.language.psi.PsiManager;
+import consulo.language.psi.scope.GlobalSearchScope;
+import consulo.project.Project;
+import consulo.xml.util.xml.DomUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

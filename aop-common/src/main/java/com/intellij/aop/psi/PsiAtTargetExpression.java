@@ -4,12 +4,12 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.*;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiMember;
+import consulo.language.ast.ASTNode;
 
-import java.util.Collection;
+import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author peter

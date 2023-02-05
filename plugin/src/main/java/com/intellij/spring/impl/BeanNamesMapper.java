@@ -4,12 +4,12 @@
 
 package com.intellij.spring.impl;
 
-import com.intellij.openapi.util.Comparing;
-import com.intellij.openapi.util.text.StringUtil;
-import com.intellij.spring.model.xml.beans.Alias;
-import com.intellij.spring.model.xml.beans.SpringBaseBeanPointer;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.util.containers.MultiMap;
+import consulo.util.lang.Comparing;
+import com.intellij.spring.impl.ide.model.xml.beans.Alias;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.util.collection.MultiMap;
+import consulo.util.lang.StringUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

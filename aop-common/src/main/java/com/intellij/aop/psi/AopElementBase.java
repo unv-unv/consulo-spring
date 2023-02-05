@@ -5,8 +5,8 @@ package com.intellij.aop.psi;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.intellij.lang.ASTNode;
+import consulo.language.impl.psi.ASTWrapperPsiElement;
+import consulo.language.ast.ASTNode;
 
 /**
  * @author peter

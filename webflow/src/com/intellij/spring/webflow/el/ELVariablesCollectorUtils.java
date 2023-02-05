@@ -4,7 +4,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Factory;
 import com.intellij.openapi.util.Pair;
-import com.intellij.openapi.util.Ref;
+import consulo.util.lang.ref.Ref;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.FakePsiElement;
@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ELVariablesCollectorUtils {
 
@@ -164,7 +165,7 @@ public class ELVariablesCollectorUtils {
   }
 
   private static boolean isInProviderScope(final WebflowScopeProvider scopeProvider, final DomElement domElement, final ProcessingContext context) {
-    final java.util.Set<DomElement> scopes = scopeProvider.getScopes(context.getDomElement());
+    final Set<DomElement> scopes = scopeProvider.getScopes(context.getDomElement());
     for (DomElement scope : scopes) {
       if (isParent(scope,  domElement)) return true;
     }

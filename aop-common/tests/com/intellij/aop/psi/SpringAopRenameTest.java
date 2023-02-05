@@ -6,13 +6,13 @@ package com.intellij.aop.psi;
 
 import com.intellij.aop.AopLiteFixture;
 import com.intellij.facet.FacetManager;
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.psi.PsiElement;
+import consulo.application.Result;
+import consulo.language.psi.PsiElement;
 import com.intellij.psi.PsiParameter;
 import com.intellij.spring.facet.SpringFacetType;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import com.intellij.lang.java.JavaRefactoringSupportProvider;
+import consulo.language.editor.WriteCommandAction;
 
 /**
  * @author peter

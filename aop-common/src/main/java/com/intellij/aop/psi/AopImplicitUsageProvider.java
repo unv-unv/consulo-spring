@@ -3,16 +3,18 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.codeInsight.daemon.ImplicitUsageProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.aop.jam.AopConstants;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.ImplicitUsageProvider;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.util.PsiTreeUtil;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class AopImplicitUsageProvider implements ImplicitUsageProvider {
   public boolean isImplicitUsage(final PsiElement element) {
     if (element instanceof PsiParameter) {

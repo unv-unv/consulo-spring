@@ -4,27 +4,27 @@
 
 package com.intellij.spring.impl;
 
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleManager;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.openapi.vfs.pointers.VirtualFilePointer;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.spring.SpringManager;
-import com.intellij.spring.SpringModel;
-import com.intellij.spring.facet.SpringFileSet;
-import com.intellij.spring.model.xml.beans.Beans;
-import com.intellij.spring.model.xml.beans.SpringImport;
-import com.intellij.util.xml.DomFileElement;
-import com.intellij.util.xml.model.impl.DomModelFactory;
-import consulo.spring.DomSpringModel;
-import consulo.spring.module.extension.SpringModuleExtension;
+import com.intellij.spring.impl.ide.SpringManager;
+import com.intellij.spring.impl.ide.SpringModel;
+import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.model.xml.beans.Beans;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringImport;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
+import consulo.module.ModuleManager;
+import consulo.project.Project;
+import consulo.spring.impl.DomSpringModel;
+import consulo.spring.impl.module.extension.SpringModuleExtension;
+import consulo.virtualFileSystem.VirtualFile;
+import consulo.virtualFileSystem.pointer.VirtualFilePointer;
+import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.util.xml.model.impl.DomModelFactory;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.*;
 
 /**

@@ -4,13 +4,17 @@
 package com.intellij.aop.psi;
 
 import com.intellij.aop.AopPointcut;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.*;
+import com.intellij.java.language.psi.PsiMember;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiParameterList;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import java.util.Collection;
 import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * @author peter

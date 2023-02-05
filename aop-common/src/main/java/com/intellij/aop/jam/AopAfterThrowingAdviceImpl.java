@@ -7,7 +7,7 @@ package com.intellij.aop.jam;
 import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopAfterThrowingAdvice;
 import com.intellij.jam.JamStringAttributeElement;
-import com.intellij.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiParameter;
 
 /**
  * @author peter

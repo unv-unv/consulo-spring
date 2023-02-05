@@ -3,10 +3,9 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.*;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.Processor;
+import consulo.language.util.IncorrectOperationException;
+import consulo.application.util.function.Processor;
 import gnu.trove.THashSet;
 
 import java.util.Arrays;

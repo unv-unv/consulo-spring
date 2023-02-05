@@ -5,8 +5,8 @@
 package com.intellij.spring.model.xml.custom;
 
 import com.intellij.javaee.ExternalResourceManager;
-import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.module.ModuleUtil;
+import consulo.ide.impl.idea.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.CommonClassNames;
 import com.intellij.psi.PsiClass;

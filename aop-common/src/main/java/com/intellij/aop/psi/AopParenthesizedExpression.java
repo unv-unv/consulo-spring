@@ -4,11 +4,11 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiMember;
+import com.intellij.java.language.psi.PsiMember;
+import consulo.language.ast.ASTNode;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collection;
 import java.util.Collections;
 

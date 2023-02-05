@@ -4,33 +4,46 @@
 
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.AopIntroduction;
 import com.intellij.aop.IntroductionManipulator;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.codeHighlighting.HighlightDisplayLevel;
-import com.intellij.codeInspection.*;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.ReadonlyStatusHandler;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.intellij.psi.xml.XmlAttributeValue;
-import com.intellij.psi.xml.XmlElement;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.containers.ContainerUtil;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiLiteralExpression;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiModifier;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.document.util.TextRange;
+import consulo.language.editor.inspection.LocalQuickFix;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.inspection.ProblemHighlightType;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.language.inject.InjectedLanguageManager;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiElementVisitor;
+import consulo.language.psi.PsiFile;
+import consulo.language.util.IncorrectOperationException;
+import consulo.logging.Logger;
+import consulo.project.Project;
+import consulo.util.collection.ContainerUtil;
+import consulo.util.lang.function.Condition;
+import consulo.virtualFileSystem.ReadonlyStatusHandler;
+import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.psi.xml.XmlElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class DeclareParentsInspection extends XmlSuppressableInspectionTool {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.DeclareParentsInspection");
+  private static final Logger LOG = Logger.getInstance(DeclareParentsInspection.class);
+
   public boolean isEnabledByDefault() {
     return true;
   }
@@ -55,9 +68,14 @@ public class DeclareParentsInspection extends XmlSuppressableInspectionTool {
   @Nonnull
   public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
     return new PsiElementVisitor() {
-      @Override public void visitElement(final PsiElement element) {
+      @Override
+      public void visitElement(final PsiElement element) {
         if (element instanceof PsiLiteralExpression || element instanceof XmlAttributeValue) {
-          final PsiFile file = InjectedLanguageUtil.findInjectedPsiNoCommit(element.getContainingFile(), element.getTextRange().getStartOffset() + 1);
+          PsiElement injectedElement =
+            InjectedLanguageManager.getInstance(holder.getProject()).findElementAtNoCommit(element.getContainingFile(),
+                                                                                           element.getTextRange().getStartOffset() + 1);
+
+          final PsiFile file = injectedElement == null ? null : injectedElement.getContainingFile();
           if (file instanceof AopPointcutExpressionFile) {
             final IntroductionManipulator manipulator = ((AopPointcutExpressionFile)file).getAopModel().getIntroductionManipulator();
             if (manipulator == null) return;
@@ -78,28 +96,34 @@ public class DeclareParentsInspection extends XmlSuppressableInspectionTool {
                   return method.hasModifierProperty(PsiModifier.ABSTRACT);
                 }
               }).isEmpty()) {
-                holder.registerProblem(manipulator.getCommonProblemElement(), AopBundle.message("error.default.implementation.class.should.be.specified"),
+                holder.registerProblem(manipulator.getCommonProblemElement(),
+                                       AopBundle.message("error.default.implementation.class.should.be.specified"),
                                        new LocalQuickFix() {
-                  @Nonnull
-                  public String getName() {
-                    return AopBundle.message("quickfix.name.define.attribute", manipulator.getDefaultImplAttributeName());
-                  }
+                                         @Nonnull
+                                         public String getName() {
+                                           return AopBundle.message("quickfix.name.define.attribute",
+                                                                    manipulator.getDefaultImplAttributeName());
+                                         }
 
-                  @Nonnull
-                  public String getFamilyName() {
-                    return getName();
-                  }
+                                         @Nonnull
+                                         public String getFamilyName() {
+                                           return getName();
+                                         }
 
-                  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-                    try {
-                      if (ReadonlyStatusHandler.getInstance(project).ensureFilesWritable(descriptor.getPsiElement().getContainingFile().getVirtualFile()).hasReadonlyFiles()) return;
-                      manipulator.defineDefaultImpl(project, descriptor);
-                    }
-                    catch (IncorrectOperationException e) {
-                      LOG.error(e);
-                    }
-                  }
-                });
+                                         public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+                                           try {
+                                             if (ReadonlyStatusHandler.getInstance(project)
+                                                                      .ensureFilesWritable(descriptor.getPsiElement()
+                                                                                                     .getContainingFile()
+                                                                                                     .getVirtualFile())
+                                                                      .hasReadonlyFiles()) return;
+                                             manipulator.defineDefaultImpl(project, descriptor);
+                                           }
+                                           catch (IncorrectOperationException e) {
+                                             LOG.error(e);
+                                           }
+                                         }
+                                       });
 
               }
               return;
@@ -107,7 +131,9 @@ public class DeclareParentsInspection extends XmlSuppressableInspectionTool {
             if (defaultImpl.hasModifierProperty(PsiModifier.ABSTRACT) || !defaultImpl.isInheritor(intf, true)) {
               final PsiElement defaultImplElement = manipulator.getDefaultImplElement();
               assert defaultImplElement != null;
-              registerProblem(defaultImplElement, AopBundle.message("error.non.abstract.class.implemention.0.expected", intf.getQualifiedName()), holder);
+              registerProblem(defaultImplElement,
+                              AopBundle.message("error.non.abstract.class.implemention.0.expected", intf.getQualifiedName()),
+                              holder);
             }
           }
         }

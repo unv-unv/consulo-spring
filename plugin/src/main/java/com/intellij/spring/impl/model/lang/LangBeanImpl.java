@@ -6,7 +6,7 @@ package com.intellij.spring.impl.model.lang;
 import javax.annotation.Nullable;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.xml.lang.LangBean;
+import com.intellij.spring.impl.ide.model.xml.lang.LangBean;
 
 /**
  * @author peter

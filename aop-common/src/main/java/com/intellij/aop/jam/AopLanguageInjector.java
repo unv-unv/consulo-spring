@@ -6,39 +6,43 @@ package com.intellij.aop.jam;
 import com.intellij.aop.*;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
 import com.intellij.aop.psi.AopPointcutExpressionLanguage;
-import com.intellij.codeInspection.ProblemDescriptor;
-import com.intellij.lang.injection.ConcatenationAwareInjector;
-import com.intellij.lang.injection.MultiHostRegistrar;
-import com.intellij.openapi.diagnostic.Logger;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.fileEditor.OpenFileDescriptor;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Condition;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.patterns.ElementPattern;
-import com.intellij.patterns.PsiJavaPatterns;
-import com.intellij.psi.*;
-import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.util.PsiUtilBase;
-import com.intellij.util.IncorrectOperationException;
-import com.intellij.util.ProcessingContext;
-import com.intellij.util.containers.ContainerUtil;
-import consulo.java.util.AnnotationTextUtil;
+import com.intellij.java.language.impl.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
+import com.intellij.java.language.patterns.PsiJavaPatterns;
+import com.intellij.java.language.psi.*;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.component.extension.Extensions;
+import consulo.document.util.TextRange;
+import consulo.java.impl.util.AnnotationTextUtil;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.editor.util.PsiUtilBase;
+import consulo.language.inject.ConcatenationAwareInjector;
+import consulo.language.inject.MultiHostRegistrar;
+import consulo.language.pattern.ElementPattern;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.IncorrectOperationException;
+import consulo.language.util.ProcessingContext;
+import consulo.logging.Logger;
+import consulo.navigation.OpenFileDescriptorFactory;
+import consulo.project.Project;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
+import consulo.util.lang.function.Condition;
+import consulo.virtualFileSystem.VirtualFile;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-import static com.intellij.patterns.StandardPatterns.or;
-import static com.intellij.patterns.StandardPatterns.string;
+import static consulo.language.pattern.StandardPatterns.or;
+import static consulo.language.pattern.StandardPatterns.string;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class AopLanguageInjector implements ConcatenationAwareInjector {
   private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.AopLanguageInjector");
   private static final Set<String> POINTCUT_ANNOTATIONS = new HashSet<String>(Arrays.asList(AopConstants.POINTCUT_ANNO, AopConstants.AFTER_ANNO, AopConstants.AFTER_RETURNING_ANNO, AopConstants.AFTER_THROWING_ANNO, AopConstants.AROUND_ANNO, AopConstants.BEFORE_ANNO));
@@ -183,7 +187,7 @@ public class AopLanguageInjector implements ConcatenationAwareInjector {
             myField.getModifierList().findAnnotation(AopConstants.DECLARE_PARENTS_ANNO).findDeclaredAttributeValue(AopConstants.DEFAULT_IMPL_PARAM);
           final int offset = value.getTextRange().getStartOffset();
           value.delete();
-          new OpenFileDescriptor(project, virtualFile, offset).navigate(true);
+          OpenFileDescriptorFactory.getInstance(project).builder(virtualFile).offset(offset).build().navigate(true);
         }
 
         @NonNls

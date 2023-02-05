@@ -4,10 +4,10 @@
  */
 package com.intellij.aop;
 
-import javax.annotation.Nullable;
-
-import com.intellij.psi.PsiMethod;
 import com.intellij.aop.psi.PointcutMatchDegree;
+import com.intellij.java.language.psi.PsiMethod;
+
+import javax.annotation.Nullable;
 
 /**
  * @author peter
@@ -20,8 +20,8 @@ public class AopAdviceUtil {
 
   public static PointcutMatchDegree accepts(AopAdvice advice, PsiMethod method, @Nullable AopAdvisedElementsSearcher searcher) {
     if (searcher != null && searcher.acceptsBoundMethod(method) &&
-        advice.accepts(method) == PointcutMatchDegree.TRUE &&
-        searcher.acceptsBoundMethodHeavy(method)) {
+      advice.accepts(method) == PointcutMatchDegree.TRUE &&
+      searcher.acceptsBoundMethodHeavy(method)) {
       return PointcutMatchDegree.TRUE;
     }
     return PointcutMatchDegree.FALSE;

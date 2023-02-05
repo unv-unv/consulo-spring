@@ -4,8 +4,8 @@
 package com.intellij.spring.impl.model.aop;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.xml.aop.AspectjAutoproxy;
-import com.intellij.spring.constants.SpringConstants;
+import com.intellij.spring.impl.ide.model.xml.aop.AspectjAutoproxy;
+import com.intellij.spring.impl.ide.constants.SpringConstants;
 
 /**
  * @author peter

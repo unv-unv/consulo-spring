@@ -5,11 +5,12 @@
 package com.intellij.aop.psi;
 
 import com.intellij.aop.AopBundle;
+import consulo.language.pratt.MutableMarker;
+import consulo.language.pratt.PrattBuilder;
+import org.jetbrains.annotations.NonNls;
+
 import static com.intellij.aop.psi.AopElementTypes.*;
 import static com.intellij.aop.psi.AopPrattParser.TYPE_PATTERN;
-import com.intellij.lang.pratt.MutableMarker;
-import com.intellij.lang.pratt.PrattBuilder;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter

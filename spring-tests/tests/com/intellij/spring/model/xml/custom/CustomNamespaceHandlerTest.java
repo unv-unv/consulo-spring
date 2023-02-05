@@ -15,8 +15,8 @@
  */
 package com.intellij.spring.model.xml.custom;
 
-import com.intellij.openapi.application.PathManager;
-import com.intellij.openapi.module.ModuleUtil;
+import consulo.ide.impl.idea.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.module.ModuleUtil;
 import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.CommonClassNames;
 import com.intellij.psi.XmlElementFactory;
@@ -35,7 +35,7 @@ import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.spring.model.xml.custom.handler.*;
 import com.intellij.testFramework.IdeaTestUtil;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;
-import com.intellij.util.Consumer;
+import java.util.function.Consumer;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.xml.DomManager;
 

@@ -7,9 +7,9 @@ package com.intellij.aop.psi;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.psi.CommonClassNames;
 import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiFileFactory;
 import com.intellij.testFramework.LiteFixture;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
+import consulo.language.psi.PsiFileFactory;
 
 import java.io.IOException;
 

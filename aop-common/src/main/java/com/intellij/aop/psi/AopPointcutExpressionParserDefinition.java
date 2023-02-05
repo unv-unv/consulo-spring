@@ -3,53 +3,63 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.aop.lexer.AopLexer;
-import com.intellij.lang.ASTNode;
-import com.intellij.lang.ParserDefinition;
-import com.intellij.lang.PsiParser;
-import com.intellij.lexer.Lexer;
-import com.intellij.psi.FileViewProvider;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.TokenSet;
-import consulo.lang.LanguageVersion;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.Language;
+import consulo.language.ast.ASTNode;
+import consulo.language.ast.IElementType;
+import consulo.language.ast.IFileElementType;
+import consulo.language.ast.TokenSet;
+import consulo.language.file.FileViewProvider;
+import consulo.language.lexer.Lexer;
+import consulo.language.parser.ParserDefinition;
+import consulo.language.parser.PsiParser;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiFile;
+import consulo.language.version.LanguageVersion;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class AopPointcutExpressionParserDefinition implements ParserDefinition, AopElementTypes {
   private static final TokenSet WHITE_SPACES = TokenSet.create(AopElementTypes.WHITE_SPACE);
 
   @Nonnull
-  public Lexer createLexer(LanguageVersion languageVersion) {
+  @Override
+  public Language getLanguage() {
+    return AopPointcutExpressionLanguage.INSTANCE;
+  }
+
+  @Nonnull
+  public Lexer createLexer(@Nonnull LanguageVersion languageVersion) {
     return new AopLexer();
   }
 
+  @Nonnull
   public IFileElementType getFileNodeType() {
     return AOP_POINTCUT_EXPRESSION_FILE;
   }
 
   @Nonnull
-  public TokenSet getWhitespaceTokens(LanguageVersion languageVersion) {
+  public TokenSet getWhitespaceTokens(@Nonnull LanguageVersion languageVersion) {
     return WHITE_SPACES;
   }
 
   @Nonnull
-  public TokenSet getCommentTokens(LanguageVersion languageVersion) {
+  public TokenSet getCommentTokens(@Nonnull LanguageVersion languageVersion) {
     return TokenSet.EMPTY;
   }
 
   @Nonnull
-  public TokenSet getStringLiteralElements(LanguageVersion languageVersion) {
+  public TokenSet getStringLiteralElements(@Nonnull LanguageVersion languageVersion) {
     return TokenSet.EMPTY;
   }
 
   @Nonnull
-  public PsiParser createParser(LanguageVersion languageVersion) {
+  public PsiParser createParser(@Nonnull LanguageVersion languageVersion) {
     return new AopPrattParser();
   }
 
@@ -67,7 +77,7 @@ public class AopPointcutExpressionParserDefinition implements ParserDefinition, 
     if (elementType == AOP_ANNOTATED_TYPE_EXPRESSION) return new AopAnnotatedTypeExpression(node);
 
     if (elementType == AOP_POINTCUT_REFERENCE) return new PsiPointcutReferenceExpression(node);
-    if (elementType == AOP_MEMBER_REFERENCE_EXPRESSION) return new AopMemberReferenceExpression(node); 
+    if (elementType == AOP_MEMBER_REFERENCE_EXPRESSION) return new AopMemberReferenceExpression(node);
     if (elementType == AOP_CONSTRUCTOR_REFERENCE_EXPRESSION) return new AopConstructorReferenceExpression(node);
 
     if (elementType == AOP_REFERENCE_EXPRESSION) return new AopReferenceExpression(node);
@@ -85,7 +95,8 @@ public class AopPointcutExpressionParserDefinition implements ParserDefinition, 
 
     if (elementType == AOP_BINARY_EXPRESSION || elementType == AOP_POINTCUT_BINARY_EXPRESSION) return new AopBinaryExpression(node);
     if (elementType == AOP_NOT_EXPRESSION || elementType == AOP_POINTCUT_NOT_EXPRESSION) return new AopNotExpression(node);
-    if (elementType == AOP_PARENTHESIZED_EXPRESSION || elementType == AOP_POINTCUT_PARENTHESIZED_EXPRESSION) return new AopParenthesizedExpression(node);
+    if (elementType == AOP_PARENTHESIZED_EXPRESSION || elementType == AOP_POINTCUT_PARENTHESIZED_EXPRESSION)
+      return new AopParenthesizedExpression(node);
 
     if (elementType instanceof AopPointcutElementType) {
       return ((AopPointcutElementType)elementType).createPsi(node);
@@ -94,10 +105,12 @@ public class AopPointcutExpressionParserDefinition implements ParserDefinition, 
     throw new UnsupportedOperationException(elementType.toString());
   }
 
-  public PsiFile createFile(FileViewProvider viewProvider) {
+  @Nonnull
+  public PsiFile createFile(@Nonnull FileViewProvider viewProvider) {
     return new AopPointcutExpressionFile(viewProvider);
   }
 
+  @Nonnull
   public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {
     return ParserDefinition.SpaceRequirements.MAY;
   }

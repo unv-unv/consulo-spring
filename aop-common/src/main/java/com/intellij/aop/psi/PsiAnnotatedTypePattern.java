@@ -3,7 +3,8 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.*;
+import com.intellij.java.language.psi.*;
+import consulo.language.psi.PsiElement;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;

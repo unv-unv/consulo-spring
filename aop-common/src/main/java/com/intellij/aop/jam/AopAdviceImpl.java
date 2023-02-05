@@ -4,8 +4,6 @@
 
 package com.intellij.aop.jam;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.aop.AopAdvice;
 import com.intellij.aop.AopAdviceType;
 import com.intellij.aop.AopAdvisedElementsSearcher;
@@ -16,10 +14,16 @@ import com.intellij.jam.JamChief;
 import com.intellij.jam.JamStringAttributeElement;
 import com.intellij.jam.annotations.JamPsiConnector;
 import com.intellij.jam.reflect.JamAnnotationMeta;
-import com.intellij.openapi.module.Module;
-import com.intellij.psi.*;
-import com.intellij.psi.xml.XmlTag;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiAnnotationMemberValue;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
+import consulo.xml.psi.xml.XmlTag;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**

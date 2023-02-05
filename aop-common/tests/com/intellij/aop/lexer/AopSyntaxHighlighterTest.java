@@ -6,10 +6,9 @@ package com.intellij.aop.lexer;
 import com.intellij.aop.AopLiteFixture;
 import com.intellij.aop.psi.AopElementTypes;
 import com.intellij.aop.psi.AopSyntaxHighlighter;
-import com.intellij.aop.psi.AopPointcutTypes;
-import com.intellij.openapi.editor.colors.TextAttributesKey;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
+import consulo.language.ast.TokenSet;
+import consulo.colorScheme.TextAttributesKey;
+import consulo.language.ast.IElementType;
 
 /**
  * @author peter

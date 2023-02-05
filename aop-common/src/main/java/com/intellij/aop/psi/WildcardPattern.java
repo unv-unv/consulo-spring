@@ -3,11 +3,11 @@
  */
 package com.intellij.aop.psi;
 
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.java.language.psi.PsiWildcardType;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.psi.PsiType;
-import com.intellij.psi.PsiWildcardType;
 
 /**
  * @author peter

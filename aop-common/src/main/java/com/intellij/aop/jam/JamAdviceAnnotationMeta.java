@@ -4,14 +4,14 @@
  */
 package com.intellij.aop.jam;
 
+import com.intellij.jam.reflect.JamAnnotationArchetype;
+import com.intellij.jam.reflect.JamAnnotationMeta;
+import com.intellij.jam.reflect.JamAttributeMeta;
+import com.intellij.java.language.psi.PsiMethod;
+import org.jetbrains.annotations.NonNls;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import com.intellij.jam.reflect.JamAnnotationMeta;
-import com.intellij.jam.reflect.JamAnnotationArchetype;
-import com.intellij.jam.reflect.JamAttributeMeta;
-import com.intellij.psi.PsiMethod;
-import org.jetbrains.annotations.NonNls;
 
 /**
  * @author peter

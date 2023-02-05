@@ -4,19 +4,20 @@
  */
 package com.intellij.aop.jam;
 
-import static com.intellij.patterns.PsiJavaPatterns.*;
-import com.intellij.semantic.SemContributor;
-import com.intellij.semantic.SemRegistrar;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.sem.SemContributor;
+import consulo.language.sem.SemRegistrar;
+
+import static com.intellij.java.language.patterns.PsiJavaPatterns.*;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class AopJamContributor extends SemContributor {
   public void registerSemProviders(SemRegistrar registrar) {
     AopAspectImpl.ASPECT_META.register(registrar, psiClass().withAnnotation(AopConstants.ASPECT_ANNO).andNot(psiElement().compiled()));
 
     AopPointcutImpl.POINTCUT_METHOD_META.register(registrar, psiMethod().andNot(psiElement().compiled()).withAnnotation(AopConstants.POINTCUT_ANNO));
-    
   }
-
 }

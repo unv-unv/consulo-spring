@@ -7,19 +7,22 @@ package com.intellij.aop.jam;
 import com.intellij.aop.AopBundle;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.aop.psi.PsiPointcutExpression;
 import com.intellij.aop.psi.PsiIfPointcutExpression;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiType;
-import com.intellij.psi.PsiCodeBlock;
-import com.intellij.psi.PsiElement;
+import com.intellij.aop.psi.PsiPointcutExpression;
+import com.intellij.java.language.psi.PsiCodeBlock;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiType;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.inspection.ProblemsHolder;
+import consulo.language.psi.PsiElement;
 import org.jetbrains.annotations.Nls;
+
 import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class PointcutMethodStyleInspection extends AbstractAopInspection {
 
   protected void checkAopMethod(final PsiMethod pointcutMethod, final LocalAopModel model, final ProblemsHolder holder,

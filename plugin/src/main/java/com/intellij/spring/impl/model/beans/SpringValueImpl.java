@@ -1,11 +1,11 @@
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.spring.model.xml.beans.SpringValue;
-import com.intellij.psi.PsiType;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringValue;
 
-import java.util.List;
+import javax.annotation.Nonnull;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Dmitry Avdeev

@@ -3,10 +3,10 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.openapi.util.Pair;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiMember;
+import com.intellij.java.language.psi.PsiMember;
+import consulo.language.ast.ASTNode;
+import consulo.language.psi.PsiElement;
+import consulo.util.lang.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

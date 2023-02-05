@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 public abstract class BaseFileScopeProvider implements WebflowScopeProvider {
 
@@ -26,7 +27,7 @@ public abstract class BaseFileScopeProvider implements WebflowScopeProvider {
   }
 
   @NotNull
-  public java.util.Set<DomElement> getScopes(@Nullable final DomElement domElement) {
+  public Set<DomElement> getScopes(@Nullable final DomElement domElement) {
     if(domElement != null) {
       final Flow flow = domElement.getParentOfType(Flow.class, false);
       if (flow != null) {

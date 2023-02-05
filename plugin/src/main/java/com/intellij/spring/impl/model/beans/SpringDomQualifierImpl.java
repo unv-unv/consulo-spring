@@ -1,14 +1,14 @@
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
-import com.intellij.spring.model.xml.CommonSpringBean;
-import com.intellij.spring.model.xml.QualifierAttribute;
-import com.intellij.spring.model.xml.beans.SpringBean;
-import com.intellij.spring.model.xml.beans.SpringDomQualifier;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
+import com.intellij.spring.impl.ide.model.xml.QualifierAttribute;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringDomQualifier;
+import consulo.language.psi.PsiElement;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.List;
 
 /**

@@ -4,7 +4,7 @@
 
 package com.intellij.spring.model.xml;
 
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.openapi.vfs.JarFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.testFramework.builders.JavaModuleFixtureBuilder;

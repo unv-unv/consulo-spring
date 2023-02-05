@@ -11,7 +11,7 @@ import com.intellij.spring.webflow.graph.WebflowNode;
 import com.intellij.spring.webflow.graph.WebflowNodeType;
 import com.intellij.spring.webflow.graph.impl.*;
 import com.intellij.spring.webflow.model.xml.*;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import com.intellij.util.xml.DomUtil;
 import com.sun.tools.jdi.LinkedHashMap;
 

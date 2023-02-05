@@ -1,6 +1,6 @@
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.spring.model.xml.beans.SpringDomAttribute;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringDomAttribute;
 
 /**
  * @author Dmitry Avdeev

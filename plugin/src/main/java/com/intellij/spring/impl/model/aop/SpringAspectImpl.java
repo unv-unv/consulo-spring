@@ -4,12 +4,12 @@
 
 package com.intellij.spring.impl.model.aop;
 
-import javax.annotation.Nullable;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.spring.impl.ide.model.xml.aop.SpringAspect;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.language.psi.PsiElement;
 
-import com.intellij.spring.model.xml.aop.SpringAspect;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElement;
+import javax.annotation.Nullable;
 
 /**
  * @author peter

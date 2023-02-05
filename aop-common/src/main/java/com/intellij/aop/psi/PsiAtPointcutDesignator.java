@@ -3,10 +3,11 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.PsiElement;
+import consulo.language.psi.PsiElement;
 
 /**
  * @author peter
  */
-public interface PsiAtPointcutDesignator extends PsiElement  {
+public interface PsiAtPointcutDesignator extends PsiElement
+{
 }

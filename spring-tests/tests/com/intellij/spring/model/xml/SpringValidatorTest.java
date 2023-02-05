@@ -5,13 +5,13 @@
 package com.intellij.spring.model.xml;
 
 import com.intellij.codeInspection.InspectionManager;
-import com.intellij.codeInspection.ex.InspectionProfileImpl;
+import consulo.ide.impl.idea.codeInspection.ex.InspectionProfileImpl;
 import com.intellij.compiler.options.ValidationConfiguration;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.compiler.CompileContext;
-import com.intellij.openapi.compiler.CompileStatusNotification;
-import com.intellij.openapi.compiler.Compiler;
-import com.intellij.openapi.compiler.CompilerManager;
+import consulo.compiler.CompileContext;
+import consulo.compiler.CompileStatusNotification;
+import consulo.compiler.Compiler;
+import consulo.compiler.CompilerManager;
 import com.intellij.openapi.compiler.util.InspectionValidatorWrapper;
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager;
 import com.intellij.psi.PsiDocumentManager;

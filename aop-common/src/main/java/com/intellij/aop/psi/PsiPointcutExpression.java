@@ -3,7 +3,7 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.PsiMember;
+import com.intellij.java.language.psi.PsiMember;
 
 import javax.annotation.Nonnull;
 

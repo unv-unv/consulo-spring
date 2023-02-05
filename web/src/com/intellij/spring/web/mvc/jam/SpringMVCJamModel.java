@@ -2,7 +2,7 @@ package com.intellij.spring.web.mvc.jam;
 
 import com.intellij.jam.JamService;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleServiceManager;
+import consulo.ide.impl.idea.openapi.module.ModuleServiceManager;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.psi.search.GlobalSearchScope;
 import gnu.trove.THashSet;

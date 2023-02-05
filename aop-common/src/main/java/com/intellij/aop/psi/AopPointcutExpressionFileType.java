@@ -3,7 +3,7 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.openapi.fileTypes.LanguageFileType;
+import consulo.language.file.LanguageFileType;
 import consulo.localize.LocalizeValue;
 import consulo.ui.image.Image;
 import org.jetbrains.annotations.NonNls;
@@ -18,7 +18,7 @@ public class AopPointcutExpressionFileType extends LanguageFileType {
   public static final AopPointcutExpressionFileType INSTANCE = new AopPointcutExpressionFileType();
   
   private AopPointcutExpressionFileType() {
-    super(new AopPointcutExpressionLanguage());
+    super(AopPointcutExpressionLanguage.INSTANCE);
   }
 
   @Nonnull

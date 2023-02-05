@@ -5,14 +5,17 @@
 package com.intellij.aop.jam;
 
 import com.intellij.aop.psi.AopPointcutExpressionFile;
-import com.intellij.codeInsight.highlighting.HighlightErrorFilter;
-import com.intellij.psi.PsiErrorElement;
-import com.intellij.psi.PsiFile;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.HighlightErrorFilter;
+import consulo.language.psi.PsiFile;
+import consulo.language.psi.PsiErrorElement;
+
 import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
+@ExtensionImpl
 public class AopHighlightErrorFilter extends HighlightErrorFilter {
 
   public boolean shouldHighlightErrorElement(@Nonnull final PsiErrorElement element) {

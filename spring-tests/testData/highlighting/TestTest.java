@@ -1,3 +1,5 @@
+import java.util.Set;
+
 public class TestTest {
-    public TestTest(java.util.Set set) {}
+    public TestTest(Set set) {}
 }

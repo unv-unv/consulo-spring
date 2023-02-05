@@ -3,8 +3,9 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiType;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiType;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 

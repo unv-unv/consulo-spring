@@ -1,7 +1,7 @@
 package com.intellij.spring.web;
 
 import com.intellij.javaee.web.facet.WebFacet;
-import com.intellij.openapi.application.PathManager;
+import consulo.ide.impl.idea.openapi.application.PathManager;
 import com.intellij.spring.SpringModel;
 import com.intellij.spring.facet.SpringFacet;
 import com.intellij.spring.model.xml.SpringHighlightingTestCase;

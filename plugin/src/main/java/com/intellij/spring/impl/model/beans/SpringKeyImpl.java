@@ -4,11 +4,11 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.PsiType;
-import com.intellij.spring.model.xml.beans.SpringEntry;
-import com.intellij.spring.model.xml.beans.SpringKey;
-import javax.annotation.Nonnull;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringEntry;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringKey;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

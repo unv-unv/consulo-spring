@@ -3,11 +3,11 @@
  */
 package com.intellij.spring.impl.model.aop;
 
-import com.intellij.spring.model.xml.aop.AfterReturningAdvice;
 import com.intellij.aop.psi.PointcutMatchDegree;
-import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiParameter;
-import com.intellij.psi.PsiType;
+import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.psi.PsiParameter;
+import com.intellij.java.language.psi.PsiType;
+import com.intellij.spring.impl.ide.model.xml.aop.AfterReturningAdvice;
 
 /**
  * @author peter

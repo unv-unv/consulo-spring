@@ -4,7 +4,7 @@
 
 package com.intellij.spring.security.model.xml.converters;
 
-import com.intellij.openapi.util.Condition;
+import consulo.util.lang.function.Condition;
 import com.intellij.openapi.util.Pair;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;

@@ -19,7 +19,7 @@
   </application-components>
 
   <extensions defaultExtensionNs="com.intellij">
-    <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+    <errorHandler implementation="consulo.ide.impl.idea.diagnostic.ITNReporter"/>
     <fileEditorProvider implementation="com.intellij.spring.webflow.fileEditor.WebflowDesignerFileEditorProvider"/>
     <dom.fileDescription implementation="com.intellij.spring.webflow.WebflowDomFileDescription"/>
     <projectService serviceInterface="com.intellij.spring.webflow.model.xml.WebflowDomModelManager"

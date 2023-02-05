@@ -13,7 +13,7 @@ import com.intellij.spring.webflow.graph.impl.*;
 import com.intellij.spring.webflow.model.xml.*;
 import com.intellij.spring.webflow.resources.messages.WebflowBundle;
 import com.intellij.spring.webflow.util.WebflowUtil;
-import com.intellij.util.Function;
+import java.util.function.Function;
 import java.util.HashSet;
 import com.intellij.util.xml.DomElement;
 import com.intellij.util.xml.GenericAttributeValue;

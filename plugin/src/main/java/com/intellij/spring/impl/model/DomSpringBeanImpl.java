@@ -2,12 +2,12 @@ package com.intellij.spring.impl.model;
 
 import javax.annotation.Nonnull;
 
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.spring.model.xml.DomSpringBean;
-import com.intellij.util.ArrayUtil;
-import com.intellij.util.xml.DomUtil;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiManager;
+import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
+import consulo.xml.util.xml.DomUtil;
+import consulo.language.psi.PsiFile;
+import consulo.util.collection.ArrayUtil;
 
 import javax.annotation.Nullable;
 

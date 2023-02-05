@@ -1,8 +1,8 @@
 package com.intellij.spring.impl.model.context;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import com.intellij.spring.model.values.PlaceholderUtils;
-import com.intellij.spring.model.xml.context.PropertyPlaceholder;
+import com.intellij.spring.impl.ide.model.values.PlaceholderUtils;
+import com.intellij.spring.impl.ide.model.xml.context.PropertyPlaceholder;
 import javax.annotation.Nonnull;
 
 public abstract class PropertyPlaceholderImpl extends DomSpringBeanImpl implements PropertyPlaceholder {

@@ -4,19 +4,18 @@
 
 package com.intellij.aop.psi;
 
-import com.intellij.lang.ASTNode;
-import com.intellij.util.Function;
-import com.intellij.util.containers.ContainerUtil;
+import consulo.language.ast.ASTNode;
+import consulo.util.collection.ContainerUtil;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Arrays;
 import java.util.Collection;
 
 /**
  * @author peter
  */
-public class AopWildcardExpression extends AopElementBase implements AopTypeExpression{
+public class AopWildcardExpression extends AopElementBase implements AopTypeExpression {
   public AopWildcardExpression(@Nonnull final ASTNode node) {
     super(node);
   }
@@ -36,11 +35,7 @@ public class AopWildcardExpression extends AopElementBase implements AopTypeExpr
     final boolean isSuper = isSuper();
     if (bound == null) return Arrays.<AopPsiTypePattern>asList(new WildcardPattern(null, isSuper));
 
-    return ContainerUtil.map2List(bound.getPatterns(), new Function<AopPsiTypePattern, AopPsiTypePattern>() {
-      public AopPsiTypePattern fun(final AopPsiTypePattern aopPsiTypePattern) {
-        return new WildcardPattern(aopPsiTypePattern, isSuper);
-      }
-    });
+    return ContainerUtil.map2List(bound.getPatterns(), aopPsiTypePattern -> new WildcardPattern(aopPsiTypePattern, isSuper));
   }
 
   public String getTypePattern() {

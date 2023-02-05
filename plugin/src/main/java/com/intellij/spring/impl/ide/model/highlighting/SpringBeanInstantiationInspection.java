@@ -1,0 +1,101 @@
+/*
+ * Copyright (c) 2000-2007 JetBrains s.r.o. All Rights Reserved.
+ */
+
+package com.intellij.spring.impl.ide.model.highlighting;
+
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiModifier;
+import com.intellij.spring.impl.ide.SpringBundle;
+import com.intellij.spring.impl.ide.SpringModel;
+import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
+import com.intellij.spring.impl.ide.model.xml.beans.Beans;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.language.editor.CodeInsightUtilCore;
+import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.ProblemDescriptor;
+import consulo.language.util.ModuleUtilCore;
+import consulo.module.Module;
+import consulo.project.Project;
+import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.util.xml.DomUtil;
+import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.util.xml.highlighting.AddDomElementQuickFix;
+import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import org.jetbrains.annotations.Nls;
+import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nonnull;
+
+/**
+ * @author Dmitry Avdeev
+ */
+@ExtensionImpl
+public class SpringBeanInstantiationInspection extends SpringBeanInspectionBase {
+
+  protected void checkBean(final SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel springModel) {
+    final PsiClass psiClass = springBean.getClazz().getValue();
+    if (psiClass != null && !springBean.isAbstract()) {
+      if (psiClass.isInterface()) {
+        return;
+      }
+      final boolean factory = DomUtil.hasXml(springBean.getFactoryMethod());
+      final boolean lookup = springBean.getLookupMethods().size() > 0;
+      if ((psiClass.hasModifierProperty(PsiModifier.ABSTRACT) && !factory && !lookup && !isJavaConfiBean(springBean))) {
+        holder.createProblem(springBean.getClazz(),
+                             HighlightSeverity.WARNING,
+                             SpringBundle.message("abstract.class.not.allowed"),
+                             new MarkAbstractFix(springBean.getAbstract()));
+      }
+    }
+  }
+
+  private static boolean isJavaConfiBean(final SpringBean springBean) {
+    final XmlElement xmlElement = springBean.getXmlElement();
+    final PsiClass beanClass = springBean.getBeanClass();
+
+    if(xmlElement != null && beanClass != null) {
+      final Module module = ModuleUtilCore.findModuleForPsiElement(xmlElement);
+      if(module != null) {
+        for (SpringJavaConfiguration javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
+          if(beanClass.equals(javaConfiguration.getPsiClass())) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  @Nls
+  @Nonnull
+  public String getDisplayName() {
+    return SpringBundle.message("spring.bean.instantiation.inspection");
+  }
+
+  @NonNls
+  @Nonnull
+  public String getShortName() {
+    return "SpringBeanInstantiationInspection";
+  }
+
+  private static class MarkAbstractFix extends AddDomElementQuickFix<GenericAttributeValue<Boolean>> {
+
+    public MarkAbstractFix(final GenericAttributeValue<Boolean> value) {
+      super(value);
+    }
+
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+      if (CodeInsightUtilCore.getInstance().preparePsiElementForWrite(descriptor.getPsiElement())) {
+        myElement.setValue(Boolean.TRUE);
+      }
+    }
+
+    @Nonnull
+    public String getName() {
+      return SpringBundle.message("mark.bean.as.abstract");
+    }
+  }
+}

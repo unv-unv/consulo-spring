@@ -4,16 +4,16 @@
 
 package com.intellij.spring.impl.model.beans;
 
-import com.intellij.psi.*;
-import com.intellij.spring.model.xml.beans.SpringBeanPointer;
-import com.intellij.spring.model.xml.beans.SpringEntry;
-import com.intellij.spring.model.xml.beans.SpringMap;
-import com.intellij.spring.model.xml.beans.TypeHolder;
-import com.intellij.util.xml.DomElement;
-import com.intellij.util.xml.GenericAttributeValue;
+import com.intellij.java.language.psi.*;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringEntry;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringMap;
+import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
+import consulo.xml.util.xml.DomElement;
+import consulo.xml.util.xml.GenericAttributeValue;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.List;
 

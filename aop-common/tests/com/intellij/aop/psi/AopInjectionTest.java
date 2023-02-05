@@ -12,17 +12,17 @@ import com.intellij.aop.jam.AopAfterThrowingAdviceImpl;
 import com.intellij.aop.jam.AopConstants;
 import com.intellij.aop.jam.AopLanguageInjector;
 import com.intellij.testFramework.IdeaTestUtil;
-import com.intellij.lang.Language;
-import com.intellij.lang.injection.ConcatenationAwareInjector;
-import com.intellij.lang.injection.MultiHostInjector;
-import com.intellij.lang.injection.MultiHostRegistrar;
-import com.intellij.openapi.extensions.Extensions;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.util.Ref;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VfsUtil;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
+import consulo.language.Language;
+import consulo.language.inject.ConcatenationAwareInjector;
+import consulo.language.inject.MultiHostInjector;
+import consulo.component.extension.Extensions;
+import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.psi.PsiManager;
+import consulo.module.Module;
+import consulo.util.lang.ref.Ref;
+import consulo.document.util.TextRange;
+import consulo.ide.impl.idea.openapi.vfs.VfsUtil;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.spring.aop.SpringAopInjector;
@@ -32,10 +32,12 @@ import com.intellij.spring.model.xml.aop.AopConfig;
 import com.intellij.spring.model.xml.aop.SpringAspect;
 import com.intellij.spring.model.xml.beans.Beans;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.Processor;
+import consulo.application.util.function.Processor;
 import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.GenericAttributeValue;
 import com.intellij.util.xml.impl.DomManagerImpl;
+import consulo.language.inject.MultiHostRegistrar;
+import consulo.virtualFileSystem.VirtualFile;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
@@ -85,7 +87,7 @@ public class AopInjectionTest extends JavaCodeInsightFixtureTestCase {
 
       @Nonnull
       public /*this*/ MultiHostRegistrar addPlace(@NonNls @Nullable String prefix, @NonNls @Nullable String suffix,
-                                                  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
+																		  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
         assertFalse(visited.get());
         visited.set(true);
         assertEquals(TextRange.from(1, attrValue.getTextLength() - 2), rangeInsideHost);
@@ -111,7 +113,7 @@ public class AopInjectionTest extends JavaCodeInsightFixtureTestCase {
 
       @Nonnull
       public /*this*/ MultiHostRegistrar addPlace(@NonNls @Nullable String prefix, @NonNls @Nullable String suffix,
-                                                  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
+																		  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
         assertFalse(visited.get());
         visited.set(true);
         assertEquals(TextRange.from(1, attrValue.getTextLength() - 2), rangeInsideHost);
@@ -228,7 +230,7 @@ public class AopInjectionTest extends JavaCodeInsightFixtureTestCase {
 
       @Nonnull
       public /*this*/ MultiHostRegistrar addPlace(@NonNls @Nullable String prefix, @NonNls @Nullable String suffix,
-                                                  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
+																		  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
         assertFalse(visited.get());
         visited.set(true);
         assertEquals(TextRange.from(1, attrValue.getTextLength() - 2), rangeInsideHost);
@@ -254,7 +256,7 @@ public class AopInjectionTest extends JavaCodeInsightFixtureTestCase {
 
       @Nonnull
       public /*this*/ MultiHostRegistrar addPlace(@NonNls @Nullable String prefix, @NonNls @Nullable String suffix,
-                                                  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
+																		  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
         assertFalse(visited.get());
         visited.set(true);
         assertEquals(TextRange.from(1, attrValue.getTextLength() - 2), rangeInsideHost);
@@ -272,7 +274,7 @@ public class AopInjectionTest extends JavaCodeInsightFixtureTestCase {
 
   private XmlFile createXmlFile(final String text) throws IOException {
     final VirtualFile file = myFixture.getTempDirFixture().createFile("a.xml");
-    VfsUtil.saveText(file, text);
+    consulo.ide.impl.idea.openapi.vfs.VfsUtil.saveText(file, text);
     return (XmlFile)PsiManager.getInstance(getProject()).findFile(file);
   }
 
@@ -302,7 +304,7 @@ public class AopInjectionTest extends JavaCodeInsightFixtureTestCase {
 
       @Nonnull
       public /*this*/ MultiHostRegistrar addPlace(@NonNls @Nullable String prefix, @NonNls @Nullable String suffix,
-                                                  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
+																		  @Nonnull PsiLanguageInjectionHost host, @Nonnull TextRange rangeInsideHost) {
 
         return null;
       }

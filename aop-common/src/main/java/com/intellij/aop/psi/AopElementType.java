@@ -3,14 +3,15 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.psi.tree.IElementType;
+import consulo.language.ast.IElementType;
 import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
 /**
  * @author peter
  */
-public class AopElementType extends IElementType {
+public class AopElementType extends IElementType
+{
   public AopElementType(@Nonnull @NonNls String debugName) {
     super(debugName, AopPointcutExpressionLanguage.getInstance());
   }

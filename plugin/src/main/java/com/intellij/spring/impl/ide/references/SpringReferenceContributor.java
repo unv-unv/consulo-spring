@@ -1,0 +1,98 @@
+package com.intellij.spring.impl.ide.references;
+
+import com.intellij.java.impl.psi.filters.PsiMethodCallFilter;
+import com.intellij.java.impl.psi.filters.TextFilter;
+import com.intellij.java.language.patterns.PsiJavaPatterns;
+import com.intellij.java.language.psi.*;
+import com.intellij.java.language.psi.util.PropertyUtil;
+import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
+import com.intellij.spring.impl.ide.model.xml.CustomBean;
+import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
+import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
+import com.intellij.xml.util.XmlUtil;
+import consulo.annotation.component.ExtensionImpl;
+import consulo.java.properties.impl.psi.PropertiesReferenceProvider;
+import consulo.language.Language;
+import consulo.language.pattern.FilterPattern;
+import consulo.language.pattern.PatternCondition;
+import consulo.language.psi.*;
+import consulo.language.psi.filter.AndFilter;
+import consulo.language.psi.filter.ScopeFilter;
+import consulo.language.psi.filter.position.ParentElementFilter;
+import consulo.language.psi.util.PsiTreeUtil;
+import consulo.language.util.ProcessingContext;
+import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.psi.filters.XmlTagFilter;
+import consulo.xml.psi.filters.position.NamespaceFilter;
+import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.util.xml.DomUtil;
+
+import javax.annotation.Nonnull;
+
+/**
+ * @author Dmitry Avdeev
+ */
+@ExtensionImpl
+public class SpringReferenceContributor extends PsiReferenceContributor {
+  public void registerReferenceProviders(final PsiReferenceRegistrar registrar) {
+    PsiReferenceProvider propertiesReferenceProvider = new PropertiesReferenceProvider(false);
+
+    //duplicated in FtlLiteralExpression
+    XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{"code"}, new ScopeFilter(new ParentElementFilter(
+      new AndFilter(new NamespaceFilter(XmlUtil.SPRING_URI),
+                    new AndFilter(XmlTagFilter.INSTANCE, new TextFilter("message", "theme"))), 2)), propertiesReferenceProvider);
+
+    registrar.registerReferenceProvider(PsiJavaPatterns.literalExpression()
+                                                       .and(new FilterPattern(new ParentElementFilter(new PsiMethodCallFilter(
+                                                         "org.springframework.beans.factory.BeanFactory",
+                                                         SpringBeanNamesReferenceProvider.METHODS), 2))),
+                                        new SpringBeanNamesReferenceProvider());
+
+    registrar.registerReferenceProvider(XmlPatterns.xmlAttributeValue().with(new PatternCondition<XmlAttributeValue>("customBeanId") {
+      public boolean accepts(@Nonnull final XmlAttributeValue attributeValue, final ProcessingContext context) {
+        final DomSpringBean element = DomUtil.findDomElement(attributeValue, DomSpringBean.class);
+        if (element instanceof CustomBeanWrapper) {
+          for (final CustomBean customBean : ((CustomBeanWrapper)element).getCustomBeans()) {
+            if (customBean.getIdAttribute() == attributeValue.getParent()) {
+              context.put("bean", customBean);
+              return true;
+            }
+          }
+        }
+        return false;
+      }
+    }), new PsiReferenceProvider() {
+      @Nonnull
+      public PsiReference[] getReferencesByElement(@Nonnull final PsiElement element, @Nonnull final ProcessingContext context) {
+        CustomBean bean = (CustomBean)context.get("bean");
+        return new PsiReference[]{PsiReferenceBase.createSelfReference(element, bean.getIdentifyingPsiElement())};
+      }
+    });
+
+    registrar.registerReferenceProvider(
+      PsiJavaPatterns.literalExpression().annotationParam(SpringAnnotationsConstants.RESOURCE_ANNOTATION, "name"),
+      new PsiReferenceProvider() {
+        @Nonnull
+        @Override
+        public PsiReference[] getReferencesByElement(@Nonnull final PsiElement element, @Nonnull final ProcessingContext context) {
+          final PsiMember member = PsiTreeUtil.getParentOfType(element, PsiMember.class);
+          final PsiType type = PropertyUtil.getPropertyType(member);
+          final PsiClass required = type instanceof PsiClassType ? ((PsiClassType)type).resolve() : null;
+          return new PsiReference[]{new SpringBeanReference((PsiLiteralExpression)element, required) {
+            @Override
+            public boolean isSoft() {
+              return true;
+            }
+          }
+          };
+        }
+      },
+      PsiReferenceRegistrar.HIGHER_PRIORITY);
+  }
+
+  @Nonnull
+  @Override
+  public Language getLanguage() {
+    return Language.ANY;
+  }
+}

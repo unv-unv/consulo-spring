@@ -6,12 +6,13 @@ package com.intellij.aop.psi;
 import com.intellij.aop.AopAdvisedElementsSearcher;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.PsiType;
 import com.intellij.testFramework.LiteFixture;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
-import com.intellij.util.Consumer;
-import com.intellij.util.Processor;
+import java.util.function.Consumer;
+
+import consulo.application.util.function.Processor;
+import consulo.language.psi.PsiFileFactory;
 
 import java.io.IOException;
 import java.util.Collection;
