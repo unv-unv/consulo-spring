@@ -39,7 +39,10 @@ public class UnparsedCustomBeanInspection extends SpringBeanInspectionBase {
     return "UnparsedCustomBeanInspection";
   }
 
-  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder, final Beans beans, final SpringModel model) {
+  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder,
+                                             final Beans beans,
+                                             final SpringModel model,
+                                             Object state) {
     return new SpringModelVisitor() {
 
       protected boolean visitBean(CommonSpringBean bean) {

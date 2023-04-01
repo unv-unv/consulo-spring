@@ -52,7 +52,11 @@ public class SpringConstructorArgInspection extends SpringBeanInspectionBase {
   }
 
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel springModel) {
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel springModel,
+                           Object state) {
     final PsiClass beanClass = springBean.getBeanClass();
     if (beanClass != null) {
       checkConstructorResolve(springBean, holder, beanClass);

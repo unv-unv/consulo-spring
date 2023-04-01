@@ -21,36 +21,47 @@ import javax.annotation.Nonnull;
 /**
  * @author Dmitry Avdeev
  */
-public abstract class SpringBeanInspectionBase extends DomElementsInspection<Beans> {
+public abstract class SpringBeanInspectionBase<State> extends DomElementsInspection<Beans, State> {
 
   public SpringBeanInspectionBase() {
     super(Beans.class);
   }
 
   @Nonnull
+  @Override
   public String getGroupDisplayName() {
     return SpringBundle.message("model.inspection.group.name");
   }
 
-  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder) {
+  @Override
+  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder, State state) {
     final XmlFile xmlFile = domFileElement.getFile();
     final Beans beans = domFileElement.getRootElement();
     final SpringModel model = SpringManager.getInstance(xmlFile.getProject()).getSpringModelByFile(xmlFile);
-    final SpringModelVisitor visitor = createVisitor(holder, beans, model);
+    final SpringModelVisitor visitor = createVisitor(holder, beans, model, state);
     SpringModelVisitor.visitBeans(visitor, beans);
   }
 
-  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder, final Beans beans, final SpringModel model) {
+  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder,
+                                             final Beans beans,
+                                             final SpringModel model,
+                                             State state) {
     return new SpringModelVisitor() {
 
+      @Override
       protected boolean visitBean(CommonSpringBean bean) {
         if (bean instanceof SpringBean) {
-          checkBean((SpringBean)bean, beans, holder, model);
+          checkBean((SpringBean)bean, beans, holder, model, state);
         }
         return true;
       }
     };
   }
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel springModel) {}
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel springModel,
+                           State state) {
+  }
 }

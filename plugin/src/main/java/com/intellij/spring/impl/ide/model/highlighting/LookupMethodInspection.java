@@ -81,7 +81,7 @@ public class LookupMethodInspection extends SpringBeanInspectionBase {
   protected void checkBean(SpringBean springBean,
                            final Beans beans,
                            final DomElementAnnotationHolder holder,
-                           final SpringModel springModel) {
+                           final SpringModel springModel, Object state) {
     for (LookupMethod lookupMethod : springBean.getLookupMethods()) {
       final PsiMethod method = lookupMethod.getName().getValue();
       if (method != null) {

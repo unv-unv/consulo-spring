@@ -46,7 +46,10 @@ public class InjectionValueStyleInspection extends SpringBeanInspectionBase {
   @NonNls
   private static final String REF = "ref";
 
-  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder, final Beans beans, final SpringModel model) {
+  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder,
+                                             final Beans beans,
+                                             final SpringModel model,
+                                             Object state) {
     return new SpringModelVisitor() {
       protected boolean visitValueHolder(final SpringValueHolder valueHolder) {
         checkValueHolder(holder, valueHolder);
@@ -58,7 +61,7 @@ public class InjectionValueStyleInspection extends SpringBeanInspectionBase {
   protected void checkBean(final SpringBean springBean,
                            final Beans beans,
                            final DomElementAnnotationHolder holder,
-                           final SpringModel springModel) {
+                           final SpringModel springModel, Object state) {
     for (final SpringValueHolderDefinition property : SpringUtils.getValueHolders(springBean)) {
       checkValueHolder(holder, property);
     }

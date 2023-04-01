@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 /**
  * @author Dmitry Avdeev
  */
-public abstract class DomSpringBeanInspectionBase extends DomElementsInspection<Beans> {
+public abstract class DomSpringBeanInspectionBase<State> extends DomElementsInspection<Beans, State> {
 
   public DomSpringBeanInspectionBase() {
     super(Beans.class);
@@ -34,7 +34,8 @@ public abstract class DomSpringBeanInspectionBase extends DomElementsInspection<
     return SpringBundle.message("model.inspection.group.name");
   }
 
-  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder) {
+  @Override
+  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder, State state) {
     final XmlFile xmlFile = domFileElement.getFile();
     final Beans beans = domFileElement.getRootElement();
     final SpringModel model = SpringManager.getInstance(xmlFile.getProject()).getSpringModelByFile(xmlFile);

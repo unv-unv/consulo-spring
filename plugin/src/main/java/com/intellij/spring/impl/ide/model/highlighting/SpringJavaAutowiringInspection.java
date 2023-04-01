@@ -42,7 +42,7 @@ import java.util.List;
  * User: Sergey.Vasiliev
  */
 @ExtensionImpl
-public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool {
+public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<Object> {
 
   @Nullable
   private static SpringModel getModelForBean(final PsiClass aClass) {
@@ -63,7 +63,7 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool 
   }
 
   @Override
-  public ProblemDescriptor[] checkMethod(@Nonnull PsiMethod psiMethod, @Nonnull InspectionManager manager, boolean isOnTheFly) {
+  public ProblemDescriptor[] checkMethod(@Nonnull PsiMethod psiMethod, @Nonnull InspectionManager manager, boolean isOnTheFly, Object state) {
     if (SpringAutowireUtil.isAutowiredByAnnotation(psiMethod)) {
       SpringModel springModel = getModelForBean(psiMethod.getContainingClass());
       if (springModel != null) {
@@ -77,7 +77,7 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool 
   }
 
   @Override
-  public ProblemDescriptor[] checkField(@Nonnull PsiField psiField, @Nonnull InspectionManager manager, boolean isOnTheFly) {
+  public ProblemDescriptor[] checkField(@Nonnull PsiField psiField, @Nonnull InspectionManager manager, boolean isOnTheFly, Object state) {
     if (SpringAutowireUtil.isAutowiredByAnnotation(psiField)) {
       SpringModel springModel = getModelForBean(psiField.getContainingClass());
       if (springModel != null) {

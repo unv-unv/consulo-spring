@@ -133,7 +133,11 @@ public class SpringDependencyCheckInspection extends SpringBeanInspectionBase {
     return false;
   }
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel model) {
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel model,
+                           Object state) {
 
     if (springBean.getBeanClass() != null) {
       DependencyCheck dependencyCheck = springBean.getDependencyCheck().getValue();

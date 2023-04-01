@@ -30,11 +30,11 @@ import java.util.*;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
-public class SpringRequiredAnnotationInspection extends BaseJavaLocalInspectionTool {
+public class SpringRequiredAnnotationInspection extends BaseJavaLocalInspectionTool<Object> {
 
   @Override
   public ProblemDescriptor[] checkMethod(@Nonnull final PsiMethod method, @Nonnull final InspectionManager manager,
-                                         final boolean isOnTheFly) {
+                                         final boolean isOnTheFly, Object state) {
 
     if (PropertyUtil.isSimplePropertySetter(method)) {
       final SpringJavaClassInfo info = SpringJavaClassInfo.getSpringJavaClassInfo(method.getContainingClass());

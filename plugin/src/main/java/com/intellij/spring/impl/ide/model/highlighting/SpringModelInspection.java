@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class SpringModelInspection extends BasicDomElementsInspection<Beans> {
+public class SpringModelInspection extends BasicDomElementsInspection<Beans, Object> {
   protected boolean shouldCheckResolveProblems(final GenericDomValue value) {
     return !SpringBeanScope.class.equals(DomUtil.getGenericValueParameter(value.getDomElementType())) &&
            super.shouldCheckResolveProblems(value);

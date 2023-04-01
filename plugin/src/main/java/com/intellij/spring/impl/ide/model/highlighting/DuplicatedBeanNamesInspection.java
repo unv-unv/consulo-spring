@@ -28,9 +28,10 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 @ExtensionImpl
-public class DuplicatedBeanNamesInspection extends SpringBeanInspectionBase {
+public class DuplicatedBeanNamesInspection extends SpringBeanInspectionBase<Object> {
 
-  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder) {
+  @Override
+  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder, Object state) {
     final XmlFile xmlFile = domFileElement.getFile();
     final SpringModel model = SpringManager.getInstance(xmlFile.getProject()).getSpringModelByFile(xmlFile);
     final Beans beans = domFileElement.getRootElement();

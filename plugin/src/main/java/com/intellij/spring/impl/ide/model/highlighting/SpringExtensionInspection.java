@@ -12,9 +12,10 @@ import consulo.codeEditor.Editor;
 import consulo.dataContext.DataManager;
 import consulo.language.editor.DaemonCodeAnalyzer;
 import consulo.language.editor.annotation.HighlightSeverity;
+import consulo.language.editor.inspection.InspectionToolState;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
-import consulo.language.editor.intention.IntentionAction;
+import consulo.language.editor.intention.SyntheticIntentionAction;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiFile;
 import consulo.language.util.IncorrectOperationException;
@@ -40,9 +41,6 @@ import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -51,22 +49,17 @@ import java.util.function.Consumer;
  * @author Dmitry Avdeev
  */
 @ExtensionImpl
-public class SpringExtensionInspection extends SpringBeanInspectionBase {
-
-  private JPanel myOptionsPanel;
-  private JCheckBox myCheckBox;
-
-  public boolean checkTestFiles = false;
-
-  public SpringExtensionInspection() {
-    myCheckBox.addActionListener(new ActionListener() {
-      public void actionPerformed(final ActionEvent e) {
-        checkTestFiles = myCheckBox.isSelected();
-      }
-    });
+public class SpringExtensionInspection extends SpringBeanInspectionBase<SpringExtensionInspectionState> {
+  @Nonnull
+  @Override
+  public InspectionToolState<?> createStateProvider() {
+    return new SpringExtensionInspectionState();
   }
 
-  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder) {
+  @Override
+  public void checkFileElement(final DomFileElement<Beans> domFileElement,
+                               final DomElementAnnotationHolder holder,
+                               SpringExtensionInspectionState state) {
     final consulo.module.Module module = domFileElement.getModule();
     if (module == null) {
       return;
@@ -77,11 +70,12 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
     }
     final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(module.getProject()).getFileIndex();
     if (!projectFileIndex.isInSourceContent(virtualFile) ||
-      (!checkTestFiles && projectFileIndex.isInTestSourceContent(virtualFile))) {
+      (!state.checkTestFiles && projectFileIndex.isInTestSourceContent(virtualFile))) {
       return;
     }
     final Ref<SpringModuleExtension> moduleExtensionRef = new Ref<SpringModuleExtension>();
     final boolean notFound = ModuleUtilCore.visitMeAndDependentModules(module, new Processor<Module>() {
+      @Override
       public boolean process(final consulo.module.Module module) {
         final SpringModuleExtension facet = SpringModuleExtension.getInstance(module);
         if (facet != null) {
@@ -114,11 +108,13 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
     }
   }
 
+  @Override
   @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.WARNING;
   }
 
+  @Override
   @Nls
   @Nonnull
   public String getDisplayName() {
@@ -126,11 +122,6 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
   }
 
   @Override
-  public JComponent createOptionsPanel() {
-    myCheckBox.setSelected(checkTestFiles);
-    return myOptionsPanel;
-  }
-
   @NonNls
   @Nonnull
   public String getShortName() {
@@ -143,6 +134,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       super(module, file);
     }
 
+    @Override
     @Nonnull
     public String getName() {
       return SpringBundle.message("configure.file.set.for.file");
@@ -161,6 +153,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
           final ArrayList<SpringFileSet> list = new ArrayList<SpringFileSet>(sets);
           final SpringFileSet newSet = new SpringFileSet(SpringFileSet.getUniqueId(sets),
                                                          SpringBundle.message("fileset.new"), extension) {
+            @Override
             public boolean isNew() {
               return true;
             }
@@ -168,6 +161,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
           list.add(newSet);
           final BaseListPopupStep<SpringFileSet> step =
             new BaseListPopupStep<SpringFileSet>(SpringBundle.message("choose.file.set"), list) {
+              @Override
               @RequiredUIAccess
               public PopupStep onChosen(final SpringFileSet selectedValue, final boolean finalChoice) {
                 if (selectedValue == newSet) {
@@ -191,7 +185,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
     }
   }
 
-  private static class EnableExtensionFix implements LocalQuickFix, IntentionAction {
+  private static class EnableExtensionFix implements LocalQuickFix, SyntheticIntentionAction {
     protected final Module myModule;
     protected final VirtualFile myVirtualFile;
 
@@ -200,35 +194,42 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       myVirtualFile = file.getVirtualFile();
     }
 
+    @Override
     @Nonnull
     public String getName() {
       return SpringBundle.message("add.spring.facet", myModule.getName());
     }
 
+    @Override
     @Nonnull
     public String getText() {
       return getName();
     }
 
+    @Override
     @Nonnull
     public String getFamilyName() {
       return SpringBundle.message("model.bean.quickfix.family");
     }
 
+    @Override
     public boolean isAvailable(@Nonnull final Project project, final Editor editor, final PsiFile file) {
       return true;
     }
 
+    @Override
     public void invoke(@Nonnull final Project project, final Editor editor, final PsiFile file) throws IncorrectOperationException {
       doFix(project);
       DomElementAnnotationsManager.getInstance(project).dropAnnotationsCache();
       DaemonCodeAnalyzer.getInstance(project).restart();
     }
 
+    @Override
     public boolean startInWriteAction() {
       return false;
     }
 
+    @Override
     public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
       doFix(project);
       DomElementAnnotationsManager.getInstance(project).dropAnnotationsCache();
@@ -253,6 +254,7 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase {
       final SpringFileSet set = new SpringFileSet(SpringFileSet.getUniqueId(sets),
                                                   SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets),
                                                   module) {
+        @Override
         public boolean isNew() {
           return true;
         }

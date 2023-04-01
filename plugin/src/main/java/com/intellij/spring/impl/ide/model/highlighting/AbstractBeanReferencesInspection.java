@@ -19,12 +19,12 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class AbstractBeanReferencesInspection extends SpringBeanInspectionBase {
+public class AbstractBeanReferencesInspection extends SpringBeanInspectionBase<Object> {
 
   protected void checkBean(SpringBean springBean,
                            final Beans beans,
                            final DomElementAnnotationHolder holder,
-                           final SpringModel springModel) {
+                           final SpringModel springModel, Object state) {
     for (SpringValueHolderDefinition property : SpringUtils.getValueHolders(springBean)) {
       checkAbstractBeanReferences(property, holder);
     }

@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
  * @author peter
  */
 @ExtensionImpl
-public class SpringScopesInspection extends BasicDomElementsInspection<Beans> {
+public class SpringScopesInspection extends BasicDomElementsInspection<Beans, Object> {
 
   protected void checkDomElement(final DomElement element, final DomElementAnnotationHolder holder, final DomHighlightingHelper helper) {
     if (element instanceof GenericDomValue) {

@@ -30,10 +30,11 @@ import java.util.Collection;
 import java.util.Map;
 
 @ExtensionImpl
-public class AutowiredDependenciesInspection extends SpringBeanInspectionBase {
+public class AutowiredDependenciesInspection extends SpringBeanInspectionBase<Object> {
 
-  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder) {
-    super.checkFileElement(domFileElement, holder);
+  @Override
+  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder, Object state) {
+    super.checkFileElement(domFileElement, holder, state);
 
     final Beans beans = domFileElement.getRootElement();
     final DefaultAutowire defaultAutowire = beans.getDefaultAutowire().getValue();
@@ -78,7 +79,11 @@ public class AutowiredDependenciesInspection extends SpringBeanInspectionBase {
     };
   }
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel model) {
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel model,
+                           Object state) {
     if (isAutowireCandidate(springBean)) {
       if (model != null) {
         addAutowireEscapeWarning(springBean, holder);

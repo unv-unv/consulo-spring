@@ -30,7 +30,7 @@ public class ReplacedMethodsInspection extends SpringBeanInspectionBase {
   protected void checkBean(SpringBean springBean,
                            final Beans beans,
                            final DomElementAnnotationHolder holder,
-                           final SpringModel springModel) {
+                           final SpringModel springModel, Object state) {
     for (ReplacedMethod replacedMethod : springBean.getReplacedMethods()) {
       checkReplacedMethod(springBean, replacedMethod, holder);
     }

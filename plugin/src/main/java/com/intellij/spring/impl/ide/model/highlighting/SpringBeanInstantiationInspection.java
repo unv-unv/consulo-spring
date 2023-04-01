@@ -35,7 +35,11 @@ import javax.annotation.Nonnull;
 @ExtensionImpl
 public class SpringBeanInstantiationInspection extends SpringBeanInspectionBase {
 
-  protected void checkBean(final SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel springModel) {
+  protected void checkBean(final SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel springModel,
+                           Object state) {
     final PsiClass psiClass = springBean.getClazz().getValue();
     if (psiClass != null && !springBean.isAbstract()) {
       if (psiClass.isInterface()) {

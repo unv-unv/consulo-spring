@@ -40,7 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @ExtensionImpl
-public class SpringAopErrorsInspection extends BasicDomElementsInspection<Beans> {
+public class SpringAopErrorsInspection extends BasicDomElementsInspection<Beans, Object> {
 
   public SpringAopErrorsInspection() {
     super(Beans.class);

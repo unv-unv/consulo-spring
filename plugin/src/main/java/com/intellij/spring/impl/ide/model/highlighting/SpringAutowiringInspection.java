@@ -155,7 +155,11 @@ public class SpringAutowiringInspection extends SpringBeanInspectionBase {
     }
   }
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel model) {
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel model,
+                           Object state) {
     final Boolean autoWireCandidate = springBean.getAutowireCandidate().getValue();
     if (autoWireCandidate != null && !autoWireCandidate.booleanValue()) return;
     checkAutowiring(springBean, model, holder);

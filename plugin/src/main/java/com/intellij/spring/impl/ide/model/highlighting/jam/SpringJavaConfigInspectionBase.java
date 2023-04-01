@@ -23,8 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspectionTool {
-  private static final Logger LOG = Logger.getInstance("#com.intellij.spring.model.highlighting.jam.SpringJamInspectionBase");
+public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspectionTool<Object> {
+  private static final Logger LOG = Logger.getInstance(SpringJavaConfigInspectionBase.class);
 
   @Nonnull
   public String getGroupDisplayName() {
@@ -36,7 +36,7 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
   }
 
   @Nullable
-  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly) {
+  public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly, Object state) {
     if (JamCommonUtil.isPlainJavaFile(file)) {
       final consulo.module.Module module = ModuleUtilCore.findModuleForPsiElement(file);
       if (module != null && SpringModuleExtension.getInstance(module) != null) {

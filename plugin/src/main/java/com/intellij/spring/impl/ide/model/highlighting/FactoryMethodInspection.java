@@ -36,7 +36,11 @@ public class FactoryMethodInspection extends SpringBeanInspectionBase {
     return "SpringFactoryMethodInspection";
   }
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel model) {
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel model,
+                           Object state) {
     final PsiMethod factoryMethod = springBean.getFactoryMethod().getValue();
     if (factoryMethod != null) {
       if (!SpringBeanFactoryMethodConverter.isPublic(factoryMethod)) {

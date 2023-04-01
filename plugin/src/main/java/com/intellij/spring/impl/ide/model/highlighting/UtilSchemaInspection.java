@@ -29,7 +29,8 @@ import java.util.Set;
 @ExtensionImpl
 public class UtilSchemaInspection extends InjectionValueTypeInspection {
 
-  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder) {
+  @Override
+  public void checkFileElement(final DomFileElement<Beans> domFileElement, final DomElementAnnotationHolder holder, Object state) {
     final Beans beans = domFileElement.getRootElement();
 
     for (UtilSet springSet : DomUtil.getDefinedChildrenOfType(beans, UtilSet.class)) {

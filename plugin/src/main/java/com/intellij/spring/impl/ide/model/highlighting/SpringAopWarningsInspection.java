@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class SpringAopWarningsInspection extends BasicDomElementsInspection<Beans> {
+public class SpringAopWarningsInspection extends BasicDomElementsInspection<Beans, Object> {
 
   public SpringAopWarningsInspection() {
     super(Beans.class);

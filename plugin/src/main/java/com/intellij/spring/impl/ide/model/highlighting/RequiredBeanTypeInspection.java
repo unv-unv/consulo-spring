@@ -23,14 +23,14 @@ import org.jetbrains.annotations.NonNls;
 import javax.annotation.Nonnull;
 
 @ExtensionImpl
-public class RequiredBeanTypeInspection extends DomElementsInspection<Beans> {
+public class RequiredBeanTypeInspection extends DomElementsInspection<Beans, Object> {
 
   public RequiredBeanTypeInspection() {
     super(Beans.class);
   }
 
   @Override
-  protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper) {
+  protected void checkDomElement(DomElement element, DomElementAnnotationHolder holder, DomHighlightingHelper helper, Object state) {
     if (element instanceof GenericAttributeValue) {
       Object value = ((GenericAttributeValue)element).getValue();
 

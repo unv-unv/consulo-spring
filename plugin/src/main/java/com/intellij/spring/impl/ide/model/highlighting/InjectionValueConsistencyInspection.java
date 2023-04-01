@@ -49,7 +49,10 @@ public class InjectionValueConsistencyInspection extends SpringBeanInspectionBas
   @NonNls
   private static final String ENTRY = SpringBundle.message("spring.bean.map.entry");
 
-  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder, final Beans beans, final SpringModel model) {
+  protected SpringModelVisitor createVisitor(final DomElementAnnotationHolder holder,
+                                             final Beans beans,
+                                             final SpringModel model,
+                                             Object state) {
     return new SpringModelVisitor() {
       protected boolean visitProperty(SpringPropertyDefinition property) {
         if (property instanceof SpringValueHolder) {

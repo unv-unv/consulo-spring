@@ -35,7 +35,11 @@ public class SpringBeanNameConventionInspection extends SpringBeanInspectionBase
     return "SpringBeanNameConventionInspection";
   }
 
-  protected void checkBean(SpringBean springBean, final Beans beans, final DomElementAnnotationHolder holder, final SpringModel springModel) {
+  protected void checkBean(SpringBean springBean,
+                           final Beans beans,
+                           final DomElementAnnotationHolder holder,
+                           final SpringModel springModel,
+                           Object state) {
     final String beanId = springBean.getId().getStringValue();
 
     if (acceptBean(springBean, beanId)) {

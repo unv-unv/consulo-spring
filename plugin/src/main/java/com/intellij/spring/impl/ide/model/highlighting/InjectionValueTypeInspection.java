@@ -35,7 +35,7 @@ import java.util.Properties;
 import java.util.Set;
 
 @ExtensionImpl
-public class InjectionValueTypeInspection extends DomSpringBeanInspectionBase {
+public class InjectionValueTypeInspection extends DomSpringBeanInspectionBase<Object> {
 
   @Nonnull
   public String getDisplayName() {

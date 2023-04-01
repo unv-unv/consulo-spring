@@ -52,7 +52,7 @@ public class SpringRequiredPropertyInspection extends SpringBeanInspectionBase {
   protected void checkBean(final SpringBean springBean,
                            final Beans beans,
                            final DomElementAnnotationHolder holder,
-                           final SpringModel springModel) {
+                           final SpringModel springModel, Object state) {
     if (springBean.isAbstract()) {
       return;
     }
