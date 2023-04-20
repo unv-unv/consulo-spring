@@ -37,9 +37,9 @@ public class SpringModelInspection extends BasicDomElementsInspection<Beans, Obj
     super(Beans.class);
   }
 
-  protected void checkDomElement(final DomElement element, final DomElementAnnotationHolder holder, final DomHighlightingHelper helper) {
+  protected void checkDomElement(final DomElement element, final DomElementAnnotationHolder holder, final DomHighlightingHelper helper, Object state) {
     final int oldSize = holder.getSize();
-    super.checkDomElement(element, holder, helper);
+    super.checkDomElement(element, holder, helper, state);
 
     if (oldSize == holder.getSize() && element instanceof GenericDomValue) {
       ExtendsClassChecker.checkExtendsClassInReferences((GenericDomValue)element, holder);
