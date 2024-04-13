@@ -4,10 +4,7 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
-import com.intellij.spring.impl.ide.model.xml.beans.DomSpringBeanPointer;
-import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
-import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
-import com.intellij.spring.impl.ide.model.xml.beans.SpringPropertyDefinition;
+import com.intellij.spring.impl.ide.model.xml.beans.*;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
@@ -15,16 +12,12 @@ import consulo.application.util.function.Processor;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.project.Project;
-import consulo.util.collection.ConcurrentMultiMap;
 import consulo.util.collection.MultiMap;
 import consulo.util.dataholder.Key;
 import consulo.xml.util.xml.DomManager;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Caches Spring mappings for given PsiClass.
@@ -73,7 +66,7 @@ public class SpringJavaClassInfo {
     myProperties = CachedValuesManager.getManager(project).createCachedValue(new CachedValueProvider<MultiMap<String, SpringPropertyDefinition>>() {
       public Result<MultiMap<String, SpringPropertyDefinition>> compute() {
         final List<DomSpringBeanPointer> list = getMappedBeans();
-        final MultiMap<String, SpringPropertyDefinition> map = new ConcurrentMultiMap<String, SpringPropertyDefinition>() ;
+        final MultiMap<String, SpringPropertyDefinition> map = MultiMap.createConcurrent();
         for (DomSpringBeanPointer beanPointer : list) {
           final DomSpringBean bean = beanPointer.getSpringBean();
           if (bean instanceof SpringBean) {
