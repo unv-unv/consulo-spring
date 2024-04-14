@@ -264,11 +264,7 @@ public class SpringAutowireUtil {
 
   @Nullable
   public static PsiAnnotation getAutowiredAnnotation(final @Nonnull PsiModifierListOwner owner) {
-    final PsiModifierList modifierList = owner.getModifierList();
-    if (modifierList != null) {
-      return modifierList.findAnnotation(SpringAnnotationsConstants.AUTOWIRED_ANNOTATION);
-    }
-    return null;
+    return AnnotationUtil.findAnnotation(owner, SpringAnnotationsConstants.INJECT_ANNOTATIONS);
   }
 
   @Nullable
@@ -281,10 +277,7 @@ public class SpringAutowireUtil {
   }
 
   public static boolean isAutowiredByAnnotation(final @Nonnull PsiModifierListOwner owner) {
-    final PsiModifierList modifierList = owner.getModifierList();
-    return modifierList != null &&
-      (modifierList.findAnnotation(SpringAnnotationsConstants.AUTOWIRED_ANNOTATION) != null ||
-        modifierList.findAnnotation(SpringAnnotationsConstants.JAVAX_RESOURCE_ANNOTATION) != null);
+    return AnnotationUtil.isAnnotated(owner, SpringAnnotationsConstants.INJECT_ANNOTATIONS, 0);
   }
 
   public static boolean isRequired(final @Nonnull PsiModifierListOwner owner) {

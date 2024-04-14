@@ -1,5 +1,7 @@
 package com.intellij.spring.impl.ide.constants;
 
+import java.util.Set;
+
 /**
  * User: Sergey.Vasiliev
  */
@@ -40,6 +42,10 @@ public interface SpringAnnotationsConstants {
 
   String SPRING_BOOT_APPLICATION_ANNOTATION = "org.springframework.boot.autoconfigure.SpringBootApplication";
   String SPRING_BOOT_CONFIGURATION_ANNOTATION = "org.springframework.boot.SpringBootConfiguration";
+
+  Set<String> INJECT_ANNOTATIONS = Set.of(AUTOWIRED_ANNOTATION,
+                                          JAVAX_RESOURCE_ANNOTATION,
+                                          JAKARTA_RESOURCE_ANNOTATION);
 
   // predefined component annotations
   String[] SPRING_COMPONENT_ANNOTATIONS =

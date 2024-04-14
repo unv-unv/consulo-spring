@@ -64,7 +64,7 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
       holder.registerProblem(configuration.getAnnotation(), SpringBundle.message("java.configuration.must.have.default.constructor"));
     }
     for (PsiMethod constructor : constructors) {
-      if (AnnotationUtil.isAnnotated(constructor, SpringAnnotationsConstants.AUTOWIRED_ANNOTATION, false)) {
+      if (AnnotationUtil.isAnnotated(constructor, SpringAnnotationsConstants.AUTOWIRED_ANNOTATION, 0)) {
         holder.registerProblem(constructor.getNameIdentifier(), SpringBundle.message("java.configuration.autowired.constructor.param"));
       }
 
