@@ -60,6 +60,7 @@
             <dependency>com.intellij.xml</dependency>
             <dependency>com.intellij.properties</dependency>
             <dependency>com.intellij.regexp</dependency>
+            <dependency>org.jetbrains.idea.maven</dependency>
             <dependency>consulo.java</dependency>
           </dependencies>
           <packaging>
@@ -99,6 +100,11 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.intellij.spring-maven.impl</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>consulo</groupId>
       <artifactId>consulo-ide-impl</artifactId>
       <version>${project.version}</version>
@@ -123,6 +129,7 @@
       <version>${project.version}</version>
       <scope>provided</scope>
     </dependency>
+    
     <dependency>
       <groupId>consulo.internal</groupId>
       <artifactId>forms_rt</artifactId>

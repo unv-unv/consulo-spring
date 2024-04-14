@@ -12,6 +12,7 @@
   <depends>com.intellij.properties</depends>
   <depends>consulo.java</depends>
   <depends>com.intellij.xml</depends>
+  <depends optional="true">org.jetbrains.idea.maven</depends>
 
   <tags>
     <tag>software.framework</tag>
