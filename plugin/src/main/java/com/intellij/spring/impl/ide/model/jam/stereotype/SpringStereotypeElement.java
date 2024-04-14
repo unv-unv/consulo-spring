@@ -23,7 +23,7 @@ public abstract class SpringStereotypeElement extends JamPsiClassSpringBean {
 
   private static final JamStringAttributeMeta.Single<String> NAME_VALUE_META = JamAttributeMeta.singleString("value");
 
-  private final JamAnnotationMeta myMeta;
+  protected final JamAnnotationMeta myMeta;
 
   protected final PsiClass myPsiClass;
 
@@ -31,7 +31,6 @@ public abstract class SpringStereotypeElement extends JamPsiClassSpringBean {
     myPsiClass = psiClass;
     myMeta = new JamAnnotationMeta(anno);
   }
-
 
   @Nonnull
   private JamStringAttributeElement<String> getNamedStringAttributeElement() {

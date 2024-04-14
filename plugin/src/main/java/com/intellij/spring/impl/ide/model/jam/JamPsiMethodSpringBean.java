@@ -27,15 +27,18 @@ import javax.annotation.Nullable;
 
 public abstract class JamPsiMethodSpringBean extends JamPsiMemberSpringBean<PsiMethod> {
 
+  @Override
   @Nonnull
   @JamPsiConnector
   public abstract PsiMethod getPsiElement();
 
+  @Override
   @Nullable
   public String getBeanName() {
     return getPsiElement().getName();
   }
 
+  @Override
   @Nullable
   public PsiClass getBeanClass() {
     final PsiMethod method = getPsiElement();

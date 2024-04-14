@@ -5,11 +5,13 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.SpringModelProvider;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
 import consulo.spring.impl.boot.jam.SpringBootApplicationElement;
+import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 
 import javax.annotation.Nonnull;
@@ -32,14 +34,19 @@ public class SpringBootModelProvider implements SpringModelProvider {
     final JamService service = JamService.getJamService(module.getProject());
     final GlobalSearchScope scope = GlobalSearchScope.moduleScope(module);
 
-    List<SpringBootApplicationElement> configurations =
-      service.getJamClassElements(SpringBootApplicationElement.META, SpringAnnotationsConstants.SPRING_BOOT_APPLICATION, scope);
+    List<SpingJamElement> elements = new ArrayList<>();
+    elements.addAll(service.getJamClassElements(SpringBootApplicationElement.META,
+                                                SpringAnnotationsConstants.SPRING_BOOT_APPLICATION_ANNOTATION,
+                                                scope));
+    elements.addAll(service.getJamClassElements(SpringBootConfigurationElement.META,
+                                                SpringAnnotationsConstants.SPRING_BOOT_CONFIGURATION_ANNOTATION,
+                                                scope));
 
-    if (configurations.isEmpty()) {
+    if (elements.isEmpty()) {
       return Collections.emptyList();
     }
-    List<SpringFileSet> list = new ArrayList<>(configurations.size());
-    for (SpringBootApplicationElement configuration : configurations) {
+    List<SpringFileSet> list = new ArrayList<>(elements.size());
+    for (SpingJamElement configuration : elements) {
       PsiClass psiClass = configuration.getPsiClass();
 
       SpringBootFileSet springFileSet =

@@ -87,7 +87,9 @@ public class AnnotationSpringModel extends BaseSpringModel implements SpringMode
     final GlobalSearchScope scope = GlobalSearchScope.moduleScope(module);
 
     List<SpringBootApplicationElement> configurations =
-      service.getJamClassElements(SpringBootApplicationElement.META, SpringAnnotationsConstants.SPRING_BOOT_APPLICATION, scope);
+      service.getJamClassElements(SpringBootApplicationElement.META, SpringAnnotationsConstants.SPRING_BOOT_APPLICATION_ANNOTATION, scope);
+
+    JavaPsiFacade javaPsiFacade = JavaPsiFacade.getInstance(module.getProject());
 
     List<ComponentScan> componentScans = new ArrayList<>();
     for (SpringBootApplicationElement configuration : configurations) {
@@ -97,15 +99,24 @@ public class AnnotationSpringModel extends BaseSpringModel implements SpringMode
 
       String packageName = StringUtil.getPackageName(qualifiedName);
 
-      PsiJavaPackage aPackage = JavaPsiFacade.getInstance(module.getProject()).findPackage(packageName);
+      PsiJavaPackage aPackage = javaPsiFacade.findPackage(packageName);
 
       if (aPackage != null) {
         componentScans.add(new AnnotatationComponentScan(List.of(aPackage)));
       }
     }
 
-    // TODO handle annotations
     List<? extends SpringComponentScan> annotationComponentScans = model.getComponentScans();
+    for (SpringComponentScan annotationComponentScan : annotationComponentScans) {
+      Set<String> basePackages = annotationComponentScan.getBasePackages();
+
+      for (String basePackage : basePackages) {
+        PsiJavaPackage aPackage = javaPsiFacade.findPackage(basePackage);
+        if (aPackage != null) {
+          componentScans.add(new AnnotatationComponentScan(List.of(aPackage)));
+        }
+      }
+    }
     return componentScans;
   }
 }

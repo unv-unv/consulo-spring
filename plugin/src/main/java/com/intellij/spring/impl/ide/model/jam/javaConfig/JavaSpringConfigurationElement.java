@@ -22,38 +22,41 @@ import com.intellij.jam.reflect.JamMethodMeta;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import consulo.language.pom.PomTarget;
 import consulo.language.psi.PsiElementRef;
-import consulo.util.lang.function.PairConsumer;
 
+import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.function.Consumer;
 
-public abstract class JavaSpringConfiguration extends SpringJavaConfiguration {
-  public static final JamClassMeta<JavaSpringConfiguration> META = new JamClassMeta<JavaSpringConfiguration>(JavaSpringConfiguration.class);
+public abstract class JavaSpringConfigurationElement extends SpingJamElement {
+  public static final JamClassMeta<JavaSpringConfigurationElement> META = new JamClassMeta<>(
+    JavaSpringConfigurationElement.class);
 
   public static final JamMethodMeta<JavaSpringJavaBean> BEANS_METHOD_META =
-    new JamMethodMeta<JavaSpringJavaBean>(JavaSpringJavaBean.class).addAnnotation(JavaSpringJavaBean.META);
+    new JamMethodMeta<>(JavaSpringJavaBean.class).addAnnotation(JavaSpringJavaBean.META);
 
   static {
-    BEANS_METHOD_META.addPomTargetProducer(new PairConsumer<JavaSpringJavaBean, Consumer<PomTarget>>() {
-      public void consume(JavaSpringJavaBean javaSpringJavaBean, Consumer<PomTarget> pomTargetConsumer) {
-        for (PomTarget pomTarget : javaSpringJavaBean.getPomTargets()) {
-          pomTargetConsumer.accept(pomTarget);
-        }
+    BEANS_METHOD_META.addPomTargetProducer((javaSpringJavaBean, pomTargetConsumer) -> {
+      for (PomTarget pomTarget : javaSpringJavaBean.getPomTargets()) {
+        pomTargetConsumer.accept(pomTarget);
       }
     });
   }
 
-  private static final JamChildrenQuery<JavaSpringJavaBean> BEANS_QUERY =
+  protected static final JamChildrenQuery<JavaSpringJavaBean> BEANS_QUERY =
     JamChildrenQuery.annotatedMethods(JavaSpringJavaBean.META, BEANS_METHOD_META);
 
-  public JavaSpringConfiguration() {
+  public JavaSpringConfigurationElement() {
     super(SpringAnnotationsConstants.JAVA_SPRING_CONFIGURATION_ANNOTATION);
+  }
+
+  protected JavaSpringConfigurationElement(@Nonnull String annotation) {
+    super(annotation);
   }
 
   static {
     META.addChildrenQuery(BEANS_QUERY);
   }
 
+  @Override
   public List<? extends SpringJavaBean> getBeans() {
     return BEANS_QUERY.findChildren(PsiElementRef.real(getPsiElement()));
   }

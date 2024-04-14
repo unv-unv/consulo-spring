@@ -5,7 +5,7 @@ import com.intellij.java.language.psi.*;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
@@ -20,7 +20,7 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
 
   @Override
   protected void checkClass(PsiClass aClass, ProblemsHolder holder, @Nonnull Module module) {
-    SpringJavaConfiguration configuration = getJavaConfiguration(aClass, module);
+    SpingJamElement configuration = getJavaConfiguration(aClass, module);
 
     if (configuration != null) {
       checkJavaConfiguration(configuration, module, holder);
@@ -36,7 +36,7 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
     }
   }
 
-  protected void checkJavaConfiguration(final SpringJavaConfiguration javaConfiguration, final Module module, final ProblemsHolder holder) {
+  protected void checkJavaConfiguration(final SpingJamElement javaConfiguration, final Module module, final ProblemsHolder holder) {
     checkJavaConfigurationClass(javaConfiguration, holder);
 
     for (SpringJavaBean springJavaBean : javaConfiguration.getBeans()) {
@@ -44,20 +44,20 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
     }
   }
 
-  private static void checkJavaConfigurationClass(final SpringJavaConfiguration configuration, final ProblemsHolder holder) {
+  private static void checkJavaConfigurationClass(final SpingJamElement configuration, final ProblemsHolder holder) {
     PsiClass psiClass = configuration.getPsiElement();
 
     checkConstructor(psiClass, configuration, holder);
     checkNonFinal(configuration, holder, psiClass);
   }
 
-  private static void checkNonFinal(SpringJavaConfiguration configuration, ProblemsHolder holder, PsiClass psiClass) {
+  private static void checkNonFinal(SpingJamElement configuration, ProblemsHolder holder, PsiClass psiClass) {
     if (psiClass.getModifierList().hasModifierProperty(PsiModifier.FINAL)) {
       holder.registerProblem(configuration.getAnnotation(), SpringBundle.message("java.configuration.cannot.be.final"));
     }
   }
 
-  private static void checkConstructor(PsiClass psiClass, SpringJavaConfiguration configuration, ProblemsHolder holder) {
+  private static void checkConstructor(PsiClass psiClass, SpingJamElement configuration, ProblemsHolder holder) {
     PsiMethod[] constructors = psiClass.getConstructors();
 
     if (constructors.length != 0 && !hasDefaultConstructor(constructors)) {

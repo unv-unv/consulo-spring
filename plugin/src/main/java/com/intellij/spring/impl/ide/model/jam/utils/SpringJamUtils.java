@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaConfigConfiguration;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaExternalBean;
 import com.intellij.spring.impl.ide.model.jam.stereotype.SpringStereotypeElement;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
@@ -49,8 +49,8 @@ public class SpringJamUtils {
   }
 
   @Nonnull
-  public static List<SpringJavaConfiguration> getJavaConfigurations(final SpringModel springModel) {
-    List<SpringJavaConfiguration> javaConfigurations = new ArrayList<>();
+  public static List<SpingJamElement> getJavaConfigurations(final SpringModel springModel) {
+    List<SpingJamElement> javaConfigurations = new ArrayList<>();
     final consulo.module.Module module = springModel.getModule();
     if (module != null) {
       List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
@@ -60,7 +60,7 @@ public class SpringJamUtils {
           return Collections.emptyList();
         }
 
-        List<SpringJavaConfiguration> components = SpringJamModel.getModel(module).getConfigurations();
+        List<SpingJamElement> components = SpringJamModel.getModel(module).getConfigurations();
 
         return filterJavaConfigurations(components, psiPackages);
       }
@@ -83,10 +83,10 @@ public class SpringJamUtils {
     return filtered;
   }
 
-  private static List<SpringJavaConfiguration> filterJavaConfigurations(final List<SpringJavaConfiguration> javaConfigurations,
-                                                                        final List<PsiJavaPackage> psiPackages) {
-    List<SpringJavaConfiguration> filtered = new ArrayList<>();
-    for (SpringJavaConfiguration component : javaConfigurations) {
+  private static List<SpingJamElement> filterJavaConfigurations(final List<SpingJamElement> javaConfigurations,
+                                                                final List<PsiJavaPackage> psiPackages) {
+    List<SpingJamElement> filtered = new ArrayList<>();
+    for (SpingJamElement component : javaConfigurations) {
       final PsiClass psiClass = component.getPsiClass();
       if (isInPackage(psiPackages, psiClass)) {
         filtered.add(component);
@@ -165,7 +165,7 @@ public class SpringJamUtils {
         final Module module = ModuleUtilCore.findModuleForPsiElement(element);
 
         if (module != null) {
-          for (SpringJavaConfiguration javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
+          for (SpingJamElement javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
             if (javaConfiguration instanceof JavaConfigConfiguration) {
               for (SpringJavaExternalBean externalBean : ((JavaConfigConfiguration)javaConfiguration).getExternalBeans()) {
                 final PsiMethod psiMethod = externalBean.getPsiElement();
@@ -189,7 +189,7 @@ public class SpringJamUtils {
   public static SpringJavaExternalBean getExternalBean(final PsiMethod psiMethod) {
     final consulo.module.Module module = ModuleUtilCore.findModuleForPsiElement(psiMethod);
     if (module != null) {
-      for (SpringJavaConfiguration javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
+      for (SpingJamElement javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
         if (javaConfiguration instanceof JavaConfigConfiguration) {
           if (psiMethod.getContainingFile().equals(javaConfiguration.getPsiClass().getContainingFile())) {
             for (SpringJavaExternalBean externalBean : ((JavaConfigConfiguration)javaConfiguration).getExternalBeans()) {

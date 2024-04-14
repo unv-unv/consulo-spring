@@ -21,10 +21,11 @@ import com.intellij.jam.reflect.JamClassMeta;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import consulo.language.psi.PsiElementRef;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-public abstract class JavaConfigConfiguration extends SpringJavaConfiguration {
-  public static final JamClassMeta<JavaConfigConfiguration> META = new JamClassMeta<JavaConfigConfiguration>(JavaConfigConfiguration.class);
+public abstract class JavaConfigConfiguration extends SpingJamElement {
+  public static final JamClassMeta<JavaConfigConfiguration> META = new JamClassMeta<>(JavaConfigConfiguration.class);
 
   private static final JamChildrenQuery<JavaConfigJavaBean> BEANS_QUERY =
     JamChildrenQuery.annotatedMethods(JavaConfigJavaBean.META, JavaConfigJavaBean.class);
@@ -36,11 +37,16 @@ public abstract class JavaConfigConfiguration extends SpringJavaConfiguration {
     super(SpringAnnotationsConstants.JAVA_CONFIG_CONFIGURATION_ANNOTATION);
   }
 
+  protected JavaConfigConfiguration(@Nonnull String annotation) {
+    super(annotation);
+  }
+
   static {
     META.addChildrenQuery(BEANS_QUERY);
     META.addChildrenQuery(EXTERNAL_BEANS_QUERY);
   }
 
+  @Override
   public List<? extends SpringJavaBean> getBeans() {
     return BEANS_QUERY.findChildren(PsiElementRef.real(getPsiElement()));
   }

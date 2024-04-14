@@ -3,7 +3,7 @@ package com.intellij.spring.impl.ide.model.highlighting.jam;
 import com.intellij.java.language.psi.*;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaConfigConfiguration;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaExternalBean;
 import com.intellij.spring.impl.ide.model.jam.utils.SpringJamUtils;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
@@ -19,7 +19,7 @@ import java.util.List;
 
 @ExtensionImpl
 public class SpringJavaConfigExternalBeansErrorInspection extends SpringJavaConfigInspectionBase {
-  protected void checkJavaConfiguration(final SpringJavaConfiguration javaConfiguration, final Module module, final ProblemsHolder holder) {
+  protected void checkJavaConfiguration(final SpingJamElement javaConfiguration, final Module module, final ProblemsHolder holder) {
     if (javaConfiguration instanceof JavaConfigConfiguration) {
       checkExternalBean((JavaConfigConfiguration)javaConfiguration, holder);
     }

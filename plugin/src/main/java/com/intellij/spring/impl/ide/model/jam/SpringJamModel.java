@@ -4,8 +4,8 @@ import com.intellij.jam.JamService;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaConfigConfiguration;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfiguration;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfigurationElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
 import com.intellij.spring.impl.ide.model.jam.stereotype.*;
 import com.intellij.spring.impl.ide.model.jam.utils.JamAnnotationTypeUtil;
 import consulo.annotation.component.ComponentScope;
@@ -13,6 +13,7 @@ import consulo.annotation.component.ServiceAPI;
 import consulo.annotation.component.ServiceImpl;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
+import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
@@ -36,18 +37,21 @@ public class SpringJamModel {
     myModule = module;
   }
 
-  public List<SpringJavaConfiguration> getConfigurations() {
+  public List<SpingJamElement> getConfigurations() {
     final JamService service = JamService.getJamService(myModule.getProject());
     final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule);
-    List<SpringJavaConfiguration> configurations = new ArrayList<SpringJavaConfiguration>();
+    List<SpingJamElement> configurations = new ArrayList<>();
 
     configurations.addAll(service.getJamClassElements(JavaConfigConfiguration.META,
                                                       SpringAnnotationsConstants.JAVA_CONFIG_CONFIGURATION_ANNOTATION,
                                                       scope));
-    configurations.addAll(service.getJamClassElements(JavaSpringConfiguration.META,
+    configurations.addAll(service.getJamClassElements(JavaSpringConfigurationElement.META,
                                                       SpringAnnotationsConstants.JAVA_SPRING_CONFIGURATION_ANNOTATION,
                                                       scope));
 
+    configurations.addAll(service.getJamClassElements(SpringBootConfigurationElement.META,
+                                                      SpringAnnotationsConstants.SPRING_BOOT_CONFIGURATION_ANNOTATION,
+                                                      scope));
     return configurations;
   }
 
@@ -62,7 +66,7 @@ public class SpringJamModel {
 
   @Nonnull
   public List<? extends SpringStereotypeElement> getAllStereotypeComponents() {
-    List<SpringStereotypeElement> stereotypeElements = new ArrayList<SpringStereotypeElement>();
+    List<SpringStereotypeElement> stereotypeElements = new ArrayList<>();
 
     stereotypeElements.addAll(getComponents());
     stereotypeElements.addAll(getControllers());
@@ -75,7 +79,7 @@ public class SpringJamModel {
 
   @Nonnull
   public List<? extends CustomSpringComponent> getCustomStereotypeComponents() {
-    List<CustomSpringComponent> customSpringComponents = new ArrayList<CustomSpringComponent>();
+    List<CustomSpringComponent> customSpringComponents = new ArrayList<>();
     final JamService service = JamService.getJamService(myModule.getProject());
     final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule);
 
