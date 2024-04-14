@@ -23,10 +23,11 @@ public abstract class BasicSpringDomGenerateProvider<T extends DomElement> exten
     super(description, tClass, mappingId);
   }
 
+  @Override
   protected DomElement getParentDomElement(final Project project, final Editor editor, final PsiFile file) {
     final SpringModel springModel = SpringManager.getInstance(project).getLocalSpringModel((XmlFile)file);
     if(springModel instanceof DomSpringModel) {
-      return ((DomSpringModel) springModel).getMergedModel();
+      return ((DomSpringModel) springModel).getDomModel().getMergedModel();
     }
     return null;
   }

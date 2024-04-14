@@ -6,6 +6,7 @@ package com.intellij.spring.impl.ide;
 
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.SpringQualifier;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
@@ -63,7 +64,9 @@ public interface SpringModel {
   Collection<? extends SpringBaseBeanPointer> getAllCommonBeans(boolean withDepenedencies);
 
   @Nonnull
-  Collection<? extends SpringBaseBeanPointer> getAllCommonBeans();
+  default Collection<? extends SpringBaseBeanPointer> getAllCommonBeans() {
+    return getAllCommonBeans(true);
+  }
 
   @Nonnull
   Collection<? extends SpringBaseBeanPointer> getAllParentBeans();
@@ -100,4 +103,6 @@ public interface SpringModel {
 
   @Nonnull
   List<DomFileElement<Beans>> getRoots();
+
+  List<? extends ComponentScan> getComponentScans();
 }

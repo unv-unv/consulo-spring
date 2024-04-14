@@ -1,26 +1,27 @@
 package consulo.spring.impl.boot;
 
+import com.intellij.jam.JamService;
+import com.intellij.java.language.psi.JavaPsiFacade;
 import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiJavaPackage;
 import com.intellij.spring.impl.ide.SpringModel;
+import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
-import com.intellij.spring.impl.ide.model.jam.stereotype.SpringStereotypeElement;
-import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
-import com.intellij.spring.impl.ide.model.xml.SpringQualifier;
+import com.intellij.spring.impl.ide.model.jam.stereotype.SpringComponentScan;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
-import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
-import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
+import consulo.spring.impl.boot.domOverAnnotation.AnnotatationComponentScan;
+import consulo.spring.impl.boot.jam.SpringBootApplicationElement;
+import consulo.spring.impl.model.BaseSpringModel;
+import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomFileElement;
-import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -29,157 +30,40 @@ import java.util.Set;
  * @author VISTALL
  * @since 15-Jan-17
  */
-public class AnnotationSpringModel implements SpringModel {
+public class AnnotationSpringModel extends BaseSpringModel implements SpringModel {
   private consulo.module.Module myModule;
 
-  public AnnotationSpringModel(Module module) {
+  public AnnotationSpringModel(Module module, SpringFileSet fileSet) {
+    super(module, fileSet);
     myModule = module;
   }
 
-  @Nonnull
-  @Override
-  public String getId() {
-    return null;
-  }
-
-  @Nonnull
-  @Override
-  public SpringModel[] getDependencies() {
-    return new SpringModel[0];
-  }
-
-  @Override
-  public SpringFileSet getFileSet() {
-    return null;
-  }
-
-  @Nullable
-  @Override
-  public SpringBeanPointer findBean(@NonNls @Nonnull String beanName) {
-    SpringJamModel model = SpringJamModel.getModel(myModule);
-
-    List<SpringJavaConfiguration> configurations = model.getConfigurations();
-    for (SpringJavaConfiguration configuration : configurations) {
-      List<? extends SpringJavaBean> beans = configuration.getBeans();
-
-      for (SpringJavaBean bean : beans) {
-        String beanName1 = bean.getBeanName();
-        if (beanName.equals(beanName1)) {
-          return SpringBeanPointer.createSpringBeanPointer(bean);
-        }
-      }
-    }
-
-    List<? extends SpringStereotypeElement> allStereotypeComponents = model.getAllStereotypeComponents();
-    for (SpringStereotypeElement allStereotypeComponent : allStereotypeComponents) {
-      String beanName1 = allStereotypeComponent.getBeanName();
-      if (beanName.equals(beanName1)) {
-        return SpringBeanPointer.createSpringBeanPointer(allStereotypeComponent);
-      }
-    }
-    return null;
-  }
-
-  @Nullable
-  @Override
-  public SpringBeanPointer findParentBean(@NonNls @Nonnull String beanName) {
-    return null;
-  }
-
-  @Nonnull
-  @Override
-  public Collection<SpringBaseBeanPointer> getAllDomBeans() {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public Collection<SpringBaseBeanPointer> getAllDomBeans(boolean withDepenedencies) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public Set<String> getAllBeanNames(@Nonnull String beanName) {
-    return Collections.emptySet();
-  }
-
-  @Override
-  public boolean isNameDuplicated(@Nonnull String beanName) {
-    return false;
-  }
-
-  @Nonnull
-  @Override
-  public Collection<? extends SpringBaseBeanPointer> getAllCommonBeans(boolean withDepenedencies) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public Collection<? extends SpringBaseBeanPointer> getAllCommonBeans() {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public Collection<? extends SpringBaseBeanPointer> getAllParentBeans() {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public List<SpringBaseBeanPointer> findBeansByPsiClass(@Nonnull PsiClass psiClass) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public List<SpringBaseBeanPointer> findBeansByPsiClassWithInheritance(@Nonnull PsiClass psiClass) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public List<SpringBaseBeanPointer> findBeansByEffectivePsiClassWithInheritance(@Nonnull PsiClass psiClass) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public List<SpringBaseBeanPointer> getChildren(@Nonnull SpringBeanPointer parent) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public List<SpringBaseBeanPointer> getDescendants(@Nonnull CommonSpringBean context) {
-    return Collections.emptyList();
-  }
-
-  @Nullable
-  @Override
-  public consulo.module.Module getModule() {
-    return null;
-  }
-
-  @Nonnull
-  @Override
-  public Collection<SpringBaseBeanPointer> getOwnBeans() {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public List<SpringBaseBeanPointer> findQualifiedBeans(@Nonnull SpringQualifier qualifier) {
-    return Collections.emptyList();
-  }
-
-  @Nonnull
-  @Override
-  public Collection<XmlTag> getCustomBeanCandidates(String id) {
-    return Collections.emptyList();
-  }
+//  @Nullable
+//  @Override
+//  public SpringBeanPointer findBean(@NonNls @Nonnull String beanName) {
+//    SpringJamModel model = SpringJamModel.getModel(myModule);
+//
+//    List<SpringJavaConfiguration> configurations = model.getConfigurations();
+//    for (SpringJavaConfiguration configuration : configurations) {
+//      List<? extends SpringJavaBean> beans = configuration.getBeans();
+//
+//      for (SpringJavaBean bean : beans) {
+//        String beanName1 = bean.getBeanName();
+//        if (beanName.equals(beanName1)) {
+//          return SpringBeanPointer.createSpringBeanPointer(bean);
+//        }
+//      }
+//    }
+//
+//    List<? extends SpringStereotypeElement> allStereotypeComponents = model.getAllStereotypeComponents();
+//    for (SpringStereotypeElement allStereotypeComponent : allStereotypeComponents) {
+//      String beanName1 = allStereotypeComponent.getBeanName();
+//      if (beanName.equals(beanName1)) {
+//        return SpringBeanPointer.createSpringBeanPointer(allStereotypeComponent);
+//      }
+//    }
+//    return null;
+//  }
 
   @Nonnull
   @Override
@@ -191,5 +75,37 @@ public class AnnotationSpringModel implements SpringModel {
   @Override
   public List<DomFileElement<Beans>> getRoots() {
     return Collections.emptyList();
+  }
+
+  @Override
+  public List<? extends ComponentScan> getComponentScans() {
+    Module module = getModule();
+
+    SpringJamModel model = SpringJamModel.getModel(module);
+
+    final JamService service = JamService.getJamService(module.getProject());
+    final GlobalSearchScope scope = GlobalSearchScope.moduleScope(module);
+
+    List<SpringBootApplicationElement> configurations =
+      service.getJamClassElements(SpringBootApplicationElement.META, SpringAnnotationsConstants.SPRING_BOOT_APPLICATION, scope);
+
+    List<ComponentScan> componentScans = new ArrayList<>();
+    for (SpringBootApplicationElement configuration : configurations) {
+      PsiClass psiClass = configuration.getPsiClass();
+
+      String qualifiedName = psiClass.getQualifiedName();
+
+      String packageName = StringUtil.getPackageName(qualifiedName);
+
+      PsiJavaPackage aPackage = JavaPsiFacade.getInstance(module.getProject()).findPackage(packageName);
+
+      if (aPackage != null) {
+        componentScans.add(new AnnotatationComponentScan(List.of(aPackage)));
+      }
+    }
+
+    // TODO handle annotations
+    List<? extends SpringComponentScan> annotationComponentScans = model.getComponentScans();
+    return componentScans;
   }
 }

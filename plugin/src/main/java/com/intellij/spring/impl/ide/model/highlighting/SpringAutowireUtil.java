@@ -275,7 +275,7 @@ public class SpringAutowireUtil {
   public static PsiAnnotation getResourceAnnotation(final @Nonnull PsiModifierListOwner owner) {
     final PsiModifierList modifierList = owner.getModifierList();
     if (modifierList != null) {
-      return modifierList.findAnnotation(SpringAnnotationsConstants.RESOURCE_ANNOTATION);
+      return modifierList.findAnnotation(SpringAnnotationsConstants.JAVAX_RESOURCE_ANNOTATION);
     }
     return null;
   }
@@ -284,7 +284,7 @@ public class SpringAutowireUtil {
     final PsiModifierList modifierList = owner.getModifierList();
     return modifierList != null &&
       (modifierList.findAnnotation(SpringAnnotationsConstants.AUTOWIRED_ANNOTATION) != null ||
-        modifierList.findAnnotation(SpringAnnotationsConstants.RESOURCE_ANNOTATION) != null);
+        modifierList.findAnnotation(SpringAnnotationsConstants.JAVAX_RESOURCE_ANNOTATION) != null);
   }
 
   public static boolean isRequired(final @Nonnull PsiModifierListOwner owner) {

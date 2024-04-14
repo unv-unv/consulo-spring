@@ -120,4 +120,11 @@ public class SpringJamModel {
     return service.getJamClassElements(SpringService.META, SpringAnnotationsConstants.SERVICE_ANNOTATION, scope);
   }
 
+  @Nonnull
+  public List<? extends SpringComponentScan> getComponentScans() {
+    final JamService service = JamService.getJamService(myModule.getProject());
+    final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule);
+
+    return service.getJamClassElements(SpringComponentScan.META, SpringAnnotationsConstants.COMPONENT_SCAN_ANNOTATION, scope);
+  }
 }

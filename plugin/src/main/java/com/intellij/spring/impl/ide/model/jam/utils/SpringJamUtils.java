@@ -6,6 +6,7 @@ import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.SpringUtils;
+import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaConfigConfiguration;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaConfiguration;
@@ -13,28 +14,25 @@ import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaExternalBean;
 import com.intellij.spring.impl.ide.model.jam.stereotype.SpringStereotypeElement;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
-import com.intellij.spring.impl.ide.model.xml.context.ComponentScan;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
-import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Function;
 
 public class SpringJamUtils {
   private SpringJamUtils() {
   }
 
   @Nonnull
-  public static List<SpringStereotypeElement> getAllStereotypeJavaBeans(final SpringModel domModel) {
-    List<SpringStereotypeElement> allStereotypes = new ArrayList<SpringStereotypeElement>();
-    final consulo.module.Module module = domModel.getModule();
+  public static List<SpringStereotypeElement> getAllStereotypeJavaBeans(final SpringModel springModel) {
+    List<SpringStereotypeElement> allStereotypes = new ArrayList<>();
+    final consulo.module.Module module = springModel.getModule();
     if (module != null) {
-      List<ComponentScan> scanBeans = getComponentScans(domModel.getAllDomBeans());
+      List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
       if (scanBeans.size() > 0) {
         List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
         if (psiPackages.isEmpty()) {
@@ -51,11 +49,11 @@ public class SpringJamUtils {
   }
 
   @Nonnull
-  public static List<SpringJavaConfiguration> getJavaConfigurations(final SpringModel domModel) {
-    List<SpringJavaConfiguration> javaConfigurations = new ArrayList<SpringJavaConfiguration>();
-    final consulo.module.Module module = domModel.getModule();
+  public static List<SpringJavaConfiguration> getJavaConfigurations(final SpringModel springModel) {
+    List<SpringJavaConfiguration> javaConfigurations = new ArrayList<>();
+    final consulo.module.Module module = springModel.getModule();
     if (module != null) {
-      List<ComponentScan> scanBeans = getComponentScans(domModel.getAllDomBeans());
+      List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
       if (scanBeans.size() > 0) {
         List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
         if (psiPackages.isEmpty()) {
@@ -71,21 +69,10 @@ public class SpringJamUtils {
     return javaConfigurations;
   }
 
-  private static List<ComponentScan> getComponentScans(final Collection<SpringBaseBeanPointer> allDomBeans) {
-    return ContainerUtil.mapNotNull(allDomBeans, new Function<SpringBaseBeanPointer, ComponentScan>() {
-      public ComponentScan apply(final SpringBaseBeanPointer domSpringBeanPointer) {
-        final CommonSpringBean domSpringBean = domSpringBeanPointer.getSpringBean();
-        if (domSpringBean instanceof ComponentScan) {
-          return (ComponentScan)domSpringBean;
-        }
-        return null;
-      }
-    });
-  }
 
   private static List<SpringStereotypeElement> filterStereotypeComponents(final List<SpringStereotypeElement> components,
-                                                                final List<PsiJavaPackage> psiPackages) {
-    List<SpringStereotypeElement> filtered = new ArrayList<SpringStereotypeElement>();
+                                                                          final List<PsiJavaPackage> psiPackages) {
+    List<SpringStereotypeElement> filtered = new ArrayList<>();
     for (SpringStereotypeElement component : components) {
       final PsiClass psiClass = component.getBeanClass();
       if (isInPackage(psiPackages, psiClass)) {
@@ -97,8 +84,8 @@ public class SpringJamUtils {
   }
 
   private static List<SpringJavaConfiguration> filterJavaConfigurations(final List<SpringJavaConfiguration> javaConfigurations,
-                                                                final List<PsiJavaPackage> psiPackages) {
-    List<SpringJavaConfiguration> filtered = new ArrayList<SpringJavaConfiguration>();
+                                                                        final List<PsiJavaPackage> psiPackages) {
+    List<SpringJavaConfiguration> filtered = new ArrayList<>();
     for (SpringJavaConfiguration component : javaConfigurations) {
       final PsiClass psiClass = component.getPsiClass();
       if (isInPackage(psiPackages, psiClass)) {
@@ -124,17 +111,17 @@ public class SpringJamUtils {
   }
 
   private static List<SpringStereotypeElement> getAllStereotypeComponents(final SpringJamModel javaModel) {
-    List<SpringStereotypeElement> elements = new ArrayList<SpringStereotypeElement>();
+    List<SpringStereotypeElement> elements = new ArrayList<>();
 
     elements.addAll(javaModel.getAllStereotypeComponents());
 
     return elements;
   }
 
-  private static List<PsiJavaPackage> getScannedPackages(final List<ComponentScan> scanBeans) {
-    final ArrayList<PsiJavaPackage> list = new ArrayList<PsiJavaPackage>(scanBeans.size());
+  private static List<PsiJavaPackage> getScannedPackages(final List<? extends ComponentScan> scanBeans) {
+    final ArrayList<PsiJavaPackage> list = new ArrayList<>(scanBeans.size());
     for (ComponentScan scanBean : scanBeans) {
-      list.addAll(scanBean.getBasePackage().getValue());
+      list.addAll(scanBean.getBasePackages());
     }
     return list;
   }
@@ -144,14 +131,14 @@ public class SpringJamUtils {
     if (!isExternalBean(psiMethod)) {
       return Collections.emptyList();
     }
-    final consulo.module.Module module = ModuleUtilCore.findModuleForPsiElement(psiMethod);
+    final consulo.module.Module module = psiMethod.getModule();
     PsiClass psiClass = psiMethod.getContainingClass();
     if (module == null || psiClass == null) {
       return Collections.emptyList();
     }
-    List<SpringBaseBeanPointer> extBeans = new ArrayList<SpringBaseBeanPointer>();
+    List<SpringBaseBeanPointer> extBeans = new ArrayList<>();
     final SpringModel springModel = SpringManager.getInstance(psiMethod.getProject()).getCombinedModel(module);
-    if(springModel != null) {
+    if (springModel != null) {
       List<SpringBaseBeanPointer> javaConfigBeans = springModel.findBeansByPsiClass(psiClass);
       if (javaConfigBeans.size() > 0) {
         for (SpringBaseBeanPointer springBean : springModel.getAllDomBeans()) {
@@ -169,7 +156,7 @@ public class SpringJamUtils {
 
   @Nonnull
   public static List<SpringJavaExternalBean> findExternalBeanReferences(final CommonSpringBean springBean) {
-    List<SpringJavaExternalBean> extBeans = new ArrayList<SpringJavaExternalBean>();
+    List<SpringJavaExternalBean> extBeans = new ArrayList<>();
     final Set<String> strings = SpringUtils.getAllBeanNames(springBean);
 
     if (strings.size() > 0) {

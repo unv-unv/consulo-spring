@@ -1,8 +1,8 @@
 package consulo.spring.impl.dom;
 
+import com.intellij.spring.impl.DomSpringModelImpl2;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
-import com.intellij.spring.impl.DomSpringModelImpl;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.language.psi.PsiFile;
@@ -40,7 +40,7 @@ public class SpringDomUtil {
       if (psiFile instanceof XmlFile) {
         final DomFileElement<Beans> dom = getDomRoot((XmlFile) psiFile, Beans.class);
         if (dom != null) {
-          list.add(new DomSpringModelImpl(dom, Collections.singleton((XmlFile) psiFile), module, set));
+          list.add(new DomSpringModelImpl2(dom, Collections.singleton((XmlFile) psiFile), module, set));
           //addIncludes(files, dom);
         }
       }

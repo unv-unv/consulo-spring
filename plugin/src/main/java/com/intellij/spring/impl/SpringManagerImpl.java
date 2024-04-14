@@ -92,7 +92,7 @@ public class SpringManagerImpl extends SpringManager {
     List<SpringModel> list = new SmartList<>();
     for (SpringFileSet set : allSets) {
       if (set instanceof SpringBootFileSet) {
-        list.add(new AnnotationSpringModel(module));
+        list.add(new AnnotationSpringModel(module, set));
       }
       else {
         list.addAll(SpringDomUtil.createModels(set, module));
@@ -131,14 +131,19 @@ public class SpringManagerImpl extends SpringManager {
   @Override
   @Nullable
   public SpringModel getSpringModelByFile(@Nonnull XmlFile file) {
-    return myModelFactory.getModelByConfigFile(file);
+    DomSpringModelImpl2.MyDomModelImpl domModel = (DomSpringModelImpl2.MyDomModelImpl)myModelFactory.getModelByConfigFile(file);
+    if (domModel == null) {
+      return null;
+    }
+    
+    return domModel.getSpringModel();
   }
 
   @Override
   @Nullable
   public SpringModel getLocalSpringModel(@Nonnull XmlFile file) {
     final DomFileElement<Beans> beans = myModelFactory.getDomRoot(file);
-    return beans == null ? null : new DomSpringModelImpl(beans,
+    return beans == null ? null : new DomSpringModelImpl2(beans,
                                                          Collections.singleton(file),
                                                          ModuleUtilCore.findModuleForPsiElement(file),
                                                          null);

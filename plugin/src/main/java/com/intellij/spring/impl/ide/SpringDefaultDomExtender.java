@@ -4,7 +4,6 @@
 package com.intellij.spring.impl.ide;
 
 import com.intellij.spring.impl.ide.constants.SpringConstants;
-import com.intellij.spring.impl.ide.model.xml.beans.ListOrSet;
 import com.intellij.spring.impl.ide.model.xml.context.*;
 import com.intellij.spring.impl.ide.model.xml.jee.JndiLookup;
 import com.intellij.spring.impl.ide.model.xml.jee.LocalSlsb;
@@ -17,10 +16,7 @@ import com.intellij.spring.impl.ide.model.xml.lang.GroovyScript;
 import com.intellij.spring.impl.ide.model.xml.lang.JRubyScript;
 import com.intellij.spring.impl.ide.model.xml.util.*;
 import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.DomExtender;
 import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;
-
-import javax.annotation.Nonnull;
 
 /**
  * @author peter
@@ -42,7 +38,7 @@ public class SpringDefaultDomExtender {
     registrar.registerCollectionChildrenExtension(new XmlName("load-time-weaver", SpringConstants.CONTEXT_NAMESPACE_KEY),
                                                   LoadTimeWeaver.class);
     registrar.registerCollectionChildrenExtension(new XmlName("component-scan", SpringConstants.CONTEXT_NAMESPACE_KEY),
-                                                  ComponentScan.class);
+                                                  DomComponentScan.class);
     registrar.registerCollectionChildrenExtension(new XmlName("filter", SpringConstants.CONTEXT_NAMESPACE_KEY), Filter.class);
     registrar.registerCollectionChildrenExtension(new XmlName("annotation-config", SpringConstants.CONTEXT_NAMESPACE_KEY),
                                                   AnnotationConfig.class);

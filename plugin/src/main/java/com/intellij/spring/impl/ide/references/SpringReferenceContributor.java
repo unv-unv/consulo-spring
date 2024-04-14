@@ -70,7 +70,7 @@ public class SpringReferenceContributor extends PsiReferenceContributor {
     });
 
     registrar.registerReferenceProvider(
-      PsiJavaPatterns.literalExpression().annotationParam(SpringAnnotationsConstants.RESOURCE_ANNOTATION, "name"),
+      PsiJavaPatterns.literalExpression().annotationParam(SpringAnnotationsConstants.JAVAX_RESOURCE_ANNOTATION, "name"),
       new PsiReferenceProvider() {
         @Nonnull
         @Override

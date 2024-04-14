@@ -16,12 +16,15 @@ import consulo.module.Module;
 import consulo.module.ModuleManager;
 import consulo.project.Project;
 import consulo.spring.impl.DomSpringModel;
+import consulo.spring.impl.model.BaseSpringModel;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
+import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.pointer.VirtualFilePointer;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.model.impl.DomModelFactory;
+import consulo.xml.util.xml.model.impl.DomModelImpl;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +34,7 @@ import java.util.*;
  * @author Dmitry Avdeev
 */
 @Deprecated
-public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, PsiElement> {
+public class SpringModelFactory extends DomModelFactory<Beans, DomModelImpl<Beans>, PsiElement> {
 
   protected SpringModelFactory(Project project) {
     super(Beans.class, project, "spring");
@@ -58,7 +61,8 @@ public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, P
     return dependencies.toArray(new Object[dependencies.size()]);
   }*/
 
-  protected List<DomSpringModel> computeAllModels(@Nonnull final Module module) {
+  @Override
+  protected List<DomModelImpl<Beans>> computeAllModels(@Nonnull final Module module) {
 
     final SpringModuleExtension facet = SpringModuleExtension.getInstance(module);
     if (facet == null) {
@@ -66,24 +70,24 @@ public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, P
     }
     final SpringManager springManager = SpringManager.getInstance(module.getProject());
     final Set<SpringFileSet> fileSets = springManager.getAllSets(facet);
-    final ArrayList<DomSpringModel> models = new ArrayList<DomSpringModel>(fileSets.size());
+    final ArrayList<DomSpringModel> models = new ArrayList<>(fileSets.size());
     for (SpringFileSet set: fileSets) {
       if (set.isRemoved()) {
         continue;
       }
-      final DomSpringModelImpl model = createModel(set, module);
+      final DomSpringModelImpl2 model = createModel(set, module);
       if (model != null) {
         models.add(model);
       }
     }
     setDependencies(models);
-    return models;
+    return ContainerUtil.map(models, DomSpringModel::getDomModel);
   }
 
   @Nullable
-  public DomSpringModelImpl createModel(final SpringFileSet set, final Module module) {
+  public DomSpringModelImpl2 createModel(final SpringFileSet set, final Module module) {
     final PsiManager psiManager = PsiManager.getInstance(module.getProject());
-    Set<XmlFile> files = new LinkedHashSet<XmlFile>(set.getFiles().size());
+    Set<XmlFile> files = new LinkedHashSet<>(set.getFiles().size());
     for (VirtualFilePointer filePointer: set.getFiles()) {
       final VirtualFile file = filePointer.getFile();
       if (file == null) {
@@ -101,7 +105,7 @@ public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, P
     if (files.size() > 0) {
       final DomFileElement<Beans> element = createMergedModelRoot(files);
       if (element != null) {
-        return new DomSpringModelImpl(element, files, module, set);
+        return new DomSpringModelImpl2(element, files, module, set);
       }
     }
     return null;
@@ -109,9 +113,9 @@ public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, P
 
   private static void setDependencies(final List<DomSpringModel> models) {
     for (SpringModel model : models) {
-      final List<String> dependencies = ((DomSpringModelImpl)model).getFileSet().getDependencies();
+      final List<String> dependencies = model.getFileSet().getDependencies();
       if (dependencies.size() > 0) {
-        final ArrayList<SpringModel> list = new ArrayList<SpringModel>(dependencies.size());
+        final ArrayList<SpringModel> list = new ArrayList<>(dependencies.size());
         for (Iterator<String> i = dependencies.iterator(); i.hasNext();) {
           String dependency = i.next();
           boolean valid = false;
@@ -126,14 +130,15 @@ public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, P
             i.remove();
           }
         }
-        ((DomSpringModelImpl)model).setDependencies(list.toArray(new SpringModel[list.size()]));
+        ((BaseSpringModel)model).setDependencies(list.toArray(new SpringModel[list.size()]));
       }
     }
   }
 
-  protected DomSpringModel computeModel(@Nonnull XmlFile psiFile, @Nullable Module module) {
+  @Override
+  protected DomModelImpl<Beans> computeModel(@Nonnull XmlFile psiFile, @Nullable Module module) {
     // trying to compute model for given module...
-    DomSpringModel model = super.computeModel(psiFile, module);
+    DomModelImpl<Beans> model = super.computeModel(psiFile, module);
     if (model != null) {
       return model;
     }
@@ -158,19 +163,22 @@ public class SpringModelFactory extends DomModelFactory<Beans, DomSpringModel, P
     // no configuration found; compute model for single file...
     final DomFileElement<Beans> beans = getDomRoot(psiFile);
     if (beans != null) {
-      final HashSet<XmlFile> files = new HashSet<XmlFile>();
+      final HashSet<XmlFile> files = new HashSet<>();
       files.add(psiFile);
       addIncludes(files, beans.getRootElement());
-      return new DomSpringModelImpl(files.size() > 1 ? createMergedModelRoot(files) : beans, files, module, null);
+      DomSpringModelImpl2 modelImpl2 =
+        new DomSpringModelImpl2(files.size() > 1 ? createMergedModelRoot(files) : beans, files, module, null);
+      return modelImpl2.getDomModel();
     }
     return null;
   }
 
-  protected DomSpringModel createCombinedModel(@Nonnull final Set<XmlFile> configFiles,
-                                            @Nonnull final DomFileElement<Beans> mergedModel,
-                                            final DomSpringModel firstModel,
-                                            final Module module) {
-    return new DomSpringModelImpl(mergedModel, configFiles, module, null);
+  @Override
+  protected DomModelImpl<Beans> createCombinedModel(@Nonnull Set<XmlFile> set,
+                                               @Nonnull DomFileElement<Beans> domFileElement,
+                                               DomModelImpl<Beans> beansDomModel,
+                                               Module module) {
+    return new DomSpringModelImpl2(domFileElement, set, module, null).getDomModel();
   }
 
   private void addIncludes(Set<XmlFile> files, final Beans dom) {

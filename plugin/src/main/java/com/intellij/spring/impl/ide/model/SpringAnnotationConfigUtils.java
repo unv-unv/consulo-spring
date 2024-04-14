@@ -6,7 +6,7 @@ import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.context.AnnotationConfig;
-import com.intellij.spring.impl.ide.model.xml.context.ComponentScan;
+import com.intellij.spring.impl.ide.model.xml.context.DomComponentScan;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
 import org.jetbrains.annotations.NonNls;
@@ -42,7 +42,7 @@ public class SpringAnnotationConfigUtils {
   public static boolean containsComponentScanBean(@Nonnull final SpringModel springModel) {
     for (SpringBaseBeanPointer beanPointer : springModel.getAllDomBeans()) {
       final CommonSpringBean domSpringBean = beanPointer.getSpringBean();
-      if (domSpringBean instanceof ComponentScan) {
+      if (domSpringBean instanceof DomComponentScan) {
         return true;
       }
     }

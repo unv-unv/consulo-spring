@@ -4,7 +4,6 @@ import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
-import com.intellij.spring.impl.DomSpringModelImpl;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import consulo.language.icon.IconDescriptorUpdaters;
 import consulo.language.psi.PsiFile;
@@ -65,7 +64,7 @@ public class ConfigFileChooser extends DialogWrapper {
               files.add(element.getFile());
             }
             if (fileToIgnore instanceof XmlFile) {
-              files.remove((XmlFile)fileToIgnore);
+              files.remove(fileToIgnore);
             }
             final List<SimpleNode> nodes = new ArrayList<SimpleNode>();
             for (SpringModel springModel : springModels) {
@@ -137,8 +136,8 @@ public class ConfigFileChooser extends DialogWrapper {
 
     private FileSetNode(SpringModel model) {
       myModel = model;
-      if (model instanceof DomSpringModelImpl && ((DomSpringModelImpl)model).getFileSet() != null) {
-        final SpringFileSet springFileSet = ((DomSpringModelImpl)model).getFileSet();
+      if (model.getFileSet() != null) {
+        final SpringFileSet springFileSet = model.getFileSet();
         setPlainText(springFileSet.getName());
         setIcon(springFileSet.getIcon());
       }

@@ -32,23 +32,21 @@ public interface SpringAnnotationsConstants {
   @NonNls
   String SERVICE_ANNOTATION = "org.springframework.stereotype.Service";
 
-  // spring 2.X
-  @NonNls
   String AUTOWIRED_ANNOTATION = "org.springframework.beans.factory.annotation.Autowired";
-  @NonNls
   String CONFIGURABLE_ANNOTATION = "org.springframework.beans.factory.annotation.Configurable";
-  @NonNls
   String QUALIFIER_ANNOTATION = "org.springframework.beans.factory.annotation.Qualifier";
-  @NonNls
   String REQUIRED_ANNOTATION = "org.springframework.beans.factory.annotation.Required";
+  String COMPONENT_SCAN_ANNOTATION = "org.springframework.context.annotation.ComponentScan";
 
   // javax annotations
-  @NonNls
-  String RESOURCE_ANNOTATION = "javax.annotation.Resource";
-  @NonNls
-  String PRE_DESTROY_ANNOTATION = "javax.annotation.PreDestroy";
-  @NonNls
-  String POST_CONSTRUCT_ANNOTATION = "javax.annotation.PostConstruct";
+  String JAVAX_RESOURCE_ANNOTATION = "javax.annotation.Resource";
+  String JAVAX_PRE_DESTROY_ANNOTATION = "javax.annotation.PreDestroy";
+  String JAVAX_POST_CONSTRUCT_ANNOTATION = "javax.annotation.PostConstruct";
+
+  // jakarta annotations
+  String JAKARTA_RESOURCE_ANNOTATION = "jakarta.annotation.Resource";
+  String JAKARTA_PRE_DESTROY_ANNOTATION = "jakarta.annotation.PreDestroy";
+  String JAKARTA_POST_CONSTRUCT_ANNOTATION = "jakarta.annotation.PostConstruct";
 
   @NonNls
   String CUSTOM_AUTOWIRE_CONFIGURER_CLASS = "org.springframework.beans.factory.annotation.CustomAutowireConfigurer";

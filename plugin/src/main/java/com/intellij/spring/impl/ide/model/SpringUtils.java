@@ -22,7 +22,7 @@ import com.intellij.java.language.psi.*;
 import com.intellij.java.language.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.java.language.psi.codeStyle.VariableKind;
 import com.intellij.java.language.psi.util.InheritanceUtil;
-import com.intellij.spring.impl.DomSpringModelImpl;
+import com.intellij.spring.impl.DomSpringModelImpl2;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
@@ -55,7 +55,6 @@ import consulo.util.lang.CharFilter;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
-import consulo.util.lang.function.Condition;
 import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.psi.xml.XmlFile;
@@ -137,11 +136,7 @@ public class SpringUtils {
 
     final XmlFile originalFile = (XmlFile)file.getOriginalFile();
 
-    return ContainerUtil.findAll(getNonEmptySpringModels(module), new Condition<SpringModel>() {
-      public boolean value(final SpringModel springModel) {
-        return springModel.getConfigFiles().contains(originalFile);
-      }
-    });
+    return ContainerUtil.findAll(getNonEmptySpringModels(module), springModel -> springModel.getConfigFiles().contains(originalFile));
   }
 
   private static final Key<CachedValue<List<SpringModel>>> NON_EMPTY_SPRING_MODELS_CACHE = Key.create("NON_EMPTY_SPRING_MODELS_CACHE");
@@ -203,7 +198,7 @@ public class SpringUtils {
       if (models.isEmpty()) return Collections.emptyList();
 
       final DomFileElement<Beans> merged = DomService.getInstance().createModelMerger().mergeModels(DomFileElement.class, models);
-      return Collections.<SpringModel>singletonList(new DomSpringModelImpl(merged, modelFiles, module, null) {
+      return Collections.<SpringModel>singletonList(new DomSpringModelImpl2(merged, modelFiles, module, null) {
         @Override
         public String toString() {
           return "No fileset mock model";

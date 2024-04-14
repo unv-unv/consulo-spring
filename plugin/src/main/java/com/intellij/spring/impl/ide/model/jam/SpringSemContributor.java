@@ -18,7 +18,7 @@ import consulo.language.sem.SemRegistrar;
 import consulo.language.sem.SemService;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
-import consulo.spring.impl.boot.SpringBootModelProvider;
+import consulo.spring.impl.boot.jam.SpringBootApplicationElement;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -42,7 +42,6 @@ public class SpringSemContributor extends SemContributor {
   public void registerSemProviders(SemRegistrar registrar) {
     PsiClassPattern psiClassPattern = psiClass().nonAnnotationType();
 
-    SpringBootModelProvider.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.SPRING_BOOT_APPLICATION));
     JavaConfigConfiguration.META.register(registrar,
                                           psiClassPattern.withAnnotation(SpringAnnotationsConstants.JAVA_CONFIG_CONFIGURATION_ANNOTATION));
     JavaSpringConfiguration.META.register(registrar,
@@ -54,6 +53,8 @@ public class SpringSemContributor extends SemContributor {
     SpringController.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.CONTROLLER_ANNOTATION));
     SpringService.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.SERVICE_ANNOTATION));
     SpringRepository.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.REPOSITORY_ANNOTATION));
+    SpringComponentScan.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.COMPONENT_SCAN_ANNOTATION));
+    SpringBootApplicationElement.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.SPRING_BOOT_APPLICATION));
 
     // register custom components
 

@@ -3,6 +3,7 @@ package consulo.spring.impl.model;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.SpringQualifier;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
@@ -119,16 +120,6 @@ public class CompositeSpringModel implements SpringModel {
 
   @Nonnull
   @Override
-  public Collection<? extends SpringBaseBeanPointer> getAllCommonBeans() {
-    Collection<SpringBaseBeanPointer> list = new ArrayList<>();
-    for (SpringModel model : myModels) {
-      list.addAll(model.getAllCommonBeans());
-    }
-    return list;
-  }
-
-  @Nonnull
-  @Override
   public Collection<? extends SpringBaseBeanPointer> getAllParentBeans() {
     Collection<SpringBaseBeanPointer> list = new ArrayList<>();
     for (SpringModel model : myModels) {
@@ -221,6 +212,15 @@ public class CompositeSpringModel implements SpringModel {
       list.addAll(model.getCustomBeanCandidates(id));
     }
     return list;
+  }
+
+  @Override
+  public List<? extends ComponentScan> getComponentScans() {
+    List componentScans = new ArrayList<>();
+    for (SpringModel model : myModels) {
+      componentScans.addAll(model.getComponentScans());
+    }
+    return componentScans;
   }
 
   @Nonnull
