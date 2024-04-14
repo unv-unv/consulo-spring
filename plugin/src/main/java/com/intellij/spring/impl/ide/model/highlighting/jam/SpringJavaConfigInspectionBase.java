@@ -6,9 +6,8 @@ import com.intellij.java.analysis.impl.codeInspection.BaseJavaLocalInspectionToo
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiJavaFile;
 import com.intellij.spring.impl.ide.SpringBundle;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaConfigConfiguration;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfigurationElement;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
@@ -70,7 +69,7 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
   }
 
   protected void checkClass(final PsiClass aClass, final ProblemsHolder holder, @Nonnull Module module) {
-    SpingJamElement configuration = getJavaConfiguration(aClass, module);
+    SpringJamElement configuration = getJavaConfiguration(aClass, module);
 
     if (configuration != null) {
       checkJavaConfiguration(configuration, module, holder);
@@ -78,13 +77,8 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
   }
 
   @Nullable
-  protected SpingJamElement getJavaConfiguration(PsiClass aClass, consulo.module.Module module) {
-    SpingJamElement javaSpringConfiguration = getJavaConfiguration(aClass, module, JavaSpringConfigurationElement.META.getJamKey());
-    if (javaSpringConfiguration != null) {
-      return javaSpringConfiguration;
-    }
-
-    javaSpringConfiguration = getJavaConfiguration(aClass, module, JavaConfigConfiguration.META.getJamKey());
+  protected SpringJamElement getJavaConfiguration(PsiClass aClass, consulo.module.Module module) {
+    SpringJamElement javaSpringConfiguration = getJavaConfiguration(aClass, module, JavaSpringConfigurationElement.META.getJamKey());
     if (javaSpringConfiguration != null) {
       return javaSpringConfiguration;
     }
@@ -97,11 +91,11 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
     return null;
   }
 
-  private <T extends SpingJamElement> T getJavaConfiguration(PsiClass aClass, consulo.module.Module module, SemKey<T> jamKey) {
+  private <T extends SpringJamElement> T getJavaConfiguration(PsiClass aClass, consulo.module.Module module, SemKey<T> jamKey) {
     return JamService.getJamService(module.getProject()).getJamElement(jamKey, aClass);
   }
 
-  protected abstract void checkJavaConfiguration(final SpingJamElement javaConfiguration,
+  protected abstract void checkJavaConfiguration(final SpringJamElement javaConfiguration,
                                                  final Module module,
                                                  final ProblemsHolder holder);
 }

@@ -1,7 +1,7 @@
 package com.intellij.spring.impl.ide.model.highlighting.jam;
 
 import com.intellij.java.language.psi.PsiMethod;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaExternalBean;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
 import com.intellij.spring.impl.ide.model.jam.utils.SpringJamUtils;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import consulo.find.FindUsagesHandler;
@@ -20,13 +20,14 @@ public class SpringJavaBeanReferencesFindUsagesHandler extends FindUsagesHandler
     mySpringBean = springBean;
   }
 
+  @Override
   @Nonnull
   public PsiElement[] getSecondaryElements() {
-    final List<SpringJavaExternalBean> list = SpringJamUtils.findExternalBeanReferences(mySpringBean);
+    final List<SpringJavaBean> list = SpringJamUtils.findBeanReferences(mySpringBean);
 
     Set<PsiElement> psiElements = new HashSet<PsiElement>();
 
-    for (SpringJavaExternalBean externalBean : list) {
+    for (SpringJavaBean externalBean : list) {
       final PsiMethod method = externalBean.getPsiElement();
       if (method != null) {
          psiElements.add(method);

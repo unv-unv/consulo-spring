@@ -6,15 +6,8 @@ import java.util.Set;
  * User: Sergey.Vasiliev
  */
 public interface SpringAnnotationsConstants {
-  // java config
-  String JAVA_CONFIG_CONFIGURATION_ANNOTATION = "org.springframework.config.java.annotation.Configuration";
-  String JAVA_CONFIG_BEAN_ANNOTATION = "org.springframework.config.java.annotation.Bean";
-  String JAVA_CONFIG_EXTERNAL_BEAN_ANNOTATION = "org.springframework.config.java.annotation.ExternalBean";
-  String JAVA_CONFIG_SCOPED_PROXY_ANNOTATION = "org.springframework.config.java.annotation.aop.ScopedProxy";
-
-  // java config in spring 3.0
-  String JAVA_SPRING_CONFIGURATION_ANNOTATION = "org.springframework.context.annotation.Configuration";
-  String JAVA_SPRING_BEAN_ANNOTATION = "org.springframework.context.annotation.Bean";
+  String SPRING_CONFIGURATION_ANNOTATION = "org.springframework.context.annotation.Configuration";
+  String SPRING_BEAN_ANNOTATION = "org.springframework.context.annotation.Bean";
 
   // stereotypes
   String COMPONENT_ANNOTATION = "org.springframework.stereotype.Component";
@@ -48,9 +41,11 @@ public interface SpringAnnotationsConstants {
                                           JAKARTA_RESOURCE_ANNOTATION);
 
   // predefined component annotations
-  String[] SPRING_COMPONENT_ANNOTATIONS =
-    {SpringAnnotationsConstants.COMPONENT_ANNOTATION, SpringAnnotationsConstants.CONTROLLER_ANNOTATION,
-      SpringAnnotationsConstants.REPOSITORY_ANNOTATION, SpringAnnotationsConstants.SERVICE_ANNOTATION,
-      SpringAnnotationsConstants.JAVA_CONFIG_CONFIGURATION_ANNOTATION, SpringAnnotationsConstants.JAVA_SPRING_CONFIGURATION_ANNOTATION};
-
+  String[] SPRING_COMPONENT_ANNOTATIONS = {
+    SpringAnnotationsConstants.COMPONENT_ANNOTATION,
+    SpringAnnotationsConstants.CONTROLLER_ANNOTATION,
+    SpringAnnotationsConstants.REPOSITORY_ANNOTATION,
+    SpringAnnotationsConstants.SERVICE_ANNOTATION,
+    SpringAnnotationsConstants.SPRING_CONFIGURATION_ANNOTATION
+  };
 }

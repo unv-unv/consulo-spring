@@ -9,7 +9,7 @@ import com.intellij.java.language.psi.PsiModifier;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import consulo.annotation.component.ExtensionImpl;
@@ -63,7 +63,7 @@ public class SpringBeanInstantiationInspection extends SpringBeanInspectionBase 
     if(xmlElement != null && beanClass != null) {
       final Module module = ModuleUtilCore.findModuleForPsiElement(xmlElement);
       if(module != null) {
-        for (SpingJamElement javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
+        for (SpringJamElement javaConfiguration : SpringJamModel.getModel(module).getConfigurations()) {
           if(beanClass.equals(javaConfiguration.getPsiClass())) {
             return true;
           }

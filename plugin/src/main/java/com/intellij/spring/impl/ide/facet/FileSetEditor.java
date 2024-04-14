@@ -37,6 +37,7 @@ import java.util.*;
 public class FileSetEditor extends DialogWrapper {
 
   public static final DefaultListCellRenderer FILESET_RENDERER = new DefaultListCellRenderer() {
+    @Override
     public Component getListCellRendererComponent(final JList list,
                                                   Object value,
                                                   final int index, final boolean isSelected, final boolean cellHasFocus) {
@@ -64,7 +65,7 @@ public class FileSetEditor extends DialogWrapper {
     super(module.getProject(), true);
 
     myOriginalSet = fileSet;
-    myFileSet = new SpringFileSet(fileSet);
+    myFileSet = new XmlSpringFileSet(fileSet);
 
     init(fileSet, allSets, new SpringConfigsSearcher(module), module.getProject());
   }
@@ -78,7 +79,7 @@ public class FileSetEditor extends DialogWrapper {
     super(parent, true);
 
     myOriginalSet = fileSet;
-    myFileSet = new SpringFileSet(fileSet);
+    myFileSet = new XmlSpringFileSet(fileSet);
 
     init(fileSet, allSets, searcher, project);
   }
@@ -117,6 +118,7 @@ public class FileSetEditor extends DialogWrapper {
 
     TreeUtil.expandAll(myFilesTree);
     myFilesTree.getModel().addTreeModelListener(new TreeModelAdapter() {
+      @Override
       public void treeNodesChanged(final TreeModelEvent e) {
         updateFileSet();
       }
@@ -124,6 +126,7 @@ public class FileSetEditor extends DialogWrapper {
 
     mySetName.setText(fileSet.getName());
     mySetName.addDocumentListener(new DocumentAdapter() {
+      @Override
       public void documentChanged(final DocumentEvent e) {
         updateFileSet();
       }
@@ -139,6 +142,7 @@ public class FileSetEditor extends DialogWrapper {
     myParentBox.setSelectedItem(myFileSet.getDependencies().size() > 0 ? myFileSet.getDependencies().get(0) : null);
 
     myParentBox.addItemListener(new ItemListener() {
+      @Override
       public void itemStateChanged(final ItemEvent e) {
         updateFileSet();
       }
@@ -149,16 +153,19 @@ public class FileSetEditor extends DialogWrapper {
     getOKAction().setEnabled(fileSet.isNew());
   }
 
+  @Override
   @Nullable
   protected JComponent createCenterPanel() {
     return myMainPanel;
   }
 
+  @Override
   @NonNls
   protected String getDimensionServiceKey() {
     return "spring file set editor";
   }
 
+  @Override
   public boolean isOKActionEnabled() {
     if (myOriginalSet.isNew()) {
       return true;
@@ -178,6 +185,7 @@ public class FileSetEditor extends DialogWrapper {
     return !myFileSet.getName().equals(myOriginalSet.getName()) || !b;
   }
 
+  @Override
   protected void doOKAction() {
     updateFileSet();
     super.doOKAction();
@@ -191,12 +199,15 @@ public class FileSetEditor extends DialogWrapper {
     getOKAction().setEnabled(isOKActionEnabled());
   }
 
+  @Override
   protected Action[] createActions() {
     return new Action[]{getOKAction(), getCancelAction()};
   }
 
+  @Override
   protected Action[] createLeftSideActions() {
     final AbstractAction locateAction = new AbstractAction(SpringBundle.message("config.locate.button")) {
+      @Override
       public void actionPerformed(final ActionEvent e) {
         final VirtualFile[] files =
           IdeaFileChooser.chooseFiles(new FileChooserDescriptor(true, false, true, false, true, true), myMainPanel, null, null);

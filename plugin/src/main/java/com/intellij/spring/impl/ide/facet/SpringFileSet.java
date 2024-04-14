@@ -2,10 +2,7 @@ package com.intellij.spring.impl.ide.facet;
 
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
-import consulo.spring.impl.SpringIcons;
-import consulo.spring.impl.module.extension.SpringModuleExtension;
 import consulo.ui.ex.awt.ElementsChooser;
-import consulo.ui.image.Image;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.pointer.VirtualFilePointer;
@@ -21,16 +18,9 @@ import java.util.*;
 /**
  * @author Dmitry Avdeev
  */
-public class SpringFileSet implements ElementsChooser.ElementProperties, Disposable {
-
-  @NonNls
+public abstract class SpringFileSet implements ElementsChooser.ElementProperties, Disposable {
   private static final String ID_PREFIX = "fileset";
   private boolean myAutodetected;
-  private Image myIcon = SpringIcons.FileSet;
-
-  public void setIcon(final Image icon) {
-    myIcon = icon;
-  }
 
   public static String getUniqueId(final Set<SpringFileSet> list) {
     int index = 0;
@@ -74,7 +64,7 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   private final List<String> myDependencies = new ArrayList<>();
   private boolean myRemoved;
 
-  public SpringFileSet(@NonNls @Nonnull String id, @Nonnull String name, @Nonnull final Disposable parent) {
+  public SpringFileSet(@Nonnull String id, @Nonnull String name, @Nonnull final Disposable parent) {
     myId = id;
     myName = name;
     Disposer.register(parent, this);
@@ -86,7 +76,6 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     myFiles.putAll(original.myFiles);
     myDependencies.addAll(original.myDependencies);
     myAutodetected = original.isAutodetected();
-    myIcon = original.getIcon();
     myRemoved = original.isRemoved();
   }
 
@@ -170,11 +159,10 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
   }
 
   @Nonnull
-  public SpringFileSet cloneTo(SpringModuleExtension extension) {
-    SpringFileSet fileSet = new SpringFileSet(myId, myName, extension);
+  public SpringFileSet cloneTo(Disposable parent) {
+    SpringFileSet fileSet = SpringFileSetFactory.create(getType(), myId, myName, parent);
     fileSet.myDependencies.addAll(myDependencies);
     fileSet.myAutodetected = isAutodetected();
-    //fileSet.myIcon = getIcon();
     fileSet.myRemoved = isRemoved();
     for (VirtualFilePointer pointer : myFiles.values()) {
       fileSet.addFile(pointer.getUrl());
@@ -182,10 +170,10 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     return fileSet;
   }
 
-  public Image getIcon() {
-    return myIcon;
-  }
+  @Nonnull
+  public abstract String getType();
 
+  @Override
   public Color getColor() {
     return null;
   }
@@ -198,8 +186,8 @@ public class SpringFileSet implements ElementsChooser.ElementProperties, Disposa
     myRemoved = removed;
   }
 
+  @Override
   public void dispose() {
-
   }
 
   @Override

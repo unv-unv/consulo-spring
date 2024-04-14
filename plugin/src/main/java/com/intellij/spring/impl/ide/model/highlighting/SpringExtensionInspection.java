@@ -4,6 +4,7 @@ import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.facet.FileSetEditor;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.facet.XmlSpringFileSet;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.WriteAction;
@@ -151,8 +152,8 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase<SpringEx
         }
         else {
           final ArrayList<SpringFileSet> list = new ArrayList<SpringFileSet>(sets);
-          final SpringFileSet newSet = new SpringFileSet(SpringFileSet.getUniqueId(sets),
-                                                         SpringBundle.message("fileset.new"), extension) {
+          final SpringFileSet newSet = new XmlSpringFileSet(SpringFileSet.getUniqueId(sets),
+                                                            SpringBundle.message("fileset.new"), extension) {
             @Override
             public boolean isNew() {
               return true;
@@ -251,9 +252,9 @@ public class SpringExtensionInspection extends SpringBeanInspectionBase<SpringEx
 
     @RequiredUIAccess
     protected void addNewSet(final consulo.module.Module module, final Set<SpringFileSet> sets) {
-      final SpringFileSet set = new SpringFileSet(SpringFileSet.getUniqueId(sets),
-                                                  SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets),
-                                                  module) {
+      final SpringFileSet set = new XmlSpringFileSet(SpringFileSet.getUniqueId(sets),
+                                                     SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), sets),
+                                                     module) {
         @Override
         public boolean isNew() {
           return true;

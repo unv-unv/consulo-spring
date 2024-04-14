@@ -9,11 +9,11 @@ import com.intellij.java.language.psi.PsiClass;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public abstract class SpingJamElement implements JamElement {
+public abstract class SpringJamElement implements JamElement {
 
   private final JamAnnotationMeta myMeta;
 
-  protected SpingJamElement(@Nonnull String annotation) {
+  protected SpringJamElement(@Nonnull String annotation) {
     myMeta = new JamAnnotationMeta(annotation);
   }
 

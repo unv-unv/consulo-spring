@@ -7,6 +7,7 @@ package com.intellij.spring.impl.ide.facet;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringIcons;
 import com.intellij.spring.impl.ide.SpringManager;
+import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
@@ -24,6 +25,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.pointer.VirtualFilePointer;
 import consulo.xml.psi.xml.XmlFile;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
@@ -35,12 +37,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 /**
  * @author Dmitry Avdeev
  */
-public class SpringConfigurationTab {
+public class SpringConfigurationTab implements Disposable {
 
   private JPanel myMainPanel;
   private SimpleTree myTree;
@@ -55,6 +56,7 @@ public class SpringConfigurationTab {
   private final SpringConfigsSearcher mySearcher;
 
   private final SimpleNode myRoot = new SimpleNode() {
+    @Override
     public SimpleNode[] getChildren() {
       List<SimpleNode> nodes = new ArrayList<SimpleNode>(myBuffer.size());
       for (SpringFileSet entry : myBuffer) {
@@ -66,6 +68,7 @@ public class SpringConfigurationTab {
       return nodes.toArray(new SimpleNode[nodes.size()]);
     }
 
+    @Override
     public boolean isAutoExpandNode() {
       return true;
     }
@@ -78,6 +81,7 @@ public class SpringConfigurationTab {
     mySearcher = new SpringConfigsSearcher(configuration.getModule());
 
     final SimpleTreeStructure structure = new SimpleTreeStructure() {
+      @Override
       public Object getRootElement() {
         return myRoot;
       }
@@ -85,8 +89,10 @@ public class SpringConfigurationTab {
     myTree.setRootVisible(false);
     myBuilder = new SimpleTreeBuilder(myTree, (DefaultTreeModel) myTree.getModel(), structure, null);
     myBuilder.initRoot();
+    Disposer.register(this, myBuilder);
 
     myTree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
+      @Override
       public void valueChanged(TreeSelectionEvent e) {
         final SpringFileSet fileSet = getCurrentFileSet();
         myEditButton.setEnabled(fileSet != null);
@@ -95,10 +101,12 @@ public class SpringConfigurationTab {
     });
 
     myAddSetButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
-        final SpringFileSet fileSet = new SpringFileSet(SpringFileSet.getUniqueId(myBuffer),
+        final SpringFileSet fileSet = new XmlSpringFileSet(SpringFileSet.getUniqueId(myBuffer),
             SpringFileSet.getUniqueName(SpringBundle.message("default.fileset.name"), myBuffer),
             myModuleExtension) {
+          @Override
           public boolean isNew() {
             return true;
           }
@@ -119,12 +127,14 @@ public class SpringConfigurationTab {
     });
 
     myRemoveButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(ActionEvent e) {
         remove();
       }
     });
 
     myEditButton.addActionListener(new ActionListener() {
+      @Override
       public void actionPerformed(final ActionEvent e) {
         final SpringFileSet fileSet = getCurrentFileSet();
         if (fileSet != null) {
@@ -136,7 +146,6 @@ public class SpringConfigurationTab {
             Disposer.register(configuration, edited);
             myBuffer.add(edited);
             edited.setAutodetected(false);
-            edited.setIcon(consulo.spring.impl.SpringIcons.FileSet);
             myBuilder.updateFromRoot();
             selectFileSet(edited);
             apply();
@@ -235,7 +244,7 @@ public class SpringConfigurationTab {
     final SpringModuleExtension springFacet = myModuleExtension;
     final Set<SpringFileSet> sets = SpringManager.getInstance(module.getProject()).getAllSets(springFacet);
     for (SpringFileSet fileSet : sets) {
-      myBuffer.add(new SpringFileSet(fileSet));
+      myBuffer.add(fileSet.cloneTo(this));
     }
 
     myBuilder.updateFromRoot();
@@ -243,21 +252,19 @@ public class SpringConfigurationTab {
     myTree.setSelectionRow(0);
   }
 
-  public void disposeUIResources() {
-    Disposer.dispose(myBuilder);
+  private void selectFileSet(final SpringFileSet fileSet) {
+    myTree.select(myBuilder, simpleNode -> {
+      if (simpleNode instanceof FileSetNode) {
+        if (((FileSetNode) simpleNode).mySet.equals(fileSet)) {
+          return true;
+        }
+      }
+      return false;
+    }, false);
   }
 
-  private void selectFileSet(final SpringFileSet fileSet) {
-    myTree.select(myBuilder, new Predicate<SimpleNode>() {
-      public boolean test(final SimpleNode simpleNode) {
-        if (simpleNode instanceof FileSetNode) {
-          if (((FileSetNode) simpleNode).mySet.equals(fileSet)) {
-            return true;
-          }
-        }
-        return false;
-      }
-    }, false);
+  @Override
+  public void dispose() {
   }
 
   private class FileSetNode extends SimpleNode {
@@ -272,6 +279,7 @@ public class SpringConfigurationTab {
       setIcon(fileSet.getIcon());
     }
 
+    @Override
     public SimpleNode[] getChildren() {
       final ArrayList<SimpleNode> nodes = new ArrayList<SimpleNode>();
       deps:
@@ -299,10 +307,13 @@ public class SpringConfigurationTab {
       return nodes.toArray(new SimpleNode[nodes.size()]);
     }
 
+    @Override
     public boolean isAutoExpandNode() {
       return true;
     }
 
+    @Nonnull
+    @Override
     public Object[] getEqualityObjects() {
       return new Object[]{mySet, mySet.getName(), mySet.getFiles(), mySet.getDependencies()};
     }
@@ -318,6 +329,7 @@ public class SpringConfigurationTab {
       setIcon(SpringIcons.DEPENDENCY);
     }
 
+    @Override
     public SimpleNode[] getChildren() {
       return NO_CHILDREN;
     }
@@ -332,6 +344,7 @@ public class SpringConfigurationTab {
       setIcon(consulo.spring.impl.SpringIcons.SpringConfig);
     }
 
+    @Override
     protected void doUpdate() {
       final VirtualFile file = myFilePointer.getFile();
       if (file != null) {
@@ -359,6 +372,7 @@ public class SpringConfigurationTab {
       addColoredFragment(" (" + myFilePointer.getPresentableUrl() + ")", toolTip, full);
     }
 
+    @Override
     public SimpleNode[] getChildren() {
       return NO_CHILDREN;
     }

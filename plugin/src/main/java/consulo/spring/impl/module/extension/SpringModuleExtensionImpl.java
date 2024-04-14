@@ -1,13 +1,13 @@
 package consulo.spring.impl.module.extension;
 
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
+import com.intellij.spring.impl.ide.facet.SpringFileSetFactory;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.module.content.layer.ModuleRootLayer;
 import consulo.module.content.layer.extension.ModuleExtensionBase;
 import consulo.spring.impl.boot.SpringBootFileSet;
 import consulo.virtualFileSystem.pointer.VirtualFilePointer;
 import org.jdom.Element;
-import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedHashSet;
@@ -20,18 +20,13 @@ import java.util.stream.Collectors;
  * @since 14-Jan-17
  */
 public class SpringModuleExtensionImpl extends ModuleExtensionBase<SpringModuleExtension> implements SpringModuleExtension {
-  @NonNls
   private static final String FILESET = "fileset";
-  @NonNls
   private static final String SET_ID = "id";
-  @NonNls
   private static final String SET_NAME = "name";
-  @NonNls
   private static final String SET_REMOVED = "removed";
-  @NonNls
   private static final String FILE = "file";
-  @NonNls
   private static final String DEPENDENCY = "dependency";
+  private static final String TYPE = "type";
 
   protected Set<SpringFileSet> myFileSets = new LinkedHashSet<>();
 
@@ -66,8 +61,9 @@ public class SpringModuleExtensionImpl extends ModuleExtensionBase<SpringModuleE
       final String setName = setElement.getAttributeValue(SET_NAME);
       final String setId = setElement.getAttributeValue(SET_ID);
       final String removed = setElement.getAttributeValue(SET_REMOVED);
+      final String type = setElement.getAttributeValue(TYPE);
       if (setName != null && setId != null) {
-        final SpringFileSet fileSet = new SpringFileSet(setId, setName, this);
+        final SpringFileSet fileSet = SpringFileSetFactory.create(type, setId, setName, this);
         final List<Element> deps = setElement.getChildren(DEPENDENCY);
         for (Element dep : deps) {
           fileSet.addDependency(dep.getText());
@@ -96,6 +92,7 @@ public class SpringModuleExtensionImpl extends ModuleExtensionBase<SpringModuleE
       setElement.setAttribute(SET_ID, fileSet.getId());
       setElement.setAttribute(SET_NAME, fileSet.getName());
       setElement.setAttribute(SET_REMOVED, Boolean.toString(fileSet.isRemoved()));
+      setElement.setAttribute(TYPE, fileSet.getType());
       element.addContent(setElement);
       for (String dep : fileSet.getDependencies()) {
         final Element depElement = new Element(DEPENDENCY);

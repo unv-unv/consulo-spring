@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.facet.SpringFileSet;
 import com.intellij.spring.impl.ide.model.SpringModelVisitor;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
 import com.intellij.spring.impl.ide.model.jam.stereotype.SpringStereotypeElement;
 import com.intellij.spring.impl.ide.model.jam.utils.SpringJamUtils;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
@@ -136,7 +136,7 @@ public abstract class BaseSpringModel implements SpringModel {
       }
     };
 
-  private List<SpingJamElement> myJavaConfigurations;
+  private List<SpringJamElement> myJavaConfigurations;
 
   private interface ModelVisitor {
 
@@ -153,7 +153,7 @@ public abstract class BaseSpringModel implements SpringModel {
     myModule = module;
   }
 
-  public List<SpingJamElement> getJavaConfigurations() {
+  public List<SpringJamElement> getJavaConfigurations() {
 
     return SpringJamUtils.getJavaConfigurations(this);
   }
@@ -301,7 +301,7 @@ public abstract class BaseSpringModel implements SpringModel {
   }
 
   private void processNonDomBeans(final Consumer<CommonSpringBean> consumer) {
-    for (SpingJamElement javaConfiguration : getJavaConfigurations()) {
+    for (SpringJamElement javaConfiguration : getJavaConfigurations()) {
       for (SpringJavaBean javaBean : javaConfiguration.getBeans()) {
         if (javaBean.isPublic()) {
           consumer.accept(javaBean);

@@ -3,9 +3,8 @@ package com.intellij.spring.impl.ide.model.jam;
 import com.intellij.jam.JamService;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaConfigConfiguration;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfigurationElement;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpingJamElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
 import com.intellij.spring.impl.ide.model.jam.stereotype.*;
 import com.intellij.spring.impl.ide.model.jam.utils.JamAnnotationTypeUtil;
 import consulo.annotation.component.ComponentScope;
@@ -37,16 +36,13 @@ public class SpringJamModel {
     myModule = module;
   }
 
-  public List<SpingJamElement> getConfigurations() {
+  public List<SpringJamElement> getConfigurations() {
     final JamService service = JamService.getJamService(myModule.getProject());
     final GlobalSearchScope scope = GlobalSearchScope.moduleWithDependenciesAndLibrariesScope(myModule);
-    List<SpingJamElement> configurations = new ArrayList<>();
+    List<SpringJamElement> configurations = new ArrayList<>();
 
-    configurations.addAll(service.getJamClassElements(JavaConfigConfiguration.META,
-                                                      SpringAnnotationsConstants.JAVA_CONFIG_CONFIGURATION_ANNOTATION,
-                                                      scope));
     configurations.addAll(service.getJamClassElements(JavaSpringConfigurationElement.META,
-                                                      SpringAnnotationsConstants.JAVA_SPRING_CONFIGURATION_ANNOTATION,
+                                                      SpringAnnotationsConstants.SPRING_CONFIGURATION_ANNOTATION,
                                                       scope));
 
     configurations.addAll(service.getJamClassElements(SpringBootConfigurationElement.META,

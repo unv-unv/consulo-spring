@@ -45,8 +45,8 @@ public abstract class JavaSpringJavaBean extends SpringJavaBean {
 
 
   public static JamAnnotationMeta META =
-    new JamAnnotationMeta(SpringAnnotationsConstants.JAVA_SPRING_BEAN_ANNOTATION).addAttribute(NAME_VALUE_META)
-      .addAttribute(INIT_METHOD_META).addAttribute(DESTROY_METHOD_META);
+    new JamAnnotationMeta(SpringAnnotationsConstants.SPRING_BEAN_ANNOTATION).addAttribute(NAME_VALUE_META)
+                                                                            .addAttribute(INIT_METHOD_META).addAttribute(DESTROY_METHOD_META);
 
 
   public PsiAnnotation getPsiAnnotation() {

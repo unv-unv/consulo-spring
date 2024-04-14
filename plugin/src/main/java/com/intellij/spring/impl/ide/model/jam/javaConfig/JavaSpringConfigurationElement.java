@@ -26,7 +26,7 @@ import consulo.language.psi.PsiElementRef;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public abstract class JavaSpringConfigurationElement extends SpingJamElement {
+public abstract class JavaSpringConfigurationElement extends SpringJamElement {
   public static final JamClassMeta<JavaSpringConfigurationElement> META = new JamClassMeta<>(
     JavaSpringConfigurationElement.class);
 
@@ -45,7 +45,7 @@ public abstract class JavaSpringConfigurationElement extends SpingJamElement {
     JamChildrenQuery.annotatedMethods(JavaSpringJavaBean.META, BEANS_METHOD_META);
 
   public JavaSpringConfigurationElement() {
-    super(SpringAnnotationsConstants.JAVA_SPRING_CONFIGURATION_ANNOTATION);
+    super(SpringAnnotationsConstants.SPRING_CONFIGURATION_ANNOTATION);
   }
 
   protected JavaSpringConfigurationElement(@Nonnull String annotation) {
