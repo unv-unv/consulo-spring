@@ -11,6 +11,7 @@ import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.java.language.JavaLanguage;
 import com.intellij.java.language.psi.*;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.aop.icon.AopIconGroup;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
@@ -159,7 +160,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
 
   public static NavigationGutterIconBuilder<PsiElement> addNavigationToBoundIntroductions(
     final List<AopIntroduction> boundIntros) {
-    return NavigationGutterIconBuilder.create(createToIcon(AopConstants.INTRODUCTION_ICON)).
+    return NavigationGutterIconBuilder.create(createToIcon(AopIconGroup.gutterIntroduction())).
       setTargets(boundIntros.stream().map(it -> it.getIdentifyingPsiElement()).collect(Collectors.toList())).
                                         setTooltipText(AopBundle.message("tooltip.text.navigate.to.introductions")).
                                         setPopupTitle(AopBundle.message("tooltip.text.navigate.to.introductions")).
@@ -396,7 +397,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
           return result;
         }
       };
-    return NavigationGutterIconBuilder.create(createFromIcon(AopConstants.INTRODUCTION_ICON)).
+    return NavigationGutterIconBuilder.create(createFromIcon(AopIconGroup.gutterIntroduction())).
       setTargets(targets).
                                         setPopupTitle(AopBundle.message("tooltip.text.navigate.to.classes")).
                                         setTooltipText(AopBundle.message("tooltip.text.navigate.to.classes")).
