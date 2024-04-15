@@ -41,12 +41,6 @@
       <add-to-group anchor="last" group-id="GenerateGroup"/>
     </action>
 
-    <action id="Spring.Patterns.ActionGroup"
-            class="com.intellij.spring.impl.ide.model.actions.patterns.frameworks.FrameworkIntegrationActionGroup"
-            text="Patterns">
-      <add-to-group anchor="last" group-id="GenerateGroup"/>
-    </action>
-
     <group id="Spring.Create.Context.Group" popup="true" text="Spring">
       <add-to-group anchor="last" group-id="NewGroup"/>
     </group>

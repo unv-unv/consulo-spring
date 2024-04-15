@@ -7,35 +7,35 @@ import consulo.ui.image.Image;
 @Deprecated
 @DeprecationInfo("Use SpringImplIconGroup")
 public interface PatternIcons {
-  Image SPRING_BEANS_ICON = SpringImplIconGroup.patternsBeans();
+  Image SPRING_BEANS_ICON = Image.empty();
 
-  Image SPRING_PATTERNS_ICON = SpringImplIconGroup.patternsPatterns();
+  Image SPRING_PATTERNS_ICON = Image.empty();
 
-  Image HIBERNATE_ICON = SpringImplIconGroup.patternsHibernate();
+  Image HIBERNATE_ICON = Image.empty();
 
-  Image DATASOURCE_ICON = SpringImplIconGroup.patternsDatasource();
+  Image DATASOURCE_ICON = Image.empty();
 
-  Image JDO_ICON = SpringImplIconGroup.patternsJdo();
+  Image JDO_ICON = Image.empty();
 
-  Image TOPLINK_ICON = SpringImplIconGroup.patternsToplink();
+  Image TOPLINK_ICON = Image.empty();
 
-  Image IBATIS_ICON = SpringImplIconGroup.patternsIbatis();
+  Image IBATIS_ICON = Image.empty();
 
-  Image JPA_ICON = SpringImplIconGroup.patternsJpa();
+  Image JPA_ICON = Image.empty();
 
-  Image TRANSACTION_MANAGER_ICON = SpringImplIconGroup.patternsTransactionmanager();
+  Image TRANSACTION_MANAGER_ICON = Image.empty();
 
-  Image DATA_ACCESS_GROUP_ICON = SpringImplIconGroup.patternsDataaccess();
+  Image DATA_ACCESS_GROUP_ICON = Image.empty();
 
-  Image INTEGRATION_GROUP_ICON = SpringImplIconGroup.patternsIntegration();
+  Image INTEGRATION_GROUP_ICON = Image.empty();
 
-  Image FACTORY_BEAN_ICON = SpringImplIconGroup.patternsFactorybean();
+  Image FACTORY_BEAN_ICON = Image.empty();
 
-  Image SCHEDULER_ICON = SpringImplIconGroup.patternsScheduler();
+  Image SCHEDULER_ICON = Image.empty();
 
-  Image EJB_ICON = SpringImplIconGroup.patternsEjb();
+  Image EJB_ICON = Image.empty();
 
-  Image JDK_ICON = SpringImplIconGroup.patternsJdk();
+  Image JDK_ICON = Image.empty();
 
   Image SPRING_WEBFLOW_ICON = SpringImplIconGroup.springbean();
 }

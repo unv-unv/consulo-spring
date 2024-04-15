@@ -1,10 +1,11 @@
 package com.intellij.spring.impl.ide.model.actions.patterns.frameworks;
 
-import javax.annotation.Nullable;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.model.actions.patterns.AbstarctSpringConfigActionGroup;
-import com.intellij.spring.impl.ide.model.actions.patterns.PatternIcons;
+import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
+
+import javax.annotation.Nullable;
 
 public class FrameworkIntegrationActionGroup extends AbstarctSpringConfigActionGroup {
 
@@ -31,6 +32,6 @@ public class FrameworkIntegrationActionGroup extends AbstarctSpringConfigActionG
 
   @Nullable
   protected Image getIcon() {
-    return PatternIcons.SPRING_PATTERNS_ICON;
+    return SpringImplIconGroup.spring();
   }
 }
