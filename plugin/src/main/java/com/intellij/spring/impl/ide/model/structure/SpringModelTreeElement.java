@@ -1,7 +1,6 @@
 package com.intellij.spring.impl.ide.model.structure;
 
 import com.intellij.spring.impl.ide.SpringBundle;
-import com.intellij.spring.impl.ide.SpringIcons;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
@@ -11,6 +10,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.TreeElement;
 import consulo.navigation.ItemPresentation;
+import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
 import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
 import consulo.xml.psi.xml.XmlDocument;
@@ -42,14 +42,17 @@ public class SpringModelTreeElement implements StructureViewTreeElement, ItemPre
     myShowBeanStructure = showBeanStructure;
   }
 
+  @Override
   public Object getValue() {
     return myXmlFile;
   }
 
+  @Override
   public ItemPresentation getPresentation() {
     return this;
   }
 
+  @Override
   public TreeElement[] getChildren() {
     List<StructureViewTreeElement> treeElements = new ArrayList<StructureViewTreeElement>();
     SpringModel springModel = getSpringModel();
@@ -84,26 +87,32 @@ public class SpringModelTreeElement implements StructureViewTreeElement, ItemPre
     return SpringManager.getInstance(myXmlFile.getProject()).getLocalSpringModel(myXmlFile);
   }
 
+  @Override
   public void navigate(final boolean requestFocus) {
   }
 
+  @Override
   public boolean canNavigate() {
     return false;
   }
 
+  @Override
   public boolean canNavigateToSource() {
     return false;
   }
 
+  @Override
   public String getPresentableText() {
     return SpringBundle.message("spring.beans");
   }
 
+  @Override
   public String getLocationString() {
     return null;
   }
 
+  @Override
   public Image getIcon() {
-    return SpringIcons.SPRING_BEANS_ICON;
+    return SpringImplIconGroup.springbean();
   }
 }

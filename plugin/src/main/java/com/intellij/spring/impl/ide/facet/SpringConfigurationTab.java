@@ -5,13 +5,13 @@
 package com.intellij.spring.impl.ide.facet;
 
 import com.intellij.spring.impl.ide.SpringBundle;
-import com.intellij.spring.impl.ide.SpringIcons;
 import com.intellij.spring.impl.ide.SpringManager;
 import consulo.disposer.Disposable;
 import consulo.disposer.Disposer;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.module.Module;
+import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.project.Project;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 import consulo.ui.ex.SimpleTextAttributes;
@@ -326,7 +326,7 @@ public class SpringConfigurationTab implements Disposable {
       super(parent);
       myFileSet = fileSet;
       setPlainText(fileSet.getName());
-      setIcon(SpringIcons.DEPENDENCY);
+      setIcon(PlatformIconGroup.vcsArrow_right());
     }
 
     @Override

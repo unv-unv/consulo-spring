@@ -5,7 +5,6 @@
 package com.intellij.spring.impl.ide.model.highlighting;
 
 import com.intellij.spring.impl.ide.SpringBundle;
-import com.intellij.spring.impl.ide.SpringIcons;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.gutter.DomElementListCellRenderer;
 import com.intellij.spring.impl.ide.model.SpringUtils;
@@ -16,6 +15,7 @@ import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
 import consulo.language.psi.PsiElement;
+import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
@@ -48,7 +48,7 @@ public class SpringDomAnnotator implements Annotator {
     if (children.size() > 0) {
 
       final NavigationGutterIconBuilder<SpringBaseBeanPointer> iconBuilder =
-        NavigationGutterIconBuilder.create(SpringIcons.PARENT_GUTTER, CONVERTER);
+        NavigationGutterIconBuilder.create(SpringImplIconGroup.gutterParentbeangutter(), CONVERTER);
       iconBuilder.
                    setTargets(children).
                    setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
