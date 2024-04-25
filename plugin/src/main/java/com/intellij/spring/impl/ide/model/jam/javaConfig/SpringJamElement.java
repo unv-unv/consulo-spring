@@ -13,8 +13,8 @@ public abstract class SpringJamElement implements JamElement {
 
   private final JamAnnotationMeta myMeta;
 
-  protected SpringJamElement(@Nonnull String annotation) {
-    myMeta = new JamAnnotationMeta(annotation);
+  protected SpringJamElement(@Nonnull JamAnnotationMeta annotationMeta) {
+    myMeta = annotationMeta;
   }
 
   public PsiAnnotation getAnnotation() {

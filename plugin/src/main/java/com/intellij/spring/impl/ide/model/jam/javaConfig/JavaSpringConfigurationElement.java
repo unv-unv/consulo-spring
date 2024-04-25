@@ -16,6 +16,7 @@
 
 package com.intellij.spring.impl.ide.model.jam.javaConfig;
 
+import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamChildrenQuery;
 import com.intellij.jam.reflect.JamClassMeta;
 import com.intellij.jam.reflect.JamMethodMeta;
@@ -27,9 +28,6 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public abstract class JavaSpringConfigurationElement extends SpringJamElement {
-  public static final JamClassMeta<JavaSpringConfigurationElement> META = new JamClassMeta<>(
-    JavaSpringConfigurationElement.class);
-
   public static final JamMethodMeta<JavaSpringJavaBean> BEANS_METHOD_META =
     new JamMethodMeta<>(JavaSpringJavaBean.class).addAnnotation(JavaSpringJavaBean.META);
 
@@ -44,16 +42,18 @@ public abstract class JavaSpringConfigurationElement extends SpringJamElement {
   protected static final JamChildrenQuery<JavaSpringJavaBean> BEANS_QUERY =
     JamChildrenQuery.annotatedMethods(JavaSpringJavaBean.META, BEANS_METHOD_META);
 
+  private static final JamAnnotationMeta ANNOTATION_META =
+    new JamAnnotationMeta(SpringAnnotationsConstants.SPRING_CONFIGURATION_ANNOTATION);
+
+  public static final JamClassMeta<JavaSpringConfigurationElement> META =
+    new JamClassMeta<>(JavaSpringConfigurationElement.class).addChildrenQuery(BEANS_QUERY);
+
   public JavaSpringConfigurationElement() {
-    super(SpringAnnotationsConstants.SPRING_CONFIGURATION_ANNOTATION);
+    super(ANNOTATION_META);
   }
 
-  protected JavaSpringConfigurationElement(@Nonnull String annotation) {
-    super(annotation);
-  }
-
-  static {
-    META.addChildrenQuery(BEANS_QUERY);
+  protected JavaSpringConfigurationElement(@Nonnull JamAnnotationMeta annotationMeta) {
+    super(annotationMeta);
   }
 
   @Override

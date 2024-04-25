@@ -27,9 +27,9 @@ public abstract class SpringStereotypeElement extends JamPsiClassSpringBean {
 
   protected final PsiClass myPsiClass;
 
-  protected SpringStereotypeElement(@Nonnull String anno, @Nonnull PsiClass psiClass) {
+  protected SpringStereotypeElement(@Nonnull JamAnnotationMeta annotationMeta, @Nonnull PsiClass psiClass) {
     myPsiClass = psiClass;
-    myMeta = new JamAnnotationMeta(anno);
+    myMeta = annotationMeta;
   }
 
   @Nonnull
@@ -37,6 +37,7 @@ public abstract class SpringStereotypeElement extends JamPsiClassSpringBean {
     return myMeta.getAttribute(myPsiClass, NAME_VALUE_META);
   }
 
+  @Override
   public String getBeanName() {
     final String definedName = getAnnotationDefinedBeanName();
 

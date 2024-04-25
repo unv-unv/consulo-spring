@@ -1,6 +1,7 @@
 package com.intellij.spring.impl.ide.model.jam;
 
 import com.intellij.jam.JamService;
+import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamMemberMeta;
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.patterns.PsiClassPattern;
@@ -22,6 +23,8 @@ import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.intellij.java.language.patterns.PsiJavaPatterns.psiClass;
 
@@ -29,7 +32,10 @@ import static com.intellij.java.language.patterns.PsiJavaPatterns.psiClass;
 public class SpringSemContributor extends SemContributor {
   private static final SemKey<JamMemberMeta<PsiClass, CustomSpringComponent>> CUSTOM_COMPONENT_META_KEY =
     JamService.MEMBER_META_KEY.subKey("CustomSpringComponentMeta");
+
   public static final SemKey<CustomSpringComponent> CUSTOM_COMPONENT_JAM_KEY = JamService.JAM_ELEMENT_KEY.subKey("CustomSpringComponent");
+
+  private Map<String, JamAnnotationMeta> myCustomAnnotationMetas = new ConcurrentHashMap<>();
 
   private final SemService mySemService;
 
@@ -61,7 +67,7 @@ public class SpringSemContributor extends SemContributor {
 
     // register custom components
 
-    registrar.registerSemElementProvider(CUSTOM_COMPONENT_META_KEY, psiClassPattern, SpringSemContributor::calcNamedWebBeanMeta);
+    registrar.registerSemElementProvider(CUSTOM_COMPONENT_META_KEY, psiClassPattern, this::calcNamedWebBeanMeta);
 
     registrar.registerSemElementProvider(CUSTOM_COMPONENT_JAM_KEY, psiClassPattern, member -> {
       final JamMemberMeta<PsiClass, CustomSpringComponent> memberMeta =
@@ -72,7 +78,7 @@ public class SpringSemContributor extends SemContributor {
 
 
   @RequiredReadAction
-  private static JamMemberMeta<PsiClass, CustomSpringComponent> calcNamedWebBeanMeta(PsiClass psiClass) {
+  private JamMemberMeta<PsiClass, CustomSpringComponent> calcNamedWebBeanMeta(PsiClass psiClass) {
     if (psiClass.isAnnotationType()) return null;
 
     final Module module = psiClass.getModule();
@@ -80,7 +86,7 @@ public class SpringSemContributor extends SemContributor {
       List<String> customComponentAnnotations = JamAnnotationTypeUtil.getUserDefinedCustomComponentAnnotations(module);
 
       for (String anno : customComponentAnnotations) {
-        if (AnnotationUtil.isAnnotated(psiClass, anno, true)) {
+        if (AnnotationUtil.isAnnotated(psiClass, anno, AnnotationUtil.CHECK_HIERARCHY)) {
           return createCustomSpringComponentJamMemberMeta(anno);
         }
       }
@@ -89,11 +95,13 @@ public class SpringSemContributor extends SemContributor {
     return null;
   }
 
-  private static JamMemberMeta<PsiClass, CustomSpringComponent> createCustomSpringComponentJamMemberMeta(final String annotationFQN) {
+  private JamMemberMeta<PsiClass, CustomSpringComponent> createCustomSpringComponentJamMemberMeta(final String annotationFQN) {
+    JamAnnotationMeta annotationMeta = myCustomAnnotationMetas.computeIfAbsent(annotationFQN, JamAnnotationMeta::new);
+
     return new JamMemberMeta<>(null, CustomSpringComponent.class, CUSTOM_COMPONENT_JAM_KEY) {
       @Override
       public CustomSpringComponent createJamElement(PsiElementRef<PsiClass> psiMemberPsiRef) {
-        return new CustomSpringComponent(annotationFQN, psiMemberPsiRef.getPsiElement());
+        return new CustomSpringComponent(annotationMeta, psiMemberPsiRef.getPsiElement());
       }
     };
   }

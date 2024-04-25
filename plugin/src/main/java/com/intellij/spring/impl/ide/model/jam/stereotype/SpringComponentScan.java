@@ -1,6 +1,7 @@
 package com.intellij.spring.impl.ide.model.jam.stereotype;
 
 import com.intellij.jam.JamStringAttributeElement;
+import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamAttributeMeta;
 import com.intellij.jam.reflect.JamClassMeta;
 import com.intellij.jam.reflect.JamStringAttributeMeta;
@@ -24,8 +25,10 @@ public abstract class SpringComponentScan extends SpringStereotypeElement {
   private static final JamStringAttributeMeta.Collection<String> BASE_PACKAGES_ATTRIBUTE_META =
     JamAttributeMeta.collectionString("basePackages");
 
+  private static final JamAnnotationMeta ANNOTATION_META = new JamAnnotationMeta(SpringAnnotationsConstants.COMPONENT_SCAN_ANNOTATION);
+
   public SpringComponentScan(@Nonnull PsiClass psiClass) {
-    super(SpringAnnotationsConstants.COMPONENT_SCAN_ANNOTATION, psiClass);
+    super(ANNOTATION_META, psiClass);
   }
 
   public Set<String> getBasePackages() {
