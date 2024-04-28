@@ -99,7 +99,7 @@ public class AnnotationSpringModel extends BaseSpringModel implements SpringMode
 
       String packageName = StringUtil.getPackageName(qualifiedName);
 
-      PsiJavaPackage aPackage = javaPsiFacade.findPackage(Objects.requireNonNullElse(packageName, ""));
+      PsiJavaPackage aPackage = javaPsiFacade.findPackage(StringUtil.notNullize(packageName));
 
       if (aPackage != null) {
         componentScans.add(new AnnotatationComponentScan(List.of(aPackage)));
@@ -111,7 +111,7 @@ public class AnnotationSpringModel extends BaseSpringModel implements SpringMode
       Set<String> basePackages = annotationComponentScan.getBasePackages();
 
       for (String basePackage : basePackages) {
-        PsiJavaPackage aPackage = javaPsiFacade.findPackage(basePackage);
+        PsiJavaPackage aPackage = javaPsiFacade.findPackage(StringUtil.notNullize(basePackage));
         if (aPackage != null) {
           componentScans.add(new AnnotatationComponentScan(List.of(aPackage)));
         }
