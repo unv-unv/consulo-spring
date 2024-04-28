@@ -196,7 +196,7 @@ public class SpringClassAnnotator implements Annotator {
       if (model != null) {
         SpringBeanPointer bean = model.findBean(method.getName());
         if (bean != null) {
-          NavigationGutterIconBuilder.create(SpringImplIconGroup.springbean(), BEAN_POINTER_CONVERTOR).
+          NavigationGutterIconBuilder.create(SpringImplIconGroup.gutterSpringbean(), BEAN_POINTER_CONVERTOR).
                                      setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
                                      setCellRenderer(DOM_RENDERER).
                                      setTargets(LazyValue.notNull(List::of)).
@@ -211,9 +211,10 @@ public class SpringClassAnnotator implements Annotator {
     }
   }
 
+  @RequiredReadAction
   private static void processAnnotatedMethod(final PsiMethod method, final AnnotationHolder holder) {
     if (SpringAutowireUtil.isAutowiredByAnnotation(method)) {
-      final Module module = ModuleUtilCore.findModuleForPsiElement(method);
+      final Module module = method.getModule();
       final SpringModel model = SpringManager.getInstance(method.getProject()).getCombinedModel(module);
       if (model != null) {
         final boolean required = SpringAutowireUtil.isRequired(method);
@@ -230,7 +231,7 @@ public class SpringClassAnnotator implements Annotator {
     final Collection<SpringBaseBeanPointer> list =
       SpringJavaAutowiringInspection.checkAutowiredPsiMember(variable, type, null, model, required);
     if (list != null && !list.isEmpty()) {
-      NavigationGutterIconBuilder.create(SpringImplIconGroup.showautowireddependencies(), BEAN_POINTER_CONVERTOR).
+      NavigationGutterIconBuilder.create(SpringImplIconGroup.gutterShowautowireddependencies(), BEAN_POINTER_CONVERTOR).
                                  setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
                                  setCellRenderer(BEAN_RENDERER).
                                  setTooltipText(SpringBundle.message("navigate.to.autowired.dependencies")).

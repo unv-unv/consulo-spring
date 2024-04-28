@@ -1,7 +1,6 @@
 package com.intellij.spring.impl.ide.model.highlighting;
 
 import com.intellij.java.analysis.impl.codeInspection.BaseJavaLocalInspectionTool;
-import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
 import com.intellij.java.language.psi.util.InheritanceUtil;
 import com.intellij.java.language.psi.util.PropertyUtil;
@@ -9,13 +8,11 @@ import com.intellij.java.language.psi.util.PsiUtil;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
-import com.intellij.spring.impl.ide.java.SpringJavaClassInfo;
-import com.intellij.spring.impl.ide.model.jam.utils.JamAnnotationTypeUtil;
-import com.intellij.spring.impl.ide.model.xml.beans.DomSpringBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import com.intellij.spring.impl.ide.references.SpringBeanReference;
 import com.intellij.spring.impl.ide.references.SpringQualifierReference;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.java.impl.model.annotations.AnnotationModelUtil;
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -26,7 +23,6 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiNameIdentifierOwner;
 import consulo.language.psi.PsiReference;
-import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.util.lang.StringUtil;
 import org.jetbrains.annotations.NonNls;
@@ -45,20 +41,12 @@ import java.util.List;
 public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<Object> {
 
   @Nullable
+  @RequiredReadAction
   private static SpringModel getModelForBean(final PsiClass aClass) {
-    final SpringJavaClassInfo info = SpringJavaClassInfo.getSpringJavaClassInfo(aClass);
-    final List<DomSpringBeanPointer> beans = info.getMappedBeans();
-    final Module module = ModuleUtilCore.findModuleForPsiElement(aClass);
+    final Module module = aClass.getModule();
     if (module == null) {
       return null;
     }
-
-    if (beans.isEmpty()) {
-      if (!AnnotationUtil.isAnnotated(aClass, JamAnnotationTypeUtil.getCustomComponentAnnotations(module))) {
-        return null;
-      }
-    }
-
     return SpringManager.getInstance(module.getProject()).getCombinedModel(module);
   }
 

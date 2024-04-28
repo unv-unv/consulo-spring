@@ -15,6 +15,9 @@ import com.intellij.spring.impl.ide.model.values.converters.*;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ServiceImpl;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
+import consulo.language.psi.PsiModificationTracker;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.project.Project;
@@ -48,9 +51,11 @@ public class SpringManagerImpl extends SpringManager {
   private final SpringModelFactory myModelFactory;
   private final GenericDomValueConvertersRegistry myValueProvidersRegistry;
   private final CustomConverterRegistry myCustomConvertersRegistry;
+  private final CachedValuesManager myCachedValuesManager;
 
   @Inject
-  public SpringManagerImpl(Project project) {
+  public SpringManagerImpl(Project project, CachedValuesManager cachedValuesManager) {
+    myCachedValuesManager = cachedValuesManager;
     myModelFactory = new SpringModelFactory(project);
     myValueProvidersRegistry = new GenericDomValueConvertersRegistry();
     myCustomConvertersRegistry = new CustomConverterRegistry();
@@ -106,6 +111,13 @@ public class SpringManagerImpl extends SpringManager {
   @Override
   @Nullable
   public SpringModel getCombinedModel(final Module module) {
+    return myCachedValuesManager.getCachedValue(module, () -> {
+      return CachedValueProvider.Result.create(getCombinedModelImpl(module), PsiModificationTracker.MODIFICATION_COUNT);
+    });
+  }
+
+  @RequiredReadAction
+  private SpringModel getCombinedModelImpl(Module module) {
     List<SpringModel> allModels = getAllModels(module);
     if (allModels.isEmpty()) {
       return null;
@@ -135,7 +147,7 @@ public class SpringManagerImpl extends SpringManager {
     if (domModel == null) {
       return null;
     }
-    
+
     return domModel.getSpringModel();
   }
 
@@ -144,9 +156,9 @@ public class SpringManagerImpl extends SpringManager {
   public SpringModel getLocalSpringModel(@Nonnull XmlFile file) {
     final DomFileElement<Beans> beans = myModelFactory.getDomRoot(file);
     return beans == null ? null : new DomSpringModelImpl2(beans,
-                                                         Collections.singleton(file),
-                                                         ModuleUtilCore.findModuleForPsiElement(file),
-                                                         null);
+                                                          Collections.singleton(file),
+                                                          ModuleUtilCore.findModuleForPsiElement(file),
+                                                          null);
   }
 
   @Override

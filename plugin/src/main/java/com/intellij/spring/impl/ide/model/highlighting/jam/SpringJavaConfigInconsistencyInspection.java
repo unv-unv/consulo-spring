@@ -83,13 +83,6 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
     checkReturnType(springJavaBean, holder);
     checkNonFinal(springJavaBean, holder);
     checkNonPrivate(springJavaBean, holder);
-    checkNoArguments(springJavaBean, holder);
-  }
-
-  private static void checkNoArguments(SpringJavaBean springJavaBean, ProblemsHolder holder) {
-    if (springJavaBean.getPsiElement().getParameterList().getParametersCount() > 0) {
-      holder.registerProblem(springJavaBean.getPsiAnnotation(), SpringBundle.message("java.config.bean.method.cannot.has.arguments"));
-    }
   }
 
   private static void checkNonPrivate(SpringJavaBean springJavaBean, ProblemsHolder holder) {

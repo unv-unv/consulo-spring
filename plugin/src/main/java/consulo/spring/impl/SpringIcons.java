@@ -9,7 +9,6 @@ import consulo.ui.image.Image;
 public interface SpringIcons {
   Image FactoryMethodBean = SpringImplIconGroup.factorymethodbean();
   Image FileSet = SpringImplIconGroup.fileset();
-  Image ShowAutowiredDependencies = SpringImplIconGroup.showautowireddependencies();
   Image Spring = SpringImplIconGroup.spring();
   Image SpringBean = SpringImplIconGroup.springbean();
   Image SpringConfig = SpringImplIconGroup.springconfig();
