@@ -136,8 +136,6 @@ public abstract class BaseSpringModel implements SpringModel {
       }
     };
 
-  private List<SpringJamElement> myJavaConfigurations;
-
   private interface ModelVisitor {
 
 
@@ -154,7 +152,6 @@ public abstract class BaseSpringModel implements SpringModel {
   }
 
   public List<SpringJamElement> getJavaConfigurations() {
-
     return SpringJamUtils.getJavaConfigurations(this);
   }
 

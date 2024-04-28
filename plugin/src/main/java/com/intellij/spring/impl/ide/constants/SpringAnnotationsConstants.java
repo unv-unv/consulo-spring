@@ -9,6 +9,8 @@ public interface SpringAnnotationsConstants {
   String SPRING_CONFIGURATION_ANNOTATION = "org.springframework.context.annotation.Configuration";
   String SPRING_BEAN_ANNOTATION = "org.springframework.context.annotation.Bean";
 
+  String IMPORT_ANNOTATION = "org.springframework.context.annotation.Import";
+
   // stereotypes
   String COMPONENT_ANNOTATION = "org.springframework.stereotype.Component";
   String CONTROLLER_ANNOTATION = "org.springframework.stereotype.Controller";

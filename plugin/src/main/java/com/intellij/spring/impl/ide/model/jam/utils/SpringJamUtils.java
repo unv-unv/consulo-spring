@@ -1,9 +1,9 @@
 package com.intellij.spring.impl.ide.model.jam.utils;
 
-import com.intellij.java.language.psi.PsiClass;
-import com.intellij.java.language.psi.PsiJavaPackage;
-import com.intellij.java.language.psi.PsiMethod;
+import com.intellij.java.language.codeInsight.AnnotationUtil;
+import com.intellij.java.language.psi.*;
 import com.intellij.spring.impl.ide.SpringModel;
+import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
@@ -54,21 +54,43 @@ public class SpringJamUtils {
   public static List<SpringJamElement> getJavaConfigurations(final SpringModel springModel) {
     List<SpringJamElement> javaConfigurations = new ArrayList<>();
     final consulo.module.Module module = springModel.getModule();
-    if (module != null) {
-      List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
-      if (scanBeans.size() > 0) {
-        List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
-        if (psiPackages.isEmpty()) {
-          return Collections.emptyList();
-        }
+    if (module == null) {
+      return List.of();
+    }
+    
+    List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
+    if (scanBeans.size() > 0) {
+      List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
+      if (psiPackages.isEmpty()) {
+        return Collections.emptyList();
+      }
 
-        List<SpringJamElement> components = SpringJamModel.getModel(module).getConfigurations();
+      List<SpringJamElement> components = SpringJamModel.getModel(module).getConfigurations();
 
-        return filterJavaConfigurations(components, psiPackages);
+      List<SpringJamElement> filteredConfigurations = filterJavaConfigurations(components, psiPackages);
+      for (SpringJamElement filteredConfiguration : filteredConfigurations) {
+        javaConfigurations.add(filteredConfiguration);
+        // TODO process imports
       }
     }
 
     return javaConfigurations;
+  }
+
+  public static void processImport(SpringJamElement filteredConfiguration) {
+    PsiClass psiClass = filteredConfiguration.getPsiClass();
+
+    if (psiClass != null) {
+      PsiAnnotation annotation = AnnotationUtil.findAnnotation(psiClass, SpringAnnotationsConstants.IMPORT_ANNOTATION);
+      if (annotation != null) {
+        PsiAnnotationParameterList parameterList = annotation.getParameterList();
+        for (PsiNameValuePair attribute : parameterList.getAttributes()) {
+          PsiAnnotationMemberValue value = attribute.getValue();
+          System.out.println();
+        }
+      }
+    }
+
   }
 
 
