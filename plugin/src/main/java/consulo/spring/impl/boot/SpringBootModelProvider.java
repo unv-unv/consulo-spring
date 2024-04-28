@@ -2,6 +2,7 @@ package consulo.spring.impl.boot;
 
 import com.intellij.jam.JamService;
 import com.intellij.java.language.psi.PsiClass;
+import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.SpringModelProvider;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
@@ -16,8 +17,8 @@ import consulo.spring.impl.module.extension.SpringModuleExtension;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author VISTALL
@@ -26,9 +27,8 @@ import java.util.List;
 @ExtensionImpl
 public class SpringBootModelProvider implements SpringModelProvider {
   @RequiredReadAction
-  @Nonnull
   @Override
-  public List<SpringFileSet> getFilesets(@Nonnull SpringModuleExtension extension) {
+  public void collectFilesets(@Nonnull SpringModuleExtension extension, @Nonnull Consumer<SpringFileSet> consumer) {
     Module module = extension.getModule();
 
     final JamService service = JamService.getJamService(module.getProject());
@@ -43,16 +43,24 @@ public class SpringBootModelProvider implements SpringModelProvider {
                                                 scope));
 
     if (elements.isEmpty()) {
-      return Collections.emptyList();
+      return;
     }
-    List<SpringFileSet> list = new ArrayList<>(elements.size());
+
     for (SpringJamElement configuration : elements) {
       PsiClass psiClass = configuration.getPsiClass();
 
-      SpringBootFileSet springFileSet =
-        new SpringBootFileSet(SpringFileSet.getUniqueId(extension.getFileSets()), psiClass.getQualifiedName(), extension);
-      list.add(springFileSet);
+      String qualifiedName = psiClass.getQualifiedName();
+      if (qualifiedName == null) {
+        continue;
+      }
+
+      consumer.accept(new SpringBootFileSet(qualifiedName, psiClass.getName(), extension));
     }
-    return list;
+  }
+
+  @Nonnull
+  @Override
+  public SpringModel createModel(@Nonnull Module module, @Nonnull SpringFileSet fileSet) {
+    return new AnnotationSpringModel(module, fileSet);
   }
 }

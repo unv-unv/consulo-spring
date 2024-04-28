@@ -3,7 +3,7 @@ package consulo.spring.impl.boot;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
 import com.intellij.spring.impl.ide.facet.SpringFileSetFactory;
 import consulo.disposer.Disposable;
-import consulo.platform.base.icon.PlatformIconGroup;
+import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
@@ -31,6 +31,6 @@ public class SpringBootFileSet extends SpringFileSet {
 
   @Override
   public Image getIcon() {
-    return PlatformIconGroup.nodesClass();
+    return SpringImplIconGroup.springjavaconfig();
   }
 }

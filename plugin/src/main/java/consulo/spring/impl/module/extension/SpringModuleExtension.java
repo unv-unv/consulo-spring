@@ -23,5 +23,6 @@ public interface SpringModuleExtension extends ModuleExtension<SpringModuleExten
   }
 
   @Nonnull
+  @Deprecated
   Set<SpringFileSet> getFileSets();
 }

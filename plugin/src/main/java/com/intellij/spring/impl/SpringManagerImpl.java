@@ -20,12 +20,15 @@ import consulo.application.util.CachedValuesManager;
 import consulo.language.psi.PsiModificationTracker;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
+import consulo.project.DumbService;
 import consulo.project.Project;
 import consulo.spring.impl.boot.AnnotationSpringModel;
 import consulo.spring.impl.boot.SpringBootFileSet;
+import consulo.spring.impl.context.SpringContextSetting;
 import consulo.spring.impl.dom.SpringDomUtil;
 import consulo.spring.impl.model.CompositeSpringModel;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
+import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
@@ -35,10 +38,7 @@ import jakarta.inject.Singleton;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Dmitry Avdeev
@@ -51,10 +51,12 @@ public class SpringManagerImpl extends SpringManager {
   private final SpringModelFactory myModelFactory;
   private final GenericDomValueConvertersRegistry myValueProvidersRegistry;
   private final CustomConverterRegistry myCustomConvertersRegistry;
+  private final Project myProject;
   private final CachedValuesManager myCachedValuesManager;
 
   @Inject
   public SpringManagerImpl(Project project, CachedValuesManager cachedValuesManager) {
+    myProject = project;
     myCachedValuesManager = cachedValuesManager;
     myModelFactory = new SpringModelFactory(project);
     myValueProvidersRegistry = new GenericDomValueConvertersRegistry();
@@ -79,6 +81,41 @@ public class SpringManagerImpl extends SpringManager {
     myValueProvidersRegistry.registerConverter(new FieldRetrievingFactoryBeanConverter(),
                                                new FieldRetrievingFactoryBeanConverter.FactoryClassAndPropertyCondition());
     myValueProvidersRegistry.registerConverter(new EnumValueConverter(), new EnumValueConverter.TypeCondition());
+  }
+
+  @RequiredReadAction
+  @Override
+  public SpringModel getModel(@Nonnull Module module) {
+    return myCachedValuesManager.getCachedValue(module, () -> {
+      return CachedValueProvider.Result.create(getModelImpl(module), PsiModificationTracker.MODIFICATION_COUNT);
+    });
+  }
+
+  @RequiredReadAction
+  private SpringModel getModelImpl(@Nonnull Module module) {
+    SpringContextSetting setting = myProject.getInstance(SpringContextSetting.class);
+
+    LinkedHashMap<SpringFileSet, SpringModelProvider> providerMap = new LinkedHashMap<>();
+    for (SpringModelProvider provider : DumbService.getDumbAwareExtensions(myProject, SpringModelProvider.EP_NAME)) {
+      SpringModuleExtension extension = module.getExtension(SpringModuleExtension.class);
+      if (extension == null) {
+        continue;
+      }
+
+      provider.collectFilesets(extension, fileSet -> providerMap.put(fileSet, provider));
+    }
+
+    if (providerMap.isEmpty()) {
+      return null;
+    }
+
+    Map.Entry<SpringFileSet, SpringModelProvider> entry = ContainerUtil.getFirstItem(providerMap.entrySet());
+
+    SpringFileSet key = entry.getKey();
+    SpringModelProvider value = entry.getValue();
+
+    // TODO settings
+    return value.createModel(module, key);
   }
 
   @Override
@@ -106,15 +143,6 @@ public class SpringManagerImpl extends SpringManager {
     return list;
   }
 
-
-  @RequiredReadAction
-  @Override
-  @Nullable
-  public SpringModel getCombinedModel(final Module module) {
-    return myCachedValuesManager.getCachedValue(module, () -> {
-      return CachedValueProvider.Result.create(getCombinedModelImpl(module), PsiModificationTracker.MODIFICATION_COUNT);
-    });
-  }
 
   @RequiredReadAction
   private SpringModel getCombinedModelImpl(Module module) {
@@ -165,20 +193,12 @@ public class SpringManagerImpl extends SpringManager {
   @Nonnull
   @RequiredReadAction
   public List<SpringFileSet> getProvidedModels(@Nonnull SpringModuleExtension extension) {
-    List<SpringFileSet> result = null;
+    List<SpringFileSet> results = new ArrayList<>();
 
     for (SpringModelProvider modelProvider : SpringModelProvider.EP_NAME.getExtensionList()) {
-      final List<SpringFileSet> list = modelProvider.getFilesets(extension);
-      if (list.size() > 0) {
-        if (result == null) {
-          result = list;
-        }
-        else {
-          result.addAll(list);
-        }
-      }
+      modelProvider.collectFilesets(extension, results::add);
     }
-    return result == null ? Collections.<SpringFileSet>emptyList() : result;
+    return results;
   }
 
   @Override

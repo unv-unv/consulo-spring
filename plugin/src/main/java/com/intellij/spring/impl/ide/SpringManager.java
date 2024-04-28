@@ -23,10 +23,14 @@ import java.util.Set;
 
 @ServiceAPI(ComponentScope.PROJECT)
 public abstract class SpringManager {
-  
+
   public static SpringManager getInstance(Project project) {
     return ServiceManager.getService(project, SpringManager.class);
   }
+
+  @RequiredReadAction
+  @Nullable
+  public abstract SpringModel getModel(@Nonnull Module module);
 
   public abstract boolean isSpringBeans(@Nonnull XmlFile file);
 
@@ -56,10 +60,17 @@ public abstract class SpringManager {
    */
   @Nullable
   @RequiredReadAction
-  public abstract SpringModel getCombinedModel(@Nullable Module module);
+  @Deprecated
+  public SpringModel getCombinedModel(@Nullable Module module) {
+    if (module== null) {
+      return null;
+    }
+    return getModel(module);
+  }
 
   /**
    * Returns models provided by all {@link SpringModelProvider}s.
+   *
    * @param extension
    * @return models provided by {@link SpringModelProvider}.
    * @see SpringModelProvider
@@ -70,6 +81,7 @@ public abstract class SpringManager {
 
   /**
    * Returns all configured and provided file sets.
+   *
    * @param extension
    * @return all working file sets for the module.
    * @see #getProvidedModels(SpringModuleExtension)
