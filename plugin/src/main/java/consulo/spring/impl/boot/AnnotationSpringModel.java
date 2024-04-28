@@ -21,10 +21,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author VISTALL
@@ -96,10 +93,13 @@ public class AnnotationSpringModel extends BaseSpringModel implements SpringMode
       PsiClass psiClass = configuration.getPsiClass();
 
       String qualifiedName = psiClass.getQualifiedName();
+      if (qualifiedName == null) {
+        continue;
+      }
 
       String packageName = StringUtil.getPackageName(qualifiedName);
 
-      PsiJavaPackage aPackage = javaPsiFacade.findPackage(packageName);
+      PsiJavaPackage aPackage = javaPsiFacade.findPackage(Objects.requireNonNullElse(packageName, ""));
 
       if (aPackage != null) {
         componentScans.add(new AnnotatationComponentScan(List.of(aPackage)));
