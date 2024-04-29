@@ -3,9 +3,12 @@ package com.intellij.spring.impl.ide.model.highlighting.jam;
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
 import com.intellij.spring.impl.ide.SpringBundle;
+import com.intellij.spring.impl.ide.SpringManager;
+import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
@@ -19,6 +22,7 @@ import javax.annotation.Nonnull;
 public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigInspectionBase {
 
   @Override
+  @RequiredReadAction
   protected void checkClass(PsiClass aClass, ProblemsHolder holder, @Nonnull Module module) {
     SpringJamElement configuration = getJavaConfiguration(aClass, module);
 
@@ -26,6 +30,11 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
       checkJavaConfiguration(configuration, module, holder);
     }
     else {
+      SpringModel model = SpringManager.getInstance(module.getProject()).getModel(module);
+      if (model != null && model.isImplicitConfiguration(aClass)) {
+        return;
+      }
+
       for (PsiMethod psiMethod : aClass.getMethods()) {
         PsiAnnotation beanAnnotation = AnnotationUtil.findAnnotation(psiMethod, SpringAnnotationsConstants.SPRING_BEAN_ANNOTATION);
         if (beanAnnotation != null) {

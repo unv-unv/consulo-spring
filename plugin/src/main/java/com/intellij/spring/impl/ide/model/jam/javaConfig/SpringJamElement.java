@@ -30,4 +30,26 @@ public abstract class SpringJamElement implements JamElement {
   public PsiClass getPsiClass() {
     return getPsiElement();
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == null) {
+      return false;
+    }
+
+    if (obj.getClass() == getClass()) {
+      SpringJamElement other = (SpringJamElement)obj;
+
+      PsiClass p1 = other.getPsiElement();
+      PsiClass p2 = getPsiElement();
+      return p1.isEquivalentTo(p2);
+    }
+
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(getPsiElement());
+  }
 }

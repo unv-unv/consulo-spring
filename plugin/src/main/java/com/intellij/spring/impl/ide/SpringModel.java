@@ -105,4 +105,8 @@ public interface SpringModel {
   List<DomFileElement<Beans>> getRoots();
 
   List<? extends ComponentScan> getComponentScans();
+
+  default boolean isImplicitConfiguration(@Nonnull PsiClass psiClass) {
+    return false;
+  }
 }

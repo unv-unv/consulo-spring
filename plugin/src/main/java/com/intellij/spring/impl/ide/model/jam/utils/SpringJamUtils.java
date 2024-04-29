@@ -1,9 +1,9 @@
 package com.intellij.spring.impl.ide.model.jam.utils;
 
-import com.intellij.java.language.codeInsight.AnnotationUtil;
-import com.intellij.java.language.psi.*;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiJavaPackage;
+import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.SpringModel;
-import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
@@ -21,103 +21,70 @@ import consulo.xml.psi.xml.XmlTag;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class SpringJamUtils {
   private SpringJamUtils() {
   }
 
-  @Nonnull
-  public static List<SpringStereotypeElement> getAllStereotypeJavaBeans(final SpringModel springModel) {
-    List<SpringStereotypeElement> allStereotypes = new ArrayList<>();
+  public static void processAllStereotypeJavaBeans(final SpringModel springModel, Consumer<CommonSpringBean> consumer) {
     final consulo.module.Module module = springModel.getModule();
     if (module != null) {
       List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
       if (scanBeans.size() > 0) {
         List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
         if (psiPackages.isEmpty()) {
-          return Collections.emptyList();
+          return;
         }
         SpringJamModel javaModel = SpringJamModel.getModel(module);
 
-        List<SpringStereotypeElement> components = getAllStereotypeComponents(javaModel);
-        return filterStereotypeComponents(components, psiPackages);
+        filterStereotypeComponents(javaModel.getAllStereotypeComponents(), psiPackages, consumer);
       }
     }
-
-    return allStereotypes;
   }
 
-  @Nonnull
-  public static List<SpringJamElement> getJavaConfigurations(final SpringModel springModel) {
-    List<SpringJamElement> javaConfigurations = new ArrayList<>();
+  public static void processConfigurations(final SpringModel springModel, Consumer<SpringJamElement> consumer) {
     final consulo.module.Module module = springModel.getModule();
     if (module == null) {
-      return List.of();
+      return;
     }
-    
+
     List<? extends ComponentScan> scanBeans = springModel.getComponentScans();
     if (scanBeans.size() > 0) {
       List<PsiJavaPackage> psiPackages = getScannedPackages(scanBeans);
       if (psiPackages.isEmpty()) {
-        return Collections.emptyList();
+        return;
       }
 
       List<SpringJamElement> components = SpringJamModel.getModel(module).getConfigurations();
 
-      List<SpringJamElement> filteredConfigurations = filterJavaConfigurations(components, psiPackages);
-      for (SpringJamElement filteredConfiguration : filteredConfigurations) {
-        javaConfigurations.add(filteredConfiguration);
-        // TODO process imports
-      }
+      filterJavaConfigurations(components, psiPackages, consumer);
     }
-
-    return javaConfigurations;
   }
 
-  public static void processImport(SpringJamElement filteredConfiguration) {
-    PsiClass psiClass = filteredConfiguration.getPsiClass();
-
-    if (psiClass != null) {
-      PsiAnnotation annotation = AnnotationUtil.findAnnotation(psiClass, SpringAnnotationsConstants.IMPORT_ANNOTATION);
-      if (annotation != null) {
-        PsiAnnotationParameterList parameterList = annotation.getParameterList();
-        for (PsiNameValuePair attribute : parameterList.getAttributes()) {
-          PsiAnnotationMemberValue value = attribute.getValue();
-          System.out.println();
-        }
-      }
-    }
-
-  }
-
-
-  private static List<SpringStereotypeElement> filterStereotypeComponents(final List<SpringStereotypeElement> components,
-                                                                          final List<PsiJavaPackage> psiPackages) {
-    List<SpringStereotypeElement> filtered = new ArrayList<>();
+  private static void filterStereotypeComponents(List<? extends SpringStereotypeElement> components,
+                                                 List<PsiJavaPackage> psiPackages,
+                                                 Consumer<CommonSpringBean> consumer) {
     for (SpringStereotypeElement component : components) {
       final PsiClass psiClass = component.getBeanClass();
+
       if (isInPackage(psiPackages, psiClass)) {
-        filtered.add(component);
+        consumer.accept(component);
       }
     }
-
-    return filtered;
   }
 
-  private static List<SpringJamElement> filterJavaConfigurations(final List<SpringJamElement> javaConfigurations,
-                                                                 final List<PsiJavaPackage> psiPackages) {
-    List<SpringJamElement> filtered = new ArrayList<>();
+  private static void filterJavaConfigurations(List<SpringJamElement> javaConfigurations,
+                                               List<PsiJavaPackage> psiPackages,
+                                               Consumer<SpringJamElement> consumer) {
     for (SpringJamElement component : javaConfigurations) {
       final PsiClass psiClass = component.getPsiClass();
       if (isInPackage(psiPackages, psiClass)) {
-        filtered.add(component);
+        consumer.accept(component);
       }
     }
-
-    return filtered;
   }
 
   private static boolean isInPackage(List<PsiJavaPackage> psiPackages, @Nullable PsiClass psiClass) {
@@ -132,14 +99,6 @@ public class SpringJamUtils {
       }
     }
     return false;
-  }
-
-  private static List<SpringStereotypeElement> getAllStereotypeComponents(final SpringJamModel javaModel) {
-    List<SpringStereotypeElement> elements = new ArrayList<>();
-
-    elements.addAll(javaModel.getAllStereotypeComponents());
-
-    return elements;
   }
 
   private static List<PsiJavaPackage> getScannedPackages(final List<? extends ComponentScan> scanBeans) {

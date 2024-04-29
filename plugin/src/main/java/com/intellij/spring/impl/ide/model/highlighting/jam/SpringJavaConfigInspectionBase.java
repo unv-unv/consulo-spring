@@ -8,12 +8,12 @@ import com.intellij.java.language.psi.PsiJavaFile;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfigurationElement;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.psi.PsiFile;
 import consulo.language.sem.SemKey;
-import consulo.language.util.ModuleUtilCore;
 import consulo.logging.Logger;
 import consulo.module.Module;
 import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
@@ -26,19 +26,23 @@ import java.util.List;
 public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspectionTool<Object> {
   private static final Logger LOG = Logger.getInstance(SpringJavaConfigInspectionBase.class);
 
+  @Override
   @Nonnull
   public String getGroupDisplayName() {
     return SpringBundle.message("model.inspection.group.name");
   }
 
+  @Override
   public boolean isEnabledByDefault() {
     return true;
   }
 
+  @Override
   @Nullable
+  @RequiredReadAction
   public ProblemDescriptor[] checkFile(@Nonnull PsiFile file, @Nonnull InspectionManager manager, boolean isOnTheFly, Object state) {
     if (JamCommonUtil.isPlainJavaFile(file)) {
-      final consulo.module.Module module = ModuleUtilCore.findModuleForPsiElement(file);
+      final consulo.module.Module module = file.getModule();
       if (module != null && SpringModuleExtension.getInstance(module) != null) {
 
         final ProblemsHolder holder = new ProblemsHolder(manager, file, isOnTheFly);

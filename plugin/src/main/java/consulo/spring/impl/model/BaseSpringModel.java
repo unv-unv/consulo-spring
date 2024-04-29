@@ -8,9 +8,8 @@ import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.facet.SpringFileSet;
 import com.intellij.spring.impl.ide.model.SpringModelVisitor;
 import com.intellij.spring.impl.ide.model.SpringUtils;
-import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
-import com.intellij.spring.impl.ide.model.jam.stereotype.SpringStereotypeElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
 import com.intellij.spring.impl.ide.model.jam.utils.SpringJamUtils;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
@@ -19,6 +18,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.Alias;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
+import consulo.application.progress.ProgressIndicatorProvider;
 import consulo.application.util.AtomicNotNullLazyValue;
 import consulo.application.util.ConcurrentFactoryMap;
 import consulo.module.Module;
@@ -49,7 +49,8 @@ public abstract class BaseSpringModel implements SpringModel {
   private final Class2BeansMap myBeansByEffectiveClassWithInheritance = new Class2BeansMap() {
     @Override
     protected void compute(PsiClass psiClass, List<SpringBaseBeanPointer> pointers) {
-      for (final SpringBaseBeanPointer bean : getAllCommonBeans()) {
+      Collection<? extends SpringBaseBeanPointer> beans = getAllCommonBeans();
+      for (final SpringBaseBeanPointer bean : beans) {
         for (PsiClass beanClass : bean.getEffectiveBeanType()) {
           if (InheritanceUtil.isInheritorOrSelf(beanClass, psiClass, true)) {
             pointers.add(bean);
@@ -149,10 +150,6 @@ public abstract class BaseSpringModel implements SpringModel {
   public BaseSpringModel(final Module module, final SpringFileSet fileSet) {
     myFileSet = fileSet;
     myModule = module;
-  }
-
-  public List<SpringJamElement> getJavaConfigurations() {
-    return SpringJamUtils.getJavaConfigurations(this);
   }
 
   private boolean visitDependencies(final ModelVisitor visitor) {
@@ -292,22 +289,32 @@ public abstract class BaseSpringModel implements SpringModel {
     Collection<SpringBaseBeanPointer> domBeans = getAllDomBeans(withDepenedencies);
     final Collection<SpringBaseBeanPointer> allBeans = new ArrayList<>(domBeans);
 
-    processNonDomBeans(bean -> allBeans.add(SpringBeanPointer.createSpringBeanPointer(bean)));
+    processNonDomBeans(bean -> {
+      ProgressIndicatorProvider.checkCanceled();
+
+      allBeans.add(SpringBeanPointer.createSpringBeanPointer(bean));
+    });
 
     return allBeans;
   }
 
-  private void processNonDomBeans(final Consumer<CommonSpringBean> consumer) {
-    for (SpringJamElement javaConfiguration : getJavaConfigurations()) {
-      for (SpringJavaBean javaBean : javaConfiguration.getBeans()) {
+  private void processNonDomBeans(Consumer<CommonSpringBean> consumer) {
+    Consumer<SpringJamElement> elementConsumer = conf -> {
+      List<? extends SpringJavaBean> beans = conf.getBeans();
+      for (SpringJavaBean javaBean : beans) {
         if (javaBean.isPublic()) {
           consumer.accept(javaBean);
         }
       }
-    }
-    for (final SpringStereotypeElement element : SpringJamUtils.getAllStereotypeJavaBeans(this)) {
-      consumer.accept(element);
-    }
+    };
+
+    processBeans(elementConsumer);
+
+    SpringJamUtils.processAllStereotypeJavaBeans(this, consumer);
+  }
+
+  protected void processBeans(Consumer<SpringJamElement> consumer) {
+    SpringJamUtils.processConfigurations(this, consumer);
   }
 
   @Override

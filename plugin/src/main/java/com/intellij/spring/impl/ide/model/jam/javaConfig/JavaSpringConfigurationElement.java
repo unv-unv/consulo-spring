@@ -20,11 +20,17 @@ import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamChildrenQuery;
 import com.intellij.jam.reflect.JamClassMeta;
 import com.intellij.jam.reflect.JamMethodMeta;
+import com.intellij.java.language.codeInsight.AnnotationUtil;
+import com.intellij.java.language.psi.*;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
+import consulo.application.util.CachedValueProvider;
+import consulo.application.util.CachedValuesManager;
 import consulo.language.pom.PomTarget;
 import consulo.language.psi.PsiElementRef;
+import consulo.language.psi.PsiModificationTracker;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class JavaSpringConfigurationElement extends SpringJamElement {
@@ -58,6 +64,78 @@ public abstract class JavaSpringConfigurationElement extends SpringJamElement {
 
   @Override
   public List<? extends SpringJavaBean> getBeans() {
-    return BEANS_QUERY.findChildren(PsiElementRef.real(getPsiElement()));
+    PsiClass psiElement = getPsiElement();
+    return CachedValuesManager.getManager(psiElement.getProject()).getCachedValue(psiElement, () -> {
+      return CachedValueProvider.Result.create(calcBeans(), PsiModificationTracker.MODIFICATION_COUNT);
+    });
+  }
+
+  @Nonnull
+  public List<PsiClass> getImportedClasses() {
+    PsiClass psiElement = getPsiElement();
+    return CachedValuesManager.getManager(psiElement.getProject()).getCachedValue(psiElement, () -> {
+      return CachedValueProvider.Result.create(getImportedClassesImpl(), PsiModificationTracker.MODIFICATION_COUNT);
+    });
+  }
+
+  @Nonnull
+  private List<PsiClass> getImportedClassesImpl() {
+    PsiClass psiClass = getPsiClass();
+
+    PsiAnnotation annotation = AnnotationUtil.findAnnotation(psiClass, SpringAnnotationsConstants.IMPORT_ANNOTATION);
+    if (annotation != null) {
+      PsiAnnotationMemberValue value = annotation.findAttributeValue(PsiAnnotation.DEFAULT_REFERENCED_METHOD_NAME);
+
+      return resolveClasses(value);
+    }
+
+    return List.of();
+  }
+
+  private List<? extends SpringJavaBean> calcBeans() {
+    PsiClass psiClass = getPsiClass();
+    List<JavaSpringJavaBean> children = BEANS_QUERY.findChildren(PsiElementRef.real(psiClass));
+    List<PsiClass> importedClasses = getImportedClasses();
+    if (!importedClasses.isEmpty()) {
+      children = new ArrayList<>(children);
+
+      for (PsiClass aClass : importedClasses) {
+        ImportConfigurationElement element = new ImportConfigurationElement(aClass);
+
+        List otherBeans = element.getBeans();
+        children.addAll(otherBeans);
+      }
+    }
+
+    return children;
+  }
+
+  private List<PsiClass> resolveClasses(PsiAnnotationMemberValue value) {
+    if (value == null) {
+      return List.of();
+    }
+
+    if (value instanceof PsiClassObjectAccessExpression expression) {
+      PsiType type = expression.getOperand().getType();
+
+      if (type instanceof PsiClassType psiClassType) {
+        PsiClass resolved = ((PsiClassType)type).resolve();
+        if (resolved != null) {
+          return List.of(resolved);
+        }
+      }
+    }
+    else if (value instanceof PsiArrayInitializerMemberValue memberValue) {
+      PsiAnnotationMemberValue[] initializers = memberValue.getInitializers();
+
+      List<PsiClass> classes = new ArrayList<>(initializers.length);
+      for (PsiAnnotationMemberValue initializer : initializers) {
+        classes.addAll(resolveClasses(initializer));
+      }
+
+      return classes;
+    }
+
+    return List.of();
   }
 }

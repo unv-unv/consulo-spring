@@ -5,6 +5,7 @@ import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.jam.reflect.JamMemberMeta;
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.patterns.PsiClassPattern;
+import com.intellij.java.language.patterns.PsiJavaPatterns;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfigurationElement;
@@ -54,7 +55,7 @@ public class SpringSemContributor extends SemContributor {
     SpringBootConfigurationElement.META.register(registrar,
                                                  psiClassPattern.withAnnotation(SpringAnnotationsConstants.SPRING_BOOT_CONFIGURATION_ANNOTATION));
 
-    //JavaSpringConfiguration.BEANS_METHOD_META.register(registrar, PsiJavaPatterns.psiMethod().withAnnotation(SpringAnnotationsConstants.JAVA_SPRING_BEAN_ANNOTATION));
+    JavaSpringConfigurationElement.BEANS_METHOD_META.register(registrar, PsiJavaPatterns.psiMethod().withAnnotation(SpringAnnotationsConstants.SPRING_BEAN_ANNOTATION));
 
     SpringComponent.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.COMPONENT_ANNOTATION));
     SpringController.META.register(registrar, psiClassPattern.withAnnotation(SpringAnnotationsConstants.CONTROLLER_ANNOTATION));

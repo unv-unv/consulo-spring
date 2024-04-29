@@ -81,4 +81,9 @@ public class AnnotatationComponentScan extends AbstractDomSpringBean implements 
   public Collection<PsiJavaPackage> getBasePackages() {
     return basePackages;
   }
+
+  @Override
+  public String toString() {
+    return basePackages.toString();
+  }
 }
