@@ -14,15 +14,8 @@ import org.jetbrains.annotations.Nls;
  * @author VISTALL
  * @since 2024-04-28
  */
-@ExtensionImpl(id = SpringContextSetWidgetFactory.ID)
+@ExtensionImpl(id = "springContextWidget", order = "before positionWidget")
 public class SpringContextSetWidgetFactory extends StatusBarEditorBasedWidgetFactory {
-  public static final String ID = "springContextSetWidget";
-  @Nonnull
-  @Override
-  public String getId() {
-    return ID;
-  }
-
   @Nls
   @Nonnull
   @Override
