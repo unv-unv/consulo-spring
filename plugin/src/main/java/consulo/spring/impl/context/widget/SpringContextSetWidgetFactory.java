@@ -38,7 +38,7 @@ public class SpringContextSetWidgetFactory extends StatusBarEditorBasedWidgetFac
   @Nonnull
   @Override
   public StatusBarWidget createWidget(@Nonnull Project project) {
-    return new SpringContextSetWidget(project);
+    return new SpringContextSetWidget(project, this);
   }
 
   @Override

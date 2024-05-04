@@ -11,6 +11,7 @@ import consulo.project.Project;
 import consulo.project.event.DumbModeListener;
 import consulo.project.ui.wm.CustomStatusBarWidget;
 import consulo.project.ui.wm.StatusBarWidget;
+import consulo.project.ui.wm.StatusBarWidgetFactory;
 import consulo.ui.ex.popup.ListPopup;
 import consulo.virtualFileSystem.VirtualFile;
 import jakarta.annotation.Nonnull;
@@ -21,8 +22,8 @@ import jakarta.annotation.Nullable;
  * @since 2024-04-28
  */
 public class SpringContextSetWidget extends EditorBasedStatusBarPopup implements CustomStatusBarWidget {
-  public SpringContextSetWidget(@Nonnull Project project) {
-    super(project, false);
+  public SpringContextSetWidget(@Nonnull Project project, @Nonnull StatusBarWidgetFactory factory) {
+    super(project, factory, false);
 
     project.getMessageBus().connect(this).subscribe(DumbModeListener.class, new DumbModeListener() {
       @Override
@@ -69,12 +70,6 @@ public class SpringContextSetWidget extends EditorBasedStatusBarPopup implements
   @Nonnull
   @Override
   protected StatusBarWidget createInstance(@Nonnull Project project) {
-    return new SpringContextSetWidget(project);
-  }
-
-  @Nonnull
-  @Override
-  public String ID() {
-    return SpringContextSetWidgetFactory.ID;
+    return new SpringContextSetWidget(project, myFactory);
   }
 }
