@@ -36,11 +36,6 @@
       <add-to-group anchor="last" group-id="GenerateGroup"/>
     </action>
 
-    <action id="Spring.Template.Beans.ActionGroup" class="com.intellij.spring.impl.ide.model.actions.patterns.GenerateTemplateBeansGroup"
-            text="Template Beans">
-      <add-to-group anchor="last" group-id="GenerateGroup"/>
-    </action>
-
     <group id="Spring.Create.Context.Group" popup="true" text="Spring">
       <add-to-group anchor="last" group-id="NewGroup"/>
     </group>
