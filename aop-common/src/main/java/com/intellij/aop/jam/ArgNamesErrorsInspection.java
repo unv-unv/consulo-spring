@@ -8,6 +8,7 @@ import com.intellij.aop.ArgNamesManipulator;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.aop.psi.AopPointcutExpressionFile;
 import com.intellij.java.language.psi.*;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.application.util.function.Processor;
 import consulo.document.util.TextRange;
@@ -21,6 +22,7 @@ import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.language.psi.search.ReferencesSearch;
+import consulo.localize.LocalizeValue;
 import consulo.xml.psi.xml.XmlElement;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
@@ -99,6 +101,7 @@ public class ArgNamesErrorsInspection extends AbstractArgNamesInspection {
     }
   }
 
+  @RequiredReadAction
   private static void addAnnoReferenceProblem(final ProblemsHolder holder, final PsiReference returningReference) {
     final PsiElement element = returningReference.getElement();
     TextRange range = returningReference.getRangeInElement();
@@ -106,10 +109,10 @@ public class ArgNamesErrorsInspection extends AbstractArgNamesInspection {
     if (emptyRange) {
       range = TextRange.from(range.getStartOffset(), 1);
     }
-    final String message = ((EmptyResolveMessageProvider)returningReference).getUnresolvedMessagePattern();
+    LocalizeValue message = ((EmptyResolveMessageProvider)returningReference).buildUnresolvedMessaged(returningReference.getCanonicalText());
     final ProblemHighlightType highlightType = emptyRange || !(element instanceof PsiLiteralExpression || element instanceof XmlElement)
                                                ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING : ProblemHighlightType.LIKE_UNKNOWN_SYMBOL;
-    holder.registerProblem(InspectionManager.getInstance(element.getProject()).createProblemDescriptor(element, range, message,
+    holder.registerProblem(InspectionManager.getInstance(element.getProject()).createProblemDescriptor(element, range, message.get(),
                                                                                                        highlightType));
   }
 

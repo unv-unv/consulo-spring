@@ -16,6 +16,7 @@ import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceBase;
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.CustomReferenceConverter;
 import consulo.xml.util.xml.GenericDomValue;
@@ -75,19 +76,22 @@ public class ConstructorArgIndexConverter implements CustomReferenceConverter<In
       return EMPTY_ARRAY;
     }
 
-    public String getUnresolvedMessagePattern() {
+    @Nonnull
+    @Override
+    public LocalizeValue buildUnresolvedMessaged(@Nonnull String s) {
       final Integer value = myGenericDomValue.getValue();
       if (value != null) {
         final SpringBean bean = (SpringBean)SpringConverterUtil.getCurrentBean(myContext);
         final PsiClass clazz = SpringBeanUtil.getInstantiationClass(bean);
         if (clazz != null) {
-          return SpringBeanUtil.isInstantiatedByFactory(bean) ?
-                 SpringBundle.message("cannot.find.factory.method.index", value, clazz.getQualifiedName()):
-                 SpringBundle.message("cannot.find.constructor.arg.index.in.class", value, clazz.getQualifiedName());
+          return LocalizeValue.localizeTODO(SpringBeanUtil.isInstantiatedByFactory(bean) ?
+                                              SpringBundle.message("cannot.find.factory.method.index", value, clazz.getQualifiedName()) :
+                                              SpringBundle.message("cannot.find.constructor.arg.index.in.class",
+                                                                   value, clazz.getQualifiedName()));
         }
-        return SpringBundle.message("cannot.find.constructor.arg.index", value);
+        return LocalizeValue.localizeTODO(SpringBundle.message("cannot.find.constructor.arg.index", value));
       } else {
-        return IdeBundle.message("value.should.be.integer");
+        return LocalizeValue.localizeTODO(IdeBundle.message("value.should.be.integer"));
       }
     }
   }

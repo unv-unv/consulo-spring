@@ -20,6 +20,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.LocalQuickFixProvider;
 import consulo.language.psi.*;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.spring.impl.SpringIcons;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.StringUtil;
@@ -32,8 +33,7 @@ import java.util.function.Function;
 /**
  * @author Dmitry Avdeev
  */
-public class PropertyReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference, EmptyResolveMessageProvider,
-		LocalQuickFixProvider
+public class PropertyReference extends PsiReferenceBase<PsiElement> implements PsiPolyVariantReference, EmptyResolveMessageProvider, LocalQuickFixProvider
 {
 
   private final PropertyReferenceSet myReferenceSet;
@@ -246,10 +246,13 @@ public class PropertyReference extends PsiReferenceBase<PsiElement> implements P
     return intersection;
   }
 
-  public String getUnresolvedMessagePattern() {
-    return SpringBundle.message("model.property.error.message", getValue());
+  @Nonnull
+  @Override
+  public LocalizeValue buildUnresolvedMessaged(@Nonnull String s) {
+    return LocalizeValue.localizeTODO(SpringBundle.message("model.property.error.message", getValue()));
   }
 
+  @Override
   public LocalQuickFix[] getQuickFixes() {
     final String value = getValue();
     if (StringUtil.isNotEmpty(value)) {

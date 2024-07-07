@@ -13,6 +13,7 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.language.util.IncorrectOperationException;
 import consulo.language.util.ModuleUtilCore;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
@@ -23,9 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class SpringBeanReference extends PsiReferenceBase<PsiLiteralExpression> implements EmptyResolveMessageProvider
-{
-
+public class SpringBeanReference extends PsiReferenceBase<PsiLiteralExpression> implements EmptyResolveMessageProvider {
   private final PsiClass myRequiredClass;
 
   public SpringBeanReference(final PsiLiteralExpression element, final PsiClass requiredClass) {
@@ -82,7 +81,9 @@ public class SpringBeanReference extends PsiReferenceBase<PsiLiteralExpression> 
     return ArrayUtil.toObjectArray(lookups);
   }
 
-  public String getUnresolvedMessagePattern() {
-    return SpringBundle.message("model.bean.error.message", getValue());
+  @Nonnull
+  @Override
+  public LocalizeValue buildUnresolvedMessaged(@Nonnull String s) {
+    return LocalizeValue.localizeTODO(SpringBundle.message("model.bean.error.message", getValue()));
   }
 }

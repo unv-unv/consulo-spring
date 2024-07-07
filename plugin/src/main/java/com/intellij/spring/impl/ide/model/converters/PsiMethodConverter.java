@@ -17,6 +17,7 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.language.psi.resolve.ResolveState;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.Converter;
@@ -164,8 +165,10 @@ public abstract class PsiMethodConverter extends Converter<PsiMethod> implements
       return PsiMethodConverter.this.getQuickFixes(myContext);
     }
 
-    public String getUnresolvedMessagePattern() {
-      return SpringBundle.message("cannot.resolve.method", myGenericDomValue.getStringValue());
+    @Nonnull
+    @Override
+    public LocalizeValue buildUnresolvedMessaged(@Nonnull String s) {
+      return LocalizeValue.localizeTODO(SpringBundle.message("cannot.resolve.method", myGenericDomValue.getStringValue()));
     }
   }
 

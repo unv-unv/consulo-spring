@@ -14,6 +14,7 @@ import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.language.psi.util.PsiTreeUtil;
+import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
 
@@ -44,7 +45,9 @@ public class AopAnnoParameterReference extends PsiReferenceBase<PsiAnnotationMem
     return StringUtil.notNullize(JamCommonUtil.getObjectValue(getElement(), String.class));
   }
 
-  public String getUnresolvedMessagePattern() {
-    return AopBundle.message("error.cannot.resolve.parameter", getCanonicalText());
+  @Nonnull
+  @Override
+  public LocalizeValue buildUnresolvedMessaged(@Nonnull String ref) {
+    return LocalizeValue.localizeTODO(AopBundle.message("error.cannot.resolve.parameter", ref));
   }
 }
