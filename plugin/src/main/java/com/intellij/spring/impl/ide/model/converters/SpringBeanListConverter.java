@@ -27,6 +27,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.LocalQuickFixProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.GenericDomValue;
@@ -49,6 +50,7 @@ public class SpringBeanListConverter extends DelimitedListConverter<SpringBeanPo
     super(delimiters);
   }
 
+  @Override
   @Nullable
   protected SpringBeanPointer convertString(final @Nullable String s, final ConvertContext context) {
     if (s == null) return null;
@@ -59,20 +61,25 @@ public class SpringBeanListConverter extends DelimitedListConverter<SpringBeanPo
     return SpringUtils.findBean(model, s);
   }
 
+  @Override
   @Nullable
   protected String toString(@Nullable final SpringBeanPointer springBeanPointer) {
     return springBeanPointer == null ? null : springBeanPointer.getName();
   }
 
+  @Override
   @Nullable
   protected PsiElement resolveReference(final SpringBeanPointer springBeanPointer, final ConvertContext context) {
     return springBeanPointer == null ? null : springBeanPointer.getPsiElement();
   }
 
-  protected String getUnresolvedMessage(final String value) {
-    return SpringBundle.message("model.bean.error.message", value);
+  @Nonnull
+  @Override
+  public LocalizeValue buildUnresolvedMessageInner(@Nullable String value) {
+    return LocalizeValue.localizeTODO(SpringBundle.message("model.bean.error.message", value));
   }
 
+  @Override
   protected Object[] getReferenceVariants(final ConvertContext context, GenericDomValue<List<SpringBeanPointer>> genericDomValue) {
     final SpringModel model = SpringConverterUtil.getSpringModel(context);
     if (model == null) return EMPTY_ARRAY;
@@ -128,6 +135,7 @@ public class SpringBeanListConverter extends DelimitedListConverter<SpringBeanPo
     return model.getAllCommonBeans(true);
   }
 
+  @Override
   @Nonnull
   protected PsiReference createPsiReference(final PsiElement element, final int start, final int end, final ConvertContext context,
 											final GenericDomValue<List<SpringBeanPointer>> genericDomValue, final boolean delimitersOnly) {
@@ -146,22 +154,26 @@ public class SpringBeanListConverter extends DelimitedListConverter<SpringBeanPo
 
       new CreateElementQuickFixProvider<List<SpringBeanPointer>>(SpringBundle.message("model.bean.quickfix.family")) {
 
+        @Override
         protected String getElementName(@Nonnull final GenericDomValue<List<SpringBeanPointer>> genericDomValue) {
           return getValue().trim();
         }
 
+        @Override
         protected void apply(final String elementName, final GenericDomValue<List<SpringBeanPointer>> genericDomValue) {
           Beans beans = genericDomValue.getParentOfType(Beans.class, false);
           final SpringBean springBean = beans.addBean();
           springBean.setName(elementName);
         }
 
+        @Override
         @Nonnull
         protected String getFixName(String elementName) {
           return SpringBundle.message("model.bean.quickfix.message", elementName);
         }
       };
 
+    @Override
     public LocalQuickFix[] getQuickFixes() {
       return myQuickFixProvider.getQuickFixes(myGenericDomValue);
     }

@@ -13,6 +13,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericDomValue;
@@ -29,9 +30,11 @@ public class SpringAdviceMethodConverter extends SpringBeanMethodConverter{
     return true;
   }
 
-  public String getErrorMessage(@Nullable final String s, final ConvertContext context) {
-    if (getPsiClass(context) == null) return null;
-    return super.getErrorMessage(s, context);
+  @Nonnull
+  @Override
+  public LocalizeValue buildUnresolvedMessage(@Nullable String s, ConvertContext context) {
+    if (getPsiClass(context) == null) return LocalizeValue.of();
+    return super.buildUnresolvedMessage(s, context);
   }
 
   @Nonnull

@@ -248,7 +248,7 @@ public class PropertyReference extends PsiReferenceBase<PsiElement> implements P
 
   @Nonnull
   @Override
-  public LocalizeValue buildUnresolvedMessaged(@Nonnull String s) {
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
     return LocalizeValue.localizeTODO(SpringBundle.message("model.property.error.message", getValue()));
   }
 

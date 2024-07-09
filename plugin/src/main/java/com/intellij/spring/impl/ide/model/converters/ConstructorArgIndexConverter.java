@@ -78,7 +78,7 @@ public class ConstructorArgIndexConverter implements CustomReferenceConverter<In
 
     @Nonnull
     @Override
-    public LocalizeValue buildUnresolvedMessaged(@Nonnull String s) {
+    public LocalizeValue buildUnresolvedMessage(@Nonnull String s) {
       final Integer value = myGenericDomValue.getValue();
       if (value != null) {
         final SpringBean bean = (SpringBean)SpringConverterUtil.getCurrentBean(myContext);
