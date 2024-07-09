@@ -47,7 +47,7 @@ public class AopAnnoParameterReference extends PsiReferenceBase<PsiAnnotationMem
 
   @Nonnull
   @Override
-  public LocalizeValue buildUnresolvedMessaged(@Nonnull String ref) {
+  public LocalizeValue buildUnresolvedMessage(@Nonnull String ref) {
     return LocalizeValue.localizeTODO(AopBundle.message("error.cannot.resolve.parameter", ref));
   }
 }

@@ -16,7 +16,6 @@ import consulo.language.editor.inspection.ProblemHighlightType;
 import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
-import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.PsiReference;
@@ -109,7 +108,7 @@ public class ArgNamesErrorsInspection extends AbstractArgNamesInspection {
     if (emptyRange) {
       range = TextRange.from(range.getStartOffset(), 1);
     }
-    LocalizeValue message = ((EmptyResolveMessageProvider)returningReference).buildUnresolvedMessaged(returningReference.getCanonicalText());
+    LocalizeValue message = ProblemsHolder.unresolvedReferenceMessage(returningReference);
     final ProblemHighlightType highlightType = emptyRange || !(element instanceof PsiLiteralExpression || element instanceof XmlElement)
                                                ? ProblemHighlightType.GENERIC_ERROR_OR_WARNING : ProblemHighlightType.LIKE_UNKNOWN_SYMBOL;
     holder.registerProblem(InspectionManager.getInstance(element.getProject()).createProblemDescriptor(element, range, message.get(),
