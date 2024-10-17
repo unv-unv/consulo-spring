@@ -23,6 +23,8 @@ public interface SpringAnnotationsConstants {
   String REQUIRED_ANNOTATION = "org.springframework.beans.factory.annotation.Required";
   String COMPONENT_SCAN_ANNOTATION = "org.springframework.context.annotation.ComponentScan";
 
+  String VALUE_ANNOTATION = "org.springframework.beans.factory.annotation.Value";
+
   // javax annotations
   String JAVAX_RESOURCE_ANNOTATION = "javax.annotation.Resource";
   String JAVAX_PRE_DESTROY_ANNOTATION = "javax.annotation.PreDestroy";

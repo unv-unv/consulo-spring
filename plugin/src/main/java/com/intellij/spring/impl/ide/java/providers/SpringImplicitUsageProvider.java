@@ -25,6 +25,7 @@ public class SpringImplicitUsageProvider implements ImplicitUsageProvider {
                                                   SpringAnnotationsConstants.JAKARTA_RESOURCE_ANNOTATION,
                                                   SpringAnnotationsConstants.JAKARTA_PRE_DESTROY_ANNOTATION,
                                                   SpringAnnotationsConstants.JAKARTA_POST_CONSTRUCT_ANNOTATION,
+                                                  SpringAnnotationsConstants.VALUE_ANNOTATION,
                                                   "org.springframework.jmx.export.annotation.ManagedOperation",
                                                   "org.springframework.jmx.export.annotation.ManagedAttribute",
                                                   AopConstants.BEFORE_ANNO,
@@ -36,11 +37,6 @@ public class SpringImplicitUsageProvider implements ImplicitUsageProvider {
   @Override
   public boolean isImplicitUsage(final PsiElement element) {
     return isImplicitWrite(element) || isBeanConstructor(element);
-  }
-
-  @Override
-  public boolean isImplicitRead(final PsiElement element) {
-    return false;
   }
 
   @Override
