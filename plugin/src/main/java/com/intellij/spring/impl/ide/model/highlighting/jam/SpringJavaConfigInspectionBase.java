@@ -41,7 +41,7 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
     @RequiredReadAction
     public PsiElementVisitor buildVisitorImpl(@Nonnull ProblemsHolder holder, boolean isOnTheFly, LocalInspectionToolSession session, Object o) {
         PsiFile file = holder.getFile();
-        if (JamCommonUtil.isPlainJavaFile(file)) {
+        if (!JamCommonUtil.isPlainJavaFile(file)) {
             return PsiElementVisitor.EMPTY_VISITOR;
         }
 
