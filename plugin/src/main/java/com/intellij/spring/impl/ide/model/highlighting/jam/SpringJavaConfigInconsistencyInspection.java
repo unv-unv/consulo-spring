@@ -14,7 +14,6 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.module.Module;
 import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
 
 import javax.annotation.Nonnull;
 
@@ -44,6 +43,7 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
     }
   }
 
+  @Override
   protected void checkJavaConfiguration(final SpringJamElement javaConfiguration, final Module module, final ProblemsHolder holder) {
     checkJavaConfigurationClass(javaConfiguration, holder);
 
@@ -118,7 +118,6 @@ public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigIns
     return SpringBundle.message("spring.java.configuration.inconsistency.inspection.name");
   }
 
-  @NonNls
   @Nonnull
   public String getShortName() {
     return "SpringJavaConfigInconsistencyInspection";
