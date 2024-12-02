@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<consulo-plugin url="https://github.com/consulo/incubating-consulo-spring">
+<consulo-plugin url="https://github.com/consulo/consulo-spring">
   <id>com.intellij.spring</id>
   <name>Spring Support</name>
   <description>Spring Support</description>
@@ -18,8 +18,6 @@
     <tag>software.framework</tag>
     <tag>web.framework</tag>
   </tags>
-
-  <experimental>true</experimental>
 
   <actions>
     <action id="Spring.Beans.Generate.Action" class="com.intellij.spring.impl.ide.model.actions.GenerateSpringDomElementActionGroup"
