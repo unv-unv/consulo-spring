@@ -26,7 +26,6 @@ import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.psi.PsiManager;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
-import consulo.util.lang.function.Condition;
 import consulo.xml.util.xml.GenericValue;
 
 import javax.annotation.Nonnull;
@@ -77,8 +76,6 @@ public abstract class AopPointcutImpl implements JamElement, AopPointcut, Pointc
 
   @Nullable
   public static PsiPointcutExpression getPsiPointcutExpression(@Nullable final PsiElement value) {
-    assert value == null || value.isPhysical();
-
     if (value instanceof PsiBinaryExpression) {
       return getPsiPointcutExpression(((PsiBinaryExpression)value).getLOperand());
     }
@@ -86,11 +83,7 @@ public abstract class AopPointcutImpl implements JamElement, AopPointcut, Pointc
     if (value instanceof PsiLanguageInjectionHost) {
       final List<Pair<PsiElement, TextRange>> list = InjectedLanguageManager.getInstance(value.getProject()).getInjectedPsiFiles(value);
       if (list != null) {
-        Pair<PsiElement, TextRange> pair = ContainerUtil.find(list, new Condition<Pair<PsiElement, TextRange>>() {
-          public boolean value(final Pair<PsiElement, TextRange> pair) {
-            return pair.first instanceof AopPointcutExpressionFile;
-          }
-        });
+        Pair<PsiElement, TextRange> pair = ContainerUtil.find(list, pair1 -> pair1.first instanceof AopPointcutExpressionFile);
         if (pair != null) {
           return ((AopPointcutExpressionFile)pair.first).getPointcutExpression();
         }
