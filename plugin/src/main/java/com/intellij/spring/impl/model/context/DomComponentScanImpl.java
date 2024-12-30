@@ -4,7 +4,7 @@ import com.intellij.java.language.psi.PsiJavaPackage;
 import com.intellij.spring.impl.ide.model.xml.context.DomComponentScan;
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 
 @SuppressWarnings({"AbstractClassNeverImplemented"})

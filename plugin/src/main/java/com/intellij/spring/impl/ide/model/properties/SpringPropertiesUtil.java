@@ -25,7 +25,7 @@ import consulo.xml.util.xml.DomManager;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericAttributeValue;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

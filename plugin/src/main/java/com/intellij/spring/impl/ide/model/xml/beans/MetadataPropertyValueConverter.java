@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.values.PropertyValueConverter;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

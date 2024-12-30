@@ -8,7 +8,7 @@ import com.intellij.spring.impl.ide.model.xml.util.SpringConstant;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.SubTag;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

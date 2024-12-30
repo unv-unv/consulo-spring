@@ -12,7 +12,7 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 import org.jetbrains.annotations.Nls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

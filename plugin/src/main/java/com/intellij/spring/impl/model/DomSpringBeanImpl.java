@@ -1,6 +1,6 @@
 package com.intellij.spring.impl.model;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
@@ -9,7 +9,7 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.ArrayUtil;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 @SuppressWarnings({"AbstractClassNeverImplemented"})
 public abstract class DomSpringBeanImpl extends AbstractDomSpringBean implements DomSpringBean {

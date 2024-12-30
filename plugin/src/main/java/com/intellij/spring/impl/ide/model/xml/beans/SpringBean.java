@@ -12,8 +12,8 @@ import com.intellij.spring.impl.ide.model.ResolvedConstructorArgs;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import consulo.xml.util.xml.*;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
 

@@ -6,7 +6,7 @@ package com.intellij.aop;
 import com.intellij.java.language.psi.PsiClass;
 import consulo.language.psi.PsiElement;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.List;
 
 /**

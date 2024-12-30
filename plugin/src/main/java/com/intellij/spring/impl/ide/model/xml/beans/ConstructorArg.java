@@ -10,7 +10,7 @@ import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Namespace;
 import consulo.xml.util.xml.Referencing;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://www.springframework.org/schema/beans:constructor-argElemType interface.

@@ -10,7 +10,7 @@ import consulo.language.editor.generation.PsiElementMemberChooserObject;
 import consulo.language.psi.PsiFile;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class SpringBeanClassMember extends MemberChooserObjectBase implements ClassMember {
   private final SpringBeanPointer mySpringBean;

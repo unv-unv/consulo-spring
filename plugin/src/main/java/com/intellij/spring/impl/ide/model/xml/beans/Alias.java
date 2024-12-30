@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import com.intellij.spring.impl.ide.model.converters.AliasNameConverter;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
 import consulo.xml.util.xml.*;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://www.springframework.org/schema/beans:aliasElemType interface.

@@ -2,7 +2,7 @@ package com.intellij.spring.impl.ide.model.jam.javaConfig;
 
 import com.intellij.java.language.psi.PsiClass;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

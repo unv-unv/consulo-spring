@@ -14,7 +14,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class SpringStructureViewComponent extends StructureViewComponent {
 

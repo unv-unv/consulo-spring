@@ -5,7 +5,7 @@ import com.intellij.spring.impl.ide.model.actions.patterns.AbstarctSpringConfigA
 import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class FrameworkIntegrationActionGroup extends AbstarctSpringConfigActionGroup {
 

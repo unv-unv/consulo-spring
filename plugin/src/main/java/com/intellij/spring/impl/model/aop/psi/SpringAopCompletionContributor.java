@@ -19,7 +19,7 @@ import consulo.language.util.ProcessingContext;
 import consulo.module.Module;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Set;
 
 /**

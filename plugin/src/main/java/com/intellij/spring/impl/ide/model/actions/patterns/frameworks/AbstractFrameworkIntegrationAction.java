@@ -21,7 +21,7 @@ import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.List;
 
 public abstract class AbstractFrameworkIntegrationAction extends FrameworkIntegrationAction {

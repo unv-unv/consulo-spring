@@ -29,7 +29,7 @@ import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

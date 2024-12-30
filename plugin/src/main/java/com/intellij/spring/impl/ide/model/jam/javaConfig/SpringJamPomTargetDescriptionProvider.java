@@ -10,7 +10,7 @@ import consulo.usage.UsageViewTypeLocation;
 import com.intellij.spring.impl.ide.SpringBundle;
 import consulo.language.psi.ElementDescriptionLocation;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class SpringJamPomTargetDescriptionProvider extends PomDescriptionProvider {

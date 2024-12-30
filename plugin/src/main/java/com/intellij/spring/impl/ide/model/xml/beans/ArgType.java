@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://www.springframework.org/schema/beans:arg-typeElemType interface.

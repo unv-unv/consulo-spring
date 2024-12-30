@@ -10,7 +10,7 @@ import com.intellij.java.language.psi.PsiWildcardType;
 import consulo.application.util.function.Processor;
 import consulo.language.psi.PsiManager;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

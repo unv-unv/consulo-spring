@@ -33,8 +33,8 @@ import consulo.xml.psi.xml.XmlToken;
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.impl.GenericDomValueReference;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 
 /**

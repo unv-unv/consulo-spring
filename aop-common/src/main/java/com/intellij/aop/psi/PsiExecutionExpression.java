@@ -6,7 +6,7 @@ package com.intellij.aop.psi;
 import com.intellij.java.language.psi.*;
 import consulo.language.ast.ASTNode;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;

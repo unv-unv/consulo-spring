@@ -4,7 +4,7 @@
 
 package com.intellij.spring.impl.model.aop;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiFile;
 import com.intellij.spring.impl.ide.model.xml.aop.DeclareParents;

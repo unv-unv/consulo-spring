@@ -5,8 +5,8 @@ package com.intellij.spring.impl.ide.model.xml;
 
 import consulo.module.Module;
 import consulo.xml.util.xml.DomElement;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.List;
 

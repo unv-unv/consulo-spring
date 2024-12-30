@@ -15,8 +15,8 @@ import consulo.application.util.function.Processor;
 import com.intellij.util.xml.GenericValue;
 import com.intellij.util.xml.ReadOnlyGenericValue;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;

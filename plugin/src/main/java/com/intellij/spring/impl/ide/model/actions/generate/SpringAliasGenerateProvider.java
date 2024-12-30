@@ -1,6 +1,6 @@
 package com.intellij.spring.impl.ide.model.actions.generate;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.codeEditor.Editor;
 import com.intellij.spring.impl.ide.model.xml.beans.Alias;

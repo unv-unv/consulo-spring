@@ -4,7 +4,7 @@ import consulo.disposer.Disposable;
 import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

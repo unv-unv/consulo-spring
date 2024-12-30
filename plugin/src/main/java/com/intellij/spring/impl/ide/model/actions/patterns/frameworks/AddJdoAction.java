@@ -3,7 +3,7 @@ package com.intellij.spring.impl.ide.model.actions.patterns.frameworks;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import consulo.language.editor.template.TemplateSettings;
 import org.jetbrains.annotations.NonNls;

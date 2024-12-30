@@ -6,7 +6,7 @@ package com.intellij.aop.psi;
 import consulo.language.ast.ASTNode;
 import consulo.util.collection.ContainerUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 
 /**

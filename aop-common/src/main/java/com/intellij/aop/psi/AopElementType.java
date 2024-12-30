@@ -5,7 +5,7 @@ package com.intellij.aop.psi;
 
 import consulo.language.ast.IElementType;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

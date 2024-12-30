@@ -6,7 +6,7 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceProvider;
 import consulo.language.util.ProcessingContext;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class SpringBeanNamesReferenceProvider extends PsiReferenceProvider {
   final public static String[] METHODS = new String[] {"containsBean", "getBean", "isSingleton", "getType", "getAliases"};

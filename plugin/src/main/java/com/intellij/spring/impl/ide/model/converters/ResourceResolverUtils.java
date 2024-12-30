@@ -32,8 +32,8 @@ import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.impl.ConvertContextImpl;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

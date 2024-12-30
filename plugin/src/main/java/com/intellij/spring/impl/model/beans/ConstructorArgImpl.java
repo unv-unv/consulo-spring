@@ -16,7 +16,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.util.lang.ComparatorUtil;
 import consulo.xml.util.xml.GenericAttributeValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

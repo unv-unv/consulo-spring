@@ -12,7 +12,7 @@ import consulo.xml.util.xml.XmlName;
 import consulo.xml.util.xml.reflect.DomExtender;
 import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

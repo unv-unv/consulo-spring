@@ -4,7 +4,7 @@ import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.converters.SpringConverterUtil;
 import consulo.xml.util.xml.GenericDomValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

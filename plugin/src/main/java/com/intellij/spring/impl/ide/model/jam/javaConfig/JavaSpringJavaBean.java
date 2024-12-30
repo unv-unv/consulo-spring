@@ -27,8 +27,8 @@ import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import consulo.language.pom.PomNamedTarget;
 import consulo.language.psi.util.PsiTreeUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

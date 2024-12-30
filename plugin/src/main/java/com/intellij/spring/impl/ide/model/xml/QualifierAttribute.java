@@ -3,7 +3,7 @@ package com.intellij.spring.impl.ide.model.xml;
 import consulo.util.lang.Comparing;
 import consulo.util.collection.HashingStrategy;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

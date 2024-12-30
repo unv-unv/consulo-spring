@@ -15,8 +15,8 @@ import com.intellij.testFramework.LiteFixture;
 import com.intellij.testFramework.fixtures.JavaCodeInsightFixtureTestCase;
 import consulo.language.util.IncorrectOperationException;
 
-import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 
 import java.util.Arrays;
 import java.util.List;

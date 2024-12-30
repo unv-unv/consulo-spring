@@ -14,7 +14,7 @@ import consulo.xml.util.xml.CustomReferenceConverter;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.language.psi.PsiReferenceBase;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @SuppressWarnings({"UnusedDeclaration"})
 public class AliasNameConverter implements CustomReferenceConverter<String> {

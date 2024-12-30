@@ -12,7 +12,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomService;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 

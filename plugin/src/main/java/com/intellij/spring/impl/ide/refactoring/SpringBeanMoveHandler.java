@@ -16,7 +16,7 @@ import consulo.language.psi.PsiReference;
 import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

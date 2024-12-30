@@ -20,7 +20,7 @@ import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class RequiredBeanTypeInspection extends DomElementsInspection<Beans, Object> {

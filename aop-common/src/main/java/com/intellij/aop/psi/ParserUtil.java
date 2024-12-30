@@ -8,8 +8,8 @@ import com.intellij.aop.AopBundle;
 import consulo.language.ast.TokenSet;
 import consulo.language.ast.IElementType;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

@@ -11,7 +11,7 @@ import consulo.dataContext.DataContext;
 import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

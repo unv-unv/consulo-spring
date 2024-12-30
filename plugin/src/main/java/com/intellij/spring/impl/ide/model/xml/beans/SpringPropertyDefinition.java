@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import com.intellij.java.language.psi.PsiType;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

@@ -16,7 +16,7 @@ import consulo.language.util.ProcessingContext;
 import consulo.module.Module;
 import consulo.util.dataholder.Key;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

@@ -12,7 +12,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.module.Module;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.function.Consumer;
 
 /**

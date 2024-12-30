@@ -19,8 +19,8 @@ import consulo.module.Module;
 import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspectionTool<Object> {
     private static final Logger LOG = Logger.getInstance(SpringJavaConfigInspectionBase.class);

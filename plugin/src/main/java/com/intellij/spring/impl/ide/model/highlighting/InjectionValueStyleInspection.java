@@ -27,7 +27,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Properties;
 
 /**

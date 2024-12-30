@@ -10,7 +10,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.MetadataValue;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.xml.util.xml.GenericDomValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

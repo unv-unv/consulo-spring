@@ -15,7 +15,7 @@ import consulo.spring.impl.boot.jam.SpringBootApplicationElement;
 import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;

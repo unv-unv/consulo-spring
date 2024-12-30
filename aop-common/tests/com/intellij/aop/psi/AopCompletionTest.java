@@ -16,7 +16,7 @@ import com.intellij.testFramework.fixtures.InjectedLanguageFixtureTestCase;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiFileFactory;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import org.junit.AfterClass;
 
 import java.util.Arrays;

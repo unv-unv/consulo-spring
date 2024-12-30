@@ -9,8 +9,8 @@ import com.intellij.java.language.psi.PsiParameter;
 import com.intellij.spring.impl.ide.model.xml.beans.ConstructorArg;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

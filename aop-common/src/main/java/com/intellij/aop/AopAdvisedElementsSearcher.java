@@ -10,7 +10,7 @@ import com.intellij.java.language.psi.PsiModifier;
 import consulo.application.util.function.Processor;
 import consulo.language.psi.PsiManager;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

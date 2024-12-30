@@ -8,7 +8,7 @@ import com.intellij.jam.model.common.CommonModelElement;
 import com.intellij.java.language.psi.PsiClass;
 import consulo.xml.util.xml.GenericValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

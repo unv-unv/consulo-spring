@@ -7,7 +7,7 @@ import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
 import consulo.xml.util.xml.*;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

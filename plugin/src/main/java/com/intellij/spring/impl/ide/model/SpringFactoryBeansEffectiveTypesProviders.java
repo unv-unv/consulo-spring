@@ -5,7 +5,7 @@ import com.intellij.spring.impl.ide.factories.SpringFactoryBeansManager;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import consulo.annotation.component.ExtensionImpl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collection;
 

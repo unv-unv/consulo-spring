@@ -3,7 +3,7 @@
  */
 package com.intellij.spring.impl.model.lang;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
 import com.intellij.spring.impl.ide.model.xml.lang.LangBean;

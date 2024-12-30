@@ -15,7 +15,7 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

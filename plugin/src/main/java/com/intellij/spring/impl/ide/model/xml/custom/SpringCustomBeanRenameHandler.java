@@ -15,7 +15,7 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.awt.Messages;
 import consulo.xml.psi.xml.XmlAttribute;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class SpringCustomBeanRenameHandler implements RenameHandler {

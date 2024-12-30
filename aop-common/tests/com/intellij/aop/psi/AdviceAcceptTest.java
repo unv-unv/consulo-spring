@@ -27,7 +27,7 @@ import com.intellij.util.xml.DomUtil;
 import com.intellij.util.xml.impl.DomManagerImpl;
 import consulo.module.Module;
 import gnu.trove.THashSet;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.Set;
 

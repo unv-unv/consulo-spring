@@ -5,7 +5,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 
 import consulo.xml.util.xml.NamedEnum;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * http://www.springframework.org/schema/beans:autowireAttrType enumeration.

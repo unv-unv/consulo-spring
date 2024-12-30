@@ -18,7 +18,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.model.impl.DomModelImpl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;

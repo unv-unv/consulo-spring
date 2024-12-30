@@ -1,5 +1,5 @@
  import org.springframework.beans.factory.annotation.Autowired;
- import javax.annotation.Resource;
+ import jakarta.annotation.Resource;
 
  public class UnusedSymbols {
 

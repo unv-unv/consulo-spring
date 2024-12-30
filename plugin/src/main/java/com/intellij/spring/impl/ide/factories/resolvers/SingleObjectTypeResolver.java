@@ -8,7 +8,7 @@ import com.intellij.spring.impl.ide.factories.ObjectTypeResolver;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import consulo.util.lang.StringUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.HashSet;
 import java.util.Set;

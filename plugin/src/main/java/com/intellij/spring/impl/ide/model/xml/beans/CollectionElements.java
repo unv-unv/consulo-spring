@@ -9,7 +9,7 @@ import consulo.xml.util.xml.Convert;
 import consulo.xml.util.xml.CustomChildren;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.SubTagList;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

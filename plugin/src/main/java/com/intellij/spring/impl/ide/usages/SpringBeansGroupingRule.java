@@ -27,8 +27,8 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public class SpringBeansGroupingRule implements UsageGroupingRule {
   private static final Logger LOG = Logger.getInstance(SpringBeansGroupingRule.class);

@@ -4,7 +4,7 @@
  */
 package com.intellij.spring.impl.ide.model.xml.aop;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.intellij.aop.AopAdvice;
 import consulo.xml.util.xml.GenericAttributeValue;

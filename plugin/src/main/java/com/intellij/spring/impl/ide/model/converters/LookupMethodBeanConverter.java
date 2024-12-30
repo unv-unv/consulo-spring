@@ -10,7 +10,7 @@ import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.xml.beans.LookupMethod;
 import consulo.xml.util.xml.ConvertContext;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 

@@ -12,7 +12,7 @@ import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.DomElement;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 

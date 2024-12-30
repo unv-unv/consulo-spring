@@ -1,6 +1,6 @@
 package com.intellij.spring.impl.ide.model.xml.beans;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.converters.SpringBeanScopeConverter;
 import consulo.xml.util.xml.Convert;

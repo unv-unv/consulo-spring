@@ -5,7 +5,7 @@ import com.intellij.spring.impl.ide.model.xml.context.AnnotationConfig;
 import consulo.xml.psi.xml.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * User: Sergey.Vasiliev

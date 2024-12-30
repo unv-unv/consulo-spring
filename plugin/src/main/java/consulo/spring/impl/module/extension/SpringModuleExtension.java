@@ -7,8 +7,8 @@ import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.module.extension.ModuleExtension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Set;
 
 /**

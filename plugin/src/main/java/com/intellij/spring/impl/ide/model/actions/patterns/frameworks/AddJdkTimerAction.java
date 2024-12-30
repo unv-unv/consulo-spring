@@ -5,7 +5,7 @@ import java.util.List;
 
 import consulo.module.Module;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import consulo.language.editor.template.TemplateSettings;
 import consulo.java.ex.facet.LibraryInfo;
 import com.intellij.spring.impl.ide.SpringBundle;

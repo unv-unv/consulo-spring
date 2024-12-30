@@ -5,8 +5,8 @@ import com.intellij.spring.impl.ide.SpringManager;
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.WrappingConverter;
-import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 
 public class PropertyKeyConverter extends WrappingConverter {
 

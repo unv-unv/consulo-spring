@@ -49,7 +49,7 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import org.jetbrains.annotations.Nls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.*;
 
 /**

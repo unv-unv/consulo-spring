@@ -8,7 +8,7 @@ import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.util.collection.ContainerUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.*;
 
 @ExtensionImpl

@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.Namespace;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

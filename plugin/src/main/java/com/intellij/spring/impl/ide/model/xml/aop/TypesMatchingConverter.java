@@ -10,7 +10,7 @@ import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.GenericAttributeValue;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 
 /**

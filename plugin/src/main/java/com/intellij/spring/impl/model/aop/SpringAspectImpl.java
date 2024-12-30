@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.model.xml.aop.SpringAspect;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.language.psi.PsiElement;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

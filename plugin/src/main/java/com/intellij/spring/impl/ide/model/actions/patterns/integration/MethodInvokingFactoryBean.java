@@ -20,7 +20,7 @@ import consulo.xml.util.xml.GenericDomValue;
 import consulo.xml.util.xml.actions.generate.DomTemplateRunner;
 import consulo.xml.util.xml.impl.DomTemplateRunnerImpl;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.LinkedHashSet;
 import java.util.Map;
 

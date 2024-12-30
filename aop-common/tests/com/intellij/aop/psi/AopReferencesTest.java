@@ -26,7 +26,7 @@ import consulo.application.util.function.Processor;
 import consulo.util.collection.ContainerUtil;
 import consulo.language.editor.completion.lookup.LookupElement;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.List;

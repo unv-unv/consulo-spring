@@ -26,7 +26,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomService;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.event.MouseAdapter;

@@ -19,8 +19,8 @@ import consulo.ui.image.Image;
 import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomFileDescription;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 

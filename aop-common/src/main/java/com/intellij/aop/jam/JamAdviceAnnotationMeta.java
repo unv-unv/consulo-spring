@@ -10,8 +10,8 @@ import com.intellij.jam.reflect.JamAttributeMeta;
 import com.intellij.java.language.psi.PsiMethod;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

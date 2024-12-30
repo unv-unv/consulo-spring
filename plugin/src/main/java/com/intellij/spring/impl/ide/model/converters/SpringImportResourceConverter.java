@@ -5,8 +5,8 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiElement;
 import consulo.xml.util.xml.*;
 import com.intellij.spring.impl.ide.model.values.PlaceholderUtils;
-import javax.annotation.Nullable;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.Nonnull;
 
 public class SpringImportResourceConverter extends Converter<PsiFile> implements CustomReferenceConverter {
 

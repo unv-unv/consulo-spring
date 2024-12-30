@@ -19,8 +19,8 @@ import com.intellij.spring.impl.ide.model.xml.aop.Advisor;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.xml.util.xml.DomUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 

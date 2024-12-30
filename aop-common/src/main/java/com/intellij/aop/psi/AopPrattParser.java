@@ -11,7 +11,7 @@ import consulo.language.pattern.ElementPattern;
 import consulo.language.pattern.IElementTypePattern;
 import consulo.language.pratt.*;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import static com.intellij.aop.psi.AopElementTypes.*;
 import static consulo.language.pratt.PathPattern.path;

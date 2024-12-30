@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.ListOrSet;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringValue;
 import consulo.xml.util.xml.GenericDomValue;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 /**

@@ -16,7 +16,7 @@
 
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import consulo.language.ast.IFileElementType;
 import consulo.language.ast.ILeafElementType;

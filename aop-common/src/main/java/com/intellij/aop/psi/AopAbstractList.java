@@ -10,7 +10,7 @@ import consulo.language.ast.TokenSet;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.function.PairFunction;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

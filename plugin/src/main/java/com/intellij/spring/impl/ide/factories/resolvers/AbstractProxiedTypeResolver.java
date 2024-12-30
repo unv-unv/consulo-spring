@@ -5,7 +5,7 @@ import com.intellij.java.language.psi.PsiClassType;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;

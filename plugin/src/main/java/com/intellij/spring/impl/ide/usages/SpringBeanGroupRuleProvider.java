@@ -5,7 +5,7 @@ import consulo.project.Project;
 import consulo.usage.rule.FileStructureGroupRuleProvider;
 import consulo.usage.rule.UsageGroupingRule;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class SpringBeanGroupRuleProvider implements FileStructureGroupRuleProvider {

@@ -8,7 +8,7 @@ import com.intellij.jam.JamService;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 

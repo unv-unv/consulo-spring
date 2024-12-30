@@ -4,7 +4,7 @@ import com.intellij.spring.impl.model.beans.ListOrSetImpl;
 import com.intellij.spring.impl.ide.model.xml.beans.ListOrSet;
 import consulo.xml.dom.DomElementImplementationProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

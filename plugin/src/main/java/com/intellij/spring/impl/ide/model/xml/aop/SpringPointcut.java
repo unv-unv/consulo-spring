@@ -3,7 +3,7 @@
 
 package com.intellij.spring.impl.ide.model.xml.aop;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.intellij.aop.AopPointcut;
 import com.intellij.aop.psi.PsiPointcutExpression;

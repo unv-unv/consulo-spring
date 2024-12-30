@@ -3,7 +3,7 @@
 
 package com.intellij.spring.impl.ide.model.xml.util;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.values.converters.FieldRetrievingFactoryBeanConverter;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;

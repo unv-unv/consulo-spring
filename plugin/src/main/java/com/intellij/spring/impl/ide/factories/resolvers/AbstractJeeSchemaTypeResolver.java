@@ -3,7 +3,7 @@ package com.intellij.spring.impl.ide.factories.resolvers;
 import com.intellij.spring.impl.ide.factories.ObjectTypeResolver;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.jee.SpringJeeElement;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.List;
 import java.util.Set;

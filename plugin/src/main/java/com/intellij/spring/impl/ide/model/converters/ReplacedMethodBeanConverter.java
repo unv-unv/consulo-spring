@@ -7,7 +7,7 @@ package com.intellij.spring.impl.ide.model.converters;
 import com.intellij.spring.impl.ide.model.highlighting.ReplacedMethodsInspection;
 import consulo.xml.util.xml.ConvertContext;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @see ReplacedMethodsInspection

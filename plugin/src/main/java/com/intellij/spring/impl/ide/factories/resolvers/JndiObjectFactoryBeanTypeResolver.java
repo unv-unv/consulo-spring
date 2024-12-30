@@ -5,7 +5,7 @@ import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.jee.JndiLookup;
 import com.intellij.spring.impl.ide.model.xml.jee.SpringJeeElement;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import java.util.*;
 

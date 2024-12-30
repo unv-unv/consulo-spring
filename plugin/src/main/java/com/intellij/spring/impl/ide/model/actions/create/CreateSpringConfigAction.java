@@ -18,7 +18,7 @@ import consulo.ui.ex.awt.Messages;
 import consulo.util.io.FileUtil;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Map;
 
 public class CreateSpringConfigAction extends CreateFileAction {

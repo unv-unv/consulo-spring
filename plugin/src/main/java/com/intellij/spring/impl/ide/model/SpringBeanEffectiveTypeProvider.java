@@ -9,7 +9,7 @@ import consulo.component.extension.ExtensionPointName;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 
 @ExtensionAPI(ComponentScope.APPLICATION)

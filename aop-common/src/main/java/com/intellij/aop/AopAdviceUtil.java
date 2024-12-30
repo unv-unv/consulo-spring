@@ -7,7 +7,7 @@ package com.intellij.aop;
 import com.intellij.aop.psi.PointcutMatchDegree;
 import com.intellij.java.language.psi.PsiMethod;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

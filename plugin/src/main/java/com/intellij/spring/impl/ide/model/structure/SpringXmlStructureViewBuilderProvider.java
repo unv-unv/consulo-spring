@@ -14,8 +14,8 @@ import consulo.project.Project;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 public class SpringXmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {

@@ -9,7 +9,7 @@ import com.intellij.java.language.psi.PsiType;
 import consulo.language.ast.ASTNode;
 import consulo.util.lang.function.PairFunction;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

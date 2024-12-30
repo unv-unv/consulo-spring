@@ -6,7 +6,7 @@ import com.intellij.jam.reflect.JamAnnotationMeta;
 import com.intellij.java.language.psi.PsiAnnotation;
 import com.intellij.java.language.psi.PsiClass;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public abstract class SpringJamElement implements JamElement {

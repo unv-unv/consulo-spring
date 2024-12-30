@@ -5,7 +5,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.util.xml.reflect.DomExtender;
 import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class ListOrSetExtender extends DomExtender<ListOrSet> {

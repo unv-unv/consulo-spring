@@ -6,7 +6,7 @@ import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
 import com.intellij.spring.impl.ide.model.xml.beans.TypedCollection;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 

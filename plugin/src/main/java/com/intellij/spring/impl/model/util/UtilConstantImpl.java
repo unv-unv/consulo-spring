@@ -6,7 +6,7 @@ package com.intellij.spring.impl.model.util;
 
 import com.intellij.spring.impl.ide.model.xml.util.SpringConstant;
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

@@ -21,7 +21,7 @@ import consulo.xml.util.xml.DomElementNavigationProvider;
 import consulo.xml.util.xml.DomElementsNavigationManager;
 import consulo.xml.util.xml.DomManager;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

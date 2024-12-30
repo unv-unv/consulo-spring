@@ -11,7 +11,7 @@ import consulo.module.Module;
 import consulo.ui.image.Image;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
 

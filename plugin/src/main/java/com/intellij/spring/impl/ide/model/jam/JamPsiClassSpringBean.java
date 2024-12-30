@@ -20,8 +20,8 @@ import com.intellij.jam.annotations.JamPsiConnector;
 import com.intellij.java.language.psi.PsiClass;
 import consulo.util.lang.StringUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public abstract class JamPsiClassSpringBean extends JamPsiMemberSpringBean<PsiClass> {
 

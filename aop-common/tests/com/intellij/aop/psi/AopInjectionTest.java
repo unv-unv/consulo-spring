@@ -40,8 +40,8 @@ import consulo.language.inject.MultiHostRegistrar;
 import consulo.virtualFileSystem.VirtualFile;
 import gnu.trove.THashSet;
 import org.jetbrains.annotations.NonNls;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import java.io.IOException;
 import java.util.Set;

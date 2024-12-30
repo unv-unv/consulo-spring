@@ -2,7 +2,7 @@ package com.intellij.spring.impl.ide.model;
 
 import consulo.language.psi.PsiElement;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author Dmitry Avdeev

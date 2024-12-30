@@ -5,7 +5,7 @@ import com.intellij.spring.impl.ide.model.xml.context.DomComponentScan;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.xml.dom.DomElementImplementationProvider;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author VISTALL

@@ -19,7 +19,7 @@ import consulo.xml.psi.xml.XmlTag;
 import consulo.xml.util.xml.DomAnchor;
 import consulo.xml.util.xml.impl.DomAnchorImpl;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.lang.ref.WeakReference;
 
 /**

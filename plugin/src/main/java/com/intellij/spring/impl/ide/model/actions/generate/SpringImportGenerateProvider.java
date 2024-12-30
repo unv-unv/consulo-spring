@@ -4,7 +4,7 @@ import consulo.codeEditor.Editor;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringImport;
 import consulo.xml.util.xml.DomElement;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class SpringImportGenerateProvider extends BasicSpringDomGenerateProvider<SpringImport> {
   public SpringImportGenerateProvider() {

@@ -7,8 +7,8 @@ import consulo.project.Project;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 import org.jdom.Element;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.LinkedHashSet;
 import java.util.Set;
 

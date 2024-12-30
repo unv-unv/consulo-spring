@@ -7,7 +7,7 @@ package com.intellij.aop.psi;
 import com.intellij.java.language.psi.PsiMember;
 import consulo.language.ast.ASTNode;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

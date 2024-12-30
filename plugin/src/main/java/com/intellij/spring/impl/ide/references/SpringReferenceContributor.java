@@ -27,7 +27,7 @@ import consulo.xml.psi.filters.position.NamespaceFilter;
 import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.util.xml.DomUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

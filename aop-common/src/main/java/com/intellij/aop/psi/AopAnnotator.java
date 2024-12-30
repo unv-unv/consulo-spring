@@ -22,7 +22,7 @@ import consulo.util.lang.ref.Ref;
 import consulo.xml.psi.xml.XmlElement;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 

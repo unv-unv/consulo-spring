@@ -5,7 +5,7 @@ import com.intellij.spring.impl.model.DomSpringBeanImpl;
 import com.intellij.spring.impl.model.beans.TypedCollectionImpl;
 import com.intellij.spring.impl.ide.model.xml.util.UtilList;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.List;
 
 public abstract class UtilListImpl extends DomSpringBeanImpl implements UtilList {

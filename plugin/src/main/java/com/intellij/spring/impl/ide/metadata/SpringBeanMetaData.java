@@ -9,7 +9,7 @@ import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.DomUtil;
 import consulo.language.util.IncorrectOperationException;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import java.util.List;
 

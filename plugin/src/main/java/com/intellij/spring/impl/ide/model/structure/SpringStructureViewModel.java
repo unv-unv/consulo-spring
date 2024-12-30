@@ -8,7 +8,7 @@ import consulo.xml.psi.xml.XmlFile;
 import consulo.xml.util.xml.DomElementNavigationProvider;
 import consulo.xml.util.xml.DomElementsNavigationManager;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class SpringStructureViewModel extends XmlStructureViewTreeModel implements Disposable
 {

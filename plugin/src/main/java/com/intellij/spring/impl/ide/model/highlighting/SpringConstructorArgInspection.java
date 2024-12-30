@@ -31,7 +31,7 @@ import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import org.jetbrains.annotations.NonNls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -17,7 +17,7 @@ import consulo.module.Module;
 import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.GenericValue;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Set;
 
 /**

@@ -15,7 +15,7 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.module.Module;
 import org.jetbrains.annotations.Nls;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class SpringJavaConfigInconsistencyInspection extends SpringJavaConfigInspectionBase {

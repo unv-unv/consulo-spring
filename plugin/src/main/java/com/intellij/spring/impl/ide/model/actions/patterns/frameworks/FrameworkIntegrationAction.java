@@ -18,7 +18,7 @@ import consulo.ui.ex.action.Presentation;
 import consulo.ui.image.Image;
 import consulo.xml.psi.xml.XmlFile;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Collection;
 
 public abstract class FrameworkIntegrationAction extends AnAction {

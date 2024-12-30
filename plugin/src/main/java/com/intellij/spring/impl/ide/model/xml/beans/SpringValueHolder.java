@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.model.values.PropertyValueConverter;
 import consulo.xml.util.xml.Attribute;
 import consulo.xml.util.xml.Convert;
 import consulo.xml.util.xml.GenericAttributeValue;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Dmitry Avdeev

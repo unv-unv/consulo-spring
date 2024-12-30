@@ -7,7 +7,7 @@ import com.intellij.java.language.psi.PsiArrayType;
 import com.intellij.java.language.psi.PsiEllipsisType;
 import com.intellij.java.language.psi.PsiType;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * @author peter

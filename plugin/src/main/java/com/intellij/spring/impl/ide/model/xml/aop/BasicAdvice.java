@@ -11,8 +11,8 @@ import consulo.xml.util.xml.Convert;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * http://www.springframework.org/schema/aop:basicAdviceType interface.

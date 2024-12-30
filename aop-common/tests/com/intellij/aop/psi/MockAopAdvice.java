@@ -3,7 +3,7 @@
  */
 package com.intellij.aop.psi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 import com.intellij.aop.AopAdvice;
 import com.intellij.aop.AopAdviceType;
@@ -16,7 +16,7 @@ import com.intellij.psi.xml.XmlTag;
 import consulo.language.util.IncorrectOperationException;
 import com.intellij.util.xml.MockDomElement;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * @author peter

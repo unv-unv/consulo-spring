@@ -5,8 +5,8 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.SpringModel;
 import consulo.xml.util.xml.NameValue;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 public interface CommonSpringBean extends CommonModelElement {
   @Nullable

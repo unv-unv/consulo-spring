@@ -10,7 +10,7 @@ import com.intellij.spring.impl.ide.model.actions.patterns.osgi.GenerateOsgiPatt
 import com.intellij.spring.impl.ide.model.actions.patterns.webflow.GenerateWebflowPatternsGroup;
 import consulo.ui.image.Image;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 public class GenerateTemplateBeansGroup extends AbstarctSpringConfigActionGroup {
 

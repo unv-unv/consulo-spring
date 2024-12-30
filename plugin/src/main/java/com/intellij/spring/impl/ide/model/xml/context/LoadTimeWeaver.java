@@ -5,7 +5,7 @@ package com.intellij.spring.impl.ide.model.xml.context;
 
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import consulo.xml.util.xml.GenericAttributeValue;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://www.springframework.org/schema/context:load-time-weaverElemType interface.

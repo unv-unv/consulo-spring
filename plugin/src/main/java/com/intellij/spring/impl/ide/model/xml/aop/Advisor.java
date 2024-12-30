@@ -11,7 +11,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.TypedBeanPointerAttribute;
 import consulo.xml.util.xml.Convert;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.Required;
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * http://www.springframework.org/schema/aop:advisorType interface.
