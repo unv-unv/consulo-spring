@@ -20,34 +20,34 @@
   </tags>
 
   <actions>
-    <action id="Spring.Beans.Generate.Action" class="com.intellij.spring.impl.ide.model.actions.GenerateSpringDomElementActionGroup"
-            text="Generate">
-      <add-to-group anchor="last" group-id="GenerateGroup"/>
-    </action>
+    <!--<action id="Spring.Beans.Generate.Action" class="com.intellij.spring.impl.ide.model.actions.GenerateSpringDomElementActionGroup"-->
+            <!--text="Generate">-->
+      <!--<add-to-group anchor="last" group-id="GenerateGroup"/>-->
+    <!--</action>-->
 
-    <action id="Spring.Beans.Generate.Setter.Dependency.Action"
-            class="com.intellij.spring.impl.ide.model.actions.GenerateSpringBeanSetterDependencyAction">
-      <add-to-group anchor="last" group-id="GenerateGroup"/>
-    </action>
-    <action id="Spring.Beans.Generate.Constructor.Dependency.Action"
-            class="com.intellij.spring.impl.ide.model.actions.GenerateSpringBeanConstructorDependencyAction">
-      <add-to-group anchor="last" group-id="GenerateGroup"/>
-    </action>
+    <!--<action id="Spring.Beans.Generate.Setter.Dependency.Action"-->
+            <!--class="com.intellij.spring.impl.ide.model.actions.GenerateSpringBeanSetterDependencyAction">-->
+      <!--<add-to-group anchor="last" group-id="GenerateGroup"/>-->
+    <!--</action>-->
+    <!--<action id="Spring.Beans.Generate.Constructor.Dependency.Action"-->
+            <!--class="com.intellij.spring.impl.ide.model.actions.GenerateSpringBeanConstructorDependencyAction">-->
+      <!--<add-to-group anchor="last" group-id="GenerateGroup"/>-->
+    <!--</action>-->
 
-    <group id="Spring.Create.Context.Group" popup="true" text="Spring">
-      <add-to-group anchor="last" group-id="NewGroup"/>
-    </group>
+    <!--<group id="Spring.Create.Context.Group" popup="true" text="Spring">-->
+      <!--<add-to-group anchor="last" group-id="NewGroup"/>-->
+    <!--</group>-->
 
     <!--<action id="Spring.Create.Context.File" class="com.intellij.spring.model.actions.create.CreateSpringConfigAction" text="Spring Config">
       <add-to-group anchor="last" group-id="Spring.Create.Context.Group"/>
     </action>   -->
 
-    <group id="Beans.Dependencies.PsiElement.Actions" popup="false">
-      <reference ref="EditSource"/>
-      <reference ref="FindUsages"/>
-      <reference ref="RenameElement"/>
-      <separator/>
-    </group>
+    <!--<group id="Beans.Dependencies.PsiElement.Actions" popup="false">-->
+      <!--<reference ref="EditSource"/>-->
+      <!--<reference ref="FindUsages"/>-->
+      <!--<reference ref="RenameElement"/>-->
+      <!--<separator/>-->
+    <!--</group>-->
 
   </actions>
 </consulo-plugin>
