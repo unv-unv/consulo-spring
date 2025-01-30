@@ -11,12 +11,13 @@ import consulo.module.content.layer.event.ModuleRootEvent;
 import consulo.module.content.layer.event.ModuleRootListener;
 import consulo.module.event.ModuleAdapter;
 import consulo.module.event.ModuleListener;
-import consulo.module.extension.ModuleExtension;
-import consulo.module.extension.event.ModuleExtensionChangeListener;
 import consulo.project.Project;
 import consulo.spring.impl.toolWindow.tree.node.SpringContextsTreeStructure;
 import consulo.ui.ex.awt.ScrollPaneFactory;
-import consulo.ui.ex.awt.tree.*;
+import consulo.ui.ex.awt.tree.AsyncTreeModel;
+import consulo.ui.ex.awt.tree.StructureTreeModel;
+import consulo.ui.ex.awt.tree.Tree;
+import consulo.ui.ex.awt.tree.TreeUtil;
 import consulo.ui.ex.tree.NodeDescriptor;
 import consulo.util.dataholder.Key;
 import jakarta.annotation.Nonnull;
@@ -92,13 +93,6 @@ public class SpringToolWindowPanel implements Disposable, DataProvider {
 
             @Override
             public void modulesRenamed(Project project, List<Module> modules) {
-                invalidate();
-            }
-        });
-
-        connection.subscribe(ModuleExtensionChangeListener.class, new ModuleExtensionChangeListener() {
-            @Override
-            public void beforeExtensionChanged(@Nonnull ModuleExtension<?> moduleExtension, @Nonnull ModuleExtension<?> moduleExtension1) {
                 invalidate();
             }
         });
