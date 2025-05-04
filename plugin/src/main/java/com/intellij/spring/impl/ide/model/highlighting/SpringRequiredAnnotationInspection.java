@@ -1,6 +1,7 @@
 package com.intellij.spring.impl.ide.model.highlighting;
 
 import com.intellij.java.analysis.impl.codeInspection.BaseJavaLocalInspectionTool;
+import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiIdentifier;
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.java.language.psi.util.PropertyUtil;
@@ -21,9 +22,8 @@ import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.virtualFileSystem.VirtualFile;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
+
 import java.util.*;
 
 /**
@@ -37,14 +37,19 @@ public class SpringRequiredAnnotationInspection extends BaseJavaLocalInspectionT
                                          final boolean isOnTheFly, Object state) {
 
     if (PropertyUtil.isSimplePropertySetter(method)) {
-      final SpringJavaClassInfo info = SpringJavaClassInfo.getSpringJavaClassInfo(method.getContainingClass());
+      PsiClass containingClass = method.getContainingClass();
+      if (containingClass == null) {
+        return null;
+      }
+
+      final SpringJavaClassInfo info = SpringJavaClassInfo.getSpringJavaClassInfo(containingClass);
       if (info.isMapped()) {
         if (method.getModifierList().findAnnotation(SpringAnnotationsConstants.REQUIRED_ANNOTATION) != null) {
           final String property = PropertyUtil.getPropertyNameBySetter(method);
           final Collection<SpringPropertyDefinition> mappedProperties = info.getMappedProperties(property);
           if (mappedProperties.isEmpty()) {
             final List<DomSpringBeanPointer> list = info.getMappedBeans();
-            final List<SpringBean> beans = new ArrayList<SpringBean>(list.size());
+            final List<SpringBean> beans = new ArrayList<>(list.size());
             for (DomSpringBeanPointer pointer : list) {
               final DomSpringBean springBean = pointer.getSpringBean();
               if (springBean instanceof SpringBean && !((SpringBean)springBean).isAbstract()) {
@@ -56,18 +61,21 @@ public class SpringRequiredAnnotationInspection extends BaseJavaLocalInspectionT
             }
 
             final LocalQuickFix fix = new LocalQuickFix() {
+              @Override
               @Nonnull
               public String getName() {
                 return SpringBundle.message("create.missing.mappings", property);
               }
 
+              @Override
               @Nonnull
               public String getFamilyName() {
                 return getName();
               }
 
+              @Override
               public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-                final Set<VirtualFile> files = new HashSet<VirtualFile>();
+                final Set<VirtualFile> files = new HashSet<>();
                 for (SpringBean bean : beans) {
                   final PsiFile psiFile = bean.getContainingFile();
                   if (psiFile != null) {
@@ -95,26 +103,30 @@ public class SpringRequiredAnnotationInspection extends BaseJavaLocalInspectionT
     return null;
   }
 
+  @Override
   @Nonnull
   public String getGroupDisplayName() {
     return SpringBundle.message("model.inspection.group.name");
   }
 
+  @Override
   @Nonnull
   public String getDisplayName() {
     return SpringBundle.message("required.properties.inspection");
   }
 
+  @Override
   @Nonnull
-  @NonNls
   public String getShortName() {
     return "SpringRequiredAnnotationInspection";
   }
 
+  @Override
   public boolean isEnabledByDefault() {
     return true;
   }
 
+  @Override
   @Nonnull
   public HighlightDisplayLevel getDefaultLevel() {
     return HighlightDisplayLevel.ERROR;
