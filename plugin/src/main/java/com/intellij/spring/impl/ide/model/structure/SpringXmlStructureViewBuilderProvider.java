@@ -2,7 +2,6 @@ package com.intellij.spring.impl.ide.model.structure;
 
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
-import consulo.annotation.component.ExtensionImpl;
 import consulo.codeEditor.Editor;
 import consulo.fileEditor.FileEditor;
 import consulo.fileEditor.structureView.StructureView;
@@ -13,11 +12,10 @@ import consulo.fileEditor.structureView.tree.Sorter;
 import consulo.project.Project;
 import consulo.xml.ide.structureView.xml.XmlStructureViewBuilderProvider;
 import consulo.xml.psi.xml.XmlFile;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-@ExtensionImpl
+//@ExtensionImpl disable - due need write it, without ref to FilEditor - need remove UnsupportedOperationException throwing
 public class SpringXmlStructureViewBuilderProvider implements XmlStructureViewBuilderProvider {
   @Nullable
   public StructureViewBuilder createStructureViewBuilder(@Nonnull final XmlFile file) {
