@@ -3,10 +3,11 @@
  */
 package com.intellij.aop.psi;
 
-import com.intellij.aop.AopBundle;
+import consulo.aop.localize.AopLocalize;
 import consulo.language.InjectableLanguage;
 import consulo.language.Language;
 import consulo.language.file.LanguageFileType;
+import consulo.localize.LocalizeValue;
 
 /**
  * @author peter
@@ -29,7 +30,7 @@ public class AopPointcutExpressionLanguage extends Language implements Injectabl
   }
 
   @Override
-  public String getDisplayName() {
-    return AopBundle.message("inspection.group.display.name.aop");
+  public LocalizeValue getDisplayName() {
+    return AopLocalize.inspectionGroupDisplayNameAop();
   }
 }

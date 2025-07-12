@@ -3,13 +3,13 @@
  */
 package com.intellij.aop.jam;
 
-import com.intellij.aop.AopBundle;
 import com.intellij.aop.LocalAopModel;
 import com.intellij.jam.model.util.JamCommonUtil;
 import com.intellij.java.language.psi.PsiAnnotationMemberValue;
 import com.intellij.java.language.psi.PsiLiteral;
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.java.language.psi.PsiParameter;
+import consulo.aop.localize.AopLocalize;
 import consulo.language.psi.EmptyResolveMessageProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReferenceBase;
@@ -17,7 +17,6 @@ import consulo.language.psi.util.PsiTreeUtil;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
-
 import jakarta.annotation.Nonnull;
 
 /**
@@ -48,6 +47,6 @@ public class AopAnnoParameterReference extends PsiReferenceBase<PsiAnnotationMem
   @Nonnull
   @Override
   public LocalizeValue buildUnresolvedMessage(@Nonnull String ref) {
-    return LocalizeValue.localizeTODO(AopBundle.message("error.cannot.resolve.parameter", ref));
+    return AopLocalize.errorCannotResolveParameter(ref);
   }
 }

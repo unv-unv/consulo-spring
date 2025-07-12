@@ -15,4 +15,5 @@ module com.intellij.aop {
   exports com.intellij.aop.lexer;
   exports com.intellij.aop.psi;
   exports consulo.aop.icon;
+  exports consulo.aop.localize;
 }

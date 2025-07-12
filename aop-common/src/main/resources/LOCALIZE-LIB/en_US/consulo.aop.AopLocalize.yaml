@@ -1,0 +1,114 @@
+add.pjp.parameter:
+    text: Add a ProceedingJoinPoint parameter
+around.advice.call.cannot.proceed:
+    text: 'Advice call cannot proceed: probably you forgot to declare a ProceedingJoinPoint parameter'
+around.advice.should.return.something:
+    text: Join point return value will be lost
+around.advice.style.inspection:
+    text: Around advice style inspection
+change.return.type.to.Object:
+    text: 'Change method return type to Object '
+empty.popup.text.navigate.to.classes:
+    text: This introduction matches no classes
+empty.popup.text.navigate.to.methods:
+    text: This advice advises no methods
+error.0.expected:
+    text: '{0} expected'
+error.0.or.1.expected:
+    text: '{0} or {1} expected'
+error.anno.expected:
+    text: '@interface name expected here'
+error.argNames.should.match:
+    text: '{0} should match formal method parameter names'
+error.arrays.not.allowed.here:
+    text: Arrays are not allowed here
+error.cannot.resolve.parameter:
+    text: Cannot resolve parameter ''{0}''
+error.cannot.resolve.pointcut:
+    text: Cannot resolve pointcut ''{0}''
+error.cannot.resolve.symbol:
+    text: Cannot resolve symbol ''{0}''
+error.constructor.pattern.expected:
+    text: Constructor pattern expected
+error.default.implementation.class.should.be.specified:
+    text: Default implementation class should be specified
+error.double.ellipsis.prohibited:
+    text: It's prohibited to use more than one '..'
+error.field.name.pattern.expected:
+    text: Field name pattern expected
+error.generics.not.allowed.here:
+    text: Generics are not allowed here
+error.id.expected:
+    text: Identifier expected
+error.id.or.asterisk.expected:
+    text: Identifier or * expected
+error.interface.expected:
+    text: Interface expected here
+error.invalid.number.of.arguments:
+    text: Incompatible number of arguments to pointcut, expected {0}, found {1}
+error.method.annotation.name.expected:
+    text: Annotation name expected
+error.method.args.pattern.expected:
+    text: Method args pattern expected
+error.method.name.pattern.expected:
+    text: Method name pattern expected
+error.method.return.type.expected:
+    text: Method return type expected
+error.non.abstract.class.implemention.0.expected:
+    text: Non-abstract class implementing {0} expected
+error.pjp.not.allowed:
+    text: ProceedingJoinPoint as first parameter is allowed only in @Around advices
+error.pointcut.arguments.expected:
+    text: Pointcut arguments expected
+error.pointcut.expression.expected:
+    text: Pointcut expression expected
+error.recursive.pointcut.reference:
+    text: Recursive pointcut reference
+error.throwable.expected:
+    text: Throwing parameter should be of type java.lang.Throwable
+error.type.name.pattern.expected:
+    text: Type name pattern expected
+error.unexpected.token:
+    text: Unexpected token
+error.varargs.not.allowed.here:
+    text: Varargs are not allowed here
+error.varargs.not.last:
+    text: Varargs parameter should be the last one
+error.wildcards.not.allowed.here:
+    text: Wildcards are not allowed here
+inspection.display.name.argNames.errors:
+    text: Advice parameters (argNames, returning, throwing) consistency check
+inspection.display.name.argNames.warnings:
+    text: argNames not defined warning
+inspection.display.name.declareParents:
+    text: Introductions (declare parents) errors
+inspection.group.display.name.aop:
+    text: AOP
+pointcut.method.style.inspection:
+    text: Pointcut method style
+pointcut.methods.should.have.empty.body:
+    text: 'Pointcut methods should have empty body '
+pointcut.methods.should.have.no.throws.clause:
+    text: Pointcut methods should not have throws clause
+pointcut.methods.should.have.void.return.type:
+    text: Pointcut methods should have void return type
+quickfix.name.arg.names.correct:
+    text: Correct {0} attribute
+quickfix.name.arg.names.remove:
+    text: Remove {0} attribute
+quickfix.name.define.attribute:
+    text: Define {0} attribute
+tooltip.text.navigate.to.advices:
+    text: Navigate to AOP advices
+tooltip.text.navigate.to.classes:
+    text: Navigate to advised classes
+tooltip.text.navigate.to.introductions:
+    text: Navigate to AOP introductions
+tooltip.text.navigate.to.methods:
+    text: Navigate to advised methods
+type.name.pattern:
+    text: Type name pattern
+unbound.pointcut.parameter:
+    text: Unbound pointcut parameter ''{0}''
+warning.argNames.should.be.defined:
+    text: '{0} attribute isn''''t defined'

@@ -3,6 +3,8 @@
  */
 package com.intellij.aop;
 
+import consulo.annotation.internal.MigratedExtensionsTo;
+import consulo.aop.localize.AopLocalize;
 import consulo.application.CommonBundle;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
@@ -14,6 +16,8 @@ import java.util.ResourceBundle;
 /**
  * @author peter
  */
+@Deprecated
+@MigratedExtensionsTo(AopLocalize.class)
 public class AopBundle {
   private static Reference<ResourceBundle> ourBundle;
 
