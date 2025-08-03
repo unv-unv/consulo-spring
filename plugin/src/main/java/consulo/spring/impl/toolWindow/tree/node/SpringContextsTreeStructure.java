@@ -2,9 +2,9 @@ package consulo.spring.impl.toolWindow.tree.node;
 
 import consulo.project.Project;
 import consulo.project.ui.view.tree.AbstractTreeNode;
-import consulo.ui.ex.awt.tree.TreeNode;
 import consulo.ui.ex.tree.AbstractTreeStructure;
 import consulo.ui.ex.tree.NodeDescriptor;
+import consulo.ui.ex.tree.TreeNode;
 import consulo.util.collection.ArrayUtil;
 import jakarta.annotation.Nonnull;
 
