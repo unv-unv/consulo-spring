@@ -40,7 +40,9 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.PsiModificationTracker;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
+import consulo.spring.localize.SpringLocalize;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.StringUtil;
@@ -50,6 +52,7 @@ import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import org.jetbrains.annotations.Nls;
 
 import jakarta.annotation.Nonnull;
+
 import java.util.*;
 
 /**
@@ -57,127 +60,128 @@ import java.util.*;
  */
 @ExtensionImpl
 public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
-  private static final Key<CachedValue<Set<PsiClass>>> REPLACE_CLASS = Key.create("ReplaceClassWithInterfaces");
+    private static final Key<CachedValue<Set<PsiClass>>> REPLACE_CLASS = Key.create("ReplaceClassWithInterfaces");
 
-  @Override
-  protected void checkBeanClass(@Nonnull CommonSpringBean springBean,
-                                @Nonnull PsiType psiType,
-                                final DomElement annotatedElement,
-                                @Nonnull DomElementAnnotationHolder holder) {
+    @Override
+    protected void checkBeanClass(
+        @Nonnull CommonSpringBean springBean,
+        @Nonnull PsiType psiType,
+        final DomElement annotatedElement,
+        @Nonnull DomElementAnnotationHolder holder
+    ) {
+        final PsiClass psiClass = psiType instanceof PsiClassType ? ((PsiClassType) psiType).resolve() : null;
+        if (psiClass == null || psiClass.isInterface()) {
+            return;
+        }
+        final Set<PsiClass> interfaces = new HashSet<PsiClass>();
 
+        interfaces.addAll(getInterfacesToReplaceClassWith(psiClass));
 
-    final PsiClass psiClass = psiType instanceof PsiClassType ? ((PsiClassType)psiType).resolve() : null;
-    if (psiClass == null || psiClass.isInterface()) {
-      return;
+        if (!interfaces.isEmpty()) {
+            String s = StringUtil.join(ContainerUtil.map(interfaces, PsiClass::getQualifiedName), ", ");
+            holder.createProblem(annotatedElement, HighlightSeverity.GENERIC_SERVER_ERROR_OR_WARNING,
+                SpringBundle.message("jdk.proxy.intercepts.class", psiType.getCanonicalText(), s),
+                createFixes(annotatedElement)
+            );
+        }
     }
-    final Set<PsiClass> interfaces = new HashSet<PsiClass>();
 
-    interfaces.addAll(getInterfacesToReplaceClassWith(psiClass));
-
-    if (!interfaces.isEmpty()) {
-      String s = StringUtil.join(ContainerUtil.map(interfaces, PsiClass::getQualifiedName), ", ");
-      holder.createProblem(annotatedElement, HighlightSeverity.GENERIC_SERVER_ERROR_OR_WARNING,
-                           SpringBundle.message("jdk.proxy.intercepts.class", psiType.getCanonicalText(), s),
-                           createFixes(annotatedElement));
+    private static LocalQuickFix[] createFixes(DomElement annotatedElement) {
+        return EnableAspectJQuickFix.isSchemaStyle(DomUtil.getFileElement(annotatedElement).getRootElement().getXmlTag()) ?
+            new LocalQuickFix[]{new SwitchToCglibProxyingFix(annotatedElement)} : new LocalQuickFix[0];
     }
-  }
 
-  private static LocalQuickFix[] createFixes(DomElement annotatedElement) {
-    return EnableAspectJQuickFix.isSchemaStyle(DomUtil.getFileElement(annotatedElement).getRootElement().getXmlTag()) ?
-      new LocalQuickFix[]{new SwitchToCglibProxyingFix(annotatedElement)} : new LocalQuickFix[0];
-  }
-
-  private static Set<PsiClass> getInterfacesToReplaceClassWith(final PsiClass psiClass) {
-    CachedValue<Set<PsiClass>> classes = psiClass.getUserData(REPLACE_CLASS);
-    if (classes == null) {
-      psiClass.putUserData(REPLACE_CLASS,
-                           classes = CachedValuesManager.getManager(psiClass.getProject())
-                                                        .createCachedValue(new CachedValueProvider<Set<PsiClass>>() {
-                                                          public Result<Set<PsiClass>> compute() {
-                                                            ProgressManager.getInstance().checkCanceled();
-                                                            for (final AopProvider provider : AopLanguageInjector.getAopProviders(psiClass)) {
-                                                              final AopAdvisedElementsSearcher elementsSearcher =
-                                                                provider.getAdvisedElementsSearcher(psiClass);
-                                                              if (elementsSearcher instanceof SpringAdvisedElementsSearcher) {
-                                                                final SpringAdvisedElementsSearcher searcher =
-                                                                  (SpringAdvisedElementsSearcher)elementsSearcher;
-                                                                if (searcher.isJdkProxyType() && isAdvised(psiClass)) {
-                                                                  final Set<PsiClass> interfaces = new HashSet<PsiClass>();
-                                                                  JamCommonUtil.processSuperClassList(psiClass,
-                                                                                                      new consulo.ide.impl.idea.util.containers.ArrayListSet<PsiClass>(),
-                                                                                                      new Processor<PsiClass>() {
-                                                                                                        public boolean process(final PsiClass psiClass) {
-                                                                                                          interfaces.addAll(Arrays.asList(
-                                                                                                            psiClass.getInterfaces()));
-                                                                                                          return true;
-                                                                                                        }
-                                                                                                      });
-                                                                  return Result.create(interfaces,
-                                                                                       PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
-                                                                }
-                                                              }
-                                                            }
-                                                            return Result.create(Collections.<PsiClass>emptySet(),
-                                                                                 PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
-                                                          }
-                                                        }, false));
+    private static Set<PsiClass> getInterfacesToReplaceClassWith(final PsiClass psiClass) {
+        CachedValue<Set<PsiClass>> classes = psiClass.getUserData(REPLACE_CLASS);
+        if (classes == null) {
+            psiClass.putUserData(
+                REPLACE_CLASS,
+                classes = CachedValuesManager.getManager(psiClass.getProject())
+                    .createCachedValue(new CachedValueProvider<Set<PsiClass>>() {
+                        public Result<Set<PsiClass>> compute() {
+                            ProgressManager.getInstance().checkCanceled();
+                            for (final AopProvider provider : AopLanguageInjector.getAopProviders(psiClass)) {
+                                final AopAdvisedElementsSearcher elementsSearcher = provider.getAdvisedElementsSearcher(psiClass);
+                                if (elementsSearcher instanceof SpringAdvisedElementsSearcher) {
+                                    final SpringAdvisedElementsSearcher searcher = (SpringAdvisedElementsSearcher) elementsSearcher;
+                                    if (searcher.isJdkProxyType() && isAdvised(psiClass)) {
+                                        final Set<PsiClass> interfaces = new HashSet<PsiClass>();
+                                        JamCommonUtil.processSuperClassList(
+                                            psiClass,
+                                            new consulo.ide.impl.idea.util.containers.ArrayListSet<PsiClass>(),
+                                            new Processor<PsiClass>() {
+                                                public boolean process(final PsiClass psiClass) {
+                                                    interfaces.addAll(Arrays.asList(psiClass.getInterfaces()));
+                                                    return true;
+                                                }
+                                            }
+                                        );
+                                        return Result.create(
+                                            interfaces,
+                                            PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT
+                                        );
+                                    }
+                                }
+                            }
+                            return Result.create(
+                                Collections.<PsiClass>emptySet(),
+                                PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT
+                            );
+                        }
+                    }, false)
+            );
+        }
+        return classes.getValue();
     }
-    return classes.getValue();
-  }
 
 
-  @Nls
-  @Nonnull
-  @Override
-  public String getDisplayName() {
-    return "JDK-proxied beans type checking";
-  }
-
-  @Nonnull
-  @Override
-  public String getShortName() {
-    return "JdkProxiedBeanTypeInspection";
-  }
-
-  private static boolean isAdvised(final PsiClass psiClass) {
-    return !AopJavaAnnotator.getBoundAdvices(psiClass).isEmpty() ||
-      !AopJavaAnnotator.getBoundIntroductions(psiClass).isEmpty();
-  }
-
-  private static class SwitchToCglibProxyingFix implements LocalQuickFix {
-    private final DomElement myElement;
-
-    public SwitchToCglibProxyingFix(final DomElement element) {
-      myElement = element;
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return LocalizeValue.localizeTODO("JDK-proxied beans type checking");
     }
 
     @Nonnull
-    public String getName() {
-      return SpringBundle.message("use.cglib.proxying");
+    @Override
+    public String getShortName() {
+        return "JdkProxiedBeanTypeInspection";
     }
 
-    @Nonnull
-    public String getFamilyName() {
-      return getName();
+    private static boolean isAdvised(final PsiClass psiClass) {
+        return !AopJavaAnnotator.getBoundAdvices(psiClass).isEmpty() ||
+            !AopJavaAnnotator.getBoundIntroductions(psiClass).isEmpty();
     }
 
-    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-      Beans beans = (Beans)DomUtil.getFileElement(myElement).getRootElement();
-      final List<AopConfig> configs = DomUtil.getDefinedChildrenOfType(beans, AopConfig.class);
-      if (!configs.isEmpty()) {
-        configs.get(0).getProxyTargetClass().setValue(Boolean.TRUE);
-        return;
-      }
+    private static class SwitchToCglibProxyingFix implements LocalQuickFix {
+        private final DomElement myElement;
 
-      List<AspectjAutoproxy> autoproxyList = DomUtil.getDefinedChildrenOfType(beans, AspectjAutoproxy.class);
-      if (autoproxyList.isEmpty()) {
-        EnableAspectJQuickFix.addAspectjAutoproxy(beans.getXmlTag());
-        autoproxyList = DomUtil.getDefinedChildrenOfType(beans, AspectjAutoproxy.class);
-      }
-      autoproxyList.get(0).getProxyTargetClass().setValue(Boolean.TRUE);
+        public SwitchToCglibProxyingFix(final DomElement element) {
+            myElement = element;
+        }
+
+        @Nonnull
+        @Override
+        public LocalizeValue getName() {
+            return SpringLocalize.useCglibProxying();
+        }
+
+        public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+            Beans beans = (Beans) DomUtil.getFileElement(myElement).getRootElement();
+            final List<AopConfig> configs = DomUtil.getDefinedChildrenOfType(beans, AopConfig.class);
+            if (!configs.isEmpty()) {
+                configs.get(0).getProxyTargetClass().setValue(Boolean.TRUE);
+                return;
+            }
+
+            List<AspectjAutoproxy> autoproxyList = DomUtil.getDefinedChildrenOfType(beans, AspectjAutoproxy.class);
+            if (autoproxyList.isEmpty()) {
+                EnableAspectJQuickFix.addAspectjAutoproxy(beans.getXmlTag());
+                autoproxyList = DomUtil.getDefinedChildrenOfType(beans, AspectjAutoproxy.class);
+            }
+            autoproxyList.get(0).getProxyTargetClass().setValue(Boolean.TRUE);
+        }
     }
-  }
 
-  private static class TimeoutException extends RuntimeException {
-  }
+    private static class TimeoutException extends RuntimeException {
+    }
 }

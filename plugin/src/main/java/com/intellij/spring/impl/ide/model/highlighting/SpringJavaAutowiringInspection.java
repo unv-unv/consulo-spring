@@ -5,7 +5,6 @@ import com.intellij.java.language.psi.*;
 import com.intellij.java.language.psi.util.InheritanceUtil;
 import com.intellij.java.language.psi.util.PropertyUtil;
 import com.intellij.java.language.psi.util.PsiUtil;
-import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
@@ -23,23 +22,23 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiNameIdentifierOwner;
 import consulo.language.psi.PsiReference;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
+import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.StringUtil;
-import org.jetbrains.annotations.NonNls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * User: Sergey.Vasiliev
+ * @author Sergey.Vasiliev
  */
 @ExtensionImpl
 public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<Object> {
-
     @Nullable
     @RequiredReadAction
     private static SpringModel getModelForBean(@Nullable PsiClass aClass) {
@@ -55,7 +54,12 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
 
     @Nonnull
     @Override
-    public PsiElementVisitor buildVisitorImpl(@Nonnull ProblemsHolder holder, boolean isOnTheFly, LocalInspectionToolSession session, Object o) {
+    public PsiElementVisitor buildVisitorImpl(
+        @Nonnull ProblemsHolder holder,
+        boolean isOnTheFly,
+        LocalInspectionToolSession session,
+        Object o
+    ) {
         return new JavaElementVisitor() {
             @Override
             @RequiredReadAction
@@ -83,8 +87,12 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
         };
     }
 
-    private static void checkAutowiredMethod(final PsiMethod psiMethod, @Nullable final ProblemsHolder holder, final SpringModel springModel,
-                                             final boolean required) {
+    private static void checkAutowiredMethod(
+        final PsiMethod psiMethod,
+        @Nullable final ProblemsHolder holder,
+        final SpringModel springModel,
+        final boolean required
+    ) {
         final PsiAnnotation resourceAnnotation = SpringAutowireUtil.getResourceAnnotation(psiMethod);
         if (resourceAnnotation != null) {
             final PsiType type = PropertyUtil.getPropertyType(psiMethod);
@@ -100,14 +108,17 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
     }
 
     @Nullable
-    public static Collection<SpringBaseBeanPointer> checkAutowiredPsiMember(final PsiModifierListOwner modifierListOwner,
-                                                                            @Nonnull final PsiType psiType,
-                                                                            @Nullable final ProblemsHolder holder,
-                                                                            @Nonnull final SpringModel springModel,
-                                                                            final boolean required) {
+    public static Collection<SpringBaseBeanPointer> checkAutowiredPsiMember(
+        final PsiModifierListOwner modifierListOwner,
+        @Nonnull final PsiType psiType,
+        @Nullable final ProblemsHolder holder,
+        @Nonnull final SpringModel springModel,
+        final boolean required
+    ) {
 
-        PsiType beanType =
-            psiType instanceof PsiArrayType ? ((PsiArrayType) psiType).getComponentType() : PsiUtil.extractIterableTypeParameter(psiType, true);
+        PsiType beanType = psiType instanceof PsiArrayType
+            ? ((PsiArrayType) psiType).getComponentType()
+            : PsiUtil.extractIterableTypeParameter(psiType, true);
         final boolean isIterable = beanType != null;
         if (beanType == null) {
             beanType = psiType;
@@ -131,22 +142,26 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
                     return Collections.singleton(bean.getBasePointer());
                 }
             }
-            return checkByTypeAutowire(((PsiNameIdentifierOwner) modifierListOwner).getNameIdentifier(),
+            return checkByTypeAutowire(
+                ((PsiNameIdentifierOwner) modifierListOwner).getNameIdentifier(),
                 beanType,
                 holder,
                 springModel,
                 isIterable,
-                required);
+                required
+            );
         }
         final PsiAnnotation qualifiedAnnotation = SpringAutowireUtil.getQualifiedAnnotation(modifierListOwner);
 
         if (qualifiedAnnotation == null) {
-            return checkByTypeAutowire(((PsiNameIdentifierOwner) modifierListOwner).getNameIdentifier(),
+            return checkByTypeAutowire(
+                ((PsiNameIdentifierOwner) modifierListOwner).getNameIdentifier(),
                 beanType,
                 holder,
                 springModel,
                 isIterable,
-                required);
+                required
+            );
         }
         else {
             return checkQualifiedAutowiring(beanType, qualifiedAnnotation, holder, springModel);
@@ -154,10 +169,12 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
     }
 
     @Nullable
-    private static Collection<SpringBaseBeanPointer> checkByNameAutowiring(final PsiAnnotationMemberValue annotationMemberValue,
-                                                                           final PsiType psiType,
-                                                                           @Nullable final ProblemsHolder holder,
-                                                                           @Nonnull final SpringModel model) {
+    private static Collection<SpringBaseBeanPointer> checkByNameAutowiring(
+        final PsiAnnotationMemberValue annotationMemberValue,
+        final PsiType psiType,
+        @Nullable final ProblemsHolder holder,
+        @Nonnull final SpringModel model
+    ) {
         SpringBeanReference ref = null;
         for (PsiReference reference : annotationMemberValue.getReferences()) {
             if (reference instanceof SpringBeanReference) {
@@ -175,8 +192,11 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
                     }
                 }
                 if (holder != null) {
-                    holder.registerProblem(ref, SpringBundle.message("cannot.autowire.bean.of.type", psiType.getCanonicalText()), ProblemHighlightType
-                        .GENERIC_ERROR_OR_WARNING);
+                    holder.registerProblem(
+                        ref,
+                        SpringLocalize.cannotAutowireBeanOfType(psiType.getCanonicalText()).get(),
+                        ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                    );
                 }
             }
             else {
@@ -189,10 +209,12 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
     }
 
     @Nullable
-    private static List<SpringBaseBeanPointer> checkQualifiedAutowiring(final PsiType type,
-                                                                        final PsiAnnotation qualifiedAnnotation,
-                                                                        @Nullable final ProblemsHolder holder,
-                                                                        @Nonnull final SpringModel springModel) {
+    private static List<SpringBaseBeanPointer> checkQualifiedAutowiring(
+        final PsiType type,
+        final PsiAnnotation qualifiedAnnotation,
+        @Nullable final ProblemsHolder holder,
+        @Nonnull final SpringModel springModel
+    ) {
 
         final PsiAnnotationMemberValue attributeValue = qualifiedAnnotation.findDeclaredAttributeValue("value");
         PsiReference qreference = null;
@@ -205,9 +227,11 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
                     qreference = reference;
                     if (((SpringQualifierReference) reference).multiResolve(false).length == 0) {
                         if (holder != null && reference.getElement().isPhysical()) {
-                            holder.registerProblem(reference,
-                                SpringBundle.message("bean.class.unknown.qualifier.bean", name),
-                                ProblemHighlightType.LIKE_UNKNOWN_SYMBOL);
+                            holder.registerProblem(
+                                reference,
+                                SpringLocalize.beanClassUnknownQualifierBean(name).get(),
+                                ProblemHighlightType.LIKE_UNKNOWN_SYMBOL
+                            );
                         }
                         return null;
                     }
@@ -230,14 +254,22 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
                 if (beanPointers.size() == 0) {
                     if (holder != null) {
                         if (attributeValue != null) {
-                            reportProblem(holder, qreference, attributeValue,
-                                SpringBundle.message("bean.class.unknown.qualifier.bean", name));
+                            reportProblem(
+                                holder,
+                                qreference,
+                                attributeValue,
+                                SpringLocalize.beanClassUnknownQualifierBean(name)
+                            );
                         }
                         else {
                             final String qualifiedName = qualifiedAnnotation.getQualifiedName();
                             assert qualifiedName != null;
-                            reportProblem(holder, qreference, qualifiedAnnotation,
-                                SpringBundle.message("cannot.find.bean.qualified.by", "@" + StringUtil.getShortName(qualifiedName)));
+                            reportProblem(
+                                holder,
+                                qreference,
+                                qualifiedAnnotation,
+                                SpringLocalize.cannotFindBeanQualifiedBy("@" + StringUtil.getShortName(qualifiedName))
+                            );
                         }
                     }
                     return null;
@@ -245,7 +277,7 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
                 else if (beanPointers.size() == 1) {
                     boolean isAssignable = false;
                     for (SpringBaseBeanPointer bean : beanPointers) {
-                        @NonNls PsiClass[] psiClasses = bean.getEffectiveBeanType();
+                        PsiClass[] psiClasses = bean.getEffectiveBeanType();
                         for (PsiClass psiClass : psiClasses) {
                             if (InheritanceUtil.isInheritorOrSelf(psiClass, aClass, true)) {
                                 isAssignable = true;
@@ -256,7 +288,8 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
 
                     if (!isAssignable) {
                         if (holder != null) {
-                            final String message = SpringBundle.message("bean.class.autowired.incorrect.qualifier.type", type.getPresentableText());
+                            LocalizeValue message =
+                                SpringLocalize.beanClassAutowiredIncorrectQualifierType(type.getPresentableText());
                             reportProblem(holder, qreference, attributeValue == null ? qualifiedAnnotation : attributeValue, message);
                         }
                         return null;
@@ -268,30 +301,38 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
         return null;
     }
 
-    private static void reportProblem(@Nonnull final ProblemsHolder holder,
-                                      final PsiReference qreference,
-                                      @Nonnull final PsiAnnotationMemberValue attributeValue,
-                                      final String text) {
+    private static void reportProblem(
+        @Nonnull final ProblemsHolder holder,
+        final PsiReference qreference,
+        @Nonnull final PsiAnnotationMemberValue attributeValue,
+        @Nonnull LocalizeValue text
+    ) {
         if (qreference == null) {
-            holder.registerProblem(attributeValue, text);
+            holder.newProblem(text)
+                .range(attributeValue)
+                .create();
         }
         else {
-            holder.registerProblem(qreference, text, ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
+            holder.registerProblem(qreference, text.get(), ProblemHighlightType.GENERIC_ERROR_OR_WARNING);
         }
     }
 
     @Nullable
-    private static Collection<SpringBaseBeanPointer> checkByTypeAutowire(final PsiElement psiElement,
-                                                                         @Nonnull final PsiType type,
-                                                                         @Nullable final ProblemsHolder holder,
-                                                                         @Nonnull final SpringModel springModel,
-                                                                         final boolean iterable, final boolean required) {
+    private static Collection<SpringBaseBeanPointer> checkByTypeAutowire(
+        final PsiElement psiElement,
+        @Nonnull final PsiType type,
+        @Nullable final ProblemsHolder holder,
+        @Nonnull final SpringModel springModel,
+        final boolean iterable, final boolean required
+    ) {
 
         final Collection<SpringBaseBeanPointer> beanPointers = SpringAutowireUtil.autowireByType(springModel, type);
 
         if (beanPointers.isEmpty() && required) {
             if (holder != null && !SpringAutowireUtil.isAutowiredByDefault(type)) {
-                holder.registerProblem(psiElement, SpringBundle.message("bean.autowiring.by.type.none", type.getPresentableText()));
+                holder.newProblem(SpringLocalize.beanAutowiringByTypeNone(type.getPresentableText()))
+                    .range(psiElement)
+                    .create();
             }
             return null;
         }
@@ -299,16 +340,16 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
             if (holder != null) {
                 final List<String> beanNames = new ArrayList<String>();
                 for (SpringBaseBeanPointer bean : beanPointers) {
-                    @NonNls String beanName = bean.getName();
+                    String beanName = bean.getName();
                     if (StringUtil.isEmptyOrSpaces(beanName)) {
                         beanName = "Unknown";
                     }
                     beanNames.add(beanName);
                 }
                 Collections.sort(beanNames);
-                final String message =
-                    SpringBundle.message("bean.class.autowired.by.type", type.getPresentableText(), StringUtil.join(beanNames, ","));
-                holder.registerProblem(psiElement, message);
+                holder.newProblem(SpringLocalize.beanClassAutowiredByType(type.getPresentableText(), StringUtil.join(beanNames, ",")))
+                    .range(psiElement)
+                    .create();
             }
             return beanPointers;
         }
@@ -318,17 +359,19 @@ public class SpringJavaAutowiringInspection extends BaseJavaLocalInspectionTool<
     }
 
     @Nonnull
-    public String getGroupDisplayName() {
-        return SpringBundle.message("model.inspection.group.name");
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return SpringLocalize.modelInspectionGroupName();
     }
 
     @Nonnull
-    public String getDisplayName() {
-        return SpringBundle.message("model.qualifiers.in.class.inspection.display.name");
+    @Override
+    public LocalizeValue getDisplayName() {
+        return SpringLocalize.modelQualifiersInClassInspectionDisplayName();
     }
 
     @Nonnull
-    @NonNls
+    @Override
     public String getShortName() {
         return "SpringJavaAutowiringInspection";
     }

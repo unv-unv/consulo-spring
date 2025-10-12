@@ -17,66 +17,69 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.localize.LocalizeValue;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
 import consulo.xml.psi.xml.XmlAttributeValue;
-import org.jetbrains.annotations.Nls;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.List;
 
 /**
  * @author peter
  */
 public abstract class AbstractAopInspection extends XmlSuppressableInspectionTool {
-  public boolean isEnabledByDefault() {
-    return true;
-  }
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-  @Nonnull
-  @Override
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.WARNING;
-  }
+    @Nonnull
+    @Override
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.WARNING;
+    }
 
-  @Nullable
-  @Override
-  public Language getLanguage() {
-    return AopPointcutExpressionLanguage.getInstance();
-  }
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return AopPointcutExpressionLanguage.getInstance();
+    }
 
-  @Nonnull
-  public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
-    return new PsiElementVisitor() {
-      @Override public void visitElement(final PsiElement element) {
-        if (element instanceof PsiLiteralExpression || element instanceof XmlAttributeValue) {
-          checkElement(element, holder);
-        }
-      }
-    };
-  }
+    @Nonnull
+    public PsiElementVisitor buildVisitor(@Nonnull final ProblemsHolder holder, final boolean isOnTheFly) {
+        return new PsiElementVisitor() {
+            @Override
+            public void visitElement(final PsiElement element) {
+                if (element instanceof PsiLiteralExpression || element instanceof XmlAttributeValue) {
+                    checkElement(element, holder);
+                }
+            }
+        };
+    }
 
-  protected void checkElement(final PsiElement element, final ProblemsHolder holder) {
-    InjectedLanguageManager.getInstance(element.getProject()).enumerate(element, new PsiLanguageInjectionHost.InjectedPsiVisitor() {
-      public void visit(@Nonnull PsiFile file, @Nonnull List<PsiLanguageInjectionHost.Shred> places) {
-        if (file instanceof AopPointcutExpressionFile && file.getContext() == element) {
-          final AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile)file;
-          final LocalAopModel model = aopFile.getAopModel();
-          final PsiMethod method = model.getPointcutMethod();
-          if (method != null) {
-            checkAopMethod(method, model, holder, aopFile);
-          }
-        }
-      }
-    });
-  }
+    protected void checkElement(final PsiElement element, final ProblemsHolder holder) {
+        InjectedLanguageManager.getInstance(element.getProject()).enumerate(element, new PsiLanguageInjectionHost.InjectedPsiVisitor() {
+            public void visit(@Nonnull PsiFile file, @Nonnull List<PsiLanguageInjectionHost.Shred> places) {
+                if (file instanceof AopPointcutExpressionFile && file.getContext() == element) {
+                    final AopPointcutExpressionFile aopFile = (AopPointcutExpressionFile) file;
+                    final LocalAopModel model = aopFile.getAopModel();
+                    final PsiMethod method = model.getPointcutMethod();
+                    if (method != null) {
+                        checkAopMethod(method, model, holder, aopFile);
+                    }
+                }
+            }
+        });
+    }
 
-  protected abstract void checkAopMethod(final PsiMethod pointcutMethod, final LocalAopModel model, final ProblemsHolder holder,
-                                         final AopPointcutExpressionFile aopFile);
+    protected abstract void checkAopMethod(
+        final PsiMethod pointcutMethod, final LocalAopModel model, final ProblemsHolder holder,
+        final AopPointcutExpressionFile aopFile
+    );
 
-  @Nls
-  @Nonnull
-  public String getGroupDisplayName() {
-    return "";
-  }
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return LocalizeValue.empty();
+    }
 }

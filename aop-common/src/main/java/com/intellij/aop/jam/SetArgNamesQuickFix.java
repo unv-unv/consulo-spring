@@ -10,6 +10,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.impl.psi.CheckUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.project.Project;
 
@@ -18,49 +19,48 @@ import jakarta.annotation.Nonnull;
 /**
  * @author peter
  */
-public class SetArgNamesQuickFix implements LocalQuickFix
-{
-  private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.SetArgNamesQuickFix");
-  private final String myName;
-  private final boolean mySet;
-  private final ArgNamesManipulator myManipulator;
-  private final PsiMethod myMethod;
+public class SetArgNamesQuickFix implements LocalQuickFix {
+    private static final Logger LOG = Logger.getInstance("#com.intellij.aop.jam.SetArgNamesQuickFix");
+    @Nonnull
+    private final LocalizeValue myName;
+    private final boolean mySet;
+    private final ArgNamesManipulator myManipulator;
+    private final PsiMethod myMethod;
 
-  public SetArgNamesQuickFix(final String name, final boolean set, final ArgNamesManipulator manipulator, final PsiMethod method) {
-    myName = name;
-    mySet = set;
-    myManipulator = manipulator;
-    myMethod = method;
-  }
+    public SetArgNamesQuickFix(@Nonnull LocalizeValue name, final boolean set, final ArgNamesManipulator manipulator, final PsiMethod method) {
+        myName = name;
+        mySet = set;
+        myManipulator = manipulator;
+        myMethod = method;
+    }
 
-  public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
-    try {
-      CheckUtil.checkWritable(descriptor.getPsiElement());
-      if (mySet) {
-        final PsiMethod method = myMethod;
-        StringBuilder result = new StringBuilder();
-        for (PsiParameter parameter : method.getParameterList().getParameters()) {
-          final String name = parameter.getName();
-          if (result.length() > 0) result.append(",");
-          result.append(name);
+    public void applyFix(@Nonnull final Project project, @Nonnull final ProblemDescriptor descriptor) {
+        try {
+            CheckUtil.checkWritable(descriptor.getPsiElement());
+            if (mySet) {
+                final PsiMethod method = myMethod;
+                StringBuilder result = new StringBuilder();
+                for (PsiParameter parameter : method.getParameterList().getParameters()) {
+                    final String name = parameter.getName();
+                    if (result.length() > 0) {
+                        result.append(",");
+                    }
+                    result.append(name);
+                }
+                myManipulator.setArgNames(result.toString());
+            }
+            else {
+                myManipulator.setArgNames(null);
+            }
         }
-        myManipulator.setArgNames(result.toString());
-      } else {
-        myManipulator.setArgNames(null);
-      }
+        catch (IncorrectOperationException e) {
+            LOG.error(e);
+        }
     }
-    catch (IncorrectOperationException e) {
-      LOG.error(e);
+
+    @Nonnull
+    @Override
+    public LocalizeValue getName() {
+        return myName;
     }
-  }
-
-  @Nonnull
-  public String getFamilyName() {
-    return myName;
-  }
-
-  @Nonnull
-  public String getName() {
-    return myName;
-  }
 }

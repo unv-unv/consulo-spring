@@ -10,7 +10,6 @@
  */
 package com.intellij.spring.impl.ide.model.highlighting;
 
-import com.intellij.aop.AopBundle;
 import com.intellij.aop.psi.*;
 import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.model.xml.aop.Advisor;
@@ -18,6 +17,7 @@ import com.intellij.spring.impl.ide.model.xml.aop.BasicAdvice;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import com.intellij.spring.impl.model.aop.psi.SpringAopCompletionContributor;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.aop.localize.AopLocalize;
 import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
@@ -26,6 +26,8 @@ import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiRecursiveElementVisitor;
+import consulo.localize.LocalizeValue;
+import consulo.spring.localize.SpringLocalize;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
 import consulo.xml.psi.xml.XmlTag;
@@ -33,86 +35,99 @@ import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
 import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
+import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.List;
 
 @ExtensionImpl
 public class SpringAopErrorsInspection extends BasicDomElementsInspection<Beans, Object> {
 
-  public SpringAopErrorsInspection() {
-    super(Beans.class);
-  }
-
-  protected void checkDomElement(final DomElement element, final DomElementAnnotationHolder holder, final DomHighlightingHelper helper) {
-    final XmlTag tag = element.getXmlTag();
-    if (element instanceof BasicAdvice && tag != null) {
-      final BasicAdvice advice = (BasicAdvice)element;
-      if (advice.getPointcut().getXmlAttribute() == null && advice.getPointcutRef().getXmlAttribute() == null) {
-        createPointcutProblem(element, holder);
-      }
+    public SpringAopErrorsInspection() {
+        super(Beans.class);
     }
-    else if (element instanceof Advisor && tag != null) {
-      final Advisor advisor = (Advisor)element;
-      if (advisor.getPointcut().getXmlAttribute() == null && advisor.getPointcutRef().getXmlAttribute() == null) {
-        createPointcutProblem(element, holder);
-      }
-    }
-  }
 
-  public ProblemDescriptor[] checkFile(@Nonnull final PsiFile file, @Nonnull final InspectionManager manager, final boolean isOnTheFly) {
-    if (file instanceof AopPointcutExpressionFile) {
-      final List<ProblemDescriptor> result = new SmartList<ProblemDescriptor>();
-      final PsiPointcutExpression expression = ((AopPointcutExpressionFile)file).getPointcutExpression();
-      if (expression != null) {
-        expression.accept(new PsiRecursiveElementVisitor() {
-          @Override
-          public void visitElement(final PsiElement element) {
-            if (!(element instanceof PsiPointcutExpression)) return;
-            super.visitElement(element);
-            final PsiElement firstChild = element.getFirstChild();
-            if (element instanceof PsiPointcutReferenceExpression || element instanceof AopNotExpression ||
-              element instanceof AopBinaryExpression || element instanceof AopParenthesizedExpression) return;
-            if (firstChild == null || firstChild.getFirstChild() != null) return;
-
-            @NonNls final String text = firstChild.getText();
-            if (StringUtil.isEmptyOrSpaces(text)) return;
-
-            if (!Arrays.asList(SpringAopCompletionContributor.SPRING20_AOP_POINTCUTS).contains(text) && !"bean".equals(text)) {
-              result.add(manager.createProblemDescriptor(firstChild,
-                                                         SpringBundle.message("this.pointcut.designator.isn.t.supported.by.spring", text),
-                                                         LocalQuickFix.EMPTY_ARRAY, ProblemHighlightType.GENERIC_ERROR_OR_WARNING));
+    protected void checkDomElement(final DomElement element, final DomElementAnnotationHolder holder, final DomHighlightingHelper helper) {
+        final XmlTag tag = element.getXmlTag();
+        if (element instanceof BasicAdvice && tag != null) {
+            final BasicAdvice advice = (BasicAdvice) element;
+            if (advice.getPointcut().getXmlAttribute() == null && advice.getPointcutRef().getXmlAttribute() == null) {
+                createPointcutProblem(element, holder);
             }
-          }
-        });
-      }
-      return result.toArray(new ProblemDescriptor[result.size()]);
+        }
+        else if (element instanceof Advisor && tag != null) {
+            final Advisor advisor = (Advisor) element;
+            if (advisor.getPointcut().getXmlAttribute() == null && advisor.getPointcutRef().getXmlAttribute() == null) {
+                createPointcutProblem(element, holder);
+            }
+        }
     }
 
-    return super.checkFile(file, manager, isOnTheFly);
-  }
+    public ProblemDescriptor[] checkFile(@Nonnull final PsiFile file, @Nonnull final InspectionManager manager, final boolean isOnTheFly) {
+        if (file instanceof AopPointcutExpressionFile) {
+            final List<ProblemDescriptor> result = new SmartList<ProblemDescriptor>();
+            final PsiPointcutExpression expression = ((AopPointcutExpressionFile) file).getPointcutExpression();
+            if (expression != null) {
+                expression.accept(new PsiRecursiveElementVisitor() {
+                    @Override
+                    public void visitElement(final PsiElement element) {
+                        if (!(element instanceof PsiPointcutExpression)) {
+                            return;
+                        }
+                        super.visitElement(element);
+                        final PsiElement firstChild = element.getFirstChild();
+                        if (element instanceof PsiPointcutReferenceExpression || element instanceof AopNotExpression ||
+                            element instanceof AopBinaryExpression || element instanceof AopParenthesizedExpression) {
+                            return;
+                        }
+                        if (firstChild == null || firstChild.getFirstChild() != null) {
+                            return;
+                        }
 
-  private static void createPointcutProblem(final DomElement element, final DomElementAnnotationHolder holder) {
-    holder.createProblem(element, HighlightSeverity.ERROR, SpringBundle.message("error.pointcut.or.pointcut.ref.should.be.defined"),
-                         new DefineAttributeQuickFix("pointcut"), new DefineAttributeQuickFix("pointcut-ref"));
-  }
+                        @NonNls final String text = firstChild.getText();
+                        if (StringUtil.isEmptyOrSpaces(text)) {
+                            return;
+                        }
 
-  @Nonnull
-  public String getGroupDisplayName() {
-    return AopBundle.message("inspection.group.display.name.aop");
-  }
+                        if (!Arrays.asList(SpringAopCompletionContributor.SPRING20_AOP_POINTCUTS).contains(text) && !"bean".equals(text)) {
+                            result.add(manager.createProblemDescriptor(
+                                firstChild,
+                                SpringLocalize.thisPointcutDesignatorIsnTSupportedBySpring(text).get(),
+                                LocalQuickFix.EMPTY_ARRAY,
+                                ProblemHighlightType.GENERIC_ERROR_OR_WARNING
+                            ));
+                        }
+                    }
+                });
+            }
+            return result.toArray(new ProblemDescriptor[result.size()]);
+        }
 
-  @Nonnull
-  public String getDisplayName() {
-    return SpringBundle.message("aop.errors.inspection.display.name");
-  }
+        return super.checkFile(file, manager, isOnTheFly);
+    }
 
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return "SpringAopErrorsInspection";
-  }
+    private static void createPointcutProblem(final DomElement element, final DomElementAnnotationHolder holder) {
+        holder.createProblem(element, HighlightSeverity.ERROR, SpringBundle.message("error.pointcut.or.pointcut.ref.should.be.defined"),
+            new DefineAttributeQuickFix("pointcut"), new DefineAttributeQuickFix("pointcut-ref")
+        );
+    }
 
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return AopLocalize.inspectionGroupDisplayNameAop();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return SpringLocalize.aopErrorsInspectionDisplayName();
+    }
+
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return "SpringAopErrorsInspection";
+    }
 }

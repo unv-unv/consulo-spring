@@ -14,21 +14,20 @@ import consulo.language.editor.inspection.ProblemsHolder;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.language.sem.SemKey;
-import consulo.logging.Logger;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
 import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 
+import consulo.spring.localize.SpringLocalize;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspectionTool<Object> {
-    private static final Logger LOG = Logger.getInstance(SpringJavaConfigInspectionBase.class);
-
-    @Override
     @Nonnull
-    public String getGroupDisplayName() {
-        return SpringBundle.message("model.inspection.group.name");
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return SpringLocalize.modelInspectionGroupName();
     }
 
     @Override
@@ -39,7 +38,12 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
     @Nonnull
     @Override
     @RequiredReadAction
-    public PsiElementVisitor buildVisitorImpl(@Nonnull ProblemsHolder holder, boolean isOnTheFly, LocalInspectionToolSession session, Object o) {
+    public PsiElementVisitor buildVisitorImpl(
+        @Nonnull ProblemsHolder holder,
+        boolean isOnTheFly,
+        LocalInspectionToolSession session,
+        Object o
+    ) {
         PsiFile file = holder.getFile();
         if (!JamCommonUtil.isPlainJavaFile(file)) {
             return PsiElementVisitor.EMPTY_VISITOR;
@@ -85,8 +89,9 @@ public abstract class SpringJavaConfigInspectionBase extends BaseJavaLocalInspec
         return JamService.getJamService(module.getProject()).getJamElement(jamKey, aClass);
     }
 
-    protected abstract void checkJavaConfiguration(final SpringJamElement javaConfiguration,
-                                                   final Module module,
-                                                   final ProblemsHolder holder);
+    protected abstract void checkJavaConfiguration(
+        final SpringJamElement javaConfiguration,
+        final Module module,
+        final ProblemsHolder holder
+    );
 }
-

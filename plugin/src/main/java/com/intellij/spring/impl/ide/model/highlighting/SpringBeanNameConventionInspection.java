@@ -1,7 +1,6 @@
 /*
  * Copyright (c) 2000-2006 JetBrains s.r.o. All Rights Reserved.
  */
-
 package com.intellij.spring.impl.ide.model.highlighting;
 
 import com.intellij.java.language.psi.JavaPsiFacade;
@@ -14,6 +13,8 @@ import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
+import consulo.localize.LocalizeValue;
+import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
@@ -23,59 +24,61 @@ import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class SpringBeanNameConventionInspection extends SpringBeanInspectionBase {
-
-  @Nonnull
-  public String getDisplayName() {
-    return SpringBundle.message("model.inspection.display.bean.name.convention");
-  }
-
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return "SpringBeanNameConventionInspection";
-  }
-
-  protected void checkBean(SpringBean springBean,
-                           final Beans beans,
-                           final DomElementAnnotationHolder holder,
-                           final SpringModel springModel,
-                           Object state) {
-    final String beanId = springBean.getId().getStringValue();
-
-    if (acceptBean(springBean, beanId)) {
-      checkName(springBean.getId(), beanId, holder);
-    }
-  }
-
-  private static boolean acceptBean(final SpringBean springBean, final String beanId) {
-    return !StringUtil.isEmpty(beanId) && (!FieldRetrievingFactoryBeanConverter.isFieldRetrivingFactoryBean(springBean) ||
-                                           !FieldRetrievingFactoryBeanConverter.isResolved(springBean.getManager().getProject(), beanId));
-
-  }
-
-  @Nonnull
-  public HighlightDisplayLevel getDefaultLevel() {
-    return HighlightDisplayLevel.WARNING;
-  }
-
-  private static void checkAlias(final Alias alias, final DomElementAnnotationHolder holder) {
-    final String aliasName = alias.getAlias().getStringValue();
-
-    checkName(alias.getAlias(), aliasName, holder);
-  }
-
-  private static void checkName(final DomElement domElement, @Nonnull final String name, final DomElementAnnotationHolder holder) {
-    PsiNameHelper psiNameHelper = JavaPsiFacade.getInstance(domElement.getManager().getProject()).getNameHelper();
-    final boolean identifier = psiNameHelper.isIdentifier(name);
-    if (!identifier) {
-      boolean keyword = psiNameHelper.isKeyword(name); // IDEADEV-15506
-      if(!keyword) {
-        holder.createProblem(domElement, SpringBundle.message("model.inspection.invalid.identifier.message", name));
-      }
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return SpringLocalize.modelInspectionDisplayBeanNameConvention();
     }
 
-    if (Character.isUpperCase(name.charAt(0))) {
-      holder.createProblem(domElement, SpringBundle.message("model.inspection.invalid.lowercase.name.message", name));
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return "SpringBeanNameConventionInspection";
     }
-  }
+
+    protected void checkBean(
+        SpringBean springBean,
+        final Beans beans,
+        final DomElementAnnotationHolder holder,
+        final SpringModel springModel,
+        Object state
+    ) {
+        final String beanId = springBean.getId().getStringValue();
+
+        if (acceptBean(springBean, beanId)) {
+            checkName(springBean.getId(), beanId, holder);
+        }
+    }
+
+    private static boolean acceptBean(final SpringBean springBean, final String beanId) {
+        return !StringUtil.isEmpty(beanId) && (!FieldRetrievingFactoryBeanConverter.isFieldRetrivingFactoryBean(springBean) ||
+            !FieldRetrievingFactoryBeanConverter.isResolved(springBean.getManager().getProject(), beanId));
+
+    }
+
+    @Nonnull
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.WARNING;
+    }
+
+    private static void checkAlias(final Alias alias, final DomElementAnnotationHolder holder) {
+        final String aliasName = alias.getAlias().getStringValue();
+
+        checkName(alias.getAlias(), aliasName, holder);
+    }
+
+    private static void checkName(final DomElement domElement, @Nonnull final String name, final DomElementAnnotationHolder holder) {
+        PsiNameHelper psiNameHelper = JavaPsiFacade.getInstance(domElement.getManager().getProject()).getNameHelper();
+        final boolean identifier = psiNameHelper.isIdentifier(name);
+        if (!identifier) {
+            boolean keyword = psiNameHelper.isKeyword(name); // IDEADEV-15506
+            if (!keyword) {
+                holder.createProblem(domElement, SpringLocalize.modelInspectionInvalidIdentifierMessage(name).get());
+            }
+        }
+
+        if (Character.isUpperCase(name.charAt(0))) {
+            holder.createProblem(domElement, SpringLocalize.modelInspectionInvalidLowercaseNameMessage(name).get());
+        }
+    }
 }
