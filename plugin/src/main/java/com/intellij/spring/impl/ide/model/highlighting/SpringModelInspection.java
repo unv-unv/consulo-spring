@@ -15,6 +15,8 @@ import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanScope;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.localize.LocalizeValue;
+import consulo.spring.localize.SpringLocalize;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericDomValue;
@@ -27,39 +29,45 @@ import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class SpringModelInspection extends BasicDomElementsInspection<Beans, Object> {
-  protected boolean shouldCheckResolveProblems(final GenericDomValue value) {
-    return !SpringBeanScope.class.equals(DomUtil.getGenericValueParameter(value.getDomElementType())) &&
-           super.shouldCheckResolveProblems(value);
+    protected boolean shouldCheckResolveProblems(final GenericDomValue value) {
+        return !SpringBeanScope.class.equals(DomUtil.getGenericValueParameter(value.getDomElementType()))
+            && super.shouldCheckResolveProblems(value);
 
-  }
-
-  public SpringModelInspection() {
-    super(Beans.class);
-  }
-
-  protected void checkDomElement(final DomElement element, final DomElementAnnotationHolder holder, final DomHighlightingHelper helper, Object state) {
-    final int oldSize = holder.getSize();
-    super.checkDomElement(element, holder, helper, state);
-
-    if (oldSize == holder.getSize() && element instanceof GenericDomValue) {
-      ExtendsClassChecker.checkExtendsClassInReferences((GenericDomValue)element, holder);
     }
-  }
-  
 
-  @Nonnull
-  public String getGroupDisplayName() {
-    return SpringBundle.message("model.inspection.group.name");
-  }
+    public SpringModelInspection() {
+        super(Beans.class);
+    }
 
-  @Nonnull
-  public String getDisplayName() {
-    return SpringBundle.message("model.inspection.display.name");
-  }
+    protected void checkDomElement(
+        final DomElement element,
+        final DomElementAnnotationHolder holder,
+        final DomHighlightingHelper helper,
+        Object state
+    ) {
+        final int oldSize = holder.getSize();
+        super.checkDomElement(element, holder, helper, state);
 
-  @Nonnull
-  @NonNls
-  public String getShortName() {
-    return "SpringModelInspection";
-  }
+        if (oldSize == holder.getSize() && element instanceof GenericDomValue) {
+            ExtendsClassChecker.checkExtendsClassInReferences((GenericDomValue) element, holder);
+        }
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getGroupDisplayName() {
+        return SpringLocalize.modelInspectionGroupName();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return SpringLocalize.modelInspectionDisplayName();
+    }
+
+    @Nonnull
+    @Override
+    public String getShortName() {
+        return "SpringModelInspection";
+    }
 }

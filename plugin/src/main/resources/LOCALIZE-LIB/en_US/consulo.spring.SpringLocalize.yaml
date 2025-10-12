@@ -1,0 +1,694 @@
+abstract.class.not.allowed:
+    text: Abstract class not allowed
+action.spring.beans.generate.constructor.dependency.action.text:
+    text: Spring Constructor Dependency...
+action.spring.beans.generate.setter.dependency.action.text:
+    text: Spring Setter Dependency...
+add.spring.facet:
+    text: Enabled Spring extension in module ''{0}''
+aop.advice.matching.aspect.bean:
+    text: Some advices are matching this bean
+aop.enable.aspectj.fix.text:
+    text: Add <aop:aspectj-autoproxy/> to Spring config
+aop.errors.inspection.display.name:
+    text: Spring AOP Errors
+aop.quickfix.define.0.attr:
+    text: Define {0} attribute
+aop.warning.aspectj.isnt.enabled:
+    text: '@AspectJ support isn''t enabled'
+aop.warnings.inspection.display.name:
+    text: Spring AOP Warnings
+available.custom.namespace.handlers:
+    text: 'Specify which custom namespaces should be validated '
+bean.autowiring.by.type:
+    text: 'Could not autowire. There are more than one bean of ''''{0}'''' type. Beans: {1}. Properties: ''''{2}'''''
+bean.autowiring.by.type.none:
+    text: Could not autowire. No beans of ''{0}'' type found.
+bean.bad.constructor.arg.type:
+    text: Constructor argument of ''{0}'' type cannot be injected by ''{1}''
+bean.bad.property.type:
+    text: Property of ''{0}'' type cannot be injected by ''{1}''
+bean.class.autowired.by.type:
+    text: 'Could not autowire. There are more than one bean of ''''{0}'''' type. Beans: {1}.'
+bean.class.autowired.incorrect.qualifier.type:
+    text: Could not autowire. Qualified bean must be of ''{0}'' type.
+bean.class.unknown.qualifier.bean:
+    text: Cannot find bean with qualifier ''{0}''
+bean.dependencies.popup.title:
+    text: Dependencies of ''{0}'' bean
+bean.dependency.check.message:
+    text: You must set bean properties({0}) or disable dependency checking for this bean
+bean.must.be.of.type:
+    text: Bean must be of ''{0}'' type
+bean.must.be.of.types:
+    text: Bean must be of ''{0}'' or ''{1}'' type
+bean.must.be.one.of.this.types:
+    text: 'Bean must be one of this types: {0}'
+bean.must.be.public:
+    text: Bean must be public
+cannot.autowire.bean.of.type:
+    text: Could not autowire. Bean should be of ''{0}'' type
+cannot.create.spring.context.file:
+    text: Cannot create spring context file
+cannot.find.bean.constructor.with.parameters.count:
+    text: No matching constructor found in class ''{0}''
+cannot.find.bean.qualified.by:
+    text: Cannot find bean qualified with {0}
+cannot.find.constructor.arg.index:
+    text: Cannot find constuctor with argument index {0}
+cannot.find.constructor.arg.index.in.class:
+    text: Cannot find constuctor with argument index {0} in class {1}
+cannot.find.customNs.jar:
+    text: Error loading customNs.jar which is necessary to run Spring custom namespace handlers
+cannot.find.factory.method.index:
+    text: Cannot find factory method with argument index {0} in class {1}
+cannot.find.factory.method.with.parameters.count:
+    text: No matching factory method found in class ''{0}''
+cannot.resolve.method:
+    text: Cannot resolve method ''{0}''
+choose.config.file:
+    text: Choose Configuration File
+choose.configuration.file:
+    text: Choose Configuration File
+choose.file.set:
+    text: Choose file set
+config.add.set.button:
+    text: New File Set...
+config.display.name:
+    text: Configuration
+config.edit.button:
+    text: Edit File Set...
+config.edit.dependencies:
+    text: Dependencies
+config.edit.files.tab:
+    text: Configuration Files
+config.features.display.name:
+    text: Spring Features
+config.features.version:
+    text: 'Spring version:'
+config.file.is.not.spring:
+    text: The file is not recognized as Spring configuration
+config.file.not.found:
+    text: File not found
+config.fileset.autodetected:
+    text: (autodetected)
+config.fileset.editor.title:
+    text: Edit File Set
+config.input.fileset:
+    text: 'Fileset &name:'
+config.input.fileset.title:
+    text: New Fileset
+config.input.parent.fileset:
+    text: '&Parent fileset:'
+config.libraries.editor.display.name:
+    text: Spring Libraries
+config.locate.button:
+    text: Locate File...
+config.new.config.button:
+    text: New Config File...
+config.new.file:
+    text: Spring Config
+config.new.file.browse.title:
+    text: Choose Folder
+config.new.file.directory:
+    text: '&Directory:'
+config.new.file.fileset:
+    text: 'File&set:'
+config.new.file.name:
+    text: '&File name:'
+config.new.file.schema:
+    text: 'Schema:'
+config.new.fileset.name:
+    text: New Fileset
+config.options.display.name:
+    text: Options
+config.options.validation.caption:
+    text: Validation
+config.options.validation.enable:
+    text: Enable Spring model validation on build
+config.options.validation.show.errors.as.warnings:
+    text: Show errors as warnings
+config.remove.button:
+    text: Remove
+config.remove.button.message:
+    text: Do you really want to remove the file set "{0}"? (No files will be physically deleted)
+config.remove.button.title:
+    text: Remove
+configure.file.set.for.file:
+    text: Configure file set for the file
+constructor.arg.incorrect.value.type:
+    text: Injected value type must correspond to constructor arg type
+constructor.arg.must.be.of.type:
+    text: Must be of ''{0}'' type
+create.missing.mappings:
+    text: Create missing mappings for ''{0}''
+create.missing.properties:
+    text: Create missing properties
+create.new.spring.configuration.file:
+    text: Create new Spring configuration file
+create.spring.context.file.dtd.1.0:
+    text: Spring 1.x DTD
+create.spring.context.file.dtd.2.0:
+    text: Spring 2.x DTD
+create.spring.context.file.schema.2.0:
+    text: Spring 2.x XSD
+custom.bean.no.id:
+    text: |-
+        IntelliJ IDEA can't find this bean's id in config file. Renaming will probably produce
+        incorrect code. Do you want to proceed?
+custom.bean.no.id.title:
+    text: Warning
+default.fileset.name:
+    text: My Fileset
+do.you.want.to.move.bean.to.the.top.level:
+    text: Do you want to move the bean to the top level?
+enter.new.fileset.name:
+    text: 'Enter a new fileset name:'
+error.pointcut.or.pointcut.ref.should.be.defined:
+    text: Either pointcut or pointcut-ref attribute should be defined
+file.set.not.configured.for.file:
+    text: File set not configured for the file
+fileset.new:
+    text: <new fileset>
+fileset.none:
+    text: <none>
+framework.title.spring:
+    text: '&Spring'
+generating.bean.dependencies.diagramm:
+    text: Generating bean dependencies  diagram
+idref.cannot.be.added.in.collection:
+    text: Cannot be added in collection of ''{0}'' type
+incorrect.constructor.arg.index:
+    text: Index must be less than ''{0}''
+incorrect.constructor.arg.index.not.unique:
+    text: Index must be unique
+interface.not.allowed:
+    text: Interface not allowed
+introduce.bean.intention:
+    text: Introduce Bean
+java.config.bean.method.cannot.be.final:
+    text: '@Bean methods must be non-final'
+java.config.bean.method.cannot.be.private:
+    text: =@Bean methods must be non-private
+java.config.bean.method.cannot.has.arguments:
+    text: '@Bean methods may not accept any arguments'
+java.config.bean.method.cannot.return.void:
+    text: '@Bean methods must be non-void'
+java.config.bean.must.be.declared.inside.configuration:
+    text: '@Bean methods are valid only when declared within a @Configuration annotated class, or @Import'
+java.configuration.autowired.constructor.param:
+    text: '@Configuration class may not use @Autowired constructor'
+java.configuration.cannot.be.final:
+    text: '@Configuration class may not be final'
+java.configuration.must.have.default.constructor:
+    text: Configuration classes must have a default/no-arg constructor
+jdk.proxy.intercepts.class:
+    text: 'Bean must implement one of ''''{0}'''' interfaces: ''''{1}'''''
+mark.bean.as.abstract:
+    text: Mark bean as abstract
+method.cannot.instantiate.bean:
+    text: Factory  method ''{0}'' cannot instantiate bean
+method.must.be.public:
+    text: Factory  method ''{0}'' must be public
+method.must.be.static:
+    text: Factory  method ''{0}'' must be static
+method.must.not.be.static:
+    text: Factory  method ''{0}'' must not be static
+missing.aspectj.autoproxy.inspection.display.name:
+    text: Missing aspectj-autoproxy
+model.add.constructor.args.for.method.quickfix.message:
+    text: Add <constructor-arg>(s) for ''{0}''
+model.bean.error.message:
+    text: Cannot resolve bean ''{0}''
+model.bean.quickfix.create.property:
+    text: Create new property from p-namespace usage
+model.bean.quickfix.family:
+    text: Spring model quick fixes
+model.bean.quickfix.message:
+    text: Create new bean ''{0}''
+model.create.constructor.quickfix.message:
+    text: Create constructor ''{0}''
+model.create.factory.method.quickfix.message:
+    text: Create factory method ''{0}''
+model.inspection.bean.autowiring:
+    text: Spring Bean Autowiring
+model.inspection.bean.constructor.arg:
+    text: Constructor Tag Injection
+model.inspection.bean.dependency.check:
+    text: Spring Bean Dependency Check
+model.inspection.bean.factory.method:
+    text: Spring Bean Factory Method
+model.inspection.bean.parent.inspection:
+    text: Parent Bean
+model.inspection.bean.property.value:
+    text: Injection Value Type
+model.inspection.display.bean.name.convention:
+    text: Spring Bean Names Convention
+model.inspection.display.name:
+    text: Spring Model
+model.inspection.group.name:
+    text: Spring Model
+model.inspection.hard.coded.string.literal:
+    text: 'Hard coded string literal: ''''{0}'''''
+model.inspection.injection.value.add.list:
+    text: Add <list> tag
+model.inspection.injection.value.add.map:
+    text: Add <map> tag
+model.inspection.injection.value.add.ref:
+    text: Add "ref" attribute
+model.inspection.injection.value.add.set:
+    text: Add <set> tag
+model.inspection.injection.value.add.value:
+    text: Add "value" attribute
+model.inspection.injection.value.consistency:
+    text: Injection Value Consistency
+model.inspection.injection.value.entry.key:
+    text: Map entry must specify a key
+model.inspection.injection.value.message:
+    text: '{0} must specify a ref or value'
+model.inspection.injection.value.style:
+    text: Spring Injection Value Style
+model.inspection.injection.value.style.message:
+    text: Usage of explicit <value> element
+model.inspection.injection.value.style.ref.fix:
+    text: Replace <ref> element with "{0}" attribute
+model.inspection.injection.value.style.ref.message:
+    text: Usage of explicit <ref> element
+model.inspection.injection.value.style.value.fix:
+    text: Replace <value> element with "{0}" attribute
+model.inspection.invalid.identifier.message:
+    text: '''''{0}'''' is not an identifier'
+model.inspection.invalid.lowercase.name.message:
+    text: '''''{0}'''' should be started with a lowercase letter'
+model.inspection.placeholder.values:
+    text: Placeholder String Values Injection
+model.inspection.string.constant.move.to.placeholder:
+    text: Move to placeholder
+model.inspection.validator.description.text:
+    text: Spring Model Validator
+model.inspection.validator.progress.text:
+    text: Validating Spring Model...
+model.intention.string.constant.move.to.placeholder:
+    text: Move to placeholder
+model.property.error.message:
+    text: Cannot resolve property ''{0}''
+model.property.error.message.descendants.incompatible:
+    text: Inheriting beans have different types for property ''{0}''
+model.property.error.message.descendants.missing:
+    text: Not all inheriting beans have property ''{0}''
+model.property.quickfix.message:
+    text: Create new property ''{0}''
+model.qualifiers.in.class.inspection.display.name:
+    text: Autowiring for Bean Class
+move.bean:
+    text: Move Bean
+move.bean.label:
+    text: 'To file:'
+move.bean.name:
+    text: Move bean ''{0}''
+move.bean.to.the.top.level:
+    text: Move Bean To the Top Level
+mvc.0.servlet.context.autodetected:
+    text: MVC ''{0}'' servlet context (autodetected)
+navigate.to.autowired.dependencies:
+    text: Navigate to the autowired dependencies
+new.fileset.name:
+    text: New Fileset Name
+parse.custom.bean.error:
+    text: Error parsing custom bean
+parse.custom.bean.intention:
+    text: Parse custom bean
+parse.custom.bean.success:
+    text: Custom handler has finished successfully
+parse.no.custom.beans:
+    text: 'Parser produced no beans '
+parse.no.namespace.handler:
+    text: Cannot find custom handler for namespace {0}
+parse.only.infrastructure.beans:
+    text: 'Parser produced only infrastructure beans '
+parse.these.beans:
+    text: |-
+        Custom namespace handler produced the following bean definitions:
+        {0}
+parse.these.beans.induct:
+    text: "Custom namespace handler produced the following bean definition:\n{0}\n\nDo you want IntelliJ IDEA to assume that all beans \nfrom namespace ''{1}'' with local name ''{2}''\nhave the same Java class and take their id from ''{3}'' attribute?\n"
+parse.these.beans.induct.only.this:
+    text: '&No, only this bean'
+parsing.custom.bean:
+    text: 'Running custom Spring bean handlers... '
+process.unexpectedly.terminated:
+    text: Process unexpectedly terminated{0}
+prompt.enter.new.spring.context.file.mame:
+    text: Enter new spring context file name
+required.properties.inspection:
+    text: Required Annotation
+required.properties.missed:
+    text: 'Required properties missed: {0}'
+required.property.not.mapped:
+    text: Required property ''{0}'' is not injected
+required.spring.bean.type.inspection:
+    text: Required Bean Type Inspection
+scopes.inspection.display.name:
+    text: Spring Scopes
+security.role.type:
+    text: Security Role
+show.bean.dependencies.diagramm:
+    text: Show Bean Depenedencies Diagram
+show.properties.and.constructor.args:
+    text: Show properties and constructor arguments
+spring:
+    text: Spring
+spring.alias.cycles:
+    text: There are cycles in alias definitions
+spring.alias.dublicate.name:
+    text: Alias with such name is already defined
+spring.bean:
+    text: Spring Bean
+spring.bean.abstract.bean.references.inspection:
+    text: Abstract Beans References
+spring.bean.autowire.escape:
+    text: Make autowired dependencies explicit
+spring.bean.autowire.escape.inspection.name:
+    text: Autowired Dependencies
+spring.bean.class.navigate.choose.class.title:
+    text: Choose bean
+spring.bean.class.tooltip.navigate.declaration:
+    text: Navigate to the spring bean declaration(s)
+spring.bean.constructor.arg:
+    text: Constructor argument
+spring.bean.dependencies.chooser.title:
+    text: Choose bean
+spring.bean.dependency.graph.action.group.beans:
+    text: Group beans
+spring.bean.dependency.graph.action.show.autowired:
+    text: Show autowired dependencies
+spring.bean.dependency.graph.action.show.fileset.model:
+    text: Show fileset model
+spring.bean.dependency.graph.action.show.simple.mode:
+    text: Simple view
+spring.bean.dependency.graph.edge.anno.autowired:
+    text: '@Autowired'
+spring.bean.dependency.graph.edge.autowired:
+    text: autowired
+spring.bean.dependency.graph.edge.creates:
+    text: creates
+spring.bean.dependency.graph.edge.depends.on:
+    text: depends on
+spring.bean.dependency.graph.edge.inherits:
+    text: inherits
+spring.bean.dependency.graph.edge.injected:
+    text: depends on
+spring.bean.dependency.graph.node.unknown:
+    text: unknown
+spring.bean.dublicate.bean.id.name:
+    text: Bean name is already used
+spring.bean.dublicate.bean.name:
+    text: Bean name duplicated
+spring.bean.duplicated.bean.name.inspection:
+    text: Duplicate Bean Name
+spring.bean.idref.attributes.inconsistency:
+    text: <idref> tag is only allowed to contain either "bean" attribute OR "local" attribute
+spring.bean.idref.attributes.must.specify:
+    text: <idref> tag must specify a bean
+spring.bean.instantiation.by.factory:
+    text: Spring Bean (instantiated by a factory)
+spring.bean.instantiation.inspection:
+    text: Spring Bean Instantiation
+spring.bean.instantiation.using.factory.method:
+    text: Spring Bean (instantiated by a static factory method)
+spring.bean.lookup.method.bean.has.no.class:
+    text: '''{0}'' bean has no class'
+spring.bean.lookup.method.constructor.not.allowed:
+    text: Constructor is not allowed here
+spring.bean.lookup.method.incorrect.return.type:
+    text: Incorrect lookup method return type
+spring.bean.lookup.method.inspection:
+    text: Lookup Method
+spring.bean.lookup.method.must.be.not.static:
+    text: Static method not allowed here
+spring.bean.lookup.method.must.be.public.or.protected:
+    text: Method must be public or protected
+spring.bean.lookup.method.must.have.no.parameters:
+    text: Method must have no parameters
+spring.bean.lookup.method.return.type.mismatch:
+    text: Lookup method return type does not match the ''{0}'' bean class
+spring.bean.map.entry:
+    text: Map entry
+spring.bean.properties.chooser.title:
+    text: Choose properties
+spring.bean.property:
+    text: Property
+spring.bean.property.navigate.choose.class.title:
+    text: Choose bean containing the property
+spring.bean.property.tooltip.navigate.declaration:
+    text: Navigate to the spring bean property declaration in XML
+spring.bean.property.value.inconsistency.key:
+    text: Map entry is only allowed to contain either "key" attribute OR "key-ref" attribute OR <key> sub-element
+spring.bean.property.value.inconsistency.more.one.subelement:
+    text: '{0} must not contain more than one sub-element'
+spring.bean.property.value.inconsistency.ref.or.value.subelemet.must.defined:
+    text: '{0} is only allowed to contain either "ref" attribute OR "value" attribute OR sub-element'
+spring.bean.ref.attributes.inconsistency:
+    text: <ref> tag is only allowed to contain either "bean" attribute OR "local" attribute OR "parent" attribute
+spring.bean.ref.attributes.must.specify:
+    text: <ref> tag must specify a bean
+spring.bean.referenced.by.abstract.bean:
+    text: Abstract bean cannot be used here
+spring.bean.replace.methods.inspection:
+    text: Replaced Methods
+spring.bean.replaced.method.must.implement.MethodReplacer:
+    text: Bean class must implement ''org.springframework.beans.factory.support.MethodReplacer''
+spring.bean.structure.perspective:
+    text: Structure
+spring.bean.use.autowire:
+    text: Unnecessary use of autowired dependencies
+spring.bean.value.converter.format.exception:
+    text: Cannot convert string ''{0}'' to target class ''{1}''
+spring.bean.value.converter.format.exception.empty.string:
+    text: Cannot convert empty string to target class ''{0}''
+spring.bean.with.unknown.name:
+    text: <anonymous bean>
+spring.beans:
+    text: Beans
+spring.beans.chooser.all.context.files:
+    text: All beans
+spring.beans.chooser.show.context.files:
+    text: Show context files
+spring.beans.dependencies:
+    text: Dependencies
+spring.choose.bean.templates.dialog.title:
+    text: Add {0} Beans
+spring.facet.inspection:
+    text: Spring Extension
+spring.facet.inspection.check.test.files:
+    text: Check test files
+spring.facet.not.configured.for.module:
+    text: Spring extension is not enabled for module ''{0}''
+spring.generate.constructor.dependencies:
+    text: Constructor Dependency...
+spring.generate.properties:
+    text: Properties...
+spring.generate.setter.dependencies:
+    text: Setter Dependency...
+spring.import:
+    text: Import
+spring.java.configuration.inconsistency.inspection.name:
+    text: Java Config Inconsistency Errors
+spring.java.configuration.inspection.cannot.find.external.bean:
+    text: Cannot find external bean
+spring.java.configuration.inspection.class.type.expected:
+    text: Class type expected
+spring.java.configuration.inspection.incorrect.return.type.of.external.bean:
+    text: Incorrect return type. {0} is expected
+spring.java.configuration.inspection.name:
+    text: Java Configured @ExternalBean Errors
+spring.parent.bean.tooltip:
+    text: Navigate to the child declarations
+spring.patterns:
+    text: Patterns
+spring.patterns.aop.auto.proxy:
+    text: 'Aop: AspectJ Auto Proxy'
+spring.patterns.aop.auto.proxy.creator:
+    text: AspectJ Auto Proxy Creator
+spring.patterns.aop.group.name:
+    text: Aop
+spring.patterns.common.beans.group.name:
+    text: Common Beans
+spring.patterns.common.beans.placeholder:
+    text: Property Placeholder Configurer
+spring.patterns.common.beans.property.override.configurer:
+    text: Property Override Configurer
+spring.patterns.data.access.data.source:
+    text: Data Source
+spring.patterns.data.access.group.name:
+    text: Data Access
+spring.patterns.data.access.hibernate.session.factory:
+    text: Hibernate Session Factory
+spring.patterns.data.access.hibernate.transaction.manager:
+    text: Hibernate Transaction Manager
+spring.patterns.data.access.ibatis.client.factory:
+    text: iBatis SqlMapClient Factory
+spring.patterns.data.access.jdo.jpox.persistence.manager:
+    text: JPOX Persistence Manager  Factory
+spring.patterns.data.access.jdo.persistence.manager:
+    text: JDO Persistence Manager Factory
+spring.patterns.data.access.jdo.persistence.manager.proxy:
+    text: JDO Persistence Manager Proxy
+spring.patterns.data.access.jdo.transaction.manager:
+    text: JDO Transaction Manager
+spring.patterns.data.access.jndi.data.source:
+    text: Jndi Data Source
+spring.patterns.data.access.jpa.container.entity.manager.factory:
+    text: JPA Container Entity Manager Factory Bean
+spring.patterns.data.access.jpa.entity.manager.factory:
+    text: JPA Entity Manager Factory Bean
+spring.patterns.data.access.jpa.persistence.anno.posr.processor:
+    text: JPA Annotation Bean Post Processor
+spring.patterns.data.access.jpa.persistence.ex.translation.posr.processor:
+    text: JPA Exception Translation Post Processor
+spring.patterns.data.access.jpa.persistence.unit.manager:
+    text: JPA Persistence Unit Manager
+spring.patterns.data.access.jpa.transaction.manager:
+    text: Transaction Manager
+spring.patterns.data.access.toplink.session.factory:
+    text: Toplink Session Factory
+spring.patterns.data.access.toplink.transaction.aware.session.adapter:
+    text: Toplink Transaction Aware Session Adapter
+spring.patterns.data.access.toplink.transaction.manager:
+    text: Toplink Transaction Manager
+spring.patterns.data.access.transaction.manager:
+    text: Transaction Manager
+spring.patterns.factory.beans.commons.log:
+    text: Commons Log Factory Bean
+spring.patterns.factory.beans.field.retrieving:
+    text: Field Retrieving Factory Bean
+spring.patterns.factory.beans.list:
+    text: List Factory Bean
+spring.patterns.factory.beans.map:
+    text: Map Factory Bean
+spring.patterns.factory.beans.properties:
+    text: Properties Factory Bean
+spring.patterns.factory.beans.resource:
+    text: Resource Factory Bean
+spring.patterns.factory.beans.set:
+    text: Set Factory Bean
+spring.patterns.group.name:
+    text: Patterns
+spring.patterns.hibernate:
+    text: Hibernate
+spring.patterns.ibatis:
+    text: iBatis
+spring.patterns.integration.ejb.local.stateles.session.bean:
+    text: EJB Local Stateless Session Bean
+spring.patterns.integration.ejb.remote.stateles.session.bean:
+    text: EJB Remote Stateless Session Bean
+spring.patterns.integration.free.marker.factory.bean:
+    text: Free Marker Configuration Factory Bean
+spring.patterns.integration.group.name:
+    text: Integration
+spring.patterns.integration.jdk.method.invoking.factory.bean:
+    text: JDK Method Invoking Timer Task Factory
+spring.patterns.integration.jdk.scheduled.timer.task:
+    text: JDK scheduled timer task
+spring.patterns.integration.jdk.timer.factory.bean:
+    text: JDK Timer Factory Bean
+spring.patterns.integration.opensymphony.cron.trigger:
+    text: OpenSymphony Cron Trigger
+spring.patterns.integration.opensymphony.job.detail.bean:
+    text: OpenSymphony Job Detail Bean
+spring.patterns.integration.opensymphony.method.invoking.factory.bean:
+    text: OpenSymphony Method Invoking Factory
+spring.patterns.integration.opensymphony.scheduler:
+    text: OpenSymphony Scheduler Factory Bean
+spring.patterns.integration.opensymphony.simple.trigger:
+    text: OpenSymphony Simple Trigger
+spring.patterns.jdk.timer:
+    text: JDK Timer
+spring.patterns.jdo:
+    text: JDO
+spring.patterns.jpa:
+    text: JPA
+spring.patterns.osgi.group.name:
+    text: Dynamic Modules
+spring.patterns.osgi.list:
+    text: List
+spring.patterns.osgi.list.comparator:
+    text: 'List(with comparator) '
+spring.patterns.osgi.multiple.ref:
+    text: Reference(multiple interfaces)
+spring.patterns.osgi.multiple.service:
+    text: 'Service(multiple interfaces) '
+spring.patterns.osgi.ref:
+    text: Reference
+spring.patterns.osgi.ref.with.bean:
+    text: Reference(specify bean)
+spring.patterns.osgi.ref.with.listener:
+    text: Reference(specify listener)
+spring.patterns.osgi.service:
+    text: Service
+spring.patterns.osgi.set:
+    text: Set
+spring.patterns.osgi.set.comparator:
+    text: Set(with comparator)
+spring.patterns.quartz.scheduler:
+    text: OpenSymphony Scheduler
+spring.patterns.scheduling.group.name:
+    text: Scheduling
+spring.patterns.toplink:
+    text: Toplink
+spring.patterns.webflow.builder.services:
+    text: Flow Builder Executor
+spring.patterns.webflow.execution.listener:
+    text: Flow Execution Listener
+spring.patterns.webflow.executor:
+    text: Flow Executor
+spring.patterns.webflow.group.name:
+    text: Webflow
+spring.patterns.webflow.registry:
+    text: Flow Registry
+spring.patterns.webflow.services.conversion.service:
+    text: Conversation Service
+spring.patterns.webflow.services.expression.parser:
+    text: Expression Parser
+spring.patterns.webflow.services.view.factory.creator:
+    text: View Factory Creator
+spring.patterns.webflow.services.view.formatter.registry:
+    text: Formatter Registry
+spring.property:
+    text: Spring Property
+spring.refactoring:
+    text: Spring Refactorings
+spring.refactorings:
+    text: Spring Refactorings
+spring.required.property.inspection:
+    text: Required Properties
+spring.resource.ant.style.reference.error.message:
+    text: Cannot find matching files
+spring.template.beans:
+    text: Template Beans
+this.pointcut.designator.isn.t.supported.by.spring:
+    text: '{0} pointcut designator isn''''t supported by Spring'
+timeout.parsing.bean:
+    text: Custom bean parsing took too long
+try.parsing.custom.beans:
+    text: Try parsing custom beans
+unparsed.custom.bean.inspection:
+    text: 'Unparsed custom Spring beans '
+unparsed.custom.bean.message:
+    text: This custom Spring bean has not yet been parsed
+update.schema.intention:
+    text: Update XML schema to spring-beans-2.0.xsd
+use.cglib.proxying:
+    text: Use CGLIB proxying
+use.p.namespace:
+    text: Convert to p-namespace
+util.requred.class.message:
+    text: Class must be inheritor of ''{0}''
+util.schema.inspection.name:
+    text: Util Schema
+warning.pointcut.should.have.id:
+    text: Pointcut should have id
+xml.schema.update.is.required:
+    text: XML schema update is required
+xml.schema.will.be.updated:
+    text: "XML schema will be updated to spring-beans.xsd. \nDo you want to proceed?"
