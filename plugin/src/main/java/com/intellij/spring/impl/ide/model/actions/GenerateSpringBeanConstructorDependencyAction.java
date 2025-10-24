@@ -1,11 +1,14 @@
 package com.intellij.spring.impl.ide.model.actions;
 
-import com.intellij.spring.impl.ide.SpringBundle;
+import consulo.annotation.component.ActionImpl;
+import consulo.spring.localize.SpringLocalize;
 
+@ActionImpl(id = "Spring.Beans.Generate.Constructor.Dependency.Action")
 public class GenerateSpringBeanConstructorDependencyAction extends GenerateSpringBeanDependencyAction {
-
-  public GenerateSpringBeanConstructorDependencyAction() {
-    super(new GenerateSpringBeanDependenciesActionHandler(false),
-          SpringBundle.message("action.Spring.Beans.Generate.Constructor.Dependency.Action.text"));
-  }
+    public GenerateSpringBeanConstructorDependencyAction() {
+        super(
+            new GenerateSpringBeanDependenciesActionHandler(false),
+            SpringLocalize.actionSpringBeansGenerateConstructorDependencyActionText()
+        );
+    }
 }
