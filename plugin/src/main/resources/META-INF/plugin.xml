@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <consulo-plugin url="https://github.com/consulo/consulo-spring">
   <id>com.intellij.spring</id>
-  <name>Spring Support</name>
-  <description>Spring Support</description>
+  <name>Spring Framework</name>
+  <description>The Spring Framework provides a comprehensive programming and configuration model for modern Java-based enterprise
+      applications - on any kind of deployment platform.</description>
   <category>Web/JavaEE Technologies</category>
   <version>SNAPSHOT</version>
   <vendor>JetBrains &amp; consulo.io</vendor>
