@@ -258,11 +258,11 @@ public class AopJavaAnnotator implements LineMarkerProvider {
               }
             }
             return CachedValueProvider.Result.create(boundIntros,
-                                                     PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+                                                     PsiModificationTracker.MODIFICATION_COUNT);
           }
         }
         return CachedValueProvider.Result.create(Collections.<AopIntroduction>emptyList(),
-                                                 PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+                                                 PsiModificationTracker.MODIFICATION_COUNT);
       }, false));
     }
     return value.getValue();
@@ -280,7 +280,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
           collectAspects(providers, module1, set);
         }
         return CachedValueProvider.Result.create(set,
-                                                 PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+                                                 PsiModificationTracker.MODIFICATION_COUNT);
       }, false));
     }
 
@@ -412,7 +412,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
           ModuleUtilCore.findModuleForPsiElement(psiClass);
         if (module == null)
           return CachedValueProvider.Result.create(Collections.<AopAdvice, Integer>emptyMap(),
-                                                   PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+                                                   PsiModificationTracker.MODIFICATION_COUNT);
 
         Map<AopAdvice, Integer> result =
           new HashMap<AopAdvice, Integer>();
@@ -422,7 +422,7 @@ public class AopJavaAnnotator implements LineMarkerProvider {
         for (final PsiMethod method : psiClass.getMethods()) {
           result.putAll(addBoundAdvices(method, aspects, providers));
         }
-        return CachedValueProvider.Result.create(result, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+        return CachedValueProvider.Result.create(result, PsiModificationTracker.MODIFICATION_COUNT);
       }, false));
     }
     return value.getValue();

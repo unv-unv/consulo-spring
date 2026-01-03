@@ -63,7 +63,7 @@ public class SpringAopProvider extends AopProvider {
           }
         }
         return new CachedValueProvider.Result<Set<? extends AopAspect>>(set,
-                                                                        PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+                                                                        PsiModificationTracker.MODIFICATION_COUNT);
       }, false));
     }
 
@@ -105,7 +105,7 @@ public class SpringAopProvider extends AopProvider {
               }
             };
           return CachedValueProvider.Result.create(searcher,
-                                                   PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT,
+                                                   PsiModificationTracker.MODIFICATION_COUNT,
                                                    ProjectRootManager.getInstance(aClass.getProject()));
         }
 
@@ -113,7 +113,7 @@ public class SpringAopProvider extends AopProvider {
           new SpringAdvisedElementsSearcher(aClass.getManager(),
                                             SpringUtils.getNonEmptySpringModels(module));
         return CachedValueProvider.Result.create(searcher,
-                                                 PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT,
+                                                 PsiModificationTracker.MODIFICATION_COUNT,
                                                  ProjectRootManager.getInstance(aClass.getProject()));
       }, false));
     }

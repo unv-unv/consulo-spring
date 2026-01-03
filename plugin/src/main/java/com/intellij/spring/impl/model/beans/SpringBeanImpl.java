@@ -147,7 +147,7 @@ public abstract class SpringBeanImpl extends DomSpringBeanImpl implements Spring
       myResolvedConstructorArgs = cachedValuesManager.createCachedValue(new CachedValueProvider<ResolvedConstructorArgsImpl>() {
         public Result<ResolvedConstructorArgsImpl> compute() {
           return Result.createSingleDependency(new ResolvedConstructorArgsImpl(SpringBeanImpl.this),
-                                               PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+                                               PsiModificationTracker.MODIFICATION_COUNT);
         }
       }, false);
     }

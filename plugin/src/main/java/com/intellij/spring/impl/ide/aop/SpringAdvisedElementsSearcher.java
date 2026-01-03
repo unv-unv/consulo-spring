@@ -193,7 +193,7 @@ public class SpringAdvisedElementsSearcher extends AopAdvisedElementsSearcher {
                      !"org.springframework.aop.framework.AopInfrastructureBean".equals(qname);
             }
           });
-          return Result.create(result, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+          return Result.create(result, PsiModificationTracker.MODIFICATION_COUNT);
         }
       }, false);
       psiClass.putUserData(INHERITANCE_CACHE_KEY, value);

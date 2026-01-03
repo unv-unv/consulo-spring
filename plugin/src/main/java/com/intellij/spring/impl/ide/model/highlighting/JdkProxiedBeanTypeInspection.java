@@ -49,8 +49,6 @@ import consulo.util.lang.StringUtil;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import org.jetbrains.annotations.Nls;
-
 import jakarta.annotation.Nonnull;
 
 import java.util.*;
@@ -118,14 +116,14 @@ public class JdkProxiedBeanTypeInspection extends InjectionValueTypeInspection {
                                         );
                                         return Result.create(
                                             interfaces,
-                                            PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT
+                                            PsiModificationTracker.MODIFICATION_COUNT
                                         );
                                     }
                                 }
                             }
                             return Result.create(
                                 Collections.<PsiClass>emptySet(),
-                                PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT
+                                PsiModificationTracker.MODIFICATION_COUNT
                             );
                         }
                     }, false)

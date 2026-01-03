@@ -1,7 +1,10 @@
 package com.intellij.spring.impl.ide.model.jam.utils;
 
 import com.intellij.java.indexing.search.searches.AnnotatedMembersSearch;
-import com.intellij.java.language.psi.*;
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiAnnotation;
+import com.intellij.java.language.psi.PsiClass;
+import com.intellij.java.language.psi.PsiModifierList;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
@@ -12,7 +15,6 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringPropertyDefinition;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
 import consulo.application.util.CachedValuesManager;
-import consulo.application.util.function.Processor;
 import consulo.java.impl.model.annotations.AnnotationGenericValue;
 import consulo.java.impl.model.annotations.AnnotationModelUtil;
 import consulo.language.psi.PsiModificationTracker;
@@ -24,9 +26,9 @@ import consulo.util.collection.Sets;
 import consulo.util.dataholder.Key;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.StringUtil;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.util.*;
@@ -138,7 +140,7 @@ public class JamAnnotationTypeUtil {
         .createCachedValue(new CachedValueProvider<Collection<PsiClass>>() {
           public Result<Collection<PsiClass>> compute() {
             final Collection<PsiClass> classes = getAnnotationTypesWithChildren(annotationName, module);
-            return new Result<Collection<PsiClass>>(classes, PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+            return new Result<Collection<PsiClass>>(classes, PsiModificationTracker.MODIFICATION_COUNT);
           }
         }, false);
 
@@ -167,13 +169,11 @@ public class JamAnnotationTypeUtil {
 
     final Set<PsiClass> result = Sets.newHashSet(HASHING_STRATEGY);
 
-    AnnotatedMembersSearch.search(psiClass, scope).forEach(new Processor<PsiMember>() {
-      public boolean process(final PsiMember psiMember) {
-        if (psiMember instanceof PsiClass && ((PsiClass)psiMember).isAnnotationType()) {
-          result.add((PsiClass)psiMember);
-        }
-        return true;
+    AnnotatedMembersSearch.search(psiClass, scope).forEach(psiMember -> {
+      if (psiMember instanceof PsiClass && ((PsiClass)psiMember).isAnnotationType()) {
+        result.add((PsiClass)psiMember);
       }
+      return true;
     });
 
     return result;

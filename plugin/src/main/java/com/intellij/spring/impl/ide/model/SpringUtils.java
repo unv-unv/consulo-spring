@@ -146,7 +146,7 @@ public class SpringUtils {
     if (value == null) {
       value = CachedValuesManager.getManager(module.getProject()).createCachedValue(new CachedValueProvider<List<SpringModel>>() {
         public Result<List<SpringModel>> compute() {
-          return Result.create(computeNonEmptyModels(module), PsiModificationTracker.OUT_OF_CODE_BLOCK_MODIFICATION_COUNT);
+          return Result.create(computeNonEmptyModels(module), PsiModificationTracker.MODIFICATION_COUNT);
         }
       }, false);
       module.putUserData(NON_EMPTY_SPRING_MODELS_CACHE, value);
