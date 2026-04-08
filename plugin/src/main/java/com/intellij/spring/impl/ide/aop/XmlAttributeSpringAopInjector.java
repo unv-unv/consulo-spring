@@ -2,8 +2,8 @@ package com.intellij.spring.impl.ide.aop;
 
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlAttribute;
 
+import consulo.xml.language.psi.XmlAttribute;
 import jakarta.annotation.Nonnull;
 
 /**

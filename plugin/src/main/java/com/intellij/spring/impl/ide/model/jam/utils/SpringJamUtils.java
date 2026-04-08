@@ -16,8 +16,8 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlTag;
 
+import consulo.xml.language.psi.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.ArrayList;

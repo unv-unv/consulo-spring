@@ -17,7 +17,7 @@ import consulo.language.editor.annotation.HighlightSeverity;
 import consulo.localize.LocalizeValue;
 import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.text.StringTokenizer;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;

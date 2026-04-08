@@ -20,7 +20,7 @@ import consulo.spring.impl.boot.jam.SpringBootApplicationElement;
 import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import consulo.spring.impl.model.BaseSpringModel;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 
 import jakarta.annotation.Nonnull;

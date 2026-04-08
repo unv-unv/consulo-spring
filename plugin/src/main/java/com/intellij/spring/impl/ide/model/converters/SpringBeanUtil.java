@@ -14,7 +14,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
 import consulo.codeEditor.Editor;
 import consulo.language.editor.TargetElementUtil;
 import consulo.language.psi.PsiElement;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 

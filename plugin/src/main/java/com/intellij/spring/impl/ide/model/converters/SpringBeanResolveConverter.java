@@ -26,7 +26,7 @@ import consulo.spring.localize.SpringLocalize;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

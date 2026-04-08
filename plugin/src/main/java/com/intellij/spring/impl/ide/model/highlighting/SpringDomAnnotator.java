@@ -17,7 +17,7 @@ import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 

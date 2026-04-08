@@ -2,10 +2,10 @@ package consulo.spring.impl;
 
 import com.intellij.spring.impl.ide.PNamespaceDescriptor;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
-import com.intellij.xml.XmlNSDescriptor;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.psi.PsiFile;
 import consulo.module.Module;
+import consulo.xml.descriptor.XmlNSDescriptor;
 import consulo.xml.javaee.ImplicitNamespaceDescriptorProvider;
 
 import jakarta.annotation.Nonnull;

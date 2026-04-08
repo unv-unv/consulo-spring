@@ -19,7 +19,7 @@ import consulo.language.psi.PsiRecursiveElementVisitor;
 import consulo.language.psi.ResolveResult;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.util.lang.ref.Ref;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

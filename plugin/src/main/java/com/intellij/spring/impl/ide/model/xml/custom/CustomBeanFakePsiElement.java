@@ -10,8 +10,8 @@ import consulo.language.impl.psi.RenameableFakePsiElement;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
 import consulo.ui.image.Image;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

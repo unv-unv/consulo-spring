@@ -14,7 +14,7 @@ import consulo.language.psi.meta.MetaDataContributor;
 import consulo.language.psi.meta.MetaDataRegistrar;
 import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 

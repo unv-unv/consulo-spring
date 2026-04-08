@@ -30,7 +30,7 @@ import consulo.spring.impl.model.CompositeSpringModel;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
 import jakarta.inject.Inject;

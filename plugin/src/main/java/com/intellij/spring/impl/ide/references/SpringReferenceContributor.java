@@ -21,10 +21,10 @@ import consulo.language.psi.filter.ScopeFilter;
 import consulo.language.psi.filter.position.ParentElementFilter;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.ProcessingContext;
+import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.patterns.XmlPatterns;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.filters.position.NamespaceFilter;
-import consulo.xml.psi.xml.XmlAttributeValue;
 import consulo.xml.util.xml.DomUtil;
 
 import jakarta.annotation.Nonnull;
@@ -34,12 +34,14 @@ import jakarta.annotation.Nonnull;
  */
 @ExtensionImpl
 public class SpringReferenceContributor extends PsiReferenceContributor {
+  public static final String SPRING_URI = "http://www.springframework.org/tags";
+
   public void registerReferenceProviders(final PsiReferenceRegistrar registrar) {
     PsiReferenceProvider propertiesReferenceProvider = new PropertiesReferenceProvider(false);
 
     //duplicated in FtlLiteralExpression
     XmlUtil.registerXmlAttributeValueReferenceProvider(registrar, new String[]{"code"}, new ScopeFilter(new ParentElementFilter(
-      new AndFilter(new NamespaceFilter(XmlUtil.SPRING_URI),
+      new AndFilter(new NamespaceFilter(SPRING_URI),
                     new AndFilter(XmlTagFilter.INSTANCE, new TextFilter("message", "theme"))), 2)), propertiesReferenceProvider);
 
     registrar.registerReferenceProvider(PsiJavaPatterns.literalExpression()

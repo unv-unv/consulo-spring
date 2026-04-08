@@ -13,9 +13,9 @@ import com.intellij.xml.XmlUndefinedElementFixProvider;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.language.editor.intention.IntentionAction;
 import consulo.project.Project;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

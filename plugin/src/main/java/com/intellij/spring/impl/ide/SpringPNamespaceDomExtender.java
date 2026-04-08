@@ -11,7 +11,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.PNamespaceRefValue;
 import com.intellij.spring.impl.ide.model.xml.beans.PNamespaceValue;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.XmlName;
 import consulo.xml.util.xml.reflect.DomExtender;
 import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;

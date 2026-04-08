@@ -9,8 +9,8 @@ import com.intellij.aop.LocalAopModel;
 import com.intellij.spring.impl.ide.model.xml.aop.BasicAdvice;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
-import consulo.xml.psi.xml.XmlTag;
 
+import consulo.xml.language.psi.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

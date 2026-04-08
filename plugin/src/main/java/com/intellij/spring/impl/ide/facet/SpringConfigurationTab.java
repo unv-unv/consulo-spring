@@ -23,8 +23,8 @@ import consulo.ui.ex.awt.tree.SimpleTreeBuilder;
 import consulo.ui.ex.awt.tree.SimpleTreeStructure;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.pointer.VirtualFilePointer;
-import consulo.xml.psi.xml.XmlFile;
 
+import consulo.xml.language.psi.XmlFile;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import javax.swing.*;

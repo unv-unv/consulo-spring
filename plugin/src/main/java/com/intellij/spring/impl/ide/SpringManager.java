@@ -14,8 +14,7 @@ import consulo.ide.ServiceManager;
 import consulo.module.Module;
 import consulo.project.Project;
 import consulo.spring.impl.module.extension.SpringModuleExtension;
-import consulo.xml.psi.xml.XmlFile;
-
+import consulo.xml.language.psi.XmlFile;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.List;

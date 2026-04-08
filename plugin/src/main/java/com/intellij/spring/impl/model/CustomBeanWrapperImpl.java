@@ -10,13 +10,13 @@ import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.xml.CustomBean;
 import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
 import com.intellij.spring.impl.ide.model.xml.custom.CustomNamespaceSpringBean;
-import com.intellij.xml.XmlElementDescriptor;
 import com.intellij.xml.util.XmlUtil;
 import consulo.application.util.NotNullLazyValue;
 import consulo.language.psi.PsiElement;
 import consulo.module.Module;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.descriptor.XmlElementDescriptor;
 
+import consulo.xml.language.psi.XmlTag;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.ArrayList;

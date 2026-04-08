@@ -35,7 +35,7 @@ import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.ui.image.Image;
 import consulo.util.lang.lazy.LazyValue;
 import consulo.xml.codeInsight.navigation.DomNavigationGutterIconBuilder;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 

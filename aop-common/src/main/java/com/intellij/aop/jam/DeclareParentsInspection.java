@@ -30,8 +30,8 @@ import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
-import consulo.xml.psi.xml.XmlAttributeValue;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlAttributeValue;
+import consulo.xml.language.psi.XmlElement;
 import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
 

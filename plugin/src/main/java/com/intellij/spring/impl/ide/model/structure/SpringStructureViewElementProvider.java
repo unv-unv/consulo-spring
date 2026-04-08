@@ -7,8 +7,8 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.xml.ide.structureView.xml.XmlStructureViewElementProvider;
-import consulo.xml.psi.xml.XmlFile;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlFile;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomManager;
 

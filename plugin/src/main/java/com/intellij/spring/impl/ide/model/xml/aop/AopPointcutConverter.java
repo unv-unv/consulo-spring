@@ -8,7 +8,7 @@ import com.intellij.aop.jam.AopModuleService;
 import consulo.language.util.ModuleUtilCore;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.ConvertContext;
 import consulo.xml.util.xml.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;

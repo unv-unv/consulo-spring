@@ -9,8 +9,8 @@ import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.xml.util.XmlUtil;
 import consulo.fileTemplate.FileTemplate;
 import consulo.fileTemplate.FileTemplateManager;
-import consulo.xml.psi.xml.XmlDocument;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlDocument;
+import consulo.xml.language.psi.XmlFile;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nullable;

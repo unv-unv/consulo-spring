@@ -13,8 +13,8 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.awt.Messages;
-import consulo.xml.psi.xml.XmlAttribute;
 
+import consulo.xml.language.psi.XmlAttribute;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl

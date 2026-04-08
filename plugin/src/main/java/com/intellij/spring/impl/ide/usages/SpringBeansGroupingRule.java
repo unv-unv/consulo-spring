@@ -22,8 +22,8 @@ import consulo.usage.rule.UsageGroupingRule;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.status.FileStatus;
 import consulo.virtualFileSystem.status.FileStatusManager;
-import consulo.xml.psi.xml.XmlElement;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlElement;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElement;
 import consulo.xml.util.xml.DomUtil;
 

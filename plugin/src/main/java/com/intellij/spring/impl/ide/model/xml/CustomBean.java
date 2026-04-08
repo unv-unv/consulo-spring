@@ -5,8 +5,8 @@ package com.intellij.spring.impl.ide.model.xml;
 
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
-import consulo.xml.psi.xml.XmlAttribute;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlAttribute;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.GenericValue;
 
 import jakarta.annotation.Nonnull;

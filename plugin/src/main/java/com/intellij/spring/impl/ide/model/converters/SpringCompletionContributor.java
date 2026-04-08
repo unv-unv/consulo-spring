@@ -28,8 +28,8 @@ import consulo.language.editor.completion.CompletionType;
 import consulo.language.editor.completion.lookup.LookupElementBuilder;
 import consulo.language.psi.PsiReference;
 import consulo.ui.ex.action.IdeActions;
-import consulo.xml.lang.xml.XMLLanguage;
-import consulo.xml.psi.xml.XmlToken;
+import consulo.xml.language.XMLLanguage;
+import consulo.xml.language.psi.XmlToken;
 import consulo.xml.util.xml.Converter;
 import consulo.xml.util.xml.impl.GenericDomValueReference;
 

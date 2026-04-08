@@ -4,7 +4,7 @@ import consulo.disposer.Disposable;
 import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.Sorter;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
-import consulo.xml.psi.xml.XmlFile;
+import consulo.xml.language.psi.XmlFile;
 import consulo.xml.util.xml.DomElementNavigationProvider;
 import consulo.xml.util.xml.DomElementsNavigationManager;
 

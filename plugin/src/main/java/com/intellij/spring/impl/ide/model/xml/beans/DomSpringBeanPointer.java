@@ -15,7 +15,7 @@ import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiManager;
 import consulo.util.lang.Comparing;
 import consulo.util.lang.ref.PatchedWeakReference;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomAnchor;
 import consulo.xml.util.xml.impl.DomAnchorImpl;
 

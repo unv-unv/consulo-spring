@@ -19,7 +19,7 @@ import consulo.localize.LocalizeValue;
 import consulo.module.Module;
 import consulo.project.Project;
 import consulo.spring.localize.SpringLocalize;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import consulo.xml.util.xml.DomUtil;
 import consulo.xml.util.xml.GenericAttributeValue;
 import consulo.xml.util.xml.highlighting.AddDomElementQuickFix;

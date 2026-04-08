@@ -16,8 +16,7 @@ import consulo.ui.ex.action.AnAction;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
 import consulo.ui.image.Image;
-import consulo.xml.psi.xml.XmlFile;
-
+import consulo.xml.language.psi.XmlFile;
 import jakarta.annotation.Nullable;
 import java.util.Collection;
 

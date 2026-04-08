@@ -17,7 +17,7 @@ import consulo.language.psi.resolve.PsiScopeProcessor;
 import consulo.language.psi.resolve.ResolveState;
 import consulo.util.dataholder.Key;
 import consulo.virtualFileSystem.fileType.FileType;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import org.jetbrains.annotations.TestOnly;
 
 import jakarta.annotation.Nonnull;

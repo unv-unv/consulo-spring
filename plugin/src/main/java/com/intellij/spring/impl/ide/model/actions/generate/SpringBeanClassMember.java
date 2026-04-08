@@ -8,8 +8,8 @@ import consulo.language.editor.generation.MemberChooserObject;
 import consulo.language.editor.generation.MemberChooserObjectBase;
 import consulo.language.editor.generation.PsiElementMemberChooserObject;
 import consulo.language.psi.PsiFile;
-import consulo.xml.psi.xml.XmlFile;
 
+import consulo.xml.language.psi.XmlFile;
 import jakarta.annotation.Nonnull;
 
 public class SpringBeanClassMember extends MemberChooserObjectBase implements ClassMember {

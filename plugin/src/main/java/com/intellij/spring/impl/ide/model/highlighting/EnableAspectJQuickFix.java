@@ -15,7 +15,7 @@ import consulo.logging.Logger;
 import consulo.project.Project;
 import consulo.spring.localize.SpringLocalize;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import consulo.xml.util.xml.DomFileElement;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

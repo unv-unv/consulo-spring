@@ -6,7 +6,7 @@ import com.intellij.java.language.psi.PsiJavaPackage;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.util.lang.PatternUtil;
-import consulo.xml.psi.xml.XmlAttributeValue;
+import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.util.xml.*;
 import consulo.xml.util.xml.converters.DelimitedListProcessor;
 import org.jetbrains.annotations.NonNls;

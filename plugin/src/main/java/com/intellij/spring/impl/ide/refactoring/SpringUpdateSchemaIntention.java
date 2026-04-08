@@ -22,12 +22,12 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
-import consulo.localize.LocalizeValue;import consulo.project.Project;
+import consulo.localize.LocalizeValue;
+import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
-import consulo.xml.psi.xml.*;
+import consulo.xml.language.psi.*;
 import consulo.xml.util.xml.DomFileElement;
 import consulo.xml.util.xml.DomManager;
-import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;
 

@@ -22,7 +22,7 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.language.psi.search.ReferencesSearch;
 import consulo.localize.LocalizeValue;
-import consulo.xml.psi.xml.XmlElement;
+import consulo.xml.language.psi.XmlElement;
 import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;

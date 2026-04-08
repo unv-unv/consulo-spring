@@ -2,7 +2,7 @@ package com.intellij.spring.impl.model.context;
 
 import com.intellij.spring.impl.model.DomSpringBeanImpl;
 import com.intellij.spring.impl.ide.model.xml.context.AnnotationConfig;
-import consulo.xml.psi.xml.XmlTag;
+import consulo.xml.language.psi.XmlTag;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nullable;
