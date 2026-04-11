@@ -6,9 +6,9 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.converters.ConstructorArgIndexConverter;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Namespace;
-import consulo.xml.util.xml.Referencing;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Namespace;
+import consulo.xml.dom.Referencing;
 
 import jakarta.annotation.Nonnull;
 

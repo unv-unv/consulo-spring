@@ -7,7 +7,7 @@ import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.xml.beans.Identified;
 import com.intellij.spring.impl.ide.model.xml.beans.ScopedElement;
 import com.intellij.spring.impl.ide.model.values.converters.ResourceValueConverter;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

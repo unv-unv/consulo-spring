@@ -11,8 +11,8 @@ import consulo.project.ui.view.tree.AbstractTreeNode;
 import consulo.util.concurrent.Promise;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nonnull;
 

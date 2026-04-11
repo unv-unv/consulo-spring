@@ -15,8 +15,8 @@ import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.util.XmlTagUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

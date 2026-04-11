@@ -6,8 +6,8 @@ import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import consulo.annotation.component.ComponentScope;
 import consulo.annotation.component.ExtensionAPI;
 import consulo.component.extension.ExtensionPointName;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collection;

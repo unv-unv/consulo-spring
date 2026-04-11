@@ -8,7 +8,7 @@ import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.aop.RequiredBeanType;
 import com.intellij.spring.impl.ide.model.xml.aop.SpringAopAdvice;
 import com.intellij.spring.impl.ide.model.xml.beans.TypedBeanPointerAttribute;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 import jakarta.annotation.Nonnull;
 
 /**

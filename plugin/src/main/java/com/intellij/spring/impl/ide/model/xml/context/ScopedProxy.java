@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.context;
 /**
  * http://www.springframework.org/schema/context:scoped-proxyAttrType enumeration.
  */
-public enum ScopedProxy implements consulo.xml.util.xml.NamedEnum {
+public enum ScopedProxy implements consulo.xml.dom.NamedEnum {
 	INTERFACES ("interfaces"),
 	NO ("no"),
 	TARGET_CLASS ("targetClass");

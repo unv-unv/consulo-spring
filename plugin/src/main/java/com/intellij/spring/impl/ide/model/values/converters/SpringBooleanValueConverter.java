@@ -1,6 +1,6 @@
 package com.intellij.spring.impl.ide.model.values.converters;
 
-import consulo.xml.util.xml.converters.values.BooleanValueConverter;
+import consulo.xml.dom.convert.BooleanValueConverter;
 import consulo.util.collection.ArrayUtil;
 import org.jetbrains.annotations.NonNls;
 

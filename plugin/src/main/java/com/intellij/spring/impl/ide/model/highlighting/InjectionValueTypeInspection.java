@@ -21,10 +21,10 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import consulo.xml.util.xml.impl.ConvertContextImpl;
 import org.jetbrains.annotations.NonNls;
 

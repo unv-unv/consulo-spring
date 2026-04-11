@@ -8,10 +8,10 @@ import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.values.PropertyValueConverter;
 import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
 import com.intellij.spring.impl.ide.model.xml.SpringModelElement;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.CustomChildren;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.SubTag;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.CustomChildren;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.SubTag;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

@@ -25,7 +25,7 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.xml.language.psi.XmlElement;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

@@ -9,9 +9,9 @@ import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.TypedBeanPointerAttribute;
-import consulo.xml.util.xml.AbstractConvertContext;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.AbstractConvertContext;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collections;

@@ -9,8 +9,8 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringEntry;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringMap;
 import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

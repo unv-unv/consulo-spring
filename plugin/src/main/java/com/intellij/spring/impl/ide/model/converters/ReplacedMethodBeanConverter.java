@@ -5,7 +5,7 @@
 package com.intellij.spring.impl.ide.model.converters;
 
 import com.intellij.spring.impl.ide.model.highlighting.ReplacedMethodsInspection;
-import consulo.xml.util.xml.ConvertContext;
+import consulo.xml.dom.ConvertContext;
 import org.jetbrains.annotations.NonNls;
 import jakarta.annotation.Nonnull;
 

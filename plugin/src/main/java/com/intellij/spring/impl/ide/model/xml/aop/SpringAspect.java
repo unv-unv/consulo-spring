@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.aop;
 import com.intellij.aop.AopAspect;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

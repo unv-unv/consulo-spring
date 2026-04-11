@@ -7,8 +7,8 @@ package com.intellij.spring.impl.ide.model.xml.aop;
 import jakarta.annotation.Nonnull;
 
 import com.intellij.aop.AopAdvice;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.DomElement;
 import com.intellij.spring.impl.ide.aop.SpringAdvisedElementsSearcher;
 
 /**

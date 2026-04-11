@@ -17,7 +17,7 @@ import consulo.language.pratt.PrattBuilder;
 import consulo.spring.impl.SpringIcons;
 import consulo.ui.image.Image;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileDescription;
+import consulo.xml.dom.DomFileDescription;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

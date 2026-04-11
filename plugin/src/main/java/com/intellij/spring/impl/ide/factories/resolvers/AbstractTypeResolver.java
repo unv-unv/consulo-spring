@@ -18,8 +18,8 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringProperty;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringPropertyDefinition;
 import consulo.language.psi.PsiManager;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.converters.values.BooleanValueConverter;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.convert.BooleanValueConverter;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

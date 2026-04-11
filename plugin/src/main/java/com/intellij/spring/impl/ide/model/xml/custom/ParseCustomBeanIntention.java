@@ -26,7 +26,7 @@ import consulo.ui.ex.awt.UIUtil;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 import jakarta.annotation.Nonnull;
 
 import java.util.Arrays;

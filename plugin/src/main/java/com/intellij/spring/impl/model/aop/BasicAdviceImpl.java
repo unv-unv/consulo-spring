@@ -13,7 +13,7 @@ import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.aop.SpringAdvisedElementsSearcher;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.xml.aop.BasicAdvice;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

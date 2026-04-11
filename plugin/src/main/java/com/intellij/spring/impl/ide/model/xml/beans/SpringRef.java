@@ -6,9 +6,9 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.converters.ParentRefConverter;
-import consulo.xml.util.xml.Attribute;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.Attribute;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.GenericAttributeValue;
 
 /**
  * http://www.springframework.org/schema/beans:refElemType interface.

@@ -23,8 +23,8 @@ import consulo.virtualFileSystem.StandardFileSystems;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.archive.ArchiveVfsUtil;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomService;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomService;
 
 import jakarta.annotation.Nullable;
 import javax.swing.*;

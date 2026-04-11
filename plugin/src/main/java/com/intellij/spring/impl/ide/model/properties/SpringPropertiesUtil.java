@@ -20,10 +20,10 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nullable;
 

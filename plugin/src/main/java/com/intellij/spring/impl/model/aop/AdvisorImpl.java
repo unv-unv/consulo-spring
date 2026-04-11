@@ -17,7 +17,7 @@ import com.intellij.spring.impl.model.DomSpringBeanImpl;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.xml.aop.Advisor;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

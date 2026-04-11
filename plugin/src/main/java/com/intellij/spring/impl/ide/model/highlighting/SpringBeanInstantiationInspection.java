@@ -20,10 +20,10 @@ import consulo.module.Module;
 import consulo.project.Project;
 import consulo.spring.localize.SpringLocalize;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericAttributeValue;
 import consulo.xml.util.xml.highlighting.AddDomElementQuickFix;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import jakarta.annotation.Nonnull;
 
 /**

@@ -5,7 +5,7 @@ package com.intellij.spring.impl.ide.model.xml.jee;
 
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 

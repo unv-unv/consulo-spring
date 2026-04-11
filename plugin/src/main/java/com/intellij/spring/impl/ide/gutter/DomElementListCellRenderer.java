@@ -8,8 +8,8 @@ import consulo.language.editor.ui.PsiElementListCellRenderer;
 import consulo.language.psi.PsiElement;
 import consulo.ui.image.Image;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 import org.jetbrains.annotations.Nls;
 
 import jakarta.annotation.Nullable;

@@ -11,8 +11,8 @@ import com.intellij.spring.impl.ide.model.xml.beans.PNamespaceValue;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

@@ -4,8 +4,8 @@
 package com.intellij.spring.impl.ide.model.xml.beans;
 
 import com.intellij.spring.impl.ide.constants.SpringConstants;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.Namespace;
 
 /**
  * http://www.springframework.org/schema/beans:listOrSetType interface.

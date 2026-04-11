@@ -23,9 +23,9 @@ import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.language.psi.XmlToken;
 import consulo.xml.language.psi.util.XmlTagUtil;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collection;

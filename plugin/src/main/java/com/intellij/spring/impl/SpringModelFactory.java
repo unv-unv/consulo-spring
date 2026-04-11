@@ -22,7 +22,7 @@ import consulo.util.collection.ContainerUtil;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.pointer.VirtualFilePointer;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomFileElement;
 import consulo.xml.util.xml.model.impl.DomModelFactory;
 import consulo.xml.util.xml.model.impl.DomModelImpl;
 

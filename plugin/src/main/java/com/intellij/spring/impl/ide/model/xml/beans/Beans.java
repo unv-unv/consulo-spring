@@ -5,7 +5,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;

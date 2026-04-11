@@ -11,7 +11,7 @@ import com.intellij.spring.impl.ide.model.properties.PropertyReferenceSet;
 import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.ResolveResult;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

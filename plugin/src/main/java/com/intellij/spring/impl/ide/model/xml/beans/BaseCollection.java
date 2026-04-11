@@ -5,8 +5,8 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 
 import jakarta.annotation.Nonnull;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
 
 /**
  * http://www.springframework.org/schema/beans:baseCollectionType interface.

@@ -8,9 +8,9 @@ import com.intellij.aop.psi.AopReferenceHolder;
 import com.intellij.java.impl.util.xml.ClassTemplate;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.util.ClassKind;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 
 import jakarta.annotation.Nonnull;
 

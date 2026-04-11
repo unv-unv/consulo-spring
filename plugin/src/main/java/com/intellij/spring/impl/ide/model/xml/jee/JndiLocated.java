@@ -6,9 +6,9 @@ package com.intellij.spring.impl.ide.model.xml.jee;
 import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.xml.beans.Identified;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.Required;
 
 /**
  * http://www.springframework.org/schema/jee:jndiLocatedType interface.

@@ -21,7 +21,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.function.Condition;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

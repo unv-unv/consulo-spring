@@ -31,10 +31,10 @@ import consulo.util.lang.Pair;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlAttributeValue;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
+import consulo.xml.dom.DomUtil;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

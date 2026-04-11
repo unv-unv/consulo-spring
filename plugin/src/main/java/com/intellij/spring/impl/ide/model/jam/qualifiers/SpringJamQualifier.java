@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.model.xml.QualifierAttribute;
 import com.intellij.spring.impl.ide.model.xml.SpringQualifier;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
-import consulo.xml.util.xml.NameValue;
+import consulo.xml.dom.NameValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

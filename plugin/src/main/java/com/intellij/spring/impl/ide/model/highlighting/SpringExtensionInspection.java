@@ -36,9 +36,9 @@ import consulo.ui.ex.popup.JBPopupFactory;
 import consulo.ui.ex.popup.PopupStep;
 import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationsManager;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomElementAnnotationsManager;
 import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;

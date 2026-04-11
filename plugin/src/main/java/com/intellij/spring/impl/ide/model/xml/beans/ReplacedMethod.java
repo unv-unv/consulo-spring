@@ -6,9 +6,9 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.model.converters.ReplacedMethodBeanConverter;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanReplacedMethodConverter;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;

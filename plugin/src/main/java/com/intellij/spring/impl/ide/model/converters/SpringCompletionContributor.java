@@ -30,7 +30,7 @@ import consulo.language.psi.PsiReference;
 import consulo.ui.ex.action.IdeActions;
 import consulo.xml.language.XMLLanguage;
 import consulo.xml.language.psi.XmlToken;
-import consulo.xml.util.xml.Converter;
+import consulo.xml.dom.Converter;
 import consulo.xml.util.xml.impl.GenericDomValueReference;
 
 import jakarta.annotation.Nonnull;

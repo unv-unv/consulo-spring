@@ -9,9 +9,9 @@ import consulo.language.psi.PsiReference;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.xml.beans.Alias;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.CustomReferenceConverter;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.CustomReferenceConverter;
+import consulo.xml.dom.GenericDomValue;
 import consulo.language.psi.PsiReferenceBase;
 
 import jakarta.annotation.Nonnull;

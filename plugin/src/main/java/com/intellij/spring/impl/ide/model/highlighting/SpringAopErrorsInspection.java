@@ -31,10 +31,10 @@ import consulo.spring.localize.SpringLocalize;
 import consulo.util.collection.SmartList;
 import consulo.util.lang.StringUtil;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.highlighting.BasicDomElementsInspection;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.editor.BasicDomElementsInspection;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomHighlightingHelper;
 import jakarta.annotation.Nonnull;
 import org.jetbrains.annotations.NonNls;
 

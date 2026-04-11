@@ -6,7 +6,7 @@ import consulo.language.editor.refactoring.rename.RenameInputValidator;
 import consulo.language.pattern.ElementPattern;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.ProcessingContext;
-import consulo.xml.patterns.DomPatterns;
+import consulo.xml.dom.pattern.DomPatterns;
 
 /**
  * @author VISTALL

@@ -20,9 +20,9 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.spring.localize.SpringLocalize;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import jakarta.annotation.Nonnull;
 
 import java.util.Collection;

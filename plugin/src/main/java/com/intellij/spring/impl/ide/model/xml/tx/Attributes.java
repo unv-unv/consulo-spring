@@ -3,7 +3,7 @@
 
 package com.intellij.spring.impl.ide.model.xml.tx;
 
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.Required;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

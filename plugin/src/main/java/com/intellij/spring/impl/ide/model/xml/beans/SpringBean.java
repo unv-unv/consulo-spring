@@ -10,7 +10,7 @@ import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.converters.*;
 import com.intellij.spring.impl.ide.model.ResolvedConstructorArgs;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

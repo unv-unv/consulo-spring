@@ -7,9 +7,9 @@ import com.intellij.java.impl.psi.impl.beanProperties.BeanProperty;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.converters.BeanPropertyConverter;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringProperty;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Namespace;
 
 import java.util.List;
 

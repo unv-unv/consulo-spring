@@ -15,7 +15,7 @@ import consulo.spring.impl.DomSpringModel;
 import consulo.spring.impl.model.BaseSpringModel;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomFileElement;
 import consulo.xml.util.xml.model.impl.DomModelImpl;
 
 import jakarta.annotation.Nonnull;

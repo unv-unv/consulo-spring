@@ -4,8 +4,8 @@
  */
 package com.intellij.spring.impl.ide.model.xml.jee;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.Namespace;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 
 /**

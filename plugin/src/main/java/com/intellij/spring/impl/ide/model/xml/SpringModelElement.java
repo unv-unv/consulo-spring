@@ -3,7 +3,7 @@
  */
 package com.intellij.spring.impl.ide.model.xml;
 
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 /**
  * @author peter

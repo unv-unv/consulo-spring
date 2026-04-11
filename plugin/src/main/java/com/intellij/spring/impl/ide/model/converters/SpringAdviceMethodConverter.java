@@ -14,9 +14,9 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

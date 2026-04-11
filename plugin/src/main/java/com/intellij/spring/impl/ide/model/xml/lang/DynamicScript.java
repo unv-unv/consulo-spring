@@ -4,10 +4,10 @@
 package com.intellij.spring.impl.ide.model.xml.lang;
 
 import com.intellij.java.impl.util.xml.converters.values.ClassArrayConverter;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Referencing;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Referencing;
+import consulo.xml.dom.Required;
 
 import jakarta.annotation.Nonnull;
 

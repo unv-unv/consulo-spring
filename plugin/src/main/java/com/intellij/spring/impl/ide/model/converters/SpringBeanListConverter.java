@@ -30,9 +30,9 @@ import consulo.language.psi.PsiReference;
 import consulo.localize.LocalizeValue;
 import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.converters.DelimitedListConverter;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.convert.DelimitedListConverter;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

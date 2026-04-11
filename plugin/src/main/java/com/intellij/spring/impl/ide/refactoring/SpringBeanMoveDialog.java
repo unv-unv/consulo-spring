@@ -20,8 +20,8 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.VirtualFileManager;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

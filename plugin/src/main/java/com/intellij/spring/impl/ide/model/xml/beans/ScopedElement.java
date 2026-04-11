@@ -3,9 +3,9 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.converters.SpringBeanScopeConverter;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
 
 public interface ScopedElement extends DomElement {
   /**

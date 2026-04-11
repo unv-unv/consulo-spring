@@ -18,9 +18,9 @@ import consulo.localize.LocalizeValue;
 import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.text.StringTokenizer;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

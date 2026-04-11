@@ -7,7 +7,7 @@ package com.intellij.spring.impl.ide.model.converters;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiReference;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

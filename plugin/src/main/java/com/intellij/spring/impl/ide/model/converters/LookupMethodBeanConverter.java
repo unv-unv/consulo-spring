@@ -8,7 +8,7 @@ import com.intellij.java.language.psi.PsiClassType;
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.xml.beans.LookupMethod;
-import consulo.xml.util.xml.ConvertContext;
+import consulo.xml.dom.ConvertContext;
 
 import jakarta.annotation.Nullable;
 import java.util.Collections;

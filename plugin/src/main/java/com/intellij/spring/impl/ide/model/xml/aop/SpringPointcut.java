@@ -7,7 +7,7 @@ import jakarta.annotation.Nonnull;
 
 import com.intellij.aop.AopPointcut;
 import com.intellij.aop.psi.PsiPointcutExpression;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 /**
  * http://www.springframework.org/schema/aop:pointcutType interface.

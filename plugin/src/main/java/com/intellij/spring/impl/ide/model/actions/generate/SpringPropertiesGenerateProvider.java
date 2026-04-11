@@ -16,9 +16,9 @@ import consulo.language.psi.PsiFile;
 import consulo.project.Project;
 import consulo.ui.ex.SimpleTextAttributes;
 import consulo.ui.ex.awt.SimpleColoredComponent;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
+import consulo.xml.dom.DomUtil;
 import consulo.xml.util.xml.actions.generate.AbstractDomGenerateProvider;
 import org.jetbrains.annotations.NonNls;
 

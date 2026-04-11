@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.context;
 /**
  * http://www.springframework.org/schema/context:typeAttrType enumeration.
  */
-public enum Type implements consulo.xml.util.xml.NamedEnum {
+public enum Type implements consulo.xml.dom.NamedEnum {
 	ANNOTATION ("annotation"),
 	ASPECTJ ("aspectj"),
 	ASSIGNABLE ("assignable"),

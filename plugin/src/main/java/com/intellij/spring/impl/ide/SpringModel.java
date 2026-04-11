@@ -15,7 +15,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.module.Module;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomFileElement;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

@@ -16,7 +16,7 @@ import consulo.language.editor.template.*;
 import consulo.language.editor.template.macro.MacroCallNode;
 import consulo.language.editor.template.macro.MacroFactory;
 import consulo.language.psi.PsiFile;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 import consulo.xml.util.xml.actions.generate.DomTemplateRunner;
 import consulo.xml.util.xml.impl.DomTemplateRunnerImpl;
 

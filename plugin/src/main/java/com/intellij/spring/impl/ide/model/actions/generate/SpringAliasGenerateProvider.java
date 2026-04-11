@@ -4,8 +4,8 @@ import jakarta.annotation.Nullable;
 
 import consulo.codeEditor.Editor;
 import com.intellij.spring.impl.ide.model.xml.beans.Alias;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
 
 public class SpringAliasGenerateProvider extends BasicSpringDomGenerateProvider<Alias> {
   public SpringAliasGenerateProvider() {

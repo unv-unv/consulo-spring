@@ -31,8 +31,8 @@ import consulo.spring.impl.module.extension.SpringModuleExtension;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.collection.SmartList;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 

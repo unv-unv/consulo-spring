@@ -15,8 +15,8 @@ import com.intellij.spring.impl.ide.model.xml.lang.BeanShellScript;
 import com.intellij.spring.impl.ide.model.xml.lang.GroovyScript;
 import com.intellij.spring.impl.ide.model.xml.lang.JRubyScript;
 import com.intellij.spring.impl.ide.model.xml.util.*;
-import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.DomExtensionsRegistrar;
 
 /**
  * @author peter

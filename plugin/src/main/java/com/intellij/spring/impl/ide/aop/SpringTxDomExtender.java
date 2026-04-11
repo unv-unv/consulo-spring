@@ -9,9 +9,9 @@ import com.intellij.spring.impl.ide.model.xml.beans.Beans;
 import com.intellij.spring.impl.ide.model.xml.tx.Advice;
 import com.intellij.spring.impl.ide.model.xml.tx.AnnotationDriven;
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.util.xml.XmlName;
-import consulo.xml.util.xml.reflect.DomExtender;
-import consulo.xml.util.xml.reflect.DomExtensionsRegistrar;
+import consulo.xml.language.XmlName;
+import consulo.xml.dom.reflect.DomExtender;
+import consulo.xml.dom.reflect.DomExtensionsRegistrar;
 import jakarta.annotation.Nonnull;
 
 /**

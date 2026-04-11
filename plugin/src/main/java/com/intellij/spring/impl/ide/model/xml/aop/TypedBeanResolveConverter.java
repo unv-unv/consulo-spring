@@ -9,8 +9,8 @@ import com.intellij.java.language.psi.JavaPsiFacade;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiClassType;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.DomElement;
 
 import jakarta.annotation.Nullable;
 import java.util.Arrays;

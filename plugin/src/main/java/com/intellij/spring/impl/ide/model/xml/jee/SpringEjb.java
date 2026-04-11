@@ -4,10 +4,10 @@
 package com.intellij.spring.impl.ide.model.xml.jee;
 
 import com.intellij.java.language.psi.PsiClass;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.Required;
 
 import jakarta.annotation.Nonnull;
 

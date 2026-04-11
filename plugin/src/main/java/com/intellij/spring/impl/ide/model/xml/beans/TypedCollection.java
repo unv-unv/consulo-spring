@@ -4,8 +4,8 @@
 package com.intellij.spring.impl.ide.model.xml.beans;
 
 import com.intellij.java.language.psi.PsiClass;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 

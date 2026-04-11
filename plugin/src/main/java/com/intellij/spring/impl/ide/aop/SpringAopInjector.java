@@ -23,8 +23,8 @@ import consulo.project.Project;
 import consulo.util.dataholder.Key;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.util.XmlTagUtil;
-import consulo.xml.patterns.XmlAttributeValuePattern;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlAttributeValuePattern;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;
@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static consulo.language.pattern.StandardPatterns.*;
-import static consulo.xml.patterns.DomPatterns.*;
+import static consulo.xml.dom.pattern.DomPatterns.*;
 
 /**
  * @author peter

@@ -8,7 +8,7 @@ import com.intellij.java.language.psi.JavaPsiFacade;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringEntry;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collections;

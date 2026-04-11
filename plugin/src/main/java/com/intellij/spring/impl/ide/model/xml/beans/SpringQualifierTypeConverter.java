@@ -5,7 +5,7 @@ import com.intellij.java.language.psi.JavaPsiFacade;
 import com.intellij.java.language.psi.PsiClass;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
-import consulo.xml.util.xml.ConvertContext;
+import consulo.xml.dom.ConvertContext;
 
 /**
  * @author Dmitry Avdeev

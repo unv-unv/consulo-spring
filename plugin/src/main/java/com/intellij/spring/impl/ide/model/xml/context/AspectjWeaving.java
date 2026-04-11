@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.context;
 /**
  * http://www.springframework.org/schema/context:aspectj-weavingAttrType enumeration.
  */
-public enum AspectjWeaving implements consulo.xml.util.xml.NamedEnum {
+public enum AspectjWeaving implements consulo.xml.dom.NamedEnum {
 	AUTODETECT ("autodetect"),
 	OFF ("off"),
 	ON ("on");

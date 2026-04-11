@@ -18,8 +18,8 @@ import consulo.language.editor.action.TypeDeclarationProvider;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

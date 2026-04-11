@@ -13,10 +13,10 @@ import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.project.Project;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.WrappingConverter;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.WrappingConverter;
 
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;

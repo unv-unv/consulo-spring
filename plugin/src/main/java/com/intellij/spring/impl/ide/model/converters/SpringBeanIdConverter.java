@@ -21,10 +21,10 @@ import consulo.language.psi.PsiReferenceBase;
 import consulo.language.util.IncorrectOperationException;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.CustomReferenceConverter;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.CustomReferenceConverter;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;

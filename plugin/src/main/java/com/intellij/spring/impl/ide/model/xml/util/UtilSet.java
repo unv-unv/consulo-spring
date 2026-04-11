@@ -8,7 +8,7 @@ import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.ListOrSet;
 import com.intellij.spring.impl.ide.model.xml.beans.ScopedElement;
 import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 

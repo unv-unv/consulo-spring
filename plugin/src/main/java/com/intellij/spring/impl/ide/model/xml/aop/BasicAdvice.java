@@ -7,9 +7,9 @@ import com.intellij.aop.psi.PsiPointcutExpression;
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.aop.SpringAdvisedElementsSearcher;
 import com.intellij.spring.impl.ide.model.converters.SpringAdviceMethodConverter;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

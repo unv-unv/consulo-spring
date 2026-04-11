@@ -23,7 +23,7 @@ import consulo.navigation.OpenFileDescriptorFactory;
 import consulo.project.Project;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;

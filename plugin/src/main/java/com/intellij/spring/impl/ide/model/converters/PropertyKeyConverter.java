@@ -2,9 +2,9 @@ package com.intellij.spring.impl.ide.model.converters;
 
 import consulo.project.Project;
 import com.intellij.spring.impl.ide.SpringManager;
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.WrappingConverter;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.WrappingConverter;
 import jakarta.annotation.Nullable;
 import jakarta.annotation.Nonnull;
 

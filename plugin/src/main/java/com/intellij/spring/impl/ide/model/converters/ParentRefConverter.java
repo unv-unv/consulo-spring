@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.converters;
 
 import com.intellij.spring.impl.ide.SpringModel;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
-import consulo.xml.util.xml.ConvertContext;
+import consulo.xml.dom.ConvertContext;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

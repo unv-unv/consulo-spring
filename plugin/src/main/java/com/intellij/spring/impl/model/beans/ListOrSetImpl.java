@@ -9,7 +9,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.TypeHolder;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

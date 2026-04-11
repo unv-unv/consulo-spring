@@ -13,7 +13,7 @@ import com.intellij.spring.impl.ide.model.highlighting.SpringAutowireUtil;
 import com.intellij.spring.impl.ide.model.xml.beans.ConstructorArg;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

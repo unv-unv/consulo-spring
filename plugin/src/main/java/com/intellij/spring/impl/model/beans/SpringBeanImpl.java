@@ -20,8 +20,8 @@ import consulo.application.util.CachedValuesManager;
 import consulo.language.psi.PsiModificationTracker;
 import consulo.util.collection.ArrayUtil;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericAttributeValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

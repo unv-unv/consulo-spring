@@ -18,7 +18,7 @@ import consulo.language.psi.PsiElementVisitor;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.localize.LocalizeValue;
-import consulo.xml.codeInspection.XmlSuppressableInspectionTool;
+import consulo.xml.editor.XmlSuppressableInspectionTool;
 import consulo.xml.language.psi.XmlAttributeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

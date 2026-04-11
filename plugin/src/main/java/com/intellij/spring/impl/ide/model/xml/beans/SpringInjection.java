@@ -5,8 +5,8 @@
 package com.intellij.spring.impl.ide.model.xml.beans;
 
 import com.intellij.spring.impl.ide.model.xml.util.SpringConstant;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.SubTag;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.SubTag;
 
 import jakarta.annotation.Nonnull;
 

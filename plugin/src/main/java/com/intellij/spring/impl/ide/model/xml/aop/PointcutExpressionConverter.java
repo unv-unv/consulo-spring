@@ -10,9 +10,9 @@ import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.PsiElement;
 import consulo.util.lang.Pair;
 import consulo.xml.language.psi.XmlAttributeValue;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.GenericAttributeValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nullable;

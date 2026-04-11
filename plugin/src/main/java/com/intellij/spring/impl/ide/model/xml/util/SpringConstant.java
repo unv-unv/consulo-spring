@@ -7,9 +7,9 @@ import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.values.converters.FieldRetrievingFactoryBeanConverter;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Referencing;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Referencing;
+import consulo.xml.dom.Required;
 
 /**
  * http://www.springframework.org/schema/util:constantElemType interface.

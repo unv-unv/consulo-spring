@@ -2,8 +2,8 @@ package com.intellij.spring.impl.ide.model.xml.jms;
 
 import jakarta.annotation.Nonnull;
 
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 
 public interface Listener extends SpringJmsElement {
 

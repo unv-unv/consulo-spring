@@ -14,7 +14,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.localize.LocalizeValue;
 import consulo.spring.localize.SpringLocalize;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import jakarta.annotation.Nonnull;
 
 /**

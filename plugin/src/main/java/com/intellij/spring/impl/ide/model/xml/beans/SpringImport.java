@@ -6,10 +6,10 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import jakarta.annotation.Nonnull;
 
 import com.intellij.spring.impl.ide.model.converters.SpringImportResourceConverter;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 import consulo.language.psi.PsiFile;
 
 /**

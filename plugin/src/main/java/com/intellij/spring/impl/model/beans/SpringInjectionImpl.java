@@ -15,8 +15,8 @@ import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nullable;
 

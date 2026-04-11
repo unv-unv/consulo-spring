@@ -4,9 +4,9 @@ import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import com.intellij.spring.impl.ide.SpringBundle;
 import consulo.xml.util.xml.DomMetaData;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.DomUtil;
 import consulo.language.util.IncorrectOperationException;
 
 import jakarta.annotation.Nullable;

@@ -5,7 +5,7 @@ import jakarta.annotation.Nonnull;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 import consulo.language.psi.PsiFile;
 import consulo.util.collection.ArrayUtil;
 

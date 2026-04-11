@@ -7,7 +7,7 @@ import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

@@ -15,7 +15,7 @@ import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 import jakarta.annotation.Nullable;
 import java.util.Set;

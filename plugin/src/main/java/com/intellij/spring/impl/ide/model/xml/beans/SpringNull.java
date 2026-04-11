@@ -3,8 +3,8 @@
  */
 package com.intellij.spring.impl.ide.model.xml.beans;
 
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.Namespace;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 
 /**

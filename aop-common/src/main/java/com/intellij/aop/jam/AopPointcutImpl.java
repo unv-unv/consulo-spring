@@ -26,7 +26,7 @@ import consulo.language.psi.PsiLanguageInjectionHost;
 import consulo.language.psi.PsiManager;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.Pair;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

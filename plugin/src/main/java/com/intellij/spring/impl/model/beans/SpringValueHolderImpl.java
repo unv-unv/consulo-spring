@@ -7,8 +7,8 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringValueHolder;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringRef;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringValue;
-import consulo.xml.util.xml.GenericDomValue;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.GenericDomValue;
+import consulo.xml.dom.DomUtil;
 
 /**
  * @author peter

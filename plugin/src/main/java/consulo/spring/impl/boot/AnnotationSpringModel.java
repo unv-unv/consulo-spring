@@ -21,7 +21,7 @@ import consulo.spring.impl.boot.jam.SpringBootConfigurationElement;
 import consulo.spring.impl.model.BaseSpringModel;
 import consulo.util.lang.StringUtil;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomFileElement;
 
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;

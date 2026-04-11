@@ -14,7 +14,7 @@ import consulo.module.Module;
 import consulo.project.Project;
 import consulo.util.collection.MultiMap;
 import consulo.util.dataholder.Key;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nonnull;
 import java.util.*;

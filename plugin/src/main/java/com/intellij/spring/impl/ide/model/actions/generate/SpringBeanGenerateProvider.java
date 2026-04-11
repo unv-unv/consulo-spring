@@ -1,7 +1,7 @@
 package com.intellij.spring.impl.ide.model.actions.generate;
 
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import org.jetbrains.annotations.NonNls;
 import jakarta.annotation.Nullable;
 

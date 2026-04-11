@@ -18,7 +18,7 @@ import com.intellij.spring.impl.model.DomSpringBeanImpl;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.xml.tx.AnnotationDriven;
 import consulo.application.util.function.Processor;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

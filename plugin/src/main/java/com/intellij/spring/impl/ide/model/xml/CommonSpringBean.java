@@ -3,7 +3,7 @@ package com.intellij.spring.impl.ide.model.xml;
 import com.intellij.jam.model.common.CommonModelElement;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.SpringModel;
-import consulo.xml.util.xml.NameValue;
+import consulo.xml.dom.NameValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

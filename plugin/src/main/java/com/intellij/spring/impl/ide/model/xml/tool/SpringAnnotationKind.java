@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.tool;
 /**
  * http://www.springframework.org/schema/tool:kindAttrType enumeration.
  */
-public enum SpringAnnotationKind implements consulo.xml.util.xml.NamedEnum {
+public enum SpringAnnotationKind implements consulo.xml.dom.NamedEnum {
 	DIRECT ("direct"),
 	REF ("ref");
 

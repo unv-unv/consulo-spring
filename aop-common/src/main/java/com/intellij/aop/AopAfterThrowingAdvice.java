@@ -5,7 +5,7 @@
 package com.intellij.aop;
 
 import com.intellij.java.language.psi.PsiParameter;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 /**
  * @author peter

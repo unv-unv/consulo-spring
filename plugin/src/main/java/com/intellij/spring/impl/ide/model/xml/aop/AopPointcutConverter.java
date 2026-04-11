@@ -9,8 +9,8 @@ import consulo.language.util.ModuleUtilCore;
 import consulo.util.collection.ContainerUtil;
 import consulo.util.lang.function.Condition;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.ResolvingConverter;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

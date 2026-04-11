@@ -34,8 +34,8 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
 import consulo.virtualFileSystem.VirtualFile;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

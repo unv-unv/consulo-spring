@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.aop;
 /**
  * http://www.springframework.org/schema/aop:typeAttrType enumeration.
  */
-public enum PointcutType implements consulo.xml.util.xml.NamedEnum {
+public enum PointcutType implements consulo.xml.dom.NamedEnum {
 	ASPECTJ ("aspectj"),
 	REGEX ("regex");
 

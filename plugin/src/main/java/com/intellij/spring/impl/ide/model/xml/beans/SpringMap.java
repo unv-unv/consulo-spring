@@ -5,9 +5,9 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Namespace;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;

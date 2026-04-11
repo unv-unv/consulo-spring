@@ -17,8 +17,8 @@
 package com.intellij.spring.impl.ide;
 
 import consulo.annotation.component.ExtensionImpl;
-import consulo.xml.javaee.ResourceRegistrar;
-import consulo.xml.javaee.StandardResourceProvider;
+import consulo.xml.standardResource.ResourceRegistrar;
+import consulo.xml.standardResource.StandardResourceProvider;
 
 /**
  * @author Dmitry Avdeev

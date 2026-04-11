@@ -5,7 +5,7 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiClassType;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
-import consulo.xml.util.xml.ConvertContext;
+import consulo.xml.dom.ConvertContext;
 
 import jakarta.annotation.Nullable;
 import java.util.ArrayList;

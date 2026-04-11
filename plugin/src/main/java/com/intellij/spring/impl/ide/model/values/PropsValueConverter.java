@@ -2,7 +2,7 @@ package com.intellij.spring.impl.ide.model.values;
 
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.converters.SpringConverterUtil;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collections;

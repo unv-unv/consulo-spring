@@ -3,7 +3,7 @@
 
 package com.intellij.spring.impl.ide.model.xml.beans;
 
-import consulo.xml.util.xml.NamedEnum;
+import consulo.xml.dom.NamedEnum;
 import org.jetbrains.annotations.NonNls;
 
 /**

@@ -17,9 +17,9 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.localize.LocalizeValue;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.CustomReferenceConverter;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.CustomReferenceConverter;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

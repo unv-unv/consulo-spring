@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 /**
  * http://www.springframework.org/schema/beans:default-dependency-checkAttrType enumeration.
  */
-public enum DefaultDependencyCheck implements consulo.xml.util.xml.NamedEnum {
+public enum DefaultDependencyCheck implements consulo.xml.dom.NamedEnum {
 	ALL ("all"),
 	NONE ("none"),
 	OBJECTS ("objects"),

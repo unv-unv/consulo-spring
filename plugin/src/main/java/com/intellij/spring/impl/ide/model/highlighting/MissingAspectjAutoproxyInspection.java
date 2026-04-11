@@ -30,7 +30,7 @@ import consulo.language.util.ModuleUtilCore;
 import consulo.localize.LocalizeValue;
 import consulo.module.Module;
 import consulo.spring.localize.SpringLocalize;
-import consulo.xml.util.xml.DomFileElement;
+import consulo.xml.dom.DomFileElement;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

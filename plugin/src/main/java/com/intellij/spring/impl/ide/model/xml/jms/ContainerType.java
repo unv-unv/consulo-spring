@@ -1,6 +1,6 @@
 package com.intellij.spring.impl.ide.model.xml.jms;
 
-import consulo.xml.util.xml.NamedEnum;
+import consulo.xml.dom.NamedEnum;
 
 public enum ContainerType implements NamedEnum {
   DEFAULT("default"),

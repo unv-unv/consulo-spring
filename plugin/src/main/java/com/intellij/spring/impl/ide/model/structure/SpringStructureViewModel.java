@@ -5,8 +5,8 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.Sorter;
 import consulo.xml.ide.structureView.impl.xml.XmlStructureViewTreeModel;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.xml.util.xml.DomElementsNavigationManager;
+import consulo.xml.dom.DomElementNavigationProvider;
+import consulo.xml.dom.DomElementsNavigationManager;
 
 import jakarta.annotation.Nonnull;
 

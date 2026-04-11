@@ -14,7 +14,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringRef;
 import consulo.language.psi.PsiManager;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 
 import jakarta.annotation.Nullable;
 import java.util.List;

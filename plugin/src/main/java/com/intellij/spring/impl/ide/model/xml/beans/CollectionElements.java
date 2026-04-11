@@ -5,10 +5,10 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 
 import com.intellij.spring.impl.ide.model.values.ListOrSetValueConverter;
 import com.intellij.spring.impl.ide.model.xml.CustomBeanWrapper;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.CustomChildren;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.SubTagList;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.CustomChildren;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.SubTagList;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

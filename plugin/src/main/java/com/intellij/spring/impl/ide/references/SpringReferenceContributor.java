@@ -22,10 +22,10 @@ import consulo.language.psi.filter.position.ParentElementFilter;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.ProcessingContext;
 import consulo.xml.language.psi.XmlAttributeValue;
-import consulo.xml.patterns.XmlPatterns;
+import consulo.xml.language.psi.pattern.XmlPatterns;
 import consulo.xml.psi.filters.XmlTagFilter;
 import consulo.xml.psi.filters.position.NamespaceFilter;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 
 import jakarta.annotation.Nonnull;
 

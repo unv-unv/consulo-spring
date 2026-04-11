@@ -3,7 +3,7 @@
 
 package com.intellij.spring.impl.ide.model.xml.aop;
 
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import jakarta.annotation.Nonnull;
 

@@ -7,8 +7,8 @@ import com.intellij.aop.AopBundle;
 import com.intellij.aop.jam.AopAdviceImpl;
 import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.java.language.psi.PsiParameter;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.ResolvingConverter;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

@@ -28,7 +28,7 @@ import consulo.virtualFileSystem.VirtualFile;
 import consulo.virtualFileSystem.util.VirtualFileUtil;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import consulo.xml.util.xml.impl.ConvertContextImpl;
 import org.jetbrains.annotations.NonNls;
 

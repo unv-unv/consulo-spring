@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 import com.intellij.java.impl.psi.impl.beanProperties.BeanProperty;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 import com.intellij.spring.impl.ide.model.converters.BeanPropertyConverter;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 
 import java.util.List;
 

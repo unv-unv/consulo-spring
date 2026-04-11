@@ -3,7 +3,7 @@
  */
 package com.intellij.spring.impl.ide.model.xml.beans;
 
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 
 /**
  * @author peter

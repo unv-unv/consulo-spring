@@ -18,8 +18,8 @@ import com.intellij.java.language.psi.PsiModifier;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import consulo.language.editor.inspection.LocalQuickFix;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

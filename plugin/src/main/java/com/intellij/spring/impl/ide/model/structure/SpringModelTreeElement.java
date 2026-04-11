@@ -16,10 +16,10 @@ import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
 import consulo.xml.language.psi.XmlDocument;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.xml.util.xml.DomElementsNavigationManager;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
+import consulo.xml.dom.DomElementsNavigationManager;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nullable;
 import java.util.ArrayList;

@@ -24,9 +24,9 @@ import consulo.project.Project;
 import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.StringUtil;
 import consulo.virtualFileSystem.ReadonlyStatusHandler;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import jakarta.annotation.Nonnull;
 
 import java.util.ArrayList;

@@ -36,10 +36,10 @@ import consulo.util.lang.Pair;
 import consulo.util.lang.StringUtil;
 import consulo.util.lang.function.Condition;
 import consulo.xml.language.psi.XmlElement;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomUtil;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.GenericDomValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

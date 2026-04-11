@@ -58,8 +58,8 @@ import consulo.util.lang.StringUtil;
 import consulo.util.lang.ref.Ref;
 import consulo.virtualFileSystem.VirtualFile;
 import consulo.xml.language.psi.XmlFile;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.reflect.AbstractDomChildrenDescription;
+import consulo.xml.dom.*;
+import consulo.xml.dom.reflect.AbstractDomChildrenDescription;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

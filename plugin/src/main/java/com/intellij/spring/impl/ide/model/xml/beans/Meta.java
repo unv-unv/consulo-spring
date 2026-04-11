@@ -5,9 +5,9 @@ package com.intellij.spring.impl.ide.model.xml.beans;
 
 import jakarta.annotation.Nonnull;
 
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Required;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Required;
 
 /**
  * http://www.springframework.org/schema/beans:metaType interface.

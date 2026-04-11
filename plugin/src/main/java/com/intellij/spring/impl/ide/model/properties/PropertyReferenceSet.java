@@ -10,8 +10,8 @@ import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import consulo.document.util.TextRange;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.ReferenceSetBase;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

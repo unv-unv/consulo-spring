@@ -4,7 +4,7 @@
 package com.intellij.spring.impl.ide.model.xml;
 
 import consulo.module.Module;
-import consulo.xml.util.xml.DomElement;
+import consulo.xml.dom.DomElement;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 

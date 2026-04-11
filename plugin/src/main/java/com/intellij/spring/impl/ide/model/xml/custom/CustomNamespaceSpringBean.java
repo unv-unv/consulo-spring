@@ -26,7 +26,7 @@ import consulo.util.collection.ArrayUtil;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

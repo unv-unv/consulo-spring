@@ -14,7 +14,7 @@ import com.intellij.spring.impl.ide.model.xml.beans.ConstructorArg;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.util.lang.ComparatorUtil;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collections;

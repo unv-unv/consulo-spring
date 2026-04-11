@@ -5,7 +5,7 @@ package com.intellij.aop;
 
 import com.intellij.aop.psi.PsiPointcutExpression;
 import consulo.language.psi.PsiElement;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 /**
  * @author peter

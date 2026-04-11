@@ -18,8 +18,8 @@ import consulo.language.psi.PsiElement;
 import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collection;

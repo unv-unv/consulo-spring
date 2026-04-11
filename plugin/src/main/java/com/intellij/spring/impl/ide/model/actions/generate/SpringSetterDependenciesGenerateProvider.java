@@ -8,8 +8,8 @@ import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringInjection;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringProperty;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.DomElementNavigationProvider;
 import consulo.xml.util.xml.actions.generate.AbstractDomGenerateProvider;
 import consulo.util.lang.Pair;
 

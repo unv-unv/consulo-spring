@@ -6,7 +6,7 @@ package com.intellij.spring.impl.ide.model.xml.jee;
 /**
  * http://www.springframework.org/schema/jee:providerAttrType enumeration.
  */
-public enum JeeProvider implements consulo.xml.util.xml.NamedEnum {
+public enum JeeProvider implements consulo.xml.dom.NamedEnum {
 	HIBERNATE ("hibernate"),
 	KODO ("kodo"),
 	TOPLINK ("toplink");

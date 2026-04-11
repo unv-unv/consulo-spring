@@ -7,7 +7,7 @@ import consulo.language.psi.PsiReference;
 import consulo.language.psi.PsiReferenceBase;
 import consulo.util.lang.Pair;
 import consulo.util.lang.function.Condition;
-import consulo.xml.util.xml.*;
+import consulo.xml.dom.*;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

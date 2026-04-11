@@ -19,10 +19,10 @@ import consulo.language.psi.resolve.ResolveState;
 import consulo.language.util.IncorrectOperationException;
 import consulo.localize.LocalizeValue;
 import consulo.util.collection.ArrayUtil;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.Converter;
-import consulo.xml.util.xml.CustomReferenceConverter;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.Converter;
+import consulo.xml.dom.CustomReferenceConverter;
+import consulo.xml.dom.GenericDomValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

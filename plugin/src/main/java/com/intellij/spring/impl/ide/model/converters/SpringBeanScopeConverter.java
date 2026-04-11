@@ -12,8 +12,8 @@ import com.intellij.spring.impl.ide.model.xml.beans.*;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
 import consulo.util.collection.ContainerUtil;
-import consulo.xml.util.xml.ConvertContext;
-import consulo.xml.util.xml.ResolvingConverter;
+import consulo.xml.dom.ConvertContext;
+import consulo.xml.dom.ResolvingConverter;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

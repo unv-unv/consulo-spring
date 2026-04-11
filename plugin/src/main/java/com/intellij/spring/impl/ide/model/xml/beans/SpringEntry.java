@@ -7,9 +7,9 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
 import com.intellij.spring.impl.ide.model.values.EntryKeyConverter;
-import consulo.xml.util.xml.Attribute;
-import consulo.xml.util.xml.Convert;
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.Attribute;
+import consulo.xml.dom.Convert;
+import consulo.xml.dom.GenericAttributeValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

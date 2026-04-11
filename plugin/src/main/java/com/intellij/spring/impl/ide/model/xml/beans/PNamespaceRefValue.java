@@ -4,8 +4,8 @@
 
 package com.intellij.spring.impl.ide.model.xml.beans;
 
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.Convert;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.Convert;
 import com.intellij.spring.impl.ide.model.converters.SpringBeanResolveConverter;
 
 /**

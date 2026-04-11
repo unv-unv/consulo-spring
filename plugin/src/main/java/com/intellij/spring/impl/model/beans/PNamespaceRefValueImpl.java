@@ -7,7 +7,7 @@ package com.intellij.spring.impl.model.beans;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.spring.impl.ide.model.xml.beans.PNamespaceRefValue;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

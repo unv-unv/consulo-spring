@@ -7,7 +7,7 @@ import com.intellij.java.language.psi.PsiMethod;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

@@ -17,7 +17,7 @@ import consulo.annotation.component.ExtensionImpl;
 import consulo.localize.LocalizeValue;
 import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.StringUtil;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 

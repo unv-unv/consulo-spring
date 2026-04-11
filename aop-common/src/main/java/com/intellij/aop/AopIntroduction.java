@@ -6,7 +6,7 @@ package com.intellij.aop;
 import com.intellij.aop.psi.AopReferenceHolder;
 import com.intellij.jam.model.common.CommonModelElement;
 import com.intellij.java.language.psi.PsiClass;
-import consulo.xml.util.xml.GenericValue;
+import consulo.xml.dom.GenericValue;
 
 import jakarta.annotation.Nonnull;
 

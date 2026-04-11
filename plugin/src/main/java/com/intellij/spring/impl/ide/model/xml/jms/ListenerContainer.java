@@ -3,7 +3,7 @@
 
 package com.intellij.spring.impl.ide.model.xml.jms;
 
-import consulo.xml.util.xml.GenericAttributeValue;
+import consulo.xml.dom.GenericAttributeValue;
 import jakarta.annotation.Nonnull;
 
 import java.util.List;

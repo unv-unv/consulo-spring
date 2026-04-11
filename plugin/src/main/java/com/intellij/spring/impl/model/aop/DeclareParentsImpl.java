@@ -8,7 +8,7 @@ import jakarta.annotation.Nullable;
 
 import consulo.language.psi.PsiFile;
 import com.intellij.spring.impl.ide.model.xml.aop.DeclareParents;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiManager;
 

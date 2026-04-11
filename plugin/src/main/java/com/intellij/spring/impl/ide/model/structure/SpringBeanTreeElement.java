@@ -14,7 +14,7 @@ import consulo.navigation.ItemPresentation;
 import consulo.ui.image.Image;
 import consulo.util.lang.StringUtil;
 import consulo.xml.ide.structureView.impl.xml.XmlTagTreeElement;
-import consulo.xml.util.xml.DomElementNavigationProvider;
+import consulo.xml.dom.DomElementNavigationProvider;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;

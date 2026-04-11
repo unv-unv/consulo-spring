@@ -4,7 +4,7 @@
  */
 package com.intellij.spring.impl.ide.model.xml.tool;
 
-import consulo.xml.util.xml.Namespace;
+import consulo.xml.dom.Namespace;
 import com.intellij.spring.impl.ide.constants.SpringConstants;
 
 /**

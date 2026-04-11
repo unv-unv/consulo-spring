@@ -12,9 +12,9 @@ import consulo.fileEditor.structureView.StructureViewTreeElement;
 import consulo.fileEditor.structureView.tree.TreeElement;
 import consulo.navigation.ItemPresentation;
 import consulo.ui.image.Image;
-import consulo.xml.util.xml.DomElementNavigationProvider;
-import consulo.xml.util.xml.DomElementsNavigationManager;
-import consulo.xml.util.xml.GenericDomValue;
+import consulo.xml.dom.DomElementNavigationProvider;
+import consulo.xml.dom.DomElementsNavigationManager;
+import consulo.xml.dom.GenericDomValue;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

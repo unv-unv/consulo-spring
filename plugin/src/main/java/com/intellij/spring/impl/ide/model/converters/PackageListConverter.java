@@ -7,8 +7,8 @@ import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.util.lang.PatternUtil;
 import consulo.xml.language.psi.XmlAttributeValue;
-import consulo.xml.util.xml.*;
-import consulo.xml.util.xml.converters.DelimitedListProcessor;
+import consulo.xml.dom.*;
+import consulo.xml.dom.convert.DelimitedListProcessor;
 import org.jetbrains.annotations.NonNls;
 
 import jakarta.annotation.Nonnull;

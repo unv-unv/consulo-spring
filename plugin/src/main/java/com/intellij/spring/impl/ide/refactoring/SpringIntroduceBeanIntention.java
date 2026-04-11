@@ -24,7 +24,7 @@ import consulo.xml.language.psi.XmlAttribute;
 import consulo.xml.language.psi.XmlElementFactory;
 import consulo.xml.language.psi.XmlFile;
 import consulo.xml.language.psi.XmlTag;
-import consulo.xml.util.xml.DomUtil;
+import consulo.xml.dom.DomUtil;
 import jakarta.annotation.Nonnull;
 
 import java.util.function.Function;

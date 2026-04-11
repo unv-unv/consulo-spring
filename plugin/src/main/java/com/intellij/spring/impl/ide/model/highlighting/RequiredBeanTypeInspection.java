@@ -12,11 +12,11 @@ import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.localize.LocalizeValue;
 import consulo.spring.localize.SpringLocalize;
-import consulo.xml.util.xml.DomElement;
-import consulo.xml.util.xml.GenericAttributeValue;
-import consulo.xml.util.xml.highlighting.DomElementAnnotationHolder;
-import consulo.xml.util.xml.highlighting.DomElementsInspection;
-import consulo.xml.util.xml.highlighting.DomHighlightingHelper;
+import consulo.xml.dom.DomElement;
+import consulo.xml.dom.GenericAttributeValue;
+import consulo.xml.dom.editor.DomElementAnnotationHolder;
+import consulo.xml.dom.editor.DomElementsInspection;
+import consulo.xml.dom.editor.DomHighlightingHelper;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl

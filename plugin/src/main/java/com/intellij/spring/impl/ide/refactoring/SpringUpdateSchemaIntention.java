@@ -26,8 +26,8 @@ import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
 import consulo.xml.language.psi.*;
-import consulo.xml.util.xml.DomFileElement;
-import consulo.xml.util.xml.DomManager;
+import consulo.xml.dom.DomFileElement;
+import consulo.xml.dom.DomManager;
 
 import jakarta.annotation.Nonnull;
 
