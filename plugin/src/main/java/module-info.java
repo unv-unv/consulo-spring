@@ -8,6 +8,8 @@ open module com.intellij.spring {
   requires com.intellij.spring.java.ex.impl;
   requires consulo.java.properties.impl;
   requires com.intellij.properties;
+  requires com.intellij.spring.spel.language.api;
+  requires com.intellij.spring.spel.language.impl;
 
   // TODO remove in future
   requires java.desktop;

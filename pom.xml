@@ -44,6 +44,8 @@
     <modules>
         <module>aop-common</module>
         <module>java-ex-impl</module>
+        <module>spel-lang-api</module>
+        <module>spel-lang-impl</module>
 
         <module>maven-impl</module>
         <module>plugin</module>
