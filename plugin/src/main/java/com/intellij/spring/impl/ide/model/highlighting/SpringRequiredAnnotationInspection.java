@@ -10,6 +10,7 @@ import com.intellij.spring.impl.ide.constants.SpringAnnotationsConstants;
 import com.intellij.spring.impl.ide.java.SpringJavaClassInfo;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.DomSpringBeanPointer;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringPropertyDefinition;
 import consulo.annotation.component.ExtensionImpl;
@@ -53,12 +54,14 @@ public class SpringRequiredAnnotationInspection extends BaseJavaLocalInspectionT
                     final String property = PropertyUtil.getPropertyNameBySetter(method);
                     final Collection<SpringPropertyDefinition> mappedProperties = info.getMappedProperties(property);
                     if (mappedProperties.isEmpty()) {
-                        final List<DomSpringBeanPointer> list = info.getMappedBeans();
+                        final List<SpringBaseBeanPointer> list = info.getMappedBeans();
                         final List<SpringBean> beans = new ArrayList<>(list.size());
-                        for (DomSpringBeanPointer pointer : list) {
-                            final DomSpringBean springBean = pointer.getSpringBean();
-                            if (springBean instanceof SpringBean && !((SpringBean) springBean).isAbstract()) {
-                                beans.add((SpringBean) springBean);
+                        for (SpringBaseBeanPointer pointer : list) {
+                            if (pointer instanceof DomSpringBeanPointer domPointer) {
+                                final DomSpringBean springBean = domPointer.getSpringBean();
+                                if (springBean instanceof SpringBean && !((SpringBean) springBean).isAbstract()) {
+                                    beans.add((SpringBean) springBean);
+                                }
                             }
                         }
                         if (beans.isEmpty()) {

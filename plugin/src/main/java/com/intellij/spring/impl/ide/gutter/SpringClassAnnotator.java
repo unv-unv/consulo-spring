@@ -166,14 +166,16 @@ public class SpringClassAnnotator implements Annotator {
         if (list.size() > 0) {
           addPropertiesGutterIcon(holder, method);
         }
-        final List<DomSpringBeanPointer> pointers = info.getMappedBeans();
-        for (DomSpringBeanPointer pointer : pointers) {
-          final DomSpringBean springBean = pointer.getSpringBean();
-          if (springBean instanceof SpringBean) {
-            final Autowire autowire = ((SpringBean)springBean).getBeanAutowire();
-            if (autowire.isAutowired()) {
-              autowired = true;
-              break;
+        final List<SpringBaseBeanPointer> pointers = info.getMappedBeans();
+        for (SpringBaseBeanPointer pointer : pointers) {
+          if (pointer instanceof DomSpringBeanPointer domPointer) {
+            final DomSpringBean springBean = domPointer.getSpringBean();
+            if (springBean instanceof SpringBean) {
+              final Autowire autowire = ((SpringBean)springBean).getBeanAutowire();
+              if (autowire.isAutowired()) {
+                autowired = true;
+                break;
+              }
             }
           }
         }
@@ -213,7 +215,21 @@ public class SpringClassAnnotator implements Annotator {
 
   @RequiredReadAction
   private static void processAnnotatedMethod(final PsiMethod method, final AnnotationHolder holder) {
-    if (SpringAutowireUtil.isAutowiredByAnnotation(method)) {
+    boolean isAutowired = SpringAutowireUtil.isAutowiredByAnnotation(method);
+
+    // implicit autowiring: single constructor of a Spring bean doesn't need @Autowired
+    if (!isAutowired && method.isConstructor()) {
+      PsiClass containingClass = method.getContainingClass();
+      if (containingClass != null) {
+        PsiMethod[] constructors = containingClass.getConstructors();
+        if (constructors.length == 1) {
+          SpringJavaClassInfo info = SpringJavaClassInfo.getSpringJavaClassInfo(containingClass);
+          isAutowired = info.isMapped();
+        }
+      }
+    }
+
+    if (isAutowired) {
       final Module module = method.getModule();
       final SpringModel model = SpringManager.getInstance(method.getProject()).getCombinedModel(module);
       if (model != null) {
@@ -285,11 +301,21 @@ public class SpringClassAnnotator implements Annotator {
                                               final PsiIdentifier psiIdentifier,
                                               final NotNullLazyValue<Collection<? extends SpringBaseBeanPointer>> targets) {
 
+    String tooltip = SpringBundle.message("spring.bean.class.tooltip.navigate.declaration");
+    Collection<? extends SpringBaseBeanPointer> resolvedTargets = targets.getValue();
+    if (!resolvedTargets.isEmpty()) {
+      SpringBaseBeanPointer first = resolvedTargets.iterator().next();
+      String beanName = first.getName();
+      if (beanName != null && !beanName.isEmpty()) {
+        tooltip = "Spring Bean: '" + beanName + "'";
+      }
+    }
+
     NavigationGutterIconBuilder.create(SpringIcons.SPRING_BEAN_ICON, BEAN_POINTER_CONVERTOR).
                                setTargets(targets).
                                setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
-                               setCellRenderer(DOM_RENDERER).
-                               setTooltipText(SpringBundle.message("spring.bean.class.tooltip.navigate.declaration")).
+                               setCellRenderer(BEAN_RENDERER).
+                               setTooltipText(tooltip).
                                install(holder, psiIdentifier);
   }
 }
