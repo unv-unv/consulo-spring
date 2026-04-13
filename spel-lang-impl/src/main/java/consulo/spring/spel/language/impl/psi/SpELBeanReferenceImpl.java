@@ -16,6 +16,8 @@
 
 package consulo.spring.spel.language.impl.psi;
 
+import com.intellij.java.language.psi.JavaPsiFacade;
+import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiExpression;
 import com.intellij.java.language.psi.PsiType;
 import consulo.document.util.TextRange;
@@ -23,6 +25,7 @@ import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
 import consulo.language.util.IncorrectOperationException;
+import consulo.spring.spel.language.SpELBeanResolverProvider;
 import consulo.spring.spel.language.SpELTokenTypes;
 import org.jspecify.annotations.Nullable;
 
@@ -59,13 +62,33 @@ public class SpELBeanReferenceImpl extends SpELElementImpl implements PsiExpress
 
     @Override
     public @Nullable PsiElement resolve() {
-        // TODO: Spring model lookup needs the plugin module
+        String beanName = getBeanName();
+        if (beanName == null) {
+            return null;
+        }
+        for (SpELBeanResolverProvider provider : SpELBeanResolverProvider.EP_NAME.getExtensionList()) {
+            PsiElement result = provider.resolveBean(beanName, this);
+            if (result != null) {
+                return result;
+            }
+        }
         return null;
     }
 
     @Override
     public @Nullable PsiType getType() {
-        // TODO: requires Spring model resolution to determine bean type
+        String beanName = getBeanName();
+        if (beanName == null) {
+            return null;
+        }
+        for (SpELBeanResolverProvider provider : SpELBeanResolverProvider.EP_NAME.getExtensionList()) {
+            PsiClass beanClass = provider.resolveBeanClass(beanName, this);
+            if (beanClass != null) {
+                return JavaPsiFacade.getInstance(getProject())
+                    .getElementFactory()
+                    .createType(beanClass);
+            }
+        }
         return null;
     }
 

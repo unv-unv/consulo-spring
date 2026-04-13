@@ -11,8 +11,11 @@ import com.intellij.spring.impl.ide.model.context.ComponentScan;
 import com.intellij.spring.impl.ide.model.jam.SpringJamModel;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.JavaSpringConfigurationElement;
 import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJamElement;
+import com.intellij.spring.impl.ide.model.jam.javaConfig.SpringJavaBean;
 import com.intellij.spring.impl.ide.model.jam.stereotype.SpringComponentScan;
+import com.intellij.spring.impl.ide.model.jam.stereotype.SpringStereotypeElement;
 import com.intellij.spring.impl.ide.model.xml.beans.Beans;
+import com.intellij.spring.impl.ide.model.xml.beans.SpringBeanPointer;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.module.Module;
 import consulo.spring.impl.boot.domOverAnnotation.AnnotatationComponentScan;
@@ -44,32 +47,33 @@ public class AnnotationSpringModel extends BaseSpringModel implements SpringMode
     mySpringJamModel = SpringJamModel.getModel(module);
   }
 
-//  @Nullable
-//  @Override
-//  public SpringBeanPointer findBean(@NonNls @Nonnull String beanName) {
-//    SpringJamModel model = SpringJamModel.getModel(myModule);
-//
-//    List<SpringJavaConfiguration> configurations = model.getConfigurations();
-//    for (SpringJavaConfiguration configuration : configurations) {
-//      List<? extends SpringJavaBean> beans = configuration.getBeans();
-//
-//      for (SpringJavaBean bean : beans) {
-//        String beanName1 = bean.getBeanName();
-//        if (beanName.equals(beanName1)) {
-//          return SpringBeanPointer.createSpringBeanPointer(bean);
-//        }
-//      }
-//    }
-//
-//    List<? extends SpringStereotypeElement> allStereotypeComponents = model.getAllStereotypeComponents();
-//    for (SpringStereotypeElement allStereotypeComponent : allStereotypeComponents) {
-//      String beanName1 = allStereotypeComponent.getBeanName();
-//      if (beanName.equals(beanName1)) {
-//        return SpringBeanPointer.createSpringBeanPointer(allStereotypeComponent);
-//      }
-//    }
-//    return null;
-//  }
+  @Override
+  public SpringBeanPointer findBean(@Nonnull String beanName) {
+    // try fast direct lookup via JAM before falling back to base mapper
+    SpringJamModel model = SpringJamModel.getModel(myModule);
+
+    // search @Configuration @Bean methods
+    List<SpringJamElement> configurations = model.getConfigurations();
+    for (SpringJamElement configuration : configurations) {
+      List<? extends SpringJavaBean> beans = configuration.getBeans();
+      for (SpringJavaBean bean : beans) {
+        if (beanName.equals(bean.getBeanName())) {
+          return SpringBeanPointer.createSpringBeanPointer(bean);
+        }
+      }
+    }
+
+    // search @Component/@Service/@Repository/@Controller stereotype components
+    List<? extends SpringStereotypeElement> allStereotypeComponents = model.getAllStereotypeComponents();
+    for (SpringStereotypeElement component : allStereotypeComponents) {
+      if (beanName.equals(component.getBeanName())) {
+        return SpringBeanPointer.createSpringBeanPointer(component);
+      }
+    }
+
+    // fall back to base implementation (BeanNamesMapper with aliases)
+    return super.findBean(beanName);
+  }
 
   @Nonnull
   @Override

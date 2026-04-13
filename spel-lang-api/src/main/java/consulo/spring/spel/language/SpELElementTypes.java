@@ -44,6 +44,8 @@ public final class SpELElementTypes {
     public static final IElementType SELECT_LAST_EXPRESSION = new SpELElementType("SELECT_LAST_EXPRESSION");
     public static final IElementType SELECT_FIRST_EXPRESSION = new SpELElementType("SELECT_FIRST_EXPRESSION");
     public static final IElementType PROPERTY_PLACEHOLDER = new SpELElementType("PROPERTY_PLACEHOLDER");
+    public static final IElementType PLACEHOLDER_KEY = new SpELElementType("PLACEHOLDER_KEY");
+    public static final IElementType PLACEHOLDER_DEFAULT_VALUE = new SpELElementType("PLACEHOLDER_DEFAULT_VALUE");
     public static final IElementType INLINE_LIST = new SpELElementType("INLINE_LIST");
     public static final IElementType INLINE_MAP = new SpELElementType("INLINE_MAP");
     public static final IElementType MAP_ENTRY = new SpELElementType("MAP_ENTRY");

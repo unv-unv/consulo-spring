@@ -23,10 +23,14 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
+import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.PsiElement;
+import consulo.language.psi.PsiLanguageInjectionHost;
+import consulo.language.util.ModuleUtilCore;
 import consulo.module.Module;
 import consulo.spring.impl.icon.SpringImplIconGroup;
 import consulo.spring.spel.language.impl.psi.SpELBeanReferenceImpl;
+import org.jspecify.annotations.Nullable;
 
 public class SpELAnnotator implements Annotator {
     @Override
@@ -44,7 +48,7 @@ public class SpELAnnotator implements Annotator {
             return;
         }
 
-        Module module = beanRef.getModule();
+        Module module = findModule(beanRef);
         if (module == null) {
             return;
         }
@@ -68,5 +72,23 @@ public class SpELAnnotator implements Annotator {
             .setTarget(beanElement)
             .setTooltipText("Navigate to bean '" + beanName + "'")
             .install(holder, beanRef);
+    }
+
+    @RequiredReadAction
+    private @Nullable Module findModule(PsiElement element) {
+        // try direct module lookup first
+        Module module = ModuleUtilCore.findModuleForPsiElement(element);
+        if (module != null) {
+            return module;
+        }
+
+        // for injected SpEL, get the host element and find module from there
+        PsiLanguageInjectionHost host = InjectedLanguageManager.getInstance(element.getProject())
+            .getInjectionHost(element);
+        if (host != null) {
+            return ModuleUtilCore.findModuleForPsiElement(host);
+        }
+
+        return null;
     }
 }

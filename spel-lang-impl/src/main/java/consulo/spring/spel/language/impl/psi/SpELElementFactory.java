@@ -91,6 +91,12 @@ public final class SpELElementFactory {
         if (type == SpELElementTypes.PROPERTY_PLACEHOLDER) {
             return new SpELPropertyPlaceholderImpl(node);
         }
+        if (type == SpELElementTypes.PLACEHOLDER_KEY) {
+            return new SpELPlaceholderKeyImpl(node);
+        }
+        if (type == SpELElementTypes.PLACEHOLDER_DEFAULT_VALUE) {
+            return new SpELPlaceholderDefaultValueImpl(node);
+        }
         if (type == SpELElementTypes.INLINE_LIST) {
             return new SpELInlineListImpl(node);
         }

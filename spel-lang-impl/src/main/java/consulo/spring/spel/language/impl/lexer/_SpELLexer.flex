@@ -34,6 +34,7 @@ import consulo.spring.spel.language.SpELTokenTypes;
 
 %state STRING
 %state PLACEHOLDER
+%state PLACEHOLDER_DEFAULT
 
 WHITE_SPACE=[ \t\r\n]+
 DIGIT=[0-9]
@@ -112,6 +113,14 @@ IDENTIFIER_PART=[a-zA-Z0-9_$]
 }
 
 <PLACEHOLDER> {
+    "}"                                     { yybegin(YYINITIAL); return SpELTokenTypes.RBRACE; }
+    ":"                                     { yybegin(PLACEHOLDER_DEFAULT); return SpELTokenTypes.COLON; }
+    "."                                     { return SpELTokenTypes.DOT; }
+    {LETTER} {IDENTIFIER_PART}*             { return SpELTokenTypes.IDENTIFIER; }
+    [^}:.a-zA-Z_$]+                         { return SpELTokenTypes.PLACEHOLDER_CONTENT; }
+}
+
+<PLACEHOLDER_DEFAULT> {
     "}"                                     { yybegin(YYINITIAL); return SpELTokenTypes.RBRACE; }
     [^}]+                                   { return SpELTokenTypes.PLACEHOLDER_CONTENT; }
 }

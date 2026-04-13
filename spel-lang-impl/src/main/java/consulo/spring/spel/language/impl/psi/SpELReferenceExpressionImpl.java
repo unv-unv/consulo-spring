@@ -22,9 +22,8 @@ import consulo.document.util.TextRange;
 import consulo.language.ast.ASTNode;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiReference;
-import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
-import consulo.spring.spel.language.SpELElementTypes;
+import consulo.spring.spel.language.SpELBeanResolverProvider;
 import consulo.spring.spel.language.SpELTokenTypes;
 import org.jspecify.annotations.Nullable;
 
@@ -67,6 +66,15 @@ public class SpELReferenceExpressionImpl extends SpELElementImpl implements PsiE
         }
         String name = idNode.getText();
 
+        PsiExpression qualifier = getQualifier();
+
+        // no qualifier: unqualified identifier at root level
+        // in SpEL, root identifiers are bean names (like greetingService)
+        if (qualifier == null) {
+            return resolveAsBean(name);
+        }
+
+        // qualified: resolve member on qualifier type
         PsiClass targetClass = resolveQualifierClass();
         if (targetClass == null) {
             return null;
@@ -74,7 +82,7 @@ public class SpELReferenceExpressionImpl extends SpELElementImpl implements PsiE
 
         boolean isStatic = isStaticContext();
 
-        // try property getter first: getName() / isName()
+        // try property getter: getName() / isName()
         PsiMethod getter = PropertyUtil.findPropertyGetter(targetClass, name, isStatic, true);
         if (getter != null) {
             return getter;
@@ -97,6 +105,23 @@ public class SpELReferenceExpressionImpl extends SpELElementImpl implements PsiE
 
     @Override
     public @Nullable PsiType getType() {
+        PsiExpression qualifier = getQualifier();
+
+        // unqualified: resolve as bean, return bean class type
+        if (qualifier == null) {
+            String name = getReferenceName();
+            if (name != null) {
+                PsiClass beanClass = resolveBeanClass(name);
+                if (beanClass != null) {
+                    return JavaPsiFacade.getInstance(getProject())
+                        .getElementFactory()
+                        .createType(beanClass);
+                }
+            }
+            return null;
+        }
+
+        // qualified: type from resolved member
         PsiElement resolved = resolve();
         if (resolved instanceof PsiMethod method) {
             return method.getReturnType();
@@ -109,19 +134,12 @@ public class SpELReferenceExpressionImpl extends SpELElementImpl implements PsiE
 
     @Override
     public PsiReference[] getReferences() {
-        // only return reference if we have a qualifier (otherwise there's nothing to resolve)
-        if (getQualifier() != null) {
-            return new PsiReference[]{this};
-        }
-        return PsiReference.EMPTY_ARRAY;
+        return new PsiReference[]{this};
     }
 
     @Override
     public @Nullable PsiReference getReference() {
-        if (getQualifier() != null) {
-            return this;
-        }
-        return null;
+        return this;
     }
 
     @Override
@@ -165,6 +183,28 @@ public class SpELReferenceExpressionImpl extends SpELElementImpl implements PsiE
             PsiElement psi = child.getPsi();
             if (psi instanceof PsiExpression && child.getElementType() != SpELTokenTypes.IDENTIFIER) {
                 return (PsiExpression) psi;
+            }
+        }
+        return null;
+    }
+
+    // Resolve unqualified identifier as a Spring bean name
+    private @Nullable PsiElement resolveAsBean(String name) {
+        for (SpELBeanResolverProvider provider : SpELBeanResolverProvider.EP_NAME.getExtensionList()) {
+            PsiElement result = provider.resolveBean(name, this);
+            if (result != null) {
+                return result;
+            }
+        }
+        return null;
+    }
+
+    // Get PsiClass for bean name
+    private @Nullable PsiClass resolveBeanClass(String name) {
+        for (SpELBeanResolverProvider provider : SpELBeanResolverProvider.EP_NAME.getExtensionList()) {
+            PsiClass result = provider.resolveBeanClass(name, this);
+            if (result != null) {
+                return result;
             }
         }
         return null;

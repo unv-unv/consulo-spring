@@ -344,13 +344,40 @@ public class SpELParser implements PsiParser {
         else if (token == SpELTokenTypes.LBRACE) {
             parseInlineListOrMap(builder);
         }
-        // property placeholder: ${...}
+        // property placeholder: ${key} or ${key:defaultValue}
         else if (token == SpELTokenTypes.DOLLAR_LBRACE) {
             PsiBuilder.Marker marker = builder.mark();
-            builder.advanceLexer();
-            if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
+            builder.advanceLexer(); // consume ${
+
+            // parse key: IDENTIFIER (DOT IDENTIFIER)*
+            if (builder.getTokenType() == SpELTokenTypes.IDENTIFIER) {
+                PsiBuilder.Marker keyMarker = builder.mark();
                 builder.advanceLexer();
+                while (builder.getTokenType() == SpELTokenTypes.DOT) {
+                    builder.advanceLexer();
+                    if (builder.getTokenType() == SpELTokenTypes.IDENTIFIER) {
+                        builder.advanceLexer();
+                    }
+                }
+                keyMarker.done(SpELElementTypes.PLACEHOLDER_KEY);
             }
+            else if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
+                // fallback for non-standard key content
+                PsiBuilder.Marker keyMarker = builder.mark();
+                builder.advanceLexer();
+                keyMarker.done(SpELElementTypes.PLACEHOLDER_KEY);
+            }
+
+            // parse optional :defaultValue
+            if (builder.getTokenType() == SpELTokenTypes.COLON) {
+                builder.advanceLexer(); // consume :
+                if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
+                    PsiBuilder.Marker defaultMarker = builder.mark();
+                    builder.advanceLexer();
+                    defaultMarker.done(SpELElementTypes.PLACEHOLDER_DEFAULT_VALUE);
+                }
+            }
+
             expect(builder, SpELTokenTypes.RBRACE, "'}' expected");
             marker.done(SpELElementTypes.PROPERTY_PLACEHOLDER);
         }
