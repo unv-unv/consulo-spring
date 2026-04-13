@@ -292,14 +292,17 @@ public class SpELParser implements PsiParser {
             return;
         }
 
-        // literals
+        // non-string literals
         if (token == SpELTokenTypes.INTEGER_LITERAL || token == SpELTokenTypes.REAL_LITERAL
-            || token == SpELTokenTypes.STRING_LITERAL
             || token == SpELTokenTypes.TRUE || token == SpELTokenTypes.FALSE
             || token == SpELTokenTypes.NULL) {
             PsiBuilder.Marker marker = builder.mark();
             builder.advanceLexer();
             marker.done(SpELElementTypes.LITERAL_EXPRESSION);
+        }
+        // string literal: may contain embedded ${...} placeholders
+        else if (token == SpELTokenTypes.STRING_LITERAL) {
+            parseStringLiteral(builder);
         }
         // parenthesized expression
         else if (token == SpELTokenTypes.LPAREN) {
@@ -346,40 +349,7 @@ public class SpELParser implements PsiParser {
         }
         // property placeholder: ${key} or ${key:defaultValue}
         else if (token == SpELTokenTypes.DOLLAR_LBRACE) {
-            PsiBuilder.Marker marker = builder.mark();
-            builder.advanceLexer(); // consume ${
-
-            // parse key: IDENTIFIER (DOT IDENTIFIER)*
-            if (builder.getTokenType() == SpELTokenTypes.IDENTIFIER) {
-                PsiBuilder.Marker keyMarker = builder.mark();
-                builder.advanceLexer();
-                while (builder.getTokenType() == SpELTokenTypes.DOT) {
-                    builder.advanceLexer();
-                    if (builder.getTokenType() == SpELTokenTypes.IDENTIFIER) {
-                        builder.advanceLexer();
-                    }
-                }
-                keyMarker.done(SpELElementTypes.PLACEHOLDER_KEY);
-            }
-            else if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
-                // fallback for non-standard key content
-                PsiBuilder.Marker keyMarker = builder.mark();
-                builder.advanceLexer();
-                keyMarker.done(SpELElementTypes.PLACEHOLDER_KEY);
-            }
-
-            // parse optional :defaultValue
-            if (builder.getTokenType() == SpELTokenTypes.COLON) {
-                builder.advanceLexer(); // consume :
-                if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
-                    PsiBuilder.Marker defaultMarker = builder.mark();
-                    builder.advanceLexer();
-                    defaultMarker.done(SpELElementTypes.PLACEHOLDER_DEFAULT_VALUE);
-                }
-            }
-
-            expect(builder, SpELTokenTypes.RBRACE, "'}' expected");
-            marker.done(SpELElementTypes.PROPERTY_PLACEHOLDER);
+            parsePlaceholderInner(builder);
         }
         // identifier - always wraps as REFERENCE_EXPRESSION, method call handled by parsePostfix
         else if (token == SpELTokenTypes.IDENTIFIER) {
@@ -391,6 +361,70 @@ public class SpELParser implements PsiParser {
             builder.error("Expression expected");
             builder.advanceLexer();
         }
+    }
+
+    // Parses a string literal that may contain embedded ${key:default} placeholders.
+    // 'hello ${name:world} bye' becomes:
+    //   LITERAL_EXPRESSION
+    //     STRING_LITERAL "'hello "
+    //     PROPERTY_PLACEHOLDER
+    //       ${ PLACEHOLDER_KEY[IDENTIFIER DOT IDENTIFIER] : PLACEHOLDER_DEFAULT_VALUE[content] }
+    //     STRING_LITERAL " bye'"
+    private void parseStringLiteral(PsiBuilder builder) {
+        PsiBuilder.Marker marker = builder.mark();
+        builder.advanceLexer(); // consume first STRING_LITERAL token (opening ' + content)
+
+        // check if string contains embedded placeholders
+        boolean hasPlaceholder = false;
+        while (builder.getTokenType() == SpELTokenTypes.DOLLAR_LBRACE) {
+            hasPlaceholder = true;
+            parsePlaceholderInner(builder);
+
+            // consume string content after placeholder (may end with closing ')
+            if (builder.getTokenType() == SpELTokenTypes.STRING_LITERAL) {
+                builder.advanceLexer();
+            }
+        }
+
+        marker.done(SpELElementTypes.LITERAL_EXPRESSION);
+    }
+
+    // Shared placeholder parsing: ${key.name:default}
+    // Used both in standalone context and inside strings
+    private void parsePlaceholderInner(PsiBuilder builder) {
+        PsiBuilder.Marker marker = builder.mark();
+        builder.advanceLexer(); // consume ${
+
+        // parse key: IDENTIFIER (DOT IDENTIFIER)*
+        if (builder.getTokenType() == SpELTokenTypes.IDENTIFIER) {
+            PsiBuilder.Marker keyMarker = builder.mark();
+            builder.advanceLexer();
+            while (builder.getTokenType() == SpELTokenTypes.DOT) {
+                builder.advanceLexer();
+                if (builder.getTokenType() == SpELTokenTypes.IDENTIFIER) {
+                    builder.advanceLexer();
+                }
+            }
+            keyMarker.done(SpELElementTypes.PLACEHOLDER_KEY);
+        }
+        else if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
+            PsiBuilder.Marker keyMarker = builder.mark();
+            builder.advanceLexer();
+            keyMarker.done(SpELElementTypes.PLACEHOLDER_KEY);
+        }
+
+        // parse optional :defaultValue
+        if (builder.getTokenType() == SpELTokenTypes.COLON) {
+            builder.advanceLexer(); // consume :
+            if (builder.getTokenType() == SpELTokenTypes.PLACEHOLDER_CONTENT) {
+                PsiBuilder.Marker defaultMarker = builder.mark();
+                builder.advanceLexer();
+                defaultMarker.done(SpELElementTypes.PLACEHOLDER_DEFAULT_VALUE);
+            }
+        }
+
+        expect(builder, SpELTokenTypes.RBRACE, "'}' expected");
+        marker.done(SpELElementTypes.PROPERTY_PLACEHOLDER);
     }
 
     private void parseQualifiedName(PsiBuilder builder) {

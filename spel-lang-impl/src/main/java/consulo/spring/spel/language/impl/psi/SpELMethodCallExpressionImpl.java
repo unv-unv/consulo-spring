@@ -69,6 +69,7 @@ public class SpELMethodCallExpressionImpl extends SpELElementImpl implements Psi
     @Override
     public PsiReference[] getReferences() {
         PsiExpression methodExpr = getMethodExpression();
-        return methodExpr != null ? methodExpr.getReferences() : PsiReference.EMPTY_ARRAY;
+        PsiReference[] ownRefs = methodExpr != null ? methodExpr.getReferences() : PsiReference.EMPTY_ARRAY;
+        return mergeWithContributed(ownRefs);
     }
 }

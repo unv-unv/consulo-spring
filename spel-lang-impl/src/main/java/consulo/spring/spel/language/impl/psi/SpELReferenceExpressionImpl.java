@@ -134,7 +134,7 @@ public class SpELReferenceExpressionImpl extends SpELElementImpl implements PsiE
 
     @Override
     public PsiReference[] getReferences() {
-        return new PsiReference[]{this};
+        return mergeWithContributed(this);
     }
 
     @Override

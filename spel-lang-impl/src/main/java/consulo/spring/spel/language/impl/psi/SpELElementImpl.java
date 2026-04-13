@@ -18,9 +18,33 @@ package consulo.spring.spel.language.impl.psi;
 
 import consulo.language.ast.ASTNode;
 import consulo.language.impl.psi.ASTWrapperPsiElement;
+import consulo.language.psi.ContributedReferenceHost;
+import consulo.language.psi.PsiReference;
+import consulo.language.psi.PsiReferenceService;
+import consulo.util.collection.ArrayUtil;
 
-public class SpELElementImpl extends ASTWrapperPsiElement {
+public class SpELElementImpl extends ASTWrapperPsiElement implements ContributedReferenceHost {
     public SpELElementImpl(ASTNode node) {
         super(node);
+    }
+
+    @Override
+    public PsiReference[] getReferences() {
+        return PsiReferenceService.getService().getContributedReferences(this);
+    }
+
+    /**
+     * Merges own references with contributed references from PsiReferenceContributors.
+     * Subclasses that provide their own PsiReference should call this instead of returning just their own refs.
+     */
+    protected PsiReference[] mergeWithContributed(PsiReference... ownRefs) {
+        PsiReference[] contributed = PsiReferenceService.getService().getContributedReferences(this);
+        if (contributed.length == 0) {
+            return ownRefs;
+        }
+        if (ownRefs.length == 0) {
+            return contributed;
+        }
+        return ArrayUtil.mergeArrays(ownRefs, contributed);
     }
 }

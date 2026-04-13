@@ -76,9 +76,11 @@ public class SpELValueInjector implements ConcatenationAwareInjector {
             }
 
             if (depth == 0) {
-                // +1 for the opening quote of the string literal
+                // After loop: i points past the closing }
+                // Content to inject: content[spelStart+2 .. i-2] (between #{ and })
+                // Text offset: +1 for the opening quote of the Java string literal
                 int rangeStart = spelStart + 2 + 1;
-                int rangeEnd = i - 1 + 1;
+                int rangeEnd = i - 1 + 1; // i-1 is } in content, +1 for quote offset, exclusive end lands on }
 
                 if (rangeStart < rangeEnd) {
                     if (!hasInjection) {

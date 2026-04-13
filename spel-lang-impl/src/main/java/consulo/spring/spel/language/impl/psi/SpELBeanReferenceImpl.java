@@ -99,7 +99,7 @@ public class SpELBeanReferenceImpl extends SpELElementImpl implements PsiExpress
 
     @Override
     public PsiReference[] getReferences() {
-        return new PsiReference[]{this};
+        return mergeWithContributed(this);
     }
 
     @Override

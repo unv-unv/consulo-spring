@@ -25,7 +25,6 @@ import consulo.language.psi.*;
 import consulo.language.util.ProcessingContext;
 import consulo.spring.spel.language.SpELLanguage;
 import consulo.spring.spel.language.impl.psi.SpELPlaceholderKeyImpl;
-import consulo.spring.spel.language.impl.psi.SpELPropertyPlaceholderImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,28 +35,23 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
 public class SpELPropertyReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(PsiReferenceRegistrar registrar) {
+        // register on PLACEHOLDER_KEY element directly - works for both
+        // standalone ${key:default} and ${key:default} inside string literals
         registrar.registerReferenceProvider(
-            psiElement(SpELPropertyPlaceholderImpl.class),
+            psiElement(SpELPlaceholderKeyImpl.class),
             new PsiReferenceProvider() {
                 @Override
                 public PsiReference[] getReferencesByElement(PsiElement element, ProcessingContext context) {
-                    if (!(element instanceof SpELPropertyPlaceholderImpl placeholder)) {
+                    if (!(element instanceof SpELPlaceholderKeyImpl keyElement)) {
                         return PsiReference.EMPTY_ARRAY;
                     }
 
-                    String key = placeholder.getPropertyKey();
+                    String key = keyElement.getText();
                     if (key == null || key.isEmpty()) {
                         return PsiReference.EMPTY_ARRAY;
                     }
 
-                    SpELPlaceholderKeyImpl keyElement = placeholder.getKeyElement();
-                    if (keyElement == null) {
-                        return PsiReference.EMPTY_ARRAY;
-                    }
-
-                    int startOffset = keyElement.getStartOffsetInParent();
-                    TextRange range = new TextRange(startOffset, startOffset + keyElement.getTextLength());
-
+                    TextRange range = TextRange.from(0, key.length());
                     return new PsiReference[]{new SpELPropertyReference(element, range, key)};
                 }
             }

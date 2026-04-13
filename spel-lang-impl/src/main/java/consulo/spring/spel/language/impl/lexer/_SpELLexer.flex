@@ -35,6 +35,8 @@ import consulo.spring.spel.language.SpELTokenTypes;
 %state STRING
 %state PLACEHOLDER
 %state PLACEHOLDER_DEFAULT
+%state STR_PLACEHOLDER
+%state STR_PLACEHOLDER_DEFAULT
 
 WHITE_SPACE=[ \t\r\n]+
 DIGIT=[0-9]
@@ -106,12 +108,16 @@ IDENTIFIER_PART=[a-zA-Z0-9_$]
     [^]                                     { return TokenType.BAD_CHARACTER; }
 }
 
+// String state: recognizes ${...} inside strings
 <STRING> {
     "''"                                    { return SpELTokenTypes.STRING_LITERAL; }
     "'"                                     { yybegin(YYINITIAL); return SpELTokenTypes.STRING_LITERAL; }
-    [^']+                                   { return SpELTokenTypes.STRING_LITERAL; }
+    "${"                                    { yybegin(STR_PLACEHOLDER); return SpELTokenTypes.DOLLAR_LBRACE; }
+    [^'$]+                                  { return SpELTokenTypes.STRING_LITERAL; }
+    "$"                                     { return SpELTokenTypes.STRING_LITERAL; }
 }
 
+// Standalone placeholder: ${key.name:default} at top level
 <PLACEHOLDER> {
     "}"                                     { yybegin(YYINITIAL); return SpELTokenTypes.RBRACE; }
     ":"                                     { yybegin(PLACEHOLDER_DEFAULT); return SpELTokenTypes.COLON; }
@@ -122,5 +128,19 @@ IDENTIFIER_PART=[a-zA-Z0-9_$]
 
 <PLACEHOLDER_DEFAULT> {
     "}"                                     { yybegin(YYINITIAL); return SpELTokenTypes.RBRACE; }
+    [^}]+                                   { return SpELTokenTypes.PLACEHOLDER_CONTENT; }
+}
+
+// Placeholder inside a string: ${key.name:default} returns to STRING on }
+<STR_PLACEHOLDER> {
+    "}"                                     { yybegin(STRING); return SpELTokenTypes.RBRACE; }
+    ":"                                     { yybegin(STR_PLACEHOLDER_DEFAULT); return SpELTokenTypes.COLON; }
+    "."                                     { return SpELTokenTypes.DOT; }
+    {LETTER} {IDENTIFIER_PART}*             { return SpELTokenTypes.IDENTIFIER; }
+    [^}:.a-zA-Z_$]+                         { return SpELTokenTypes.PLACEHOLDER_CONTENT; }
+}
+
+<STR_PLACEHOLDER_DEFAULT> {
+    "}"                                     { yybegin(STRING); return SpELTokenTypes.RBRACE; }
     [^}]+                                   { return SpELTokenTypes.PLACEHOLDER_CONTENT; }
 }

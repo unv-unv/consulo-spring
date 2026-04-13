@@ -76,7 +76,7 @@ public class SpELVariableReferenceImpl extends SpELElementImpl implements PsiExp
 
     @Override
     public PsiReference[] getReferences() {
-        return new PsiReference[]{this};
+        return mergeWithContributed(this);
     }
 
     @Override
