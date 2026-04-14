@@ -18,7 +18,6 @@ module com.intellij.spring.spel.language.impl {
     requires consulo.language.api;
     requires consulo.language.impl;
     requires consulo.language.editor.api;
-    requires consulo.java.language.api;
 
     requires com.intellij.spring.spel.language.api;
 
