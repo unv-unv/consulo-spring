@@ -14,8 +14,8 @@
   <depends>consulo.java</depends>
   <depends>com.intellij.xml</depends>
   <depends optional="true">org.jetbrains.idea.maven</depends>
-  <depends optional="true">org.jetbrains.plugins.yaml</depends>
-  <depends optional="true">consulo.json</depends>
+  <depends>org.jetbrains.plugins.yaml</depends>
+  <depends>consulo.json</depends>
 
   <tags>
     <tag>software.framework</tag>
