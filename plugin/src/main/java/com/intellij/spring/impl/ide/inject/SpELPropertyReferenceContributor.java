@@ -16,13 +16,15 @@
 
 package com.intellij.spring.impl.ide.inject;
 
-import com.intellij.lang.properties.IProperty;
-import com.intellij.lang.properties.PropertiesFilesManager;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.document.util.TextRange;
 import consulo.language.Language;
+import consulo.language.inject.InjectedLanguageManager;
 import consulo.language.psi.*;
+import consulo.language.util.ModuleUtilCore;
 import consulo.language.util.ProcessingContext;
+import consulo.module.Module;
+import consulo.spring.impl.boot.properties.SpringConfigurationPropertySearch;
 import consulo.spring.spel.language.SpELLanguage;
 import consulo.spring.spel.language.impl.psi.SpELPlaceholderKeyImpl;
 
@@ -35,8 +37,6 @@ import static consulo.language.pattern.PlatformPatterns.psiElement;
 public class SpELPropertyReferenceContributor extends PsiReferenceContributor {
     @Override
     public void registerReferenceProviders(PsiReferenceRegistrar registrar) {
-        // register on PLACEHOLDER_KEY element directly - works for both
-        // standalone ${key:default} and ${key:default} inside string literals
         registrar.registerReferenceProvider(
             psiElement(SpELPlaceholderKeyImpl.class),
             new PsiReferenceProvider() {
@@ -73,16 +73,18 @@ public class SpELPropertyReferenceContributor extends PsiReferenceContributor {
 
         @Override
         public ResolveResult[] multiResolve(boolean incompleteCode) {
-            List<ResolveResult> results = new ArrayList<>();
+            Module module = findModule();
+            if (module == null) {
+                return ResolveResult.EMPTY_ARRAY;
+            }
 
-            PropertiesFilesManager.getInstance(myElement.getProject()).processAllPropertiesFiles((s, propertiesFile) -> {
-                List<? extends IProperty> properties = propertiesFile.findPropertiesByKey(myKey);
-                for (IProperty property : properties) {
-                    results.add(new PsiElementResolveResult(property.getPsiElement()));
-                }
-                return true;
-            });
+            SpringConfigurationPropertySearch search = SpringConfigurationPropertySearch.getInstance(myElement.getProject());
+            List<PsiElement> resolved = search.resolvePropertyKey(myKey, module);
 
+            List<ResolveResult> results = new ArrayList<>(resolved.size());
+            for (PsiElement element : resolved) {
+                results.add(new PsiElementResolveResult(element));
+            }
             return results.toArray(ResolveResult.EMPTY_ARRAY);
         }
 
@@ -94,17 +96,27 @@ public class SpELPropertyReferenceContributor extends PsiReferenceContributor {
 
         @Override
         public Object[] getVariants() {
-            List<Object> variants = new ArrayList<>();
-            PropertiesFilesManager.getInstance(myElement.getProject()).processAllPropertiesFiles((s, propertiesFile) -> {
-                for (IProperty property : propertiesFile.getProperties()) {
-                    String propKey = property.getKey();
-                    if (propKey != null && !propKey.isEmpty()) {
-                        variants.add(propKey);
-                    }
-                }
-                return true;
-            });
-            return variants.toArray();
+            Module module = findModule();
+            if (module == null) {
+                return EMPTY_ARRAY;
+            }
+
+            SpringConfigurationPropertySearch search = SpringConfigurationPropertySearch.getInstance(myElement.getProject());
+            List<String> keys = search.getAllPropertyKeys(module);
+            return keys.toArray();
+        }
+
+        private Module findModule() {
+            Module module = ModuleUtilCore.findModuleForPsiElement(myElement);
+            if (module != null) {
+                return module;
+            }
+            PsiLanguageInjectionHost host = InjectedLanguageManager.getInstance(myElement.getProject())
+                .getInjectionHost(myElement);
+            if (host != null) {
+                return ModuleUtilCore.findModuleForPsiElement(host);
+            }
+            return null;
         }
     }
 }
