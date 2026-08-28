@@ -92,6 +92,8 @@ pointcut.methods.should.have.no.throws.clause:
     text: Pointcut methods should not have throws clause
 pointcut.methods.should.have.void.return.type:
     text: Pointcut methods should have void return type
+presentation.container.in.file:
+    text: in {0}
 quickfix.name.arg.names.correct:
     text: Correct {0} attribute
 quickfix.name.arg.names.remove:

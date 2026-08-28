@@ -8,7 +8,6 @@ import com.intellij.jam.JamService;
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
 import com.intellij.java.language.psi.util.PropertyUtil;
-import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringIcons;
 import com.intellij.spring.impl.ide.SpringManager;
 import com.intellij.spring.impl.ide.SpringModel;
@@ -21,18 +20,21 @@ import com.intellij.spring.impl.ide.model.xml.CommonSpringBean;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.*;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.application.Application;
 import consulo.application.util.NotNullLazyValue;
 import consulo.language.editor.annotation.AnnotationHolder;
 import consulo.language.editor.annotation.Annotator;
-import consulo.language.editor.ui.DefaultPsiElementCellRenderer;
-import consulo.language.editor.ui.PsiElementListCellRenderer;
+import consulo.language.editor.ui.navigation.PsiTargetPresentationFactory;
+import consulo.language.editor.ui.navigation.TargetPresentationProvider;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.ModuleUtilCore;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
+import consulo.navigation.TargetPresentationBuilder;
 import consulo.spring.impl.icon.SpringImplIconGroup;
-import consulo.ui.image.Image;
+import consulo.spring.localize.SpringLocalize;
 import consulo.util.lang.lazy.LazyValue;
 import consulo.xml.codeInsight.navigation.DomNavigationGutterIconBuilder;
 import consulo.xml.language.psi.XmlTag;
@@ -48,8 +50,8 @@ import java.util.function.Function;
 
 public class SpringClassAnnotator implements Annotator {
 
-  private static final String UNKNOWN = SpringBundle.message("spring.bean.with.unknown.name");
-  private static final DomElementListCellRenderer DOM_RENDERER = new DomElementListCellRenderer(UNKNOWN);
+  private static final LocalizeValue UNKNOWN = SpringLocalize.springBeanWithUnknownName();
+  private static final DomElementPresentationProvider DOM_PRESENTATION = new DomElementPresentationProvider(UNKNOWN);
 
   @Nullable
   private static SpringBean getSpringBean(PsiElement element) {
@@ -57,56 +59,39 @@ public class SpringClassAnnotator implements Annotator {
     return domElement == null ? null : domElement.getParentOfType(SpringBean.class, false);
   }
 
-  private static final PsiElementListCellRenderer BEAN_RENDERER = new DefaultPsiElementCellRenderer() {
-
-    @Override
-    public String getElementText(PsiElement element) {
-      if (element instanceof XmlTag) {
-        return DOM_RENDERER.getElementText((XmlTag)element);
-      }
-      else if (element instanceof PsiAnnotation) {
-        PsiMember member = PsiTreeUtil.getParentOfType(element, PsiMember.class);
-        CommonSpringBean springBean =
-          member == null ? null : JamService.getJamService(element.getProject()).getJamElement(JamPsiMemberSpringBean.class, member);
-        if (springBean != null) {
-          String beanName = springBean.getBeanName();
-          return beanName == null ? UNKNOWN : beanName;
-        }
-      }
-      return super.getElementText(element);
+  private static final TargetPresentationProvider<PsiElement> BEAN_PRESENTATION = element -> {
+    if (element instanceof XmlTag tag) {
+      return DOM_PRESENTATION.getPresentation(tag);
     }
 
-    @Override
-    public String getContainerText(PsiElement element, String name) {
-      if (element instanceof XmlTag) {
-        return DOM_RENDERER.getContainerText((XmlTag)element, name);
+    TargetPresentationBuilder builder =
+      Application.get().getInstance(PsiTargetPresentationFactory.class).presentationBuilder(element);
+
+    if (element instanceof PsiAnnotation) {
+      CommonSpringBean springBean = findJamSpringBean(element);
+      if (springBean != null) {
+        String beanName = springBean.getBeanName();
+        builder = builder.withPresentableText(beanName == null ? UNKNOWN : LocalizeValue.of(beanName))
+                         .withIcon(consulo.spring.impl.SpringIcons.SpringJavaBean);
       }
-      else if (element instanceof PsiAnnotation) {
-        PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        if (psiClass != null && psiClass.getName() != null) {
-          return psiClass.getName();
-        }
+
+      PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+      if (psiClass != null && psiClass.getName() != null) {
+        builder = builder.withContainerText(LocalizeValue.of(psiClass.getName()));
       }
-      return super.getContainerText(element, name);
     }
 
-    @Nullable
-    @Override
-    protected Image getIcon(PsiElement element) {
-      if (element instanceof XmlTag) {
-        return DOM_RENDERER.getIcon(element);
-      }
-      else if (element instanceof PsiAnnotation) {
-        PsiMember member = PsiTreeUtil.getParentOfType(element, PsiMember.class);
-        CommonSpringBean springBean =
-          member == null ? null : JamService.getJamService(element.getProject()).getJamElement(JamPsiMemberSpringBean.class, member);
-        if (springBean != null) {
-          return consulo.spring.impl.SpringIcons.SpringJavaBean;
-        }
-      }
-      return super.getIcon(element);
-    }
+    return builder.build();
   };
+
+  @Nullable
+  @RequiredReadAction
+  private static CommonSpringBean findJamSpringBean(PsiElement element) {
+    PsiMember member = PsiTreeUtil.getParentOfType(element, PsiMember.class);
+    return member == null
+      ? null
+      : JamService.getJamService(element.getProject()).getJamElement(JamPsiMemberSpringBean.class, member);
+  }
 
   private static final Function<SpringBaseBeanPointer, Collection<? extends PsiElement>> BEAN_POINTER_CONVERTOR = new Function<>() {
     @Override
@@ -199,10 +184,10 @@ public class SpringClassAnnotator implements Annotator {
         SpringBeanPointer bean = model.findBean(method.getName());
         if (bean != null) {
           NavigationGutterIconBuilder.create(SpringImplIconGroup.gutterSpringbean(), BEAN_POINTER_CONVERTOR).
-                                     setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
-                                     setCellRenderer(DOM_RENDERER).
+                                     setPopupTitle(SpringLocalize.springBeanClassNavigateChooseClassTitle()).
+                                     setPresentationProvider(DOM_PRESENTATION).
                                      setTargets(LazyValue.notNull(List::of)).
-                                     setTooltipText(SpringBundle.message("spring.bean.class.tooltip.navigate.declaration")).
+                                     setTooltipText(SpringLocalize.springBeanClassTooltipNavigateDeclaration()).
                                      install(holder, method.getNameIdentifier());
         }
       }
@@ -248,9 +233,9 @@ public class SpringClassAnnotator implements Annotator {
       SpringJavaAutowiringInspection.checkAutowiredPsiMember(variable, type, null, model, required);
     if (list != null && !list.isEmpty()) {
       NavigationGutterIconBuilder.create(SpringImplIconGroup.gutterShowautowireddependencies(), BEAN_POINTER_CONVERTOR).
-                                 setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
-                                 setCellRenderer(BEAN_RENDERER).
-                                 setTooltipText(SpringBundle.message("navigate.to.autowired.dependencies")).
+                                 setPopupTitle(SpringLocalize.springBeanClassNavigateChooseClassTitle()).
+                                 setPresentationProvider(BEAN_PRESENTATION).
+                                 setTooltipText(SpringLocalize.navigateToAutowiredDependencies()).
                                  setTargets(list).install(holder, element);
     }
   }
@@ -269,31 +254,21 @@ public class SpringClassAnnotator implements Annotator {
                                      SpringJavaClassInfo.getSpringJavaClassInfo((PsiClass)psiMethod.getParent());
                                    return info.getMappedProperties(propertyName);
                                  }
-                               }).setPopupTitle(SpringBundle.message("spring.bean.property.navigate.choose.class.title")).
-                               setCellRenderer(new DefaultPsiElementCellRenderer() {
-                                 @Override
-                                 public String getElementText(PsiElement element) {
-                                   SpringBean springBean = getSpringBean(element);
-                                   assert springBean != null;
-                                   String elementName = springBean.getBeanName();
-                                   assert elementName != null;
-                                   return elementName;
-                                 }
+                               }).setPopupTitle(SpringLocalize.springBeanPropertyNavigateChooseClassTitle()).
+                               setPresentationProvider(element -> {
+                                 SpringBean springBean = getSpringBean(element);
+                                 assert springBean != null;
+                                 String elementName = springBean.getBeanName();
+                                 assert elementName != null;
 
-                                 @Nullable
-                                 @Override
-                                 protected Image getIcon(PsiElement element) {
-                                   SpringBean springBean = getSpringBean(element);
-                                   assert springBean != null;
-                                   return consulo.spring.impl.SpringIcons.SpringBean;
-                                 }
-
-                                 @Override
-                                 public String getContainerText(PsiElement element, String name) {
-                                   return DomElementListCellRenderer.getContainerText(element);
-                                 }
+                                 return Application.get().getInstance(PsiTargetPresentationFactory.class)
+                                                   .presentationBuilder(element)
+                                                   .withPresentableText(LocalizeValue.of(elementName))
+                                                   .withContainerText(DomElementPresentationProvider.getContainerText(element))
+                                                   .withIcon(consulo.spring.impl.SpringIcons.SpringBean)
+                                                   .build();
                                }).
-                               setTooltipText(SpringBundle.message("spring.bean.property.tooltip.navigate.declaration")).
+                               setTooltipText(SpringLocalize.springBeanPropertyTooltipNavigateDeclaration()).
                                install(holder, psiMethod.getNameIdentifier());
   }
 
@@ -301,20 +276,20 @@ public class SpringClassAnnotator implements Annotator {
                                               PsiIdentifier psiIdentifier,
                                               NotNullLazyValue<Collection<? extends SpringBaseBeanPointer>> targets) {
 
-    String tooltip = SpringBundle.message("spring.bean.class.tooltip.navigate.declaration");
+    LocalizeValue tooltip = SpringLocalize.springBeanClassTooltipNavigateDeclaration();
     Collection<? extends SpringBaseBeanPointer> resolvedTargets = targets.getValue();
     if (!resolvedTargets.isEmpty()) {
       SpringBaseBeanPointer first = resolvedTargets.iterator().next();
       String beanName = first.getName();
       if (beanName != null && !beanName.isEmpty()) {
-        tooltip = "Spring Bean: '" + beanName + "'";
+        tooltip = LocalizeValue.localizeTODO("Spring Bean: '" + beanName + "'");
       }
     }
 
     NavigationGutterIconBuilder.create(SpringIcons.SPRING_BEAN_ICON, BEAN_POINTER_CONVERTOR).
                                setTargets(targets).
-                               setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
-                               setCellRenderer(BEAN_RENDERER).
+                               setPopupTitle(SpringLocalize.springBeanClassNavigateChooseClassTitle()).
+                               setPresentationProvider(BEAN_PRESENTATION).
                                setTooltipText(tooltip).
                                install(holder, psiIdentifier);
   }

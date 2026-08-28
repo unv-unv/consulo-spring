@@ -15,6 +15,7 @@ import consulo.annotation.access.RequiredReadAction;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.aop.icon.AopIconGroup;
 import consulo.aop.localize.AopLocalize;
+import consulo.application.Application;
 import consulo.application.progress.ProgressManager;
 import consulo.application.util.CachedValue;
 import consulo.application.util.CachedValueProvider;
@@ -24,13 +25,16 @@ import consulo.codeEditor.markup.GutterIconRenderer;
 import consulo.language.Language;
 import consulo.language.editor.gutter.LineMarkerInfo;
 import consulo.language.editor.gutter.LineMarkerProvider;
-import consulo.language.editor.ui.DefaultPsiElementCellRenderer;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
+import consulo.language.editor.ui.navigation.PsiTargetPresentationFactory;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
 import consulo.language.psi.PsiModificationTracker;
 import consulo.language.util.ModuleUtilCore;
+import consulo.localize.LocalizeValue;
 import consulo.module.Module;
+import consulo.navigation.TargetPresentation;
+import consulo.navigation.TargetPresentationBuilder;
 import consulo.ui.image.Image;
 import consulo.ui.image.ImageEffects;
 import consulo.util.collection.HashingStrategy;
@@ -198,37 +202,28 @@ public class AopJavaAnnotator implements LineMarkerProvider {
       .setTooltipText(AopLocalize.tooltipTextNavigateToAdvices())
       .setPopupTitle(AopLocalize.tooltipTextNavigateToAdvices())
       .setAlignment(GutterIconRenderer.Alignment.LEFT)
-      .setCellRenderer(new DefaultPsiElementCellRenderer() {
-        @Override
-        public String getElementText(PsiElement element) {
-          String superText = super.getElementText(element);
-          AopAdvice advice = psi2Advice.get(element);
-          if (advice != null && advice.isValid()) {
-            Integer integer = boundAdvices.get(advice);
-            if (integer != null && integer < Integer.MAX_VALUE) {
-              return superText + " (order=" + integer + ")";
-            }
+      .setPresentationProvider(element -> {
+        PsiTargetPresentationFactory factory = Application.get().getInstance(PsiTargetPresentationFactory.class);
+        TargetPresentation presentation = factory.presentation(element);
+        TargetPresentationBuilder builder = factory.presentationBuilder(element);
+
+        AopAdvice advice = psi2Advice.get(element);
+        if (advice != null && advice.isValid()) {
+          Integer order = boundAdvices.get(advice);
+          if (order != null && order < Integer.MAX_VALUE) {
+            builder = builder.withPresentableText(
+              LocalizeValue.localizeTODO(presentation.getPresentableText().get() + " (order=" + order + ")"));
           }
-          return superText;
         }
 
-        @Override
-        @RequiredReadAction
-        public String getContainerText(PsiElement element, String name) {
-          String superText = super.getContainerText(element, name);
-          if (StringUtil.isEmpty(superText)) {
-            PsiFile file = element.getContainingFile();
-            if (file != null) {
-              return "(in " + file.getName() + ")";
-            }
+        if (presentation.getContainerText().isEmpty()) {
+          PsiFile file = element.getContainingFile();
+          if (file != null) {
+            builder = builder.withContainerText(AopLocalize.presentationContainerInFile(file.getName()));
           }
-          return superText;
         }
 
-        @Override
-        protected int getIconFlags() {
-          return 0;
-        }
+        return builder.build();
       });
   }
 

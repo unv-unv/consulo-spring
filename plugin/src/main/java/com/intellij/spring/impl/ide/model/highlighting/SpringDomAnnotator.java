@@ -4,9 +4,8 @@
 
 package com.intellij.spring.impl.ide.model.highlighting;
 
-import com.intellij.spring.impl.ide.SpringBundle;
 import com.intellij.spring.impl.ide.SpringModel;
-import com.intellij.spring.impl.ide.gutter.DomElementListCellRenderer;
+import com.intellij.spring.impl.ide.gutter.DomElementPresentationProvider;
 import com.intellij.spring.impl.ide.model.SpringUtils;
 import com.intellij.spring.impl.ide.model.xml.DomSpringBean;
 import com.intellij.spring.impl.ide.model.xml.beans.SpringBaseBeanPointer;
@@ -16,6 +15,7 @@ import consulo.language.editor.annotation.Annotator;
 import consulo.language.editor.ui.navigation.NavigationGutterIconBuilder;
 import consulo.language.psi.PsiElement;
 import consulo.spring.impl.icon.SpringImplIconGroup;
+import consulo.spring.localize.SpringLocalize;
 import consulo.util.collection.ContainerUtil;
 import consulo.xml.language.psi.XmlTag;
 import consulo.xml.dom.DomElement;
@@ -28,7 +28,8 @@ import java.util.function.Function;
 
 public class SpringDomAnnotator implements Annotator {
 
-  private static final DomElementListCellRenderer RENDERER = new DomElementListCellRenderer(SpringBundle.message("spring.bean.with.unknown.name"));
+  private static final DomElementPresentationProvider PRESENTATION =
+    new DomElementPresentationProvider(SpringLocalize.springBeanWithUnknownName());
 
   private static final Function<SpringBaseBeanPointer, Collection<? extends PsiElement>> CONVERTER =
     new Function<SpringBaseBeanPointer, Collection<? extends PsiElement>>() {
@@ -51,9 +52,9 @@ public class SpringDomAnnotator implements Annotator {
         NavigationGutterIconBuilder.create(SpringImplIconGroup.gutterParentbeangutter(), CONVERTER);
       iconBuilder.
                    setTargets(children).
-                   setPopupTitle(SpringBundle.message("spring.bean.class.navigate.choose.class.title")).
-                   setCellRenderer(RENDERER).
-                   setTooltipText(SpringBundle.message("spring.parent.bean.tooltip")).
+                   setPopupTitle(SpringLocalize.springBeanClassNavigateChooseClassTitle()).
+                   setPresentationProvider(PRESENTATION).
+                   setTooltipText(SpringLocalize.springParentBeanTooltip()).
                    install(holder, bean.getXmlTag());
     }
   }
